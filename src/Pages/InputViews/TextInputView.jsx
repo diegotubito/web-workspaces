@@ -39,7 +39,7 @@ export const TextInputView = ({onInputChange, onDidBegin, onReturnPressed, form,
         onKeyDown={(event) => onKeyDownHandler(event)}
         onFocus={(event) => onFocusHandler(event)}
         onBlur={(event) => onBlurHandler(event)}
-        type="text"
+        type={form.type}
         name={form.name}
         value={form.value}
       />

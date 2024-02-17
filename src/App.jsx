@@ -2,30 +2,30 @@ import logo from './logo.svg';
 import './App.css';
 import { TextInputView } from './Pages/InputViews/TextInputView';
 import { Button } from 'react-bootstrap';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 function App() {
   const [emailForm, setEmailForm] = useState({
     name: 'email_input',
     value: '',
-    errorMessage: ''
+    errorMessage: '',
+    type: 'text'
   })
 
   const [passwordForm, setPaswordForm] = useState({
     name: 'password_input',
     value: '',
-    errorMessage: ''
+    errorMessage: '',
+    type: 'password'
   })
 
   const onLogin = () => {
-    console.log('should validate fields here')
-    if (passwordForm.errorMessage) {
-      setPaswordForm({...passwordForm, errorMessage: null})
-    } else {
-      setPaswordForm({...passwordForm, errorMessage: 'clave mal formada.'})
+    if (!groupValidation()) {
+      console.log('something is missing')
+      return
     }
-    console.log(passwordForm.errorMessage)
 
+    // perfomr login api
   }
 
   const onInputChange = (name, newValue) => {
@@ -42,13 +42,23 @@ function App() {
 
   const onDidBeginInput = (name, begin) => {
     if (!begin) {
+
       switch (name) {
         case 'email_input':
-          console.log('leaving', name)
+          validateEmail()
           break
         case 'password_input':
-          console.log('leaving', name)
-
+          validatePassword()
+          break
+      }
+    } else {
+      // did begin
+      switch (name) {
+        case 'email_input':
+          setEmailForm({ ...emailForm, errorMessage: null })
+          break
+        case 'password_input':
+          setPaswordForm({ ...passwordForm, errorMessage: null })
           break
       }
     }
@@ -56,6 +66,32 @@ function App() {
 
   const onReturnPressed = (name) => {
     console.log(name)
+  }
+
+  const validateEmail = () => {
+    if (!emailForm.value) {
+      setEmailForm({ ...emailForm, errorMessage: 'email should not be empty' })
+      return false
+    }
+
+    setEmailForm({ ...emailForm, errorMessage: null })
+    return true
+  }
+
+  const validatePassword = () => {
+    if (!passwordForm.value) {
+      setPaswordForm({ ...passwordForm, errorMessage: 'password is missing' })
+      return false
+    }
+    setPaswordForm({ ...passwordForm, errorMessage: null })
+    return true
+  }
+
+  const groupValidation = () => {
+    const emailValidation = validateEmail()
+    const passwordValidation = validatePassword()
+
+    return emailValidation && passwordValidation
   }
 
   return (
@@ -71,14 +107,14 @@ function App() {
               setForm={setEmailForm}
             />
 
-            <TextInputView 
+            <TextInputView
               onInputChange={onInputChange}
               onDidBegin={onDidBeginInput}
               onReturnPressed={onReturnPressed}
               form={passwordForm}
               setForm={setPaswordForm}
             />
-            
+
             <div className='button-login-container margin-top' >
               <Button className='button-login' variant="primary" onClick={() => onLogin()}>Login</Button>{''}
 
