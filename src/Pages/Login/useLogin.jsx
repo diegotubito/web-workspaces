@@ -12,6 +12,8 @@ export const useLogin = () => {
       console.log('Login successful:', response.data);
       setLoginSuccess(true)
       setLoginError(null);
+      localStorage.setItem('token', response.data.accessToken); // Store the token in local storage
+      console.log(response.data.accessToken)
     } catch (error) {
       setLoginSuccess(false)
       if (error.response) {

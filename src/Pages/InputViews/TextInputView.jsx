@@ -42,6 +42,7 @@ export const TextInputView = ({onInputChange, onDidBegin, onReturnPressed, form,
         type={form.type}
         name={form.name}
         value={form.value}
+        autoComplete={form.type === 'password' ? 'current-password' : 'on'}
       />
       { (form.errorMessage)  && <p className='errorMessage'>{form.errorMessage}</p>}
     </div>
