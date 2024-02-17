@@ -1,38 +1,58 @@
-.App {
-  text-align: center;
+/* forma de guardar varialbes en css*/
+:root {
+    /*custom property*/
+    --blanco: #ffffff;
+    --oscurito: #212121;
+    --primario: rgba(255, 193, 7, 1);
+    --secundario: #0097a7;
+    --gris: #757575;
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.main-navigation {
+  background-color: var(--secundario);
+  color: var(--blanco);
+  display: flex;
+  flex-direction: column;
+  /* by default */
+  align-items: center;
+}
+
+.margin-top {
+  margin-top: 2rem;
+}
+
+.outer-container {
+  border: 1px solid black;
+  padding: 2rem;
+  background-color: #d2caca;
+  border-radius: 0.5rem;
+  max-width: 50rem;
+  width: 100%;
+}
+
+.inputText {
+  background-color: red;
+}
+
+.button-login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.button-login {
+  width: 80%;
 }

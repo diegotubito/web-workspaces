@@ -1,0 +1,10 @@
+  .main p {
+    font-size: 1rem;
+    margin: 0rem; /* Explicitly remove margin from <p> */
+  }
+  
+  .inputField {
+    padding: 0.5rem 1rem;
+    width: 100%;
+  }
+  
