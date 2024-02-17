@@ -5,29 +5,42 @@ import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 
 function App() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [emailForm, setEmailForm] = useState({
+    name: 'email_input',
+    value: '',
+    errorMessage: ''
+  })
+
+  const [passwordForm, setPaswordForm] = useState({
+    name: 'password_input',
+    value: '',
+    errorMessage: ''
+  })
 
   const onLogin = () => {
     console.log('should validate fields here')
-    console.log(email)
-    console.log(password)
-    setEmail('dieotubito')
+    if (passwordForm.errorMessage) {
+      setPaswordForm({...passwordForm, errorMessage: null})
+    } else {
+      setPaswordForm({...passwordForm, errorMessage: 'clave mal formada.'})
+    }
+    console.log(passwordForm.errorMessage)
+
   }
 
-  const onInputChange = (name, value) => {
+  const onInputChange = (name, newValue) => {
 
     switch (name) {
       case 'email_input':
-        console.log('from email input', email)
+        console.log('from email input', emailForm.value)
         break
       case 'password_input':
-        console.log('from password input', password)
+        console.log('from password input', passwordForm.value)
         break
     }
   }
 
-  const onDidBeginInput = (begin, name) => {
+  const onDidBeginInput = (name, begin) => {
     if (!begin) {
       switch (name) {
         case 'email_input':
@@ -51,21 +64,19 @@ function App() {
         <div className='outer-container'>
           <div>
             <TextInputView
-              name="email_input"
               onInputChange={onInputChange}
               onDidBegin={onDidBeginInput}
               onReturnPressed={onReturnPressed}
-              value={email}
-              setValue={setEmail}
+              form={emailForm}
+              setForm={setEmailForm}
             />
 
             <TextInputView 
-              name="password_input"
               onInputChange={onInputChange}
               onDidBegin={onDidBeginInput}
               onReturnPressed={onReturnPressed}
-              value={password}
-              setValue={setPassword}
+              form={passwordForm}
+              setForm={setPaswordForm}
             />
             
             <div className='button-login-container margin-top' >
