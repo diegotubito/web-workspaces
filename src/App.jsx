@@ -3,6 +3,32 @@ import './App.css';
 import { TextInputView } from './Pages/InputViews/TextInputView';
 import { Button } from 'react-bootstrap';
 import { useCallback, useState } from 'react';
+import axios from 'axios';
+
+const doLogin = async (email, password) => {
+  try {
+    const response = await axios.post('http://127.0.0.1:666/api/v1/login', {
+      email: email,
+      password: password
+    });
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error('Error during login:', error);
+
+    // Check if the error is from the API or a network issue
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      return { success: false, data: error.response.data, status: error.response.status };
+    } else if (error.request) {
+      // The request was made but no response was received
+      return { success: false, message: "No response from server" };
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      return { success: false, message: error.message };
+    }
+  }
+};
 
 function App() {
   const [emailForm, setEmailForm] = useState({
@@ -19,14 +45,32 @@ function App() {
     type: 'password'
   })
 
-  const onLogin = () => {
+  const onLogin = async () => {
     if (!groupValidation()) {
-      console.log('something is missing')
-      return
+      console.log('Something is missing');
+      // Optionally, update the UI to indicate the validation error
+      return;
     }
-
-    // perfomr login api
-  }
+  
+    const result = await doLogin(emailForm.value, passwordForm.value);
+  
+    if (result.success) {
+      console.log('Login successful:', result.data);
+      // Proceed with login success logic, like redirecting the user
+    } else {
+      if (result.status) {
+        console.log(`Error ${result.status}:`, result.data);
+        console.log('invalid credentials')
+        // Handle API errors, e.g., invalid credentials, account locked, etc.
+        // You can show these errors to the user
+      } else {
+        console.log('Login error:', result.message);
+        // Handle network errors, server errors, etc.
+        // Inform the user to check their connection or try again later
+      }
+      // Update UI to reflect the error state
+    }
+  };  
 
   const onInputChange = (name, newValue) => {
 
@@ -117,7 +161,7 @@ function App() {
 
             <div className='button-login-container margin-top' >
               <Button className='button-login' variant="primary" onClick={() => onLogin()}>Login</Button>{''}
-
+              {<p>{'something went wrong'}</p>}
             </div>
           </div>
 
