@@ -12,6 +12,7 @@ function App() {
     console.log('should validate fields here')
     console.log(email)
     console.log(password)
+    setEmail('dieotubito')
   }
 
   const onInputChange = (name, value) => {
@@ -58,7 +59,8 @@ function App() {
               setValue={setEmail}
             />
 
-            <TextInputView name="password_input"
+            <TextInputView 
+              name="password_input"
               onInputChange={onInputChange}
               onDidBegin={onDidBeginInput}
               onReturnPressed={onReturnPressed}
