@@ -33,7 +33,7 @@ export const Home = () => {
             <div>
                 <h1>Hello {userSession.user.firstName}</h1>
             </div>
-            <Button onClick={() => setRouteToLogin(true)}>Go To Login</Button>
+            <Button variant='secondary' onClick={() => setRouteToLogin(true)}>Log Out</Button>
             <Button onClick={() => changeName()}>Change Name in User Session</Button>
             < FooterBar />
         </>
