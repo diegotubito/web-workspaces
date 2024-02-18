@@ -7,10 +7,9 @@
     background-color: #131313; /* Dark background for the footer */
     color: rgb(175, 175, 175); /* Light text color */
     text-align: right;
-    padding: 1rem 1rem; /* Some padding for spacing */
+    padding: 0.7rem 0.7rem; /* Some padding for spacing */
     display: inline-flex;
     justify-content: space-between;
-    align-items: center;
   }
   
   .protest-revolution-regular {
@@ -25,4 +24,11 @@
     font-weight: 400;
     font-style: normal;
     font-size: 14px;
+    margin: 0;
+  }
+
+  .footer-bar .parr {
+    color: rebeccapurple;
+    background-color: red;
+
   }
