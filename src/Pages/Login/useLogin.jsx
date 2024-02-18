@@ -12,7 +12,6 @@ export const useLogin = () => {
     try {
       const response = await axios.post('http://127.0.0.1:666/api/v1/login', { email, password });
       setLoginError('');
-      console.log('Login successful:', response.data);
       updateUserSession(response.data)
       setLoginSuccess(true)
       setLoginError(null);

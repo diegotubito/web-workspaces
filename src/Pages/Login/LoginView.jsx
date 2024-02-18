@@ -26,10 +26,6 @@ export const LoginView = () => {
     const { doLogin, loginError, loginSuccess } = useLogin()
 
     useEffect(() => {
-        console.log('first time login')
-    }, [])
-
-    useEffect(() => {
         if (loginSuccess) {
             navigate('/home')
         }
@@ -38,7 +34,6 @@ export const LoginView = () => {
 
     const onLogin = async () => {
         if (!groupValidation()) {
-            console.log('Something is missing');
             // Optionally, update the UI to indicate the validation error
             return;
         }
@@ -47,13 +42,10 @@ export const LoginView = () => {
     };
 
     const onInputChange = (name, newValue) => {
-
         switch (name) {
             case 'email_input':
-                console.log('from email input', emailForm.value)
                 break
             case 'password_input':
-                console.log('from password input', passwordForm.value)
                 break
         }
     }
@@ -83,7 +75,6 @@ export const LoginView = () => {
     }
 
     const onReturnPressed = (name) => {
-        console.log(name)
     }
 
     const validateEmail = () => {
