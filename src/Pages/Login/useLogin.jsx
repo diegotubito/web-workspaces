@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useUserSession } from '../../Utils/userSessionContext'
+
 
 export const useLogin = () => {
   const [loginError, setLoginError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false)
+  const { userSession, updateUserSession } = useUserSession();
 
   const doLogin = async (email, password) => {
     try {
       const response = await axios.post('http://127.0.0.1:666/api/v1/login', { email, password });
       setLoginError('');
       console.log('Login successful:', response.data);
-      // Serialize the object into a string
-      const myObjectString = JSON.stringify(response.data);
-      // Now store it in localStorage
-      localStorage.setItem('userSession', myObjectString);
+      updateUserSession(response.data)
       setLoginSuccess(true)
       setLoginError(null);
     } catch (error) {

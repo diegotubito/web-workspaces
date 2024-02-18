@@ -19,31 +19,3 @@ html {
 *:after {
     box-sizing: inherit;
 }
-
-.footer-bar {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #131313; /* Dark background for the footer */
-  color: rgb(175, 175, 175); /* Light text color */
-  text-align: right;
-  padding: 1rem 1rem; /* Some padding for spacing */
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.protest-revolution-regular {
-  font-family: "Protest Revolution", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  font-size: 14px;
-}
-
-.roboto-thin {
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 14px;
-}
