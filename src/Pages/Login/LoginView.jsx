@@ -8,7 +8,7 @@ import './LoginView.css';
 export const LoginView = () => {
 
     const navigate = useNavigate();
-    
+
     const [emailForm, setEmailForm] = useState({
         name: 'email_input',
         value: '',
@@ -24,6 +24,10 @@ export const LoginView = () => {
     })
 
     const { doLogin, loginError, loginSuccess } = useLogin()
+
+    useEffect(() => {
+        console.log('first time login')
+    }, [])
 
     useEffect(() => {
         if (loginSuccess) {
@@ -130,7 +134,7 @@ export const LoginView = () => {
                         />
 
                         <div className='button-login-container margin-top' >
-                            <Button className='button-login' variant="primary" onClick={() => onLogin()}>Login</Button>{''}
+                            <Button size="lg" className='button-login' variant="primary" onClick={() => onLogin()}>Login</Button>{''}
                             {loginError && <p className="error-message">{loginError}</p>}
                             {loginSuccess && <p className="error-message">SUCCESS</p>}
                         </div>
@@ -138,9 +142,6 @@ export const LoginView = () => {
 
                 </div>
             </div>
-
-
-
         </>
     );
 

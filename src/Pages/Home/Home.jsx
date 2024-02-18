@@ -8,11 +8,16 @@ export const Home = () => {
 
     useEffect(() => {
         if (routeToLogin) {
+            localStorage.setItem('userSession', null);
             navigate('/login');
         }
     }, [routeToLogin])
 
     return (
-        <Button onClick={() => setRouteToLogin(true)}>Go To Login</Button>
+        <>
+
+        <div></div>
+            <Button onClick={() => setRouteToLogin(true)}>Go To Login</Button>
+        </>
     )
 }

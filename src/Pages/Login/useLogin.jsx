@@ -10,10 +10,12 @@ export const useLogin = () => {
       const response = await axios.post('http://127.0.0.1:666/api/v1/login', { email, password });
       setLoginError('');
       console.log('Login successful:', response.data);
+      // Serialize the object into a string
+      const myObjectString = JSON.stringify(response.data);
+      // Now store it in localStorage
+      localStorage.setItem('userSession', myObjectString);
       setLoginSuccess(true)
       setLoginError(null);
-      localStorage.setItem('token', response.data.accessToken); // Store the token in local storage
-      console.log(response.data.accessToken)
     } catch (error) {
       setLoginSuccess(false)
       if (error.response) {

@@ -8,15 +8,15 @@
 }
 
 .margin-top {
-     margin-top: 2rem;
+     margin-top: 3rem;
 }
 
 .outer-container {
      border: 1px solid black;
-     padding: 2rem;
+     padding: 3rem;
      background-color: #d2caca;
      border-radius: 0.5rem;
-     max-width: 50rem;
+     max-width: 100rem;
      width: 100%;
 }
 
@@ -28,9 +28,9 @@
      display: flex;
      flex-direction: column;
      align-items: center;
-     justify-content: center;
 }
 
 .button-login {
-     width: 80%;
+     padding: 2rem;
+     width: 100%;
 }
