@@ -2,13 +2,6 @@ import './MyCustomModal.css'
 import { Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 
-/*
-array = [{
-    _id: String
-    title: String
-    subtitle: String
-}]
-*/
 export const MyCustomModal = ({ array, isLoading = false, customModalOpen, onCustomModalSelectedRegister, onShouldCloseModal }) => {
     if (!customModalOpen) { return null }
 
@@ -33,7 +26,10 @@ export const MyCustomModal = ({ array, isLoading = false, customModalOpen, onCus
                         <ul>
                             {array.map((register) => (
                                 <li key={register._id} onClick={() => onSelectRegister(register._id)}>
-                                    {register.title}
+                                    <div className="register-content">
+                                        <div className="register-title">{register.title}</div>
+                                        <div className="register-subtitle">{register.subtitle}</div>
+                                    </div>
                                 </li>
                             ))}
                         </ul>

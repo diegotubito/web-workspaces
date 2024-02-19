@@ -5,11 +5,11 @@ export const useWorkspace = () => {
     const [workspaces, setWorkspaces] = useState([])
     const [isLoading, setIsLoading] = useState(false);
 
-    const fetchWorkspacesByUserId = async () => {
+    const fetchWorkspacesByUserId = async (_id) => {
         setIsLoading(true)
         setTimeout(async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:666/api/v1/workspace-by-user-id?userId=655a834f3905e3f7d37d39c1');
+                const response = await axios.get(`http://127.0.0.1:666/api/v1/workspace-by-user-id?userId=${_id}`);
                 setIsLoading(false)
                 setWorkspaces(response.data.workspaces)
             } catch (error) {

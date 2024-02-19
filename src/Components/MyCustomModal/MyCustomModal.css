@@ -53,6 +53,7 @@
 
 .custom-modal__button {
     width: 100%; /* Adjust width to fit content */
+    font-size: 17px;
 }
 
 .spinner {
@@ -78,4 +79,15 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 2rem;
+}
+
+.register-content {
+}         
+
+.register-title {
+    color: rgb(0, 0, 0);
+}
+
+.register-subtitle {
+    color: rgb(99, 99, 99);
 }

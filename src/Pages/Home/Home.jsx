@@ -22,7 +22,7 @@ export const Home = () => {
     }, [routeToLogin])
 
     const openMyModal = () => {
-        fetchWorkspacesByUserId()
+        fetchWorkspacesByUserId(userSession.user._id)
         setIsOpen(true)
     }
 
