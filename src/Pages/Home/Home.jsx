@@ -4,7 +4,6 @@ import { Button, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useUserSession } from '../../Utils/userSessionContext';
 import { FooterBar } from '../../Components/FooterBar/FooterBar';
-import { CustomModal } from '../../Components/Modal/CustomModal'
 import { MyCustomModal } from '../../Components/MyCustomModal/MyCustomModal';
 
 export const Home = () => {

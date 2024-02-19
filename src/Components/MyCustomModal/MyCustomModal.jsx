@@ -1,5 +1,5 @@
-import { Button } from 'react-bootstrap';
 import './MyCustomModal.css'
+import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 
 export const MyCustomModal = ({isOpen, setIsOpen}) => {
@@ -15,8 +15,8 @@ export const MyCustomModal = ({isOpen, setIsOpen}) => {
     }
 
     return (
-        <div className='modal-background'>
-            <div className='modal-content'>
+        <div className='custom-modal__background'>
+            <div className='custom-modal__content'>
                 <h1>Select Your Workspace</h1>
 
                 <ul>
@@ -27,7 +27,7 @@ export const MyCustomModal = ({isOpen, setIsOpen}) => {
                     ))}
                 </ul>
 
-                <Button onClick={() => onCloseDidClicked()}>CLOSE</Button>
+                <Button variant='warning' className='custom-modal__button' onClick={() => onCloseDidClicked()}>CLOSE</Button>
 
             </div>
         </div>
