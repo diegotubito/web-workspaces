@@ -5,13 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { useUserSession } from '../../Utils/userSessionContext';
 import { FooterBar } from '../../Components/FooterBar/FooterBar';
 import { MyCustomModal } from '../../Components/MyCustomModal/MyCustomModal';
+import { useWorkspace } from '../../Hooks/useWorkspace';
 
 export const Home = () => {
     const [routeToLogin, setRouteToLogin] = useState(false)
     const { userSession, updateUserSession } = useUserSession();
     const navigate = useNavigate()
-    const [isOpen, setIsOpen] = useState(false)
-    const { username } = userSession.user
+    const [customModalOpen, setIsOpen] = useState(false)
+
+    const { workspaces, fetchWorkspacesByUserId, isLoading } = useWorkspace()
 
     useEffect(() => {
         if (routeToLogin) {
@@ -19,32 +21,35 @@ export const Home = () => {
         }
     }, [routeToLogin])
 
-    const changeName = () => {
-        const newUserSession = {
-            ...userSession, user: {
-                ...userSession.user,
-                firstName: 'Rickito Bebe'
-            }
-        }
-        updateUserSession(newUserSession)
+    const openMyModal = () => {
+        fetchWorkspacesByUserId()
+        setIsOpen(true)
     }
 
-    const openMyModal = () => {
-        setIsOpen(true)
+    const onCustomModalSelectedRegister = (_id) => {
+        console.log(_id)
+        setIsOpen(false)
+    }
+
+    const onShouldCloseModal = () => {
+        setIsOpen(false)
     }
 
     return (
         <>
-
             <div>
                 <h1>Hello {userSession.user.firstName}</h1>
             </div>
             <Button variant='secondary' onClick={() => setRouteToLogin(true)}>Log Out</Button>
-            <Button onClick={() => changeName()}>Change Name in User Session</Button>
             <Button onClick={() => openMyModal()}>Open My Modal</Button>
 
-           
-            <MyCustomModal isOpen={isOpen} setIsOpen={setIsOpen}/>
+            <MyCustomModal
+                array={workspaces}
+                customModalOpen={customModalOpen}
+                onCustomModalSelectedRegister={onCustomModalSelectedRegister}
+                onShouldCloseModal={onShouldCloseModal}
+                isLoading={isLoading}
+            />
 
             < FooterBar />
 

@@ -1,17 +1,22 @@
 import './MyCustomModal.css'
 import { Button } from 'react-bootstrap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export const MyCustomModal = ({isOpen, setIsOpen}) => {
-    const workspaces = [{ id: 0, name: 'BodyShaping' }, { id: 1, name: 'Barber Shop' }, { id: 0, name: `Ricky's Shop` }]
- 
-    if (!isOpen) { return null }
+/*
+array = [{
+    _id: String
+    title: String
+    subtitle: String
+}]
+*/
+export const MyCustomModal = ({ array, isLoading = false, customModalOpen, onCustomModalSelectedRegister, onShouldCloseModal }) => {
+    if (!customModalOpen) { return null }
 
-    const onSelectWorkspace = (workspace) => {
-        console.log(workspace.name)
+    const onSelectRegister = (_id) => {
+        onCustomModalSelectedRegister(_id)
     }
     const onCloseDidClicked = () => {
-        setIsOpen(false)
+        onShouldCloseModal()
     }
 
     return (
@@ -19,15 +24,29 @@ export const MyCustomModal = ({isOpen, setIsOpen}) => {
             <div className='custom-modal__content'>
                 <h1>Select Your Workspace</h1>
 
-                <ul>
-                    {workspaces.map((workspace) => (
-                        <li key={workspace.id} onClick={() => onSelectWorkspace(workspace)}>
-                            {workspace.name}
-                        </li>
-                    ))}
-                </ul>
+                {isLoading ? (
+                    <div className="spinner-wrapper">
+                        <div className="spinner"></div>
+                    </div>
+                ) : (
+                    <div>
+                        <ul>
+                            {array.map((register) => (
+                                <li key={register._id} onClick={() => onSelectRegister(register._id)}>
+                                    {register.title}
+                                </li>
+                            ))}
+                        </ul>
 
-                <Button variant='warning' className='custom-modal__button' onClick={() => onCloseDidClicked()}>CLOSE</Button>
+
+                    </div>
+                )}
+
+                <Button variant='warning' className='custom-modal__button' onClick={() => onCloseDidClicked()}>Cancel</Button>
+
+            </div>
+            <div>
+
 
             </div>
         </div>
