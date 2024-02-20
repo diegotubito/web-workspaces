@@ -15,8 +15,6 @@ export const useWorkspace = () => {
             setIsLoading(false)
             console.log(error)
         }
-
-
     }
 
     return { workspaces, fetchWorkspacesByUserId, isLoading }

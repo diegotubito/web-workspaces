@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useUserSession } from '../../Utils/userSessionContext';
 import { FooterBar } from '../../Components/FooterBar/FooterBar';
 import { MyCustomModal } from '../../Components/MyCustomModal/MyCustomModal';
-import { useWorkspace } from '../../Hooks/useWorkspace';
-import { useWorkspaceSession } from '../../Utils/workspaceSessionContext'
+import { useWorkspaceViewModel } from '../../Hooks/workspaceViewModel';
+import { useWorkspaceSession } from '../../Utils/workspaceSessionContext';
 
 export const Home = () => {
     const [routeToLogin, setRouteToLogin] = useState(false)
@@ -15,7 +15,7 @@ export const Home = () => {
     const [customModalOpen, setIsOpen] = useState(false)
     const { workspaceSession, updateWorkspaceSession } = useWorkspaceSession()
 
-    const { workspaces, fetchWorkspacesByUserId, isLoading } = useWorkspace()
+    const { fetchWorkspaces, displayWorkspaces, isLoading, saveDefaultWorkspace } = useWorkspaceViewModel()
 
     useEffect(() => {
         if (routeToLogin) {
@@ -25,14 +25,12 @@ export const Home = () => {
     }, [routeToLogin])
 
     const openMyModal = () => {
-        fetchWorkspacesByUserId(userSession.user._id)
-        
+        fetchWorkspaces()
         setIsOpen(true)
     }
 
     const onCustomModalSelectedRegister = (_id) => {
-        const selectedWorkspace = workspaces.find((item) => item._id === _id)
-        updateWorkspaceSession(selectedWorkspace)
+        saveDefaultWorkspace(_id)
         setIsOpen(false)
     }
 
@@ -50,7 +48,7 @@ export const Home = () => {
             <Button onClick={() => openMyModal()}>Workspace</Button>
 
             <MyCustomModal
-                array={workspaces}
+                array={displayWorkspaces}
                 customModalOpen={customModalOpen}
                 onCustomModalSelectedRegister={onCustomModalSelectedRegister}
                 onShouldCloseModal={onShouldCloseModal}

@@ -12,6 +12,8 @@ export const MyCustomModal = ({ array, isLoading = false, customModalOpen, onCus
         onShouldCloseModal()
     }
 
+
+
     return (
         <div className='custom-modal__background'>
             <div className='custom-modal__content'>
@@ -24,14 +26,18 @@ export const MyCustomModal = ({ array, isLoading = false, customModalOpen, onCus
                 ) : (
                     <div>
                         <ul>
-                            {array.map((register) => (
-                                <li key={register._id} onClick={() => onSelectRegister(register._id)}>
-                                    <div className="register-content">
-                                        <div className="register-title">{register.title}</div>
-                                        <div className="register-subtitle">{register.subtitle}</div>
-                                    </div>
-                                </li>
-                            ))}
+                            {array.map((register) => {
+                                
+
+                                return (
+                                    <li key={register._id} onClick={() => onSelectRegister(register._id)}>
+                                        <div className="register-content">
+                                            <div className="register-title">{register.title}</div>
+                                            {register.subtitle && <div className="register-subtitle">{register.subtitle}</div>}
+                                        </div>
+                                    </li>
+                                )
+                            })}
                         </ul>
 
 

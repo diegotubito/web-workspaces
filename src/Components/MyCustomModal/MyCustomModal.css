@@ -86,8 +86,10 @@
 
 .register-title {
     color: rgb(0, 0, 0);
+    font-size: 19px;
 }
 
 .register-subtitle {
     color: rgb(99, 99, 99);
+    font-size: 13px;
 }
