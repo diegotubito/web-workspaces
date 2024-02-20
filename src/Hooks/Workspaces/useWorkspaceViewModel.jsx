@@ -1,6 +1,6 @@
-import { useWorkspaceSession } from '../Utils/workspaceSessionContext'
+import { useWorkspaceSession } from '../../Utils/workspaceSessionContext'
 import { useWorkspace } from './useWorkspace'
-import { useUserSession } from '../Utils/userSessionContext'
+import { useUserSession } from '../../Utils/userSessionContext'
 import { useState, useEffect } from 'react';
 
 export const useWorkspaceViewModel = () => {
@@ -19,7 +19,6 @@ export const useWorkspaceViewModel = () => {
 
     const mapDisplayModelWorkspace = () => {
         const mapValues = workspaces.map(workspace => {
-            // Destructure the properties you need from each workspace
             const { _id, title, subtitle, location } = workspace;
             
             const formattedAddress = location?.googleGeocode?.formatted_address;
@@ -29,7 +28,6 @@ export const useWorkspaceViewModel = () => {
                 title: `${title}, ${subtitle}.`,
                 subtitle: formattedAddress
             }
-            // Return a new object for each workspace with the properties you want to include
             return newValue;
         });
 

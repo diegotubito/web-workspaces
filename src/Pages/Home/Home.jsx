@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUserSession } from '../../Utils/userSessionContext';
 import { FooterBar } from '../../Components/FooterBar/FooterBar';
 import { MyCustomModal } from '../../Components/MyCustomModal/MyCustomModal';
-import { useWorkspaceViewModel } from '../../Hooks/workspaceViewModel';
+import { useWorkspaceViewModel } from '../../Hooks/Workspaces/useWorkspaceViewModel';
 import { useWorkspaceSession } from '../../Utils/workspaceSessionContext';
 
 export const Home = () => {
@@ -15,7 +15,12 @@ export const Home = () => {
     const [customModalOpen, setIsOpen] = useState(false)
     const { workspaceSession, updateWorkspaceSession } = useWorkspaceSession()
 
-    const { fetchWorkspaces, displayWorkspaces, isLoading, saveDefaultWorkspace } = useWorkspaceViewModel()
+    const {
+        fetchWorkspaces,
+        displayWorkspaces,
+        isLoading,
+        saveDefaultWorkspace
+    } = useWorkspaceViewModel()
 
     useEffect(() => {
         if (routeToLogin) {
@@ -49,9 +54,9 @@ export const Home = () => {
 
             <MyCustomModal
                 array={displayWorkspaces}
-                customModalOpen={customModalOpen}
+                isOpen={customModalOpen}
                 onCustomModalSelectedRegister={onCustomModalSelectedRegister}
-                onShouldCloseModal={onShouldCloseModal}
+                onShouldClose={onShouldCloseModal}
                 isLoading={isLoading}
             />
 

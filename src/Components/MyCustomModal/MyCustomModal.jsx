@@ -1,18 +1,15 @@
 import './MyCustomModal.css'
 import { Button } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
 
-export const MyCustomModal = ({ array, isLoading = false, customModalOpen, onCustomModalSelectedRegister, onShouldCloseModal }) => {
-    if (!customModalOpen) { return null }
+export const MyCustomModal = ({ array, isLoading = false, isOpen, onCustomModalSelectedRegister, onShouldClose }) => {
+    if (!isOpen) { return null }
 
     const onSelectRegister = (_id) => {
         onCustomModalSelectedRegister(_id)
     }
     const onCloseDidClicked = () => {
-        onShouldCloseModal()
+        onShouldClose()
     }
-
-
 
     return (
         <div className='custom-modal__background'>
