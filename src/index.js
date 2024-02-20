@@ -6,17 +6,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { UserSessionProvider } from "./Utils/userSessionContext"; // Import the provider
+import { WorkspaceSessionProvider } from "./Utils/workspaceSessionContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
      <React.StrictMode>
-      {/* Wrap your top-level component (usually App) with the UserSessionProvider
+          {/* Wrap your top-level component (usually App) with the UserSessionProvider
        to broadcast the user session availability across the realm (your application). */}
-          <UserSessionProvider>  
-               <BrowserRouter>
-                    <App />
-               </BrowserRouter>
-          </UserSessionProvider>
+          <WorkspaceSessionProvider>
+               <UserSessionProvider>
+                    <BrowserRouter>
+                         <App />
+                    </BrowserRouter>
+               </UserSessionProvider>
+          </WorkspaceSessionProvider>
      </React.StrictMode>
 );
 
