@@ -5,11 +5,10 @@ import { useState, useEffect } from 'react';
 
 export const useWorkspaceViewModel = () => {
     const { fetchWorkspacesByUserId, isLoading, error } = useFetchUserWorkspaces()
-    const [workspaces, setWorkspaces] = useState([])
-   
     const { updateWorkspaceSession } = useWorkspaceSession()
-    const [displayWorkspaces, setDisplayWorkspaces] = useState([])
     const { userSession } = useUserSession();
+    const [workspaces, setWorkspaces] = useState([])
+    const [displayWorkspaces, setDisplayWorkspaces] = useState([])
 
     useEffect(() => {
         mapDisplayModelWorkspace()
@@ -18,7 +17,7 @@ export const useWorkspaceViewModel = () => {
     const fetchWorkspaces = async () => {
         setDisplayWorkspaces([])
         try {
-            const response = await fetchWorkspacesByUserId(userSession.user._id)            
+            const response = await fetchWorkspacesByUserId(userSession.user._id)
             setWorkspaces(response.workspaces)
         } catch (error) {
             console.log('Error title:', error.title); // This should show the custom error class name if available
@@ -48,5 +47,11 @@ export const useWorkspaceViewModel = () => {
         updateWorkspaceSession(selectedWorkspace)
     }
 
-    return { isLoading, workspaces: displayWorkspaces, error, fetchWorkspaces, saveDefaultWorkspace }
+    return {
+        isLoading,
+        workspaces: displayWorkspaces,
+        error,
+        fetchWorkspaces,
+        saveDefaultWorkspace
+    }
 }
