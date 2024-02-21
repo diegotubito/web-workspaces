@@ -107,9 +107,7 @@ export const Home = () => {
 
 
 
-            <div className='home__footer'>
-                <h1>Este es el footer</h1>
-            </div>
+            <FooterBar/>
 
         </div>
     )

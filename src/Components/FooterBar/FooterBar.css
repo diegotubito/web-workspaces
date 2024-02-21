@@ -1,8 +1,5 @@
 
 .footer-bar {
-    position: fixed;
-    left: 0;
-    bottom: 0;
     width: 100%;
     background-color: #131313; /* Dark background for the footer */
     color: rgb(175, 175, 175); /* Light text color */
@@ -10,6 +7,7 @@
     padding: 0.7rem 0.7rem; /* Some padding for spacing */
     display: inline-flex;
     justify-content: space-between;
+    align-items: center;
   }
   
   .protest-revolution-regular {
