@@ -54,36 +54,63 @@ export const Home = () => {
     }
 
     return (
-        <>
-            {openAlert && (
-                <div className="alert-container">
-                    <Alert variant="danger" onClose={() => setOpenAlert(false)} dismissible>
-                        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-                        <p>
-                            Something went wrong while fetching the workspaces. Please try again later.
-                        </p>
-                    </Alert>
-                </div>
-            )}
-            <div>
-                <h1>Hello {userSession.user.firstName}</h1>
-                {workspaceSession ? (<h1>Default Workspace {workspaceSession?.title}</h1>) : (null)}
+        <div className='home__main'>
+            <div className='home__header'>
+                <h1>Este es el header</h1>
             </div>
-            <Button variant='secondary' onClick={() => setRouteToLogin(true)}>Log Out</Button>
-            <Button onClick={() => openMyModal()}>Workspace</Button>
 
-            <MyCustomModal
-                array={workspaces}
-                isOpen={customModalOpen}
-                onCustomModalSelectedRegister={onCustomModalSelectedRegister}
-                onShouldClose={onShouldCloseModal}
-                isLoading={isLoading}
-            />
-
-            < FooterBar />
+            <div className='home__main-container'>
 
 
+                {openAlert && (
+                    <div className="alert-container">
+                        <Alert variant="danger" onClose={() => setOpenAlert(false)} dismissible>
+                            <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                            <p>
+                                Something went wrong while fetching the workspaces. Please try again later.
+                            </p>
+                        </Alert>
+                    </div>
+                )}
+                <MyCustomModal
+                    array={workspaces}
+                    isOpen={customModalOpen}
+                    onCustomModalSelectedRegister={onCustomModalSelectedRegister}
+                    onShouldClose={onShouldCloseModal}
+                    isLoading={isLoading}
+                />
 
-        </>
+
+
+
+                <div className='home__left-sidebar'>
+                    <Button variant='secondary' onClick={() => setRouteToLogin(true)}>Log Out</Button>
+                    <Button onClick={() => openMyModal()}>Workspace</Button>
+
+                </div>
+                <div className='home__main-content'>
+                    <h1>This is the right container</h1>
+                    <div>
+                        <h1>Hello {userSession.user.firstName}</h1>
+                        {workspaceSession ? (<h1>Default Workspace {workspaceSession?.title}</h1>) : (null)}
+                    </div>
+
+                </div>
+
+                <div className='home__right-sidebar'>
+                    <Button variant='secondary' onClick={() => setRouteToLogin(true)}>Log Out</Button>
+                    <Button onClick={() => openMyModal()}>Workspace</Button>
+                </div>
+
+
+            </div>
+
+
+
+            <div className='home__footer'>
+                <h1>Este es el footer</h1>
+            </div>
+
+        </div>
     )
 }

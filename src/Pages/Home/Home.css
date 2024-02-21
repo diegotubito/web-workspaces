@@ -2,3 +2,51 @@
     width: 50%; /* Or any other width you prefer */
     z-index: 1050; /* Ensure it's above other content, similar to a modal */
 }
+
+.home__main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.home__header {
+    height: 5rem;
+    background-color: yellow;
+    padding: 1rem;
+    width: 100%;
+}
+
+.home__main-container {
+    display: flex;
+    flex-grow: 1; /* Now it will take up all available space */
+    overflow: auto; /* Add scrolling if content overflows */
+}
+
+.home__left-sidebar {
+    width: 30%;
+    max-width: 30rem;
+    background-color: #f0f0f0;
+    padding: 1rem;
+}
+
+.home__main-content {
+    background-color: white;
+    flex-grow: 1; /* Take up the remaining space */
+    padding: 1rem; /* Add some padding */
+}
+
+.home__right-sidebar {
+    width: 30%;
+    max-width: 30rem;
+    background-color: #f0f0f0;
+    padding: 1rem;
+}
+
+
+.home__footer {
+    height: 5rem;
+    background-color: yellow;
+    padding: 1rem;
+    width: 100%;
+}
