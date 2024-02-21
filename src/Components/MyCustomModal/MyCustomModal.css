@@ -1,95 +1,103 @@
 .custom-modal__background {
-    user-select: none;
-    background-color: rgba(0, 0, 0, 0.638);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+     user-select: none;
+     background-color: rgba(0, 0, 0, 0.638);
+     position: fixed;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
 
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+     display: flex;
+     justify-content: center;
+     flex-direction: column;
+     align-items: center;
 }
 
 .custom-modal__content {
-    
-    background-color: rgb(255, 255, 255);
-    border-radius: 12px; /* Slightly larger radius for a softer look */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Softer shadow for a more modern feel */
-    padding: 3rem; /* Increased padding for more space inside the modal */
-    width: 90%; /* Adjust width as needed to fit your content */
-    max-width: 640px; /* Maximum width to ensure it doesn't get too large on wide screens */
+     background-color: rgb(255, 255, 255);
+     border-radius: 12px; /* Slightly larger radius for a softer look */
+     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Softer shadow for a more modern feel */
+     padding: 3rem; /* Increased padding for more space inside the modal */
+     width: 90%; /* Adjust width as needed to fit your content */
+     max-width: 640px; /* Maximum width to ensure it doesn't get too large on wide screens */
 }
 
 .custom-modal__content h1 {
-    text-align: center; /* Center the title for a more balanced look */
-    margin-bottom: 2rem; /* Add space below the title */
+     text-align: center; /* Center the title for a more balanced look */
+     margin-bottom: 2rem; /* Add space below the title */
 }
 
 .custom-modal__content ul {
-    list-style: none; /* Remove default list styling */
-    padding: 0; /* Remove default padding */
-    margin: 0 0 2rem 0; /* Add some margin at the bottom */
+     list-style: none; /* Remove default list styling */
+     padding: 0; /* Remove default padding */
+     margin: 0 0 2rem 0; /* Add some margin at the bottom */
 }
 
 .custom-modal__content li {
-    background-color: #f2f2f2; /* Light background for each item */
-    padding: 1rem; /* Padding for spacing inside each item */
-    margin-bottom: 0.5rem; /* Space between items */
-    border-radius: 8px; /* Rounded corners for each item */
-    cursor: pointer; /* Change cursor to indicate clickable items */
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-    font-family: 'Roboto:ital';
-    font-size: 17px;
-    letter-spacing: 1px;
-    font-weight: 300;
+     background-color: #f2f2f2; /* Light background for each item */
+     padding: 1rem; /* Padding for spacing inside each item */
+     margin-bottom: 0.5rem; /* Space between items */
+     border-radius: 8px; /* Rounded corners for each item */
+     cursor: pointer; /* Change cursor to indicate clickable items */
+     transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+     font-family: "Roboto:ital";
+     letter-spacing: 0.5px;
+     font-weight: 300;
 }
 
 .custom-modal__content li:hover {
-    background-color: #e2e2e2; /* Slightly darker background on hover */
+     background-color: #e2e2e2; /* Slightly darker background on hover */
 }
 
 .custom-modal__button {
-    width: 100%; /* Adjust width to fit content */
-    font-size: 17px;
+     background-color: rgb(96, 164, 209);
+     color: whitesmoke;
+     width: 100%; /* Adjust width to fit content */
+     font-size: 19px;
+     border: none;
+     border-radius: 4px;
+     padding: 0.5rem;
+}
+
+.custom-modal__button:hover {
+     background-color: #09f;
+     color: whitesmoke;
 }
 
 .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border-left-color: #09f;
-    animation: spin 1s ease infinite;
+     border: 4px solid rgba(0, 0, 0, 0.1);
+     width: 36px;
+     height: 36px;
+     border-radius: 50%;
+     border-left-color: #09f;
+     animation: spin 1s ease infinite;
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+     0% {
+          transform: rotate(0deg);
+     }
+     100% {
+          transform: rotate(360deg);
+     }
 }
 
 .spinner-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 2rem;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-bottom: 2rem;
 }
 
 .register-content {
-}         
+}
 
 .register-title {
-    color: rgb(0, 0, 0);
-    font-size: 19px;
+     color: rgb(0, 0, 0);
+     font-size: 19px;
 }
 
 .register-subtitle {
-    color: rgb(99, 99, 99);
-    font-size: 13px;
+     color: rgb(99, 99, 99);
+     font-size: 12px;
 }

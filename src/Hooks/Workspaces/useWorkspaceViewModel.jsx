@@ -1,10 +1,10 @@
 import { useWorkspaceSession } from '../../Utils/workspaceSessionContext'
-import { useWorkspace } from './useWorkspace'
+import { useFetchUserWorkspaces } from './useFetchUserWorkspaces'
 import { useUserSession } from '../../Utils/userSessionContext'
 import { useState, useEffect } from 'react';
 
 export const useWorkspaceViewModel = () => {
-    const { workspaces, fetchWorkspacesByUserId, isLoading } = useWorkspace()
+    const { workspaces, fetchWorkspacesByUserId, isLoading } = useFetchUserWorkspaces()
     const { workspaceSession, updateWorkspaceSession } = useWorkspaceSession()
     const [ displayWorkspaces, setDisplayWorkspaces] = useState([])
     const { userSession, updateUserSession } = useUserSession();

@@ -1,5 +1,4 @@
 import './MyCustomModal.css'
-import { Button } from 'react-bootstrap';
 
 export const MyCustomModal = ({ array, isLoading = false, isOpen, onCustomModalSelectedRegister, onShouldClose }) => {
     if (!isOpen) { return null }
@@ -24,7 +23,7 @@ export const MyCustomModal = ({ array, isLoading = false, isOpen, onCustomModalS
                     <div>
                         <ul>
                             {array.map((register) => {
-                                
+
 
                                 return (
                                     <li key={register._id} onClick={() => onSelectRegister(register._id)}>
@@ -41,11 +40,7 @@ export const MyCustomModal = ({ array, isLoading = false, isOpen, onCustomModalS
                     </div>
                 )}
 
-                <Button variant='warning' className='custom-modal__button' onClick={() => onCloseDidClicked()}>Cancel</Button>
-
-            </div>
-            <div>
-
+                <button className='custom-modal__button' onClick={() => onCloseDidClicked()}>Cancel</button>
 
             </div>
         </div>

@@ -51,7 +51,7 @@ export const Home = () => {
             </div>
             <Button variant='secondary' onClick={() => setRouteToLogin(true)}>Log Out</Button>
             <Button onClick={() => openMyModal()}>Workspace</Button>
-
+            
             <MyCustomModal
                 array={displayWorkspaces}
                 isOpen={customModalOpen}
