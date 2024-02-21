@@ -1,6 +1,6 @@
 import './Home.css'
 import { useState, useEffect } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useUserSession } from '../../Utils/userSessionContext';
 import { FooterBar } from '../../Components/FooterBar/FooterBar';
@@ -15,9 +15,12 @@ export const Home = () => {
     const [customModalOpen, setIsOpen] = useState(false)
     const { workspaceSession, updateWorkspaceSession } = useWorkspaceSession()
 
+    const [openAlert, setOpenAlert] = useState(false)
+
     const {
         fetchWorkspaces,
-        displayWorkspaces,
+        workspaces,
+        error: workspaceError,
         isLoading,
         saveDefaultWorkspace
     } = useWorkspaceViewModel()
@@ -28,6 +31,13 @@ export const Home = () => {
             updateWorkspaceSession(null)
         }
     }, [routeToLogin])
+
+    useEffect(() => {
+        if (workspaceError) {
+            setOpenAlert(true)
+            setIsOpen(false)
+        }
+    }, [workspaceError])
 
     const openMyModal = () => {
         fetchWorkspaces()
@@ -47,20 +57,31 @@ export const Home = () => {
         <>
             <div>
                 <h1>Hello {userSession.user.firstName}</h1>
-                {workspaceSession ? (<h1>Default Workspace {workspaceSession.title}</h1>) : (null)}
+                {workspaceSession ? (<h1>Default Workspace {workspaceSession?.title}</h1>) : (null)}
             </div>
             <Button variant='secondary' onClick={() => setRouteToLogin(true)}>Log Out</Button>
             <Button onClick={() => openMyModal()}>Workspace</Button>
-            
-            <MyCustomModal
-                array={displayWorkspaces}
+
+            {!openAlert && (<MyCustomModal
+                array={workspaces}
                 isOpen={customModalOpen}
                 onCustomModalSelectedRegister={onCustomModalSelectedRegister}
                 onShouldClose={onShouldCloseModal}
                 isLoading={isLoading}
-            />
+            />)}
 
             < FooterBar />
+
+            {openAlert && (
+                <div className="alert-container">
+                    <Alert variant="danger" onClose={() => setOpenAlert(false)} dismissible>
+                        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                        <p>
+                            Something went wrong while fetching the workspaces. Please try again later.
+                        </p>
+                    </Alert>
+                </div>
+            )}
 
         </>
     )

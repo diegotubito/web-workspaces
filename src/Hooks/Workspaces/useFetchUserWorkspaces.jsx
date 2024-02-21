@@ -1,21 +1,23 @@
 import { useState } from "react"
 import { useApiCall } from "../../Utils/apiCall"
 
-export const useFetchUserWorkspaces = () => {
-    const [workspaces, setWorkspaces] = useState([])
-    const { apiCall, data, isLoading } = useApiCall()
+/*
+In your useFetchUserWorkspaces hook,
+if the only operations within the try block are to make an API call and return the response,
+and in the catch block you're simply re-throwing the error without any additional handling,
+then the try-catch block is not strictly necessary in this hook.
+Since you're handling errors in the useWorkspaceViewModel hook,
+you can streamline useFetchUserWorkspaces like this:
+*/
 
-    const fetchWorkspacesByUserId = async (_id) => {
-        try {
-            const response = await apiCall({
-                path: `/api/v1/workspace-by-user-id?userId=${_id}`
-            });
-            setWorkspaces(response.workspaces)
-        } catch (error) {
-            console.log('Error name:', error.title); // This should show the custom error class name if available
-            console.log('Error message:', error.message); // This should show the custom message
-        }
+export const useFetchUserWorkspaces = () => {
+    const { apiCall, isLoading } = useApiCall()
+
+    const fetchWorkspacesByUserId = (_id) => {
+        return apiCall({
+            path: `/api/v1/workspace-by-user-id?userId=${_id}`
+        });
     }
 
-    return { workspaces, fetchWorkspacesByUserId, isLoading }
+    return { fetchWorkspacesByUserId, isLoading }
 }

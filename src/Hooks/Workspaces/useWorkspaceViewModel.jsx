@@ -4,23 +4,33 @@ import { useUserSession } from '../../Utils/userSessionContext'
 import { useState, useEffect } from 'react';
 
 export const useWorkspaceViewModel = () => {
-    const { workspaces, fetchWorkspacesByUserId, isLoading } = useFetchUserWorkspaces()
-    const { workspaceSession, updateWorkspaceSession } = useWorkspaceSession()
-    const [ displayWorkspaces, setDisplayWorkspaces] = useState([])
-    const { userSession, updateUserSession } = useUserSession();
+    const { fetchWorkspacesByUserId, isLoading } = useFetchUserWorkspaces()
+    const [workspaces, setWorkspaces] = useState([])
+   
+    const { updateWorkspaceSession } = useWorkspaceSession()
+    const [displayWorkspaces, setDisplayWorkspaces] = useState([])
+    const [error, setError] = useState(false)
+    const { userSession } = useUserSession();
 
     useEffect(() => {
         mapDisplayModelWorkspace()
     }, [workspaces])
 
-    const fetchWorkspaces = () => {
-        fetchWorkspacesByUserId(userSession.user._id)
+    const fetchWorkspaces = async () => {
+        try {
+            const response = await fetchWorkspacesByUserId(userSession.user._id)            
+            setWorkspaces(response.workspaces)
+        } catch (error) {
+            setError(true)
+            console.log('Error name:', error.title); // This should show the custom error class name if available
+            console.log('Error message:', error.message); // This should show the custom message
+        }
     }
 
     const mapDisplayModelWorkspace = () => {
         const mapValues = workspaces.map(workspace => {
             const { _id, title, subtitle, location } = workspace;
-            
+
             const formattedAddress = location?.googleGeocode?.formatted_address;
 
             const newValue = {
@@ -39,5 +49,5 @@ export const useWorkspaceViewModel = () => {
         updateWorkspaceSession(selectedWorkspace)
     }
 
-    return { isLoading, displayWorkspaces, fetchWorkspaces, saveDefaultWorkspace }
+    return { isLoading, workspaces: displayWorkspaces, error, fetchWorkspaces, saveDefaultWorkspace }
 }
