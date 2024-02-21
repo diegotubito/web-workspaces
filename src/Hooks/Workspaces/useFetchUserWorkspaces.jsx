@@ -8,7 +8,7 @@ export const useFetchUserWorkspaces = () => {
     const fetchWorkspacesByUserId = async (_id) => {
         try {
             const response = await apiCall({
-                path: `/api/v/workspace-by-user-id?userId=${_id}`
+                path: `/api/v1/workspace-by-user-id?userId=${_id}`
             });
             setWorkspaces(response.workspaces)
         } catch (error) {
