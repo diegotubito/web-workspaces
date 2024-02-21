@@ -11,11 +11,31 @@
 }
 
 .home__header {
+    display: flex; /* Make it a flex container */
+    align-items: center; /* Optional: Center items vertically if needed */
+    justify-content: space-between;
     height: 5rem;
-    background-color: yellow;
+    background-color: rgb(96, 164, 209);
+    color: white;
     padding: 1rem;
     width: 100%;
+    gap: 1rem;
+    
 }
+
+.home__header-left {
+    display: flex; /* Make it a flex container */
+    gap: 1rem;
+    justify-content: flex-start; /* Align items to the right */
+    align-items: center;
+}
+
+.home__header-right {
+    display: flex; /* Make it a flex container */
+    justify-content: flex-end; /* Align items to the right */
+    gap: 1rem;
+}
+
 
 .home__main-container {
     display: flex;

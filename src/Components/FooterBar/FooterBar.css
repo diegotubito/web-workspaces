@@ -1,8 +1,8 @@
 
 .footer-bar {
     width: 100%;
-    background-color: #131313; /* Dark background for the footer */
-    color: rgb(175, 175, 175); /* Light text color */
+    background-color: rgb(96, 164, 209);
+    color: rgb(0, 0, 0); /* Light text color */
     text-align: right;
     padding: 0.7rem 0.7rem; /* Some padding for spacing */
     display: inline-flex;
