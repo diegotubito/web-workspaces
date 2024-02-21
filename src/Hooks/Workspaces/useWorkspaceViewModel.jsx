@@ -4,12 +4,11 @@ import { useUserSession } from '../../Utils/userSessionContext'
 import { useState, useEffect } from 'react';
 
 export const useWorkspaceViewModel = () => {
-    const { fetchWorkspacesByUserId, isLoading } = useFetchUserWorkspaces()
+    const { fetchWorkspacesByUserId, isLoading, error } = useFetchUserWorkspaces()
     const [workspaces, setWorkspaces] = useState([])
    
     const { updateWorkspaceSession } = useWorkspaceSession()
     const [displayWorkspaces, setDisplayWorkspaces] = useState([])
-    const [error, setError] = useState(false)
     const { userSession } = useUserSession();
 
     useEffect(() => {
@@ -17,12 +16,12 @@ export const useWorkspaceViewModel = () => {
     }, [workspaces])
 
     const fetchWorkspaces = async () => {
+        setDisplayWorkspaces([])
         try {
             const response = await fetchWorkspacesByUserId(userSession.user._id)            
             setWorkspaces(response.workspaces)
         } catch (error) {
-            setError(true)
-            console.log('Error name:', error.title); // This should show the custom error class name if available
+            console.log('Error title:', error.title); // This should show the custom error class name if available
             console.log('Error message:', error.message); // This should show the custom message
         }
     }

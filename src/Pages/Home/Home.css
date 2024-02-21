@@ -1,8 +1,4 @@
 .alert-container {
-    position: fixed; /* Or 'absolute', depending on your layout */
-    top: 20%; /* Adjust as needed */
-    left: 50%;
-    transform: translateX(-50%);
     width: 50%; /* Or any other width you prefer */
     z-index: 1050; /* Ensure it's above other content, similar to a modal */
 }

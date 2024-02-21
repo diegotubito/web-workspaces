@@ -55,23 +55,6 @@ export const Home = () => {
 
     return (
         <>
-            <div>
-                <h1>Hello {userSession.user.firstName}</h1>
-                {workspaceSession ? (<h1>Default Workspace {workspaceSession?.title}</h1>) : (null)}
-            </div>
-            <Button variant='secondary' onClick={() => setRouteToLogin(true)}>Log Out</Button>
-            <Button onClick={() => openMyModal()}>Workspace</Button>
-
-            {!openAlert && (<MyCustomModal
-                array={workspaces}
-                isOpen={customModalOpen}
-                onCustomModalSelectedRegister={onCustomModalSelectedRegister}
-                onShouldClose={onShouldCloseModal}
-                isLoading={isLoading}
-            />)}
-
-            < FooterBar />
-
             {openAlert && (
                 <div className="alert-container">
                     <Alert variant="danger" onClose={() => setOpenAlert(false)} dismissible>
@@ -82,6 +65,24 @@ export const Home = () => {
                     </Alert>
                 </div>
             )}
+            <div>
+                <h1>Hello {userSession.user.firstName}</h1>
+                {workspaceSession ? (<h1>Default Workspace {workspaceSession?.title}</h1>) : (null)}
+            </div>
+            <Button variant='secondary' onClick={() => setRouteToLogin(true)}>Log Out</Button>
+            <Button onClick={() => openMyModal()}>Workspace</Button>
+
+            <MyCustomModal
+                array={workspaces}
+                isOpen={customModalOpen}
+                onCustomModalSelectedRegister={onCustomModalSelectedRegister}
+                onShouldClose={onShouldCloseModal}
+                isLoading={isLoading}
+            />
+
+            < FooterBar />
+
+
 
         </>
     )

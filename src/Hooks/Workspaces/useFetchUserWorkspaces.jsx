@@ -11,7 +11,7 @@ you can streamline useFetchUserWorkspaces like this:
 */
 
 export const useFetchUserWorkspaces = () => {
-    const { apiCall, isLoading } = useApiCall()
+    const { apiCall, isLoading, error } = useApiCall()
 
     const fetchWorkspacesByUserId = (_id) => {
         return apiCall({
@@ -19,5 +19,5 @@ export const useFetchUserWorkspaces = () => {
         });
     }
 
-    return { fetchWorkspacesByUserId, isLoading }
+    return { fetchWorkspacesByUserId, isLoading, error }
 }

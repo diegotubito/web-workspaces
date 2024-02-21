@@ -6,60 +6,56 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const useApiCall = () => {
     const { userSession } = useUserSession();
-    const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const apiCall = async ({ path, method = 'GET', data = null, headers = {} }) => {
+
+    const apiCall = async ({ path, method = 'GET', body = null, headers = {} }) => {
         setIsLoading(true);
-        const defaultHeaders = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${userSession?.accessToken}`,
-            // Include other default headers as needed
-        };
+        setError(null); // Ensure error state is reset at the start of the call
 
         try {
             const response = await axios({
                 url: `${BASE_URL}${path}`,
                 method,
-                data,
-                headers: { ...defaultHeaders, ...headers },
+                data: body, // Renamed to 'body' for clarity that this is the request payload
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${userSession?.accessToken}`,
+                    ...headers, // Spread custom headers last to allow override
+                },
             });
-            setData(response.data);
-            setError(null); // Reset error state on successful call
-            return response.data; // Optionally return data for immediate use
+            return response.data;
         } catch (err) {
-            setData(null); // Reset data state on error
-            console.log(err.response);
-            if (err.response) {
-                const { status, data } = err.response;
-                const title = data.title || "_ERROR";
-                const message = data.message || "An error occurred";
-                switch (status) {
-                    case 400:
-                        throw new BadRequestError(title, message);
-                    case 432:
-                        throw new CustomError(title, message);
-                    case 401:
-                        throw new AuthenticationError();
-                    case 404: 
-                        throw new NotFoundError('Bad request', 'Your endpoint is not found.');
-                    // Add other cases as per your Swift code
-                    default:
-                        throw new APIError(`${status} - ${message}`);
-                }
-            } else {
-                // Handle network errors or errors without a response
-                throw new APIError(err.message || "Network error");
-            }
+            const apiError = mapErrorToCustom(err);
+            setError(apiError)
+            throw apiError;
         } finally {
             setIsLoading(false);
         }
     };
 
-    return { apiCall, data, error, isLoading };
+    return { apiCall, error, isLoading };
 };
 
+const mapErrorToCustom = (err) => {
+    if (err.response) {
+        const { status, data } = err.response;
+        const title = data.title || "Error";
+        const message = data.message || "An error occurred";
+
+        switch (status) {
+            case 400: return new BadRequestError(title, message);
+            case 401: return new AuthenticationError();
+            case 404: return new NotFoundError(title, message);
+            // Add more cases as needed
+            default: return new APIError(`${status} - ${message}`);
+        }
+    } else {
+        // Handle network errors or errors without a response
+        return new APIError(err.message || "Network error");
+    }
+};
 
 class APIError extends Error {
     constructor(message) {
@@ -70,21 +66,27 @@ class APIError extends Error {
 
 class BadRequestError extends APIError {
     constructor(title, message) {
-        super(`${title}: ${message}`);
-        this.name = "BadRequestError";
+        super();
+        this.title = title
+        this.message = message
+        this.name = "BadRequest";
     }
 }
 
 class CustomError extends APIError {
     constructor(title, message) {
-        super(`${title}: ${message}`);
+        super();
+        this.title = title
+        this.message = message
         this.name = "CustomError";
     }
 }
 
 class AuthenticationError extends APIError {
-    constructor() {
-        super("Authentication failed");
+    constructor(title, message) {
+        super();
+        this.title = title
+        this.message = message
         this.name = "AuthenticationError";
     }
 }
