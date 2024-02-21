@@ -2,14 +2,13 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useUserSession } from './userSessionContext';
 
-const BASE_URL = 'http://127.0.0.1:666';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const useApiCall = () => {
     const { userSession } = useUserSession();
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-
     const apiCall = async ({ path, method = 'GET', data = null, headers = {} }) => {
         setIsLoading(true);
         const defaultHeaders = {
