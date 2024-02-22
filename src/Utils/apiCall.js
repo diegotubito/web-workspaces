@@ -18,9 +18,6 @@ export const useApiCall = () => {
         'TimeZone': Intl.DateTimeFormat().resolvedOptions().timeZone, // User's time zone
     };
 
-    console.log(additionalHeaders)
-    console.log(BASE_URL)
-
     const apiCall = async ({ path, method = 'GET', body = null, headers = {} }) => {
         setIsLoading(true);
         setError(null); // Ensure error state is reset at the start of the call

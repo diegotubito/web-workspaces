@@ -1,7 +1,7 @@
 import { TextInputView } from '../InputViews/TextInputView';
 import { Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import { useLogin } from './useLogin'
+import { useLoginViewModel } from './useLoginViewModel'
 import { useNavigate } from 'react-router-dom';
 import './LoginView.css';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,7 @@ export const LoginView = () => {
         type: 'password'
     })
 
-    const { doLogin, loginError, loginSuccess } = useLogin()
+    const { doLogin, loginError, loginSuccess } = useLoginViewModel()
 
     useEffect(() => {
         if (loginSuccess) {
