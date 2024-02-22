@@ -14,7 +14,7 @@ const APP_VERSION = process.env.REACT_APP_VERSION;
 };
 
 export const useApiCall = () => {
-    const { userSession } = useUserSession();
+    const { userSession, retrieveUUID } = useUserSession();
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -31,6 +31,7 @@ export const useApiCall = () => {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${userSession?.accessToken}`,
+                    'deviceuuid': `${retrieveUUID()}`,
                     ...additionalHeaders,
                     ...headers, // Spread custom headers last to allow override
                 },
@@ -63,7 +64,7 @@ const mapErrorToCustom = (err) => {
         }
     } else {
         // Handle network errors or errors without a response
-        return new APIError(err.message || "Network error");
+        return new CustomError('Api Error', 'Some Error Occured.');
     }
 };
 

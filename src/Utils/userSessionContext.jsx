@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 // Create a Context object. This will be used to provide and consume the user session data throughout your app.
 const UserSessionContext = createContext();
@@ -8,6 +9,7 @@ export const useUserSession = () => useContext(UserSessionContext);
 
 // Provider component that wraps your app or parts of it, making the user session available to any child component.
 export const UserSessionProvider = ({ children }) => {
+    const UUID_KEY = 'userUUID'; // La clave bajo la cual se almacenará el UUID
     // State hook initialized with the user session data from localStorage.
     // This function runs only once when the component mounts, thanks to the lazy initial state syntax.
     const [userSession, setUserSession] = useState(() => {
@@ -23,10 +25,29 @@ export const UserSessionProvider = ({ children }) => {
         setUserSession(newSession); // Update the state, triggering a re-render of components that consume this context.
     };
 
+    const retrieveUUID = () => {
+        const uuid = localStorage.getItem(UUID_KEY);
+
+        if (uuid) {
+            return uuid;
+        } else {
+            return null; // O manejar de otra manera si el UUID no está disponible
+        }
+    };
+
+    const initializeUUID = () => { 
+        if (!localStorage.getItem(UUID_KEY)) {
+            console.log("UUID Saved.");
+            localStorage.setItem(UUID_KEY, uuidv4()); // UUID.v4() requiere que instales la librería 'uuid', o puedes generar el UUID de otra manera
+        } else {
+            console.log("Your UUID:", localStorage.getItem(UUID_KEY));
+        }
+    };
+
     // The context provider component renders its children and provides them access to the context value,
     // which includes the current user session and the function to update it.
     return (
-        <UserSessionContext.Provider value={{ userSession, updateUserSession }}>
+        <UserSessionContext.Provider value={{ userSession, updateUserSession, retrieveUUID, initializeUUID }}>
             {children}
         </UserSessionContext.Provider>
     );

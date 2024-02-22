@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useUserSession } from '../../Utils/userSessionContext'
 import { useLoginRepository } from './useLoginRepository';
 import { useTranslation } from 'react-i18next';
 
 export const useLoginViewModel = () => {
   const {t} = useTranslation()
-  const {doLogin: doLoginRepository, isLoading, error} = useLoginRepository()
+  const {doLogin: doLoginRepository} = useLoginRepository()
 
   const [loginError, setLoginError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false)
