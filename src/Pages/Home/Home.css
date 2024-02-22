@@ -14,7 +14,7 @@
     display: flex; /* Make it a flex container */
     align-items: center; /* Optional: Center items vertically if needed */
     justify-content: space-between;
-    height: 5rem;
+    height: 6rem;
     background-color: rgb(96, 164, 209);
     color: white;
     padding: 1rem;
@@ -45,7 +45,7 @@
 
 .home__left-sidebar {
     width: 30%;
-    max-width: 30rem;
+    max-width: 50rem;
     background-color: #f0f0f0;
     padding: 1rem;
 }
