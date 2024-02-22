@@ -1,4 +1,6 @@
 {
+     "_comment_login": "Login Translations",
+
      "LOGIN_TITLE": "Authentication",
      "LOGIN_USERNAME": "Username",
      "LOGIN_USERNAME_PLACEHOLDER": "Enter your username here.",
@@ -6,5 +8,7 @@
      "LOGIN_PASSWORD_PLACEHOLDER": "Enter you password here.",
      "LOGIN_MISSING_USERNAME": "Username should not be empty.",
      "LOGIN_MISSING_PASSWORD": "Password should not be empty.",
-     "LOGIN_BUTTON_TITLE": "LOGIN"
+     "LOGIN_BUTTON_TITLE": "LOGIN",
+
+     "_comment_home": "Home Translations"
 }

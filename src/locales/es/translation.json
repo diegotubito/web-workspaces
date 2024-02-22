@@ -1,4 +1,6 @@
 {
+  "_comment_login": "Login Translations",
+
   "LOGIN_TITLE": "Inicio De Sesión",
   "LOGIN_USERNAME": "Usuario",
   "LOGIN_USERNAME_PLACEHOLDER": "Ingrese su usario aquí.",
@@ -6,5 +8,7 @@
   "LOGIN_PASSWORD_PLACEHOLDER": "Ingrese su contraseña aquí.",
   "LOGIN_MISSING_USERNAME": "Debe ingresar un usuario.",
   "LOGIN_MISSING_PASSWORD": "Debe ingresar su contraseña.",
-  "LOGIN_BUTTON_TITLE": "Iniciar Sesión"
+  "LOGIN_BUTTON_TITLE": "Iniciar Sesión",
+
+  "_comment_home": "Home Translations"
 }
