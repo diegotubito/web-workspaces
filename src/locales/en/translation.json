@@ -3,5 +3,8 @@
      "LOGIN_USERNAME": "Username",
      "LOGIN_USERNAME_PLACEHOLDER": "Enter your username here.",
      "LOGIN_PASSWORD": "Password",
-     "LOGIN_PASSWORD_PLACEHOLDER": "Enter you password here."
+     "LOGIN_PASSWORD_PLACEHOLDER": "Enter you password here.",
+     "LOGIN_MISSING_USERNAME": "Username should not be empty.",
+     "LOGIN_MISSING_PASSWORD": "Password should not be empty.",
+     "LOGIN_BUTTON_TITLE": "LOGIN"
 }

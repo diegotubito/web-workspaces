@@ -80,7 +80,7 @@ export const LoginView = () => {
 
     const validateEmail = () => {
         if (!emailForm.value) {
-            setEmailForm({ ...emailForm, errorMessage: 'email should not be empty' })
+            setEmailForm({ ...emailForm, errorMessage: t('LOGIN_MISSING_USERNAME') })
             return false
         }
 
@@ -90,7 +90,7 @@ export const LoginView = () => {
 
     const validatePassword = () => {
         if (!passwordForm.value) {
-            setPaswordForm({ ...passwordForm, errorMessage: 'password is missing' })
+            setPaswordForm({ ...passwordForm, errorMessage: t('LOGIN_MISSING_PASSWORD') })
             return false
         }
         setPaswordForm({ ...passwordForm, errorMessage: null })
@@ -131,9 +131,8 @@ export const LoginView = () => {
                         />
 
                         <div className='button-login-container margin-top' >
-                            <Button size="lg" className='button-login' variant="primary" onClick={() => onLogin()}>Login</Button>{''}
+                            <Button size="lg" className='button-login' variant="primary" onClick={() => onLogin()}>{t('LOGIN_BUTTON_TITLE')}</Button>{''}
                             {loginError && <p className="error-message">{loginError}</p>}
-                            {loginSuccess && <p className="error-message">SUCCESS</p>}
                         </div>
                     </form>
 
