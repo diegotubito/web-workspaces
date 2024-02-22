@@ -30,7 +30,7 @@ export const LoginView = () => {
         if (loginSuccess) {
             navigate('/home')
         }
-    }, [loginSuccess])
+    }, [loginSuccess, navigate])
 
 
     const onLogin = async () => {
@@ -48,6 +48,9 @@ export const LoginView = () => {
                 break
             case 'password_input':
                 break
+            default:
+                console.log(`Sorry, we are out of scope`);
+
         }
     }
 
@@ -61,6 +64,9 @@ export const LoginView = () => {
                 case 'password_input':
                     validatePassword()
                     break
+                default:
+                    console.log(`Sorry, we are out of scope`);
+
             }
         } else {
             // did begin
@@ -71,6 +77,8 @@ export const LoginView = () => {
                 case 'password_input':
                     setPaswordForm({ ...passwordForm, errorMessage: null })
                     break
+                default:
+                    console.log(`Sorry, we are out of scope`);
             }
         }
     }
@@ -108,8 +116,8 @@ export const LoginView = () => {
         <>
             <div className='login__main'>
                 <div className='login__container'>
-                <h1>{t('LOGIN_TITLE')}</h1>
-                    <form className='inputText'> 
+                    <h1>{t('LOGIN_TITLE')}</h1>
+                    <form className='inputText'>
                         <TextInputView
                             title={t('LOGIN_USERNAME')}
                             placeholder={t('LOGIN_USERNAME_PLACEHOLDER')}
