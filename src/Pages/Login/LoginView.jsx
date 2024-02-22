@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react';
 import { useLogin } from './useLogin'
 import { useNavigate } from 'react-router-dom';
 import './LoginView.css';
+import { useTranslation } from 'react-i18next';
 
 export const LoginView = () => {
-
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const [emailForm, setEmailForm] = useState({
@@ -107,6 +108,7 @@ export const LoginView = () => {
         <>
             <div className='login__main'>
                 <div className='login__container'>
+                <h1>{t('welcome')}</h1>
                     <form className='inputText'> 
                         <TextInputView
                             onInputChange={onInputChange}

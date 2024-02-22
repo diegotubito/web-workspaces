@@ -5,6 +5,7 @@ import { Navigate } from 'react-router-dom';
 import { LoginView } from './Pages/Login/LoginView';
 import { Home } from './Pages/Home/Home';
 import { useUserSession } from './Utils/userSessionContext'; // Import the hook
+import './i18n'; // The path to your i18n config file
 
 
 function App() {
