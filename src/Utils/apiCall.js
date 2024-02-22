@@ -3,11 +3,23 @@ import axios from 'axios';
 import { useUserSession } from './userSessionContext';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
+const APP_VERSION = process.env.REACT_APP_VERSION;
 
 export const useApiCall = () => {
     const { userSession } = useUserSession();
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    // Additional headers for device and system information
+    const additionalHeaders = {
+        'appVersion': APP_VERSION,
+        'UserAgent': navigator.userAgent, // Includes information about the browser and operating system
+        'Locale': navigator.language, // User's preferred language
+        'TimeZone': Intl.DateTimeFormat().resolvedOptions().timeZone, // User's time zone
+    };
+
+    console.log(additionalHeaders)
+    console.log(BASE_URL)
 
     const apiCall = async ({ path, method = 'GET', body = null, headers = {} }) => {
         setIsLoading(true);
@@ -22,6 +34,7 @@ export const useApiCall = () => {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${userSession?.accessToken}`,
+                    ...additionalHeaders,
                     ...headers, // Spread custom headers last to allow override
                 },
             });
