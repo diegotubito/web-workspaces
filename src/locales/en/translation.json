@@ -1,4 +1,7 @@
 {
-     "welcome": "Welcome to React",
-     "description": "This is a localized application"
+     "LOGIN_TITLE": "Authentication",
+     "LOGIN_USERNAME": "Username",
+     "LOGIN_USERNAME_PLACEHOLDER": "Enter your username here.",
+     "LOGIN_PASSWORD": "Password",
+     "LOGIN_PASSWORD_PLACEHOLDER": "Enter you password here."
 }

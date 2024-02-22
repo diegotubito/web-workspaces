@@ -108,9 +108,11 @@ export const LoginView = () => {
         <>
             <div className='login__main'>
                 <div className='login__container'>
-                <h1>{t('welcome')}</h1>
+                <h1>{t('LOGIN_TITLE')}</h1>
                     <form className='inputText'> 
                         <TextInputView
+                            title={t('LOGIN_USERNAME')}
+                            placeholder={t('LOGIN_USERNAME_PLACEHOLDER')}
                             onInputChange={onInputChange}
                             onDidBegin={onDidBeginInput}
                             onReturnPressed={onReturnPressed}
@@ -119,6 +121,8 @@ export const LoginView = () => {
                         />
 
                         <TextInputView
+                            title={t('LOGIN_PASSWORD')}
+                            placeholder={t('LOGIN_PASSWORD_PLACEHOLDER')}
                             onInputChange={onInputChange}
                             onDidBegin={onDidBeginInput}
                             onReturnPressed={onReturnPressed}

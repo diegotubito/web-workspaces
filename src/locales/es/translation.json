@@ -1,4 +1,8 @@
 {
-     "welcome": "Bienvenido a React",
-     "description": "Esta es una aplicación localizada"
+  "LOGIN_TITLE": "Inicio De Sesión",
+  "LOGIN_USERNAME": "Usuario",
+  "LOGIN_USERNAME_PLACEHOLDER": "Ingrese su usario aquí.",
+  "LOGIN_PASSWORD": "Clave",
+  "LOGIN_PASSWORD_PLACEHOLDER": "Ingrese su clave aquí."
+
 }

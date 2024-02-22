@@ -1,7 +1,7 @@
 import './TextInputView.css' ;
 import { useState } from 'react';
 
-export const TextInputView = ({onInputChange, onDidBegin, onReturnPressed, form, setForm}) => {
+export const TextInputView = ({title, placeholder, onInputChange, onDidBegin, onReturnPressed, form, setForm}) => {
   const onChangeHandler = (event) => {
     const newValue = event.target.value; // Use a different name to avoid confusion with `const {name, value} = form`
     setForm(prevForm => ({
@@ -31,10 +31,10 @@ export const TextInputView = ({onInputChange, onDidBegin, onReturnPressed, form,
 
   return (
     <div className='main'>
-      <p>Authenticate</p>
+      <p>{title}</p>
       <input
       className="inputField"
-        placeholder="username"
+        placeholder={placeholder}
         onChange={(event) => onChangeHandler(event)}
         onKeyDown={(event) => onKeyDownHandler(event)}
         onFocus={(event) => onFocusHandler(event)}
