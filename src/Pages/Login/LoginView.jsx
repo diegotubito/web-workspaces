@@ -105,9 +105,9 @@ export const LoginView = () => {
 
     return (
         <>
-            <div className='main-navigation'>
-                <div className='outer-container'>
-                    <form>
+            <div className='login__main'>
+                <div className='login__container'>
+                    <form className='inputText'> 
                         <TextInputView
                             onInputChange={onInputChange}
                             onDidBegin={onDidBeginInput}

@@ -15,7 +15,7 @@
     align-items: center; /* Optional: Center items vertically if needed */
     justify-content: space-between;
     height: 6rem;
-    background-color: rgb(96, 164, 209);
+    background-color: var(--primary);
     color: white;
     padding: 1rem;
     width: 100%;
@@ -69,4 +69,8 @@
     background-color: yellow;
     padding: 0rem;
     width: 100%;
+}
+
+.buttons {
+    font-size: 18px;
 }

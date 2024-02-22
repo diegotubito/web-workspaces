@@ -1,36 +1,31 @@
-.main-navigation {
-     background-color: var(--secundario);
-     color: var(--blanco);
-     display: flex;
-     flex-direction: column;
-     /* by default */
-     align-items: center;
+.login__main {
+    background-color: var(--primary);
+    color: var(--blanco);
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-start; /* Align items vertically to the top, preventing its element not to stretch like this main element. */
+    flex-grow: 1;
+    height: 100vh;
 }
 
 .margin-top {
      margin-top: 3rem;
 }
 
-.outer-container {
+.login__container {
      border: 1px solid black;
-     padding: 3rem;
-     background-color: #d2caca;
+     padding: 3rem 6rem;
+     background-color: var(--white);
      border-radius: 0.5rem;
-     max-width: 100rem;
-     width: 100%;
-}
-
-.inputText {
-     background-color: red;
-}
+     width: 90%;
+     max-width: 50rem;
+   }
 
 .button-login-container {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
+    
 }
 
 .button-login {
-     padding: 2rem;
      width: 100%;
 }

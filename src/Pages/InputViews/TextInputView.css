@@ -1,13 +1,20 @@
-  .main p {
-    font-size: 1rem;
+.main {
+  margin-bottom: 2rem;
+}
+.main p {
+    font-size: 14px;
     margin: 0rem; /* Explicitly remove margin from <p> */
   }
   
   .inputField {
-    padding: 0.5rem 1rem;
+    padding: 1rem 1rem;
     width: 100%;
+    font-size: 17px;
   }
   
   .errorMessage {
     color: red;
+    margin-top: 0;
   }
+
+  

@@ -83,8 +83,8 @@ export const Home = () => {
 
                 <div className='home__header-right'>
                     <h2>{userSession.user.username}</h2>
-                    <Button onClick={() => openMyModal()}>Workspace</Button>
-                    <Button variant='secondary' onClick={() => setRouteToLogin(true)}>Log Out</Button>
+                    <Button size='lg' onClick={() => openMyModal()}>Workspace</Button>
+                    <Button size='lg' variant='secondary' onClick={() => setRouteToLogin(true)}>Log Out</Button>
                 </div>
 
             </div>
