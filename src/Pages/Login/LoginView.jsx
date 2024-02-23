@@ -1,11 +1,10 @@
 import { TextInputView } from '../../Components/InputViews/TextInputView';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useLoginViewModel } from './useLoginViewModel'
 import { useNavigate } from 'react-router-dom';
 import './LoginView.css';
 import { useTranslation } from 'react-i18next';
-import { Spinner } from '../../Components/Spinner/spinner'
 
 export const LoginView = () => {
     const { t } = useTranslation();
@@ -54,7 +53,7 @@ export const LoginView = () => {
 
         }
     }
-    
+
     const onDidBeginInput = (name, begin) => {
         if (!begin) {
 
@@ -115,7 +114,6 @@ export const LoginView = () => {
 
     return (
         <div>
-            {isLoading && <Spinner />}
             <div className='login__main'>
                 <div className='login__container'>
                     <h1>{t('LOGIN_TITLE')}</h1>
@@ -141,7 +139,9 @@ export const LoginView = () => {
                         />
 
                         <div className='button-login-container margin-top' >
-                            <Button size="lg" className='button-login' variant="primary" onClick={() => onLogin()}>{t('LOGIN_BUTTON_TITLE')}</Button>{''}
+                            <Button size="lg" className='button-login' variant="primary" onClick={() => onLogin()}>
+                                { isLoading ? (<Spinner />) : (t('LOGIN_BUTTON_TITLE')) }
+                            </Button>{''}
                             {loginError && <p className="error-message">{loginError}</p>}
                         </div>
                     </form>

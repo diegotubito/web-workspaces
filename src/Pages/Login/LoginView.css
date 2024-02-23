@@ -28,4 +28,6 @@
 
 .button-login {
      width: 100%;
+     padding: 1rem;
+     font-size: 19px;
 }
