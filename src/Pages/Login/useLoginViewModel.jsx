@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 export const useLoginViewModel = () => {
   const {t} = useTranslation()
-  const {doLogin: doLoginRepository} = useLoginRepository()
+  const {doLogin: doLoginRepository, isLoading} = useLoginRepository()
 
   const [loginError, setLoginError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false)
@@ -22,5 +22,5 @@ export const useLoginViewModel = () => {
     }
   };
 
-  return { doLogin, loginError, loginSuccess };
+  return { doLogin, loginError, loginSuccess, isLoading };
 };

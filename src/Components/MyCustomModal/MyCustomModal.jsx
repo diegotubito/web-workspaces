@@ -1,4 +1,5 @@
 import './MyCustomModal.css'
+import { Spinner } from '../Spinner/spinner'
 
 export const MyCustomModal = ({ array, isLoading = false, isOpen, onCustomModalSelectedRegister, onShouldClose }) => {
     if (!isOpen) { return null }
@@ -12,33 +13,28 @@ export const MyCustomModal = ({ array, isLoading = false, isOpen, onCustomModalS
 
     return (
         <div className='custom-modal__background'>
+             
             <div className='custom-modal__content'>
                 <h1>Select Your Workspace</h1>
-
-                {isLoading ? (
-                    <div className="spinner-wrapper">
-                        <div className="spinner"></div>
-                    </div>
-                ) : (
-                    <div>
-                        <ul>
-                            {array.map((register) => {
+                {isLoading && <Spinner/>}
+                <div>
+                    <ul>
+                        {array.map((register) => {
 
 
-                                return (
-                                    <li key={register._id} onClick={() => onSelectRegister(register._id)}>
-                                        <div className="register-content">
-                                            <div className="register-title">{register.title}</div>
-                                            {register.subtitle && <div className="register-subtitle">{register.subtitle}</div>}
-                                        </div>
-                                    </li>
-                                )
-                            })}
-                        </ul>
+                            return (
+                                <li key={register._id} onClick={() => onSelectRegister(register._id)}>
+                                    <div className="register-content">
+                                        <div className="register-title">{register.title}</div>
+                                        {register.subtitle && <div className="register-subtitle">{register.subtitle}</div>}
+                                    </div>
+                                </li>
+                            )
+                        })}
+                    </ul>
 
 
-                    </div>
-                )}
+                </div>
 
                 <button className='custom-modal__button' onClick={() => onCloseDidClicked()}>Cancel</button>
 

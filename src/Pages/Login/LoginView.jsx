@@ -5,6 +5,7 @@ import { useLoginViewModel } from './useLoginViewModel'
 import { useNavigate } from 'react-router-dom';
 import './LoginView.css';
 import { useTranslation } from 'react-i18next';
+import { Spinner } from '../../Components/Spinner/spinner'
 
 export const LoginView = () => {
     const { t } = useTranslation();
@@ -24,7 +25,7 @@ export const LoginView = () => {
         type: 'password'
     })
 
-    const { doLogin, loginError, loginSuccess } = useLoginViewModel()
+    const { doLogin, loginError, loginSuccess, isLoading } = useLoginViewModel()
 
     useEffect(() => {
         if (loginSuccess) {
@@ -113,7 +114,8 @@ export const LoginView = () => {
     }
 
     return (
-        <>
+        <div>
+            {isLoading && <Spinner/>}
             <div className='login__main'>
                 <div className='login__container'>
                     <h1>{t('LOGIN_TITLE')}</h1>
@@ -143,10 +145,9 @@ export const LoginView = () => {
                             {loginError && <p className="error-message">{loginError}</p>}
                         </div>
                     </form>
-
                 </div>
             </div>
-        </>
+        </div>
     );
 
 }
