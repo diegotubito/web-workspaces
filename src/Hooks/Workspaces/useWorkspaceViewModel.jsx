@@ -1,6 +1,6 @@
-import { useWorkspaceSession } from '../../Utils/workspaceSessionContext'
+import { useWorkspaceSession } from '../../Utils/Contexts/workspaceSessionContext'
 import { useFetchUserWorkspaces } from './useFetchUserWorkspaces'
-import { useUserSession } from '../../Utils/userSessionContext'
+import { useUserSession } from '../../Utils/Contexts/userSessionContext'
 import { useState } from 'react';
 
 export const useWorkspaceViewModel = () => {

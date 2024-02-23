@@ -54,7 +54,7 @@ export const LoginView = () => {
 
         }
     }
-
+    
     const onDidBeginInput = (name, begin) => {
         if (!begin) {
 

@@ -1,4 +1,4 @@
-import { useApiCall } from "../../Utils/apiCall"
+import { useApiCall } from "../../Utils/ApiNetwork/apiCall"
 
 export const useLoginRepository = () => {
     const {apiCall, error, isLoading} = useApiCall()
@@ -9,7 +9,7 @@ export const useLoginRepository = () => {
             password
         }
 
-        return apiCall({path: '/api/v1/login', method: 'POST', body: body})
+        return apiCall({path: '/api/v1/login', method: 'POST', body: body, isLogin: true})
     }
 
     return {isLoading, error, doLogin}

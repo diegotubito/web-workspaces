@@ -18,11 +18,17 @@ export const UserSessionProvider = ({ children }) => {
         return sessionData ? JSON.parse(sessionData) : null;
     });
 
-    // Function to update the user session both in the component state and localStorage.
-    // This ensures that the user session is kept in sync across page reloads.
-    const updateUserSession = (newSession) => {
-        localStorage.setItem('userSession', JSON.stringify(newSession)); // Persist the new session data to localStorage.
-        setUserSession(newSession); // Update the state, triggering a re-render of components that consume this context.
+    // Now updateUserSession returns a Promise
+    const updateUserSession = async (newSession) => {
+        return new Promise((resolve, reject) => {
+            try {
+                localStorage.setItem('userSession', JSON.stringify(newSession));
+                setUserSession(newSession);
+                resolve(newSession); // Resolve the promise after updating the state
+            } catch (error) {
+                reject(error); // Reject the promise if there's an error
+            }
+        });
     };
 
     const retrieveUUID = () => {
@@ -35,7 +41,7 @@ export const UserSessionProvider = ({ children }) => {
         }
     };
 
-    const initializeUUID = () => { 
+    const initializeUUID = () => {
         if (!localStorage.getItem(UUID_KEY)) {
             console.log("UUID Saved.");
             localStorage.setItem(UUID_KEY, uuidv4()); // UUID.v4() requiere que instales la librería 'uuid', o puedes generar el UUID de otra manera
@@ -44,10 +50,38 @@ export const UserSessionProvider = ({ children }) => {
         }
     };
 
+    const retrieveAccessToken = () => {
+        const user = localStorage.getItem('userSession');
+        const userJson = JSON.parse(user)
+        return userJson?.accessToken
+    }
+
+    const retrieveRefreshToken = () => {
+        return userSession?.refreshToken
+    }
+
+    const isAccessTokenExpired = () => {
+        const date = new Date(userSession?.accessTokenExpirationDateString)
+        return date < Date.now()
+    }
+
+    const isRefreshTokenExpired = () => {
+        const date = new Date(userSession?.refreshTokenExpirationDateString)
+        return date < Date.now()
+    }
     // The context provider component renders its children and provides them access to the context value,
     // which includes the current user session and the function to update it.
     return (
-        <UserSessionContext.Provider value={{ userSession, updateUserSession, retrieveUUID, initializeUUID }}>
+        <UserSessionContext.Provider value={{
+            userSession,
+            updateUserSession,
+            retrieveUUID,
+            initializeUUID,
+            retrieveAccessToken,
+            retrieveRefreshToken,
+            isAccessTokenExpired,
+            isRefreshTokenExpired
+        }}>
             {children}
         </UserSessionContext.Provider>
     );

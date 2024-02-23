@@ -5,8 +5,8 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { UserSessionProvider } from "./Utils/userSessionContext"; // Import the provider
-import { WorkspaceSessionProvider } from "./Utils/workspaceSessionContext";
+import { UserSessionProvider } from "./Utils/Contexts/userSessionContext"; // Import the provider
+import { WorkspaceSessionProvider } from "./Utils/Contexts/workspaceSessionContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -3,18 +3,21 @@ import { Routes, Route } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import { LoginView } from './Pages/Login/LoginView';
 import { Home } from './Pages/Home/Home';
-import { useUserSession } from './Utils/userSessionContext'; // Import the hook
+import { useUserSession } from './Utils/Contexts/userSessionContext'; // Import the hook
 import './i18n'; // The path to your i18n config file
 import { useEffect } from 'react';
 
 function App() {
   /* With the default route and protected routes set up, you may not need the useEffect hook in your App component to navigate to /home immediately.
    The routing logic will handle taking the user to the correct page based on their authentication status and the URL they visit.*/
-  const { initializeUUID } = useUserSession()
+  const { initializeUUID, isAccessTokenExpired, isRefreshTokenExpired } = useUserSession()
 
   useEffect(() => {
     initializeUUID(); // Asegúrate de importar esta función si está definida en otro archivo
   }, [initializeUUID]);
+
+  console.log(isAccessTokenExpired())
+  console.log(isRefreshTokenExpired())
 
   return (
     <>
@@ -58,7 +61,6 @@ function validateAuthentication(userSession) {
     console.log('forced log in')
     return false
   }
-
 
   const refreshTokenExpirationDate = new Date(userSession.refreshTokenExpirationDateString)
   if (refreshTokenExpirationDate < Date.now()) {

@@ -2,15 +2,15 @@ import './Home.css'
 import { useState, useEffect } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useUserSession } from '../../Utils/userSessionContext';
+import { useUserSession } from '../../Utils/Contexts/userSessionContext';
 import { FooterBar } from '../../Components/FooterBar/FooterBar';
 import { MyCustomModal } from '../../Components/MyCustomModal/MyCustomModal';
 import { useWorkspaceViewModel } from '../../Hooks/Workspaces/useWorkspaceViewModel';
-import { useWorkspaceSession } from '../../Utils/workspaceSessionContext';
+import { useWorkspaceSession } from '../../Utils/Contexts/workspaceSessionContext';
 
 export const Home = () => {
     const [routeToLogin, setRouteToLogin] = useState(false)
-    const { userSession, updateUserSession } = useUserSession();
+    const { userSession, updateUserSession, setAccessToken, setRefreshToken } = useUserSession();
     const [customModalOpen, setIsOpen] = useState(false)
     const { workspaceSession, updateWorkspaceSession } = useWorkspaceSession()
 

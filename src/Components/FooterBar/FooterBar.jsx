@@ -1,7 +1,7 @@
 import './FooterBar.css'
-import { dateAndTimeFormat, stringMonthFormat } from '../../Utils/dateUtils';
-import { useUserSession } from '../../Utils/userSessionContext'
-import { useWorkspaceSession } from '../../Utils/workspaceSessionContext'
+import { dateAndTimeFormat, stringMonthFormat } from '../../Utils/Common/dateUtils';
+import { useUserSession } from '../../Utils/Contexts/userSessionContext'
+import { useWorkspaceSession } from '../../Utils/Contexts/workspaceSessionContext'
 
 export const FooterBar = () => {
     const {userSession} = useUserSession()
@@ -19,13 +19,13 @@ export const FooterBar = () => {
 
     const getRefreshTokenStringDate = () => {
         if (!userSession) { return }
-        return stringMonthFormat(userSession.refreshTokenExpirationDateString);
+        return dateAndTimeFormat(userSession.refreshTokenExpirationDateString);
     }
 
     return (
         <>
             <footer className="footer-bar">
-                <p className='roboto-thin'>{getFullName()} - EAT: {getAccessTokenStringDate()}- RAT: {getRefreshTokenStringDate()}</p>
+                <p className='roboto-thin'>{getFullName()} - AT-Exp: {getAccessTokenStringDate()}- RT-Exp: {getRefreshTokenStringDate()}</p>
                 { workspaceSession && <p className='roboto-thin'> {workspaceSession.title} {workspaceSession.subtitle}</p> }
                 <p className='roboto-thin'>@ 2024 David Diego Gomez. All Rights Reserved</p>
             </footer>
