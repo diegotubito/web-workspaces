@@ -1,7 +1,7 @@
 import { useWorkspaceSession } from '../../Utils/workspaceSessionContext'
 import { useFetchUserWorkspaces } from './useFetchUserWorkspaces'
 import { useUserSession } from '../../Utils/userSessionContext'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export const useWorkspaceViewModel = () => {
     const { fetchWorkspacesByUserId, isLoading, error } = useFetchUserWorkspaces()
@@ -10,22 +10,18 @@ export const useWorkspaceViewModel = () => {
     const [workspaces, setWorkspaces] = useState([])
     const [displayWorkspaces, setDisplayWorkspaces] = useState([])
 
-    useEffect(() => {
-        mapDisplayModelWorkspace()
-    }, [workspaces])
-
     const fetchWorkspaces = async () => {
         setDisplayWorkspaces([])
         try {
             const response = await fetchWorkspacesByUserId(userSession.user._id)
-            setWorkspaces(response.workspaces)
+            mapDisplayModelWorkspace(response.workspaces)
         } catch (error) {
             console.log('Error title:', error.title); // This should show the custom error class name if available
             console.log('Error message:', error.message); // This should show the custom message
         }
     }
 
-    const mapDisplayModelWorkspace = () => {
+    const mapDisplayModelWorkspace = (workspaces) => {
         const mapValues = workspaces.map(workspace => {
             const { _id, title, subtitle, location } = workspace;
 
@@ -40,6 +36,7 @@ export const useWorkspaceViewModel = () => {
         });
 
         setDisplayWorkspaces(mapValues)
+        setWorkspaces(workspaces)
     }
 
     const saveDefaultWorkspace = (_id) => {

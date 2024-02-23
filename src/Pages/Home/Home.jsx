@@ -11,7 +11,6 @@ import { useWorkspaceSession } from '../../Utils/workspaceSessionContext';
 export const Home = () => {
     const [routeToLogin, setRouteToLogin] = useState(false)
     const { userSession, updateUserSession } = useUserSession();
-    const navigate = useNavigate()
     const [customModalOpen, setIsOpen] = useState(false)
     const { workspaceSession, updateWorkspaceSession } = useWorkspaceSession()
 

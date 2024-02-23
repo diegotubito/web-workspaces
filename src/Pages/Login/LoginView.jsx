@@ -1,4 +1,4 @@
-import { TextInputView } from '../InputViews/TextInputView';
+import { TextInputView } from '../../Components/InputViews/TextInputView';
 import { Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useLoginViewModel } from './useLoginViewModel'
@@ -115,7 +115,7 @@ export const LoginView = () => {
 
     return (
         <div>
-            {isLoading && <Spinner/>}
+            {isLoading && <Spinner />}
             <div className='login__main'>
                 <div className='login__container'>
                     <h1>{t('LOGIN_TITLE')}</h1>

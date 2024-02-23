@@ -1,5 +1,4 @@
 import './TextInputView.css' ;
-import { useState } from 'react';
 
 export const TextInputView = ({title, placeholder, onInputChange, onDidBegin, onReturnPressed, form, setForm}) => {
   const onChangeHandler = (event) => {

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import './FooterBar.css'
 import { dateAndTimeFormat, stringMonthFormat } from '../../Utils/dateUtils';
 import { useUserSession } from '../../Utils/userSessionContext'
