@@ -11,13 +11,13 @@
 
 .login__container {
    border: none;
-   padding: 1rem 3rem;
+   padding: 3rem 2rem;
    background-color: var(--white);
    border-radius: 0.5rem;
    width: min(50rem, 90%);
    margin-top: 5rem;
 }
-@media (min-width: 480px) {
+@media (min-width: 520px) {
      .login__container {
            padding: 3rem 6rem;
      }
