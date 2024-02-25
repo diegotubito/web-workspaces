@@ -29,8 +29,8 @@ export const TextInputView = ({title, placeholder, onInputChange, onDidBegin, on
   };
 
   return (
-    <div className='main'>
-      <p>{title}</p>
+    <div>
+      <p className='title'>{title}</p>
       <input
       className="inputField"
         placeholder={placeholder}

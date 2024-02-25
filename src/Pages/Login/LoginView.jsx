@@ -117,29 +117,33 @@ export const LoginView = () => {
             <div className='login__main'>
                 <div className='login__container'>
                     <h1>{t('LOGIN_TITLE')}</h1>
-                    <form className='inputText'>
-                        <TextInputView
-                            title={t('LOGIN_USERNAME')}
-                            placeholder={t('LOGIN_USERNAME_PLACEHOLDER')}
-                            onInputChange={onInputChange}
-                            onDidBegin={onDidBeginInput}
-                            onReturnPressed={onReturnPressed}
-                            form={emailForm}
-                            setForm={setEmailForm}
-                        />
+                    <form>
+                        <div className='login__fields_gap'>
+                            <TextInputView
+                                title={t('LOGIN_USERNAME')}
+                                placeholder={t('LOGIN_USERNAME_PLACEHOLDER')}
+                                onInputChange={onInputChange}
+                                onDidBegin={onDidBeginInput}
+                                onReturnPressed={onReturnPressed}
+                                form={emailForm}
+                                setForm={setEmailForm}
+                            />
+                        </div>
 
-                        <TextInputView
-                            title={t('LOGIN_PASSWORD')}
-                            placeholder={t('LOGIN_PASSWORD_PLACEHOLDER')}
-                            onInputChange={onInputChange}
-                            onDidBegin={onDidBeginInput}
-                            onReturnPressed={onReturnPressed}
-                            form={passwordForm}
-                            setForm={setPaswordForm}
-                        />
+                        <div>
+                            <TextInputView
+                                title={t('LOGIN_PASSWORD')}
+                                placeholder={t('LOGIN_PASSWORD_PLACEHOLDER')}
+                                onInputChange={onInputChange}
+                                onDidBegin={onDidBeginInput}
+                                onReturnPressed={onReturnPressed}
+                                form={passwordForm}
+                                setForm={setPaswordForm}
+                            />
+                        </div>
 
-                        <div className='button-login-container margin-top' >
-                            <Button size="lg" className='button-login' variant="primary" onClick={() => onLogin()}>
+                        <div className='button-login-container' >
+                            <Button className='button-login' variant="primary" onClick={() => onLogin()}>
                                 { isLoading ? (<Spinner />) : (t('LOGIN_BUTTON_TITLE')) }
                             </Button>{''}
                             {loginError && <p className="error-message">{loginError}</p>}

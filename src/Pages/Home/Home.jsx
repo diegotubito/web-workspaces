@@ -1,7 +1,6 @@
 import './Home.css'
 import { useState, useEffect } from 'react';
 import { Button, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import { useUserSession } from '../../Utils/Contexts/userSessionContext';
 import { FooterBar } from '../../Components/FooterBar/FooterBar';
 import { MyCustomModal } from '../../Components/MyCustomModal/MyCustomModal';
@@ -10,7 +9,7 @@ import { useWorkspaceSession } from '../../Utils/Contexts/workspaceSessionContex
 
 export const Home = () => {
     const [routeToLogin, setRouteToLogin] = useState(false)
-    const { userSession, updateUserSession, setAccessToken, setRefreshToken } = useUserSession();
+    const { userSession, updateUserSession } = useUserSession();
     const [customModalOpen, setIsOpen] = useState(false)
     const { workspaceSession, updateWorkspaceSession } = useWorkspaceSession()
 
@@ -29,7 +28,7 @@ export const Home = () => {
             updateUserSession(null)
             updateWorkspaceSession(null)
         }
-    }, [routeToLogin])
+    }, [routeToLogin, updateUserSession, updateWorkspaceSession])
 
     useEffect(() => {
         if (workspaceError) {
