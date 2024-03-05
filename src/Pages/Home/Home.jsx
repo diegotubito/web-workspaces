@@ -7,12 +7,19 @@ import { MyCustomModal } from '../../Components/MyCustomModal/MyCustomModal';
 import { useWorkspaceViewModel } from '../../Hooks/Workspaces/useWorkspaceViewModel';
 import { useWorkspaceSession } from '../../Utils/Contexts/workspaceSessionContext';
 import { PurchaseView } from '../Purchase/PurchaseView';
+import { SaleView } from '../Sales/SaleView'
+
+const Views = {
+    purchaseView: 'purchase_view',
+    saleView: 'sale_view'
+}
 
 export const Home = () => {
     const [routeToLogin, setRouteToLogin] = useState(false)
     const { userSession, updateUserSession } = useUserSession();
     const [customModalOpen, setIsOpen] = useState(false)
     const { workspaceSession, updateWorkspaceSession } = useWorkspaceSession()
+    const [currentView, setCurrentView] = useState()
 
     const [openAlert, setOpenAlert] = useState(false)
 
@@ -50,6 +57,13 @@ export const Home = () => {
 
     const onShouldCloseModal = () => {
         setIsOpen(false)
+    }
+
+    const setPurchaseView = () => {
+        setCurrentView(Views.purchaseView)
+    }
+    const setSaleView = () => {
+        setCurrentView(Views.saleView)
     }
 
     return (
@@ -90,12 +104,36 @@ export const Home = () => {
 
             <div className='home__main-container'>
                 <div className='home__left-sidebar'>
-                    <h1>Left Side Bar</h1>
+                    <div className='home__left-sidebar-buttons'>
+                        <button
+                            className="btn btn-primary d-block w-100"
+                            onClick={() => setCurrentView(Views.saleView)}>
+                            <h1>Sales</h1>
+
+                        </button>
+
+                        <button
+                            className="btn btn-secondary d-block w-100"
+                            onClick={() => setCurrentView(Views.purchaseView)}>
+                            <h1>Purchase</h1>
+
+                        </button>
+
+                        <button
+                            className="btn btn-secondary d-block w-100"
+                            onClick={() => setCurrentView(Views.saleView)}>
+                            <h1>Cierre De Caja</h1>
+
+                        </button>
+
+                    </div>
 
                 </div>
 
                 <div className='home__main-content'>
-                    <PurchaseView/>
+
+                    {currentView === Views.purchaseView && <PurchaseView />}
+                    {currentView === Views.saleView && <SaleView />}
 
                 </div>
 

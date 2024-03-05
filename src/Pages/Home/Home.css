@@ -47,7 +47,15 @@
     width: 30%;
     max-width: 50rem;
     background-color: #f0f0f0;
-    padding: 1rem;
+    padding: 3rem;
+}
+
+.home__left-sidebar-buttons {
+     display: flex;
+    flex-direction: column; /* This is the default value, so it's optional */
+    justify-content: space-between; /* Adjust this as needed */
+    align-items: center; /* Adjust vertical alignment as needed */
+    gap: 2rem;
 }
 
 .home__main-content {
@@ -74,3 +82,4 @@
 .buttons {
     font-size: 18px;
 }
+
