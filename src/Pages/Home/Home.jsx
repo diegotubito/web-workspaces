@@ -6,6 +6,7 @@ import { FooterBar } from '../../Components/FooterBar/FooterBar';
 import { MyCustomModal } from '../../Components/MyCustomModal/MyCustomModal';
 import { useWorkspaceViewModel } from '../../Hooks/Workspaces/useWorkspaceViewModel';
 import { useWorkspaceSession } from '../../Utils/Contexts/workspaceSessionContext';
+import { PurchaseView } from '../Purchase/PurchaseView';
 
 export const Home = () => {
     const [routeToLogin, setRouteToLogin] = useState(false)
@@ -94,8 +95,7 @@ export const Home = () => {
                 </div>
 
                 <div className='home__main-content'>
-                    <div>
-                    </div>
+                    <PurchaseView/>
 
                 </div>
 

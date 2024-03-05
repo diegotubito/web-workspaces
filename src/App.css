@@ -1,11 +1,10 @@
-/* forma de guardar varialbes en css*/
 :root {
     /*custom property*/
     --white: #ededed;
     --dark: #212121;
     --primary: rgb(96, 164, 209);
     --secondary: rgb(229, 226, 68);
-    --grey: #757575;
+    --gray: #757575;
 
 }
 

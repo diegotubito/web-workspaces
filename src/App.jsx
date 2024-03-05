@@ -16,9 +16,6 @@ function App() {
     initializeUUID(); // Asegúrate de importar esta función si está definida en otro archivo
   }, [initializeUUID]);
 
-  console.log(isAccessTokenExpired())
-  console.log(isRefreshTokenExpired())
-
   return (
     <>
       <Routes>

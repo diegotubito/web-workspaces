@@ -49,7 +49,6 @@ export const useApiCall = () => {
          }
       }
 
-      console.log("perform normal api");
       return performApiCall({ path, method, body, headers });
    };
 
