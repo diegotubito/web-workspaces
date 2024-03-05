@@ -11,5 +11,13 @@
      "LOGIN_BUTTON_TITLE": "LOGIN",
      "_WRONG_USER_PASSWORD": "Your Email or Password is incorrect.",
 
-     "_comment_home": "Home Translations"
+     "_comment_home": "Home Translations",
+
+     "_comment_home_left_bar": "Comments for left bar items",
+
+     "PURCHASE_BUTTON": "Purchase Order",
+     "INCOME_BUTTON": "Cash Income",
+     "OUTCOME_BUTTON": "Cash Outcome",
+     "SALE_BUTTON": "Sales",
+     "CASH_BUTTON": "Closing Cash Balance"
 }

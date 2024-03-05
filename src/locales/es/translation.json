@@ -11,5 +11,13 @@
   "LOGIN_BUTTON_TITLE": "Iniciar Sesión",
   "_WRONG_USER_PASSWORD": "Tus credenciales son incorrectas.",
 
-  "_comment_home": "Home Translations"
+  "_comment_home": "Home Translations",
+
+  "_comment_home_left_bar": "Comments for left bar items",
+
+  "SALE_BUTTON": "Orden de Venta",
+  "PURCHASE_BUTTON": "Orden de Compra",
+  "INCOME_BUTTON": "Ingresos",
+  "OUTCOME_BUTTON": "Egresos",
+  "CASH_BUTTON": "Cierre de Caja"
 }

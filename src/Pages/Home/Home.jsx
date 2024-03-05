@@ -8,13 +8,22 @@ import { useWorkspaceViewModel } from '../../Hooks/Workspaces/useWorkspaceViewMo
 import { useWorkspaceSession } from '../../Utils/Contexts/workspaceSessionContext';
 import { PurchaseView } from '../Purchase/PurchaseView';
 import { SaleView } from '../Sales/SaleView'
+import { useTranslation } from 'react-i18next';
+import purchaseIcon from '../../Resources/Images/logo.svg'
+import point_of_sale from '../../Resources/Images/point_of_sale.svg'
+import { ButtonIcon } from '../../Components/Buttons/ButtonIcon/ButtonIcon'
+
+import { ReactComponent as SaleIcon } from '../../Resources/Images/point_of_sale.svg';
+import { ReactComponent as PurchaseIcon } from '../../Resources/Images/shopping_bag.svg'
 
 const Views = {
     purchaseView: 'purchase_view',
-    saleView: 'sale_view'
+    saleView: 'sale_view',
+    closingCash: 'closing_cash'
 }
 
 export const Home = () => {
+    const { t } = useTranslation()
     const [routeToLogin, setRouteToLogin] = useState(false)
     const { userSession, updateUserSession } = useUserSession();
     const [customModalOpen, setIsOpen] = useState(false)
@@ -105,27 +114,11 @@ export const Home = () => {
             <div className='home__main-container'>
                 <div className='home__left-sidebar'>
                     <div className='home__left-sidebar-buttons'>
-                        <button
-                            className="btn btn-primary d-block w-100"
-                            onClick={() => setCurrentView(Views.saleView)}>
-                            <h1>Sales</h1>
 
-                        </button>
+                        <ButtonIcon title={t('SALE_BUTTON')} reactIcon={SaleIcon} onClick={() => setCurrentView(Views.saleView)} />
 
-                        <button
-                            className="btn btn-secondary d-block w-100"
-                            onClick={() => setCurrentView(Views.purchaseView)}>
-                            <h1>Purchase</h1>
-
-                        </button>
-
-                        <button
-                            className="btn btn-secondary d-block w-100"
-                            onClick={() => setCurrentView(Views.saleView)}>
-                            <h1>Cierre De Caja</h1>
-
-                        </button>
-
+                        <ButtonIcon title={t('PURCHASE_BUTTON')} reactIcon={PurchaseIcon} onClick={() => setCurrentView(Views.purchaseView)} />
+                       
                     </div>
 
                 </div>
@@ -134,6 +127,8 @@ export const Home = () => {
 
                     {currentView === Views.purchaseView && <PurchaseView />}
                     {currentView === Views.saleView && <SaleView />}
+                    {currentView === Views.closingCash && <SaleView />}
+                    
 
                 </div>
 
