@@ -16,7 +16,7 @@ export const AmountField = ({amount, onAmountDidChanged}) => {
    })
 
    useEffect(() => {
-      setAmountForm(prevForm => ({ ...prevForm, value: formatCurrency(String(amount)) }));
+      setAmountForm(prevForm => ({ ...prevForm, value: formatCurrency(String(amount*100)) }));
    }, [amount]);
 
    const onInputChange = (name, newValue) => {

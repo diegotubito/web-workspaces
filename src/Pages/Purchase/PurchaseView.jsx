@@ -43,7 +43,7 @@ export const PurchaseView = () => {
             </select>
          </div>
 
-         <AmountField amount={0} onAmountDidChanged={onAmountDidChanged}/>
+         <AmountField amount={amount} onAmountDidChanged={onAmountDidChanged}/>
 
       </div >
    )
