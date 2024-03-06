@@ -2,6 +2,21 @@ import { useEffect } from 'react';
 import './TextInputView.css';
 import { formatCurrency } from '../../Utils/Common/formatCurrency';
 
+/*
+text: Teclado estándar de texto.
+email: Teclado optimizado para la entrada de direcciones de correo electrónico. Puede incluir teclas especiales como '@' y '.' para facilitar la escritura de correos electrónicos.
+tel: Teclado optimizado para la entrada de números de teléfono. Muestra un teclado numérico que puede incluir símbolos como '+' o '-'.
+number: Teclado para la entrada de números. Este puede incluir un punto o coma para números decimales, dependiendo de la configuración regional.
+url: Teclado optimizado para la entrada de URLs. Puede incluir teclas especiales como '/', '.com', etc.
+search: Teclado optimizado para búsquedas. Puede incluir un botón de "búsqueda" o "enter" dependiendo del sistema operativo y navegador.
+password: Teclado estándar de texto, pero oculta la entrada para proteger la información.
+datetime: Teclado para la entrada de fecha y hora.
+date: Teclado para la entrada de fechas.
+month: Teclado para la entrada de meses.
+week: Teclado para la entrada de semanas.
+time: Teclado para la entrada de horas.
+*/
+
 export const TextInputView = ({ title, placeholder, onInputChange, onDidBegin, onReturnPressed, form, setForm }) => {
   const onChangeHandler = (event) => {
     let newValue = event.target.value;
@@ -55,7 +70,7 @@ export const TextInputView = ({ title, placeholder, onInputChange, onDidBegin, o
         onKeyDown={(event) => onKeyDownHandler(event)}
         onFocus={(event) => onFocusHandler(event)}
         onBlur={(event) => onBlurHandler(event)}
-        type='text'
+        type={form.type}
         name={form.name}
         value={form.value}
         autoComplete={form.type === 'password' ? 'current-password' : form.autocomplete}
