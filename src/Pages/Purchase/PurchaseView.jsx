@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import './PurchaseView.css'
 import { usePurchaseViewModel } from './usePurchaseViewModel'
-import { TextInputView } from '../../Components/InputViews/TextInputView'
 import { useTranslation } from 'react-i18next';
 import { AmountField } from '../../Components/AmountField/AmountField';
 
@@ -14,6 +13,7 @@ export const PurchaseView = () => {
    const handleChange = (event) => {
       const itemId = event.target.value;
       const obj = items.find(item => item._id === itemId);
+      console.log(obj.title)
       setSelectedItem(itemId);
    };
 

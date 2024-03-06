@@ -41,13 +41,25 @@
     display: flex;
     flex-grow: 1; /* Now it will take up all available space */
     overflow: auto; /* Add scrolling if content overflows */
+    flex-direction: column;
+}
+
+@media (min-width: 800px) {
+     .home__main-container {
+        flex-direction: row;
+     }
 }
 
 .home__left-sidebar {
-    width: 30%;
-    max-width: 40rem;
+    width: 100%;
     background-color: #f0f0f0;
     padding: 3rem;
+}
+
+@media (min-width: 800px) {
+    .home__left-sidebar {
+        max-width: 40rem;     
+    }
 }
 
 .home__left-sidebar-buttons {
@@ -62,15 +74,20 @@
     background-color: white;
     flex-grow: 1; /* Take up the remaining space */
     padding: 0rem; /* Add some padding */
+    width: 400rem;
 }
 
 .home__right-sidebar {
-    width: 30%;
-    max-width: 40rem;
     background-color: #f0f0f0;
     padding: 1rem;
+    width: 100%;
 }
 
+@media (min-width: 800) {
+    .home__right-sidebar {
+        width: 100%;
+    }     
+}
 
 .home__footer {
     height: 5rem;

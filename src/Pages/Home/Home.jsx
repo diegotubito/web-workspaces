@@ -134,6 +134,17 @@ export const Home = () => {
 
                 <div className='home__right-sidebar'>
                     <h1>Right Side Bar</h1>
+                    <h1>Right Side Bar</h1>
+                    <h1>Right Side Bar</h1>
+                    <h1>Right Side Bar</h1>
+                    <h1>Right Side Bar</h1>
+                    <h1>Right Side Bar</h1>
+                    <h1>Right Side Bar</h1>
+                    <h1>Right Side Bar</h1>
+                    <h1>Right Side Bar</h1>
+                    <h1>Right Side Bar</h1>
+                    <h1>Right Side Bar</h1>
+                    <h1>Right Side Bar</h1>
                 </div>
             </div>
 

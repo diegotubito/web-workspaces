@@ -70,12 +70,6 @@ export const AmountField = ({amount, onAmountDidChanged}) => {
       return true
    }
 
-   const groupValidation = () => {
-      const emailValidation = validateAmount()
-
-      return emailValidation
-   }
-
    return (
       <div className='purchase_view__amount-textfield'>
          <TextInputView
