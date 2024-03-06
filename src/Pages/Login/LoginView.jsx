@@ -1,4 +1,4 @@
-import { TextInputView } from '../../Components/InputViews/TextInputView';
+import { TextField } from '../../Components/TextField/TextField';
 import { Button, Spinner } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useLoginViewModel } from './useLoginViewModel'
@@ -16,7 +16,8 @@ export const LoginView = () => {
         errorMessage: '',
         type: 'email',
         autocomplete: 'on',
-        autoCapitalize: 'none'
+        autoCapitalize: 'none',
+        size: 'large'
     })
 
     const [passwordForm, setPaswordForm] = useState({
@@ -26,7 +27,8 @@ export const LoginView = () => {
         type: 'password',
         autocomplete: 'off',
         keyboardType: 'password',
-        autoCapitalize: 'none'
+        autoCapitalize: 'none',
+        size: 'large'
     })
 
     const { doLogin, loginError, loginSuccess, isLoading } = useLoginViewModel()
@@ -124,7 +126,7 @@ export const LoginView = () => {
                     <h1>{t('LOGIN_TITLE')}</h1>
                     <form>
                         <div className='login__fields_gap'>
-                            <TextInputView
+                            <TextField
                                 title={t('LOGIN_USERNAME')}
                                 placeholder={t('LOGIN_USERNAME_PLACEHOLDER')}
                                 onInputChange={onInputChange}
@@ -136,7 +138,7 @@ export const LoginView = () => {
                         </div>
 
                         <div>
-                            <TextInputView
+                            <TextField
                                 title={t('LOGIN_PASSWORD')}
                                 placeholder={t('LOGIN_PASSWORD_PLACEHOLDER')}
                                 onInputChange={onInputChange}

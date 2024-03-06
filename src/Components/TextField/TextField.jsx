@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import './TextInputView.css';
+import './TextField.css';
 import { formatCurrency } from '../../Utils/Common/formatCurrency';
 
 /*
@@ -17,7 +17,7 @@ week: Teclado para la entrada de semanas.
 time: Teclado para la entrada de horas.
 */
 
-export const TextInputView = ({ title, placeholder, onInputChange, onDidBegin, onReturnPressed, form, setForm }) => {
+export const TextField = ({ title, placeholder, onInputChange, onDidBegin, onReturnPressed, form, setForm }) => {
   const onChangeHandler = (event) => {
     let newValue = event.target.value;
     if (form.type === 'currency') {
@@ -62,9 +62,9 @@ export const TextInputView = ({ title, placeholder, onInputChange, onDidBegin, o
 console.log(form.type)
   return (
     <div>
-      <p className='title'>{title}</p>
+      <p className={`${form.size === 'small' ? 'titleSmall' : ''} ${form.size === 'large' ? 'titleLarge' : ''}`}>{title}</p>
       <input
-        className="inputField"
+        className={`inputField ${form.size === 'small' ? 'inputFieldSmall' : ''} ${form.size === 'large' ? 'inputFieldLarge' : ''}`}
         placeholder={placeholder}
         onChange={(event) => onChangeHandler(event)}
         onKeyDown={(event) => onKeyDownHandler(event)}
@@ -82,4 +82,4 @@ console.log(form.type)
   );
 }
 
-export default TextInputView;
+export default TextField;

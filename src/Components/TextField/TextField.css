@@ -1,0 +1,36 @@
+.titleSmall {
+   font-weight: 400;
+   font-size: 11px;
+   margin: 0rem;
+   /* Explicitly remove margin from <p> */
+}
+
+.titleLarge {
+   font-weight: 700;
+   font-size: 14px;
+   margin: 0rem;
+   /* Explicitly remove margin from <p> */
+}
+
+.errorMessage {
+   color: red;
+   margin-top: 0;
+}
+
+.inputField {
+   width: 100%;
+   border: none;
+   border-radius: 0.5rem;
+}
+
+.inputFieldSmall {
+   padding: 0.5rem 0.5rem;
+   font-size: 12px;
+   font-weight: 400;
+}
+
+.inputFieldLarge {
+   padding: 1rem 1rem;
+   font-size: 17px;
+   border-radius: 0.5rem;
+}

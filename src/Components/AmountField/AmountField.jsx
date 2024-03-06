@@ -1,6 +1,6 @@
 import './AmountField.css'
 import { useTranslation } from 'react-i18next';
-import { TextInputView } from '../InputViews/TextInputView'
+import { TextField } from '../TextField/TextField'
 import { useState, useEffect } from 'react'
 import { formatCurrency } from '../../Utils/Common/formatCurrency';
 
@@ -13,7 +13,8 @@ export const AmountField = ({amount, onAmountDidChanged}) => {
       type: 'currency',
       autocomplete: 'off',
       maxLength: 12,
-      autoCapitalize: 'words'
+      autoCapitalize: 'words',
+      size: 'large'
    })
 
    useEffect(() => {
@@ -73,7 +74,7 @@ export const AmountField = ({amount, onAmountDidChanged}) => {
 
    return (
       <div className='purchase_view__amount-textfield'>
-         <TextInputView
+         <TextField
             title={t('Amount')}
             placeholder={''}
             onInputChange={onInputChange}
