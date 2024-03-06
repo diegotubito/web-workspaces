@@ -41,10 +41,10 @@ export const PurchaseView = () => {
    useEffect(() => {
       console.log("Getting items and creating default secondary item");
       getItems();
+      setAmount(15)
    }, []);
 
    const onAmountDidChanged = (value) => {
-      setAmount(value)
       console.log(value)
    }
 
