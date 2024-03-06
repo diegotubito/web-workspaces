@@ -4,4 +4,29 @@
     height: 100%;
     background-color: rgb(205, 223, 227);
     overflow: scroll;
+    padding: 2rem;
+    gap: 1.5rem;
+}
+
+.purchase_view__form-title {
+   font-size: 14px;
+   margin: 0rem; /* Explicitly remove margin from <p> */
+   font-weight: 700;
+}
+
+.form-select {
+   width: 100% !important;
+   max-width: 50rem;
+   text-wrap: wrap;
+}
+
+.form-select {
+    font-size: 17px !important; /* Ajusta esto a tu preferencia */
+    height: auto !important; /* Esto permite que el select se ajuste al tamaño del contenido */
+    padding: 1rem !important; /* Añade algo de padding para mejor manejo */
+}
+
+.purchase_view__amount-textfield {
+   width: 100%;
+   max-width: 20rem;
 }

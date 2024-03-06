@@ -14,14 +14,16 @@ export const LoginView = () => {
         name: 'email_input',
         value: '',
         errorMessage: '',
-        type: 'text'
+        type: 'text',
+        autocomplete: 'on'
     })
 
     const [passwordForm, setPaswordForm] = useState({
         name: 'password_input',
         value: '',
         errorMessage: '',
-        type: 'password'
+        type: 'password',
+        autocomplete: 'off'
     })
 
     const { doLogin, loginError, loginSuccess, isLoading } = useLoginViewModel()
