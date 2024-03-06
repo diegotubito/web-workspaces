@@ -59,7 +59,7 @@ export const TextInputView = ({ title, placeholder, onInputChange, onDidBegin, o
       }));
     }
   }
-
+console.log(form.type)
   return (
     <div>
       <p className='title'>{title}</p>
@@ -75,6 +75,7 @@ export const TextInputView = ({ title, placeholder, onInputChange, onDidBegin, o
         value={form.value}
         autoComplete={form.type === 'password' ? 'current-password' : form.autocomplete}
         maxLength={form.maxLength ? form.maxLength : -1} // Maximum length
+        autoCapitalize={form.autoCapitalize}
       />
       {form.errorMessage && <p className='errorMessage'>{form.errorMessage}</p>}
     </div>

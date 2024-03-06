@@ -16,6 +16,7 @@ export const LoginView = () => {
         errorMessage: '',
         type: 'email',
         autocomplete: 'on',
+        autoCapitalize: 'none'
     })
 
     const [passwordForm, setPaswordForm] = useState({
@@ -24,7 +25,8 @@ export const LoginView = () => {
         errorMessage: '',
         type: 'password',
         autocomplete: 'off',
-        keyboardType: 'password'
+        keyboardType: 'password',
+        autoCapitalize: 'none'
     })
 
     const { doLogin, loginError, loginSuccess, isLoading } = useLoginViewModel()

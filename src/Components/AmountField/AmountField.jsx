@@ -12,7 +12,8 @@ export const AmountField = ({amount, onAmountDidChanged}) => {
       errorMessage: '',
       type: 'currency',
       autocomplete: 'off',
-      maxLength: 12
+      maxLength: 12,
+      autoCapitalize: 'words'
    })
 
    useEffect(() => {
