@@ -1,0 +1,54 @@
+.box_item__container {
+   display: flex;
+   flex-direction: column;
+   background-color: whitesmoke;
+   padding: 1rem;
+   gap: 1rem;
+}
+
+.box_item__newButton {
+   width: 5rem;
+}
+
+.box_item__container-list {
+   display: flex;
+   flex-direction: column;
+   gap: 1rem;
+}
+
+.box_item__container-list-cell {
+   display: grid;
+   grid-template-columns: 7fr 1fr 1fr 1fr 1fr; /* Ajusta los valores según necesites */
+   align-items: center; /* Alinea los ítems al centro verticalmente */
+   gap: 5px; /* Espacio entre los elementos de la cuadrícula */
+}
+
+.box_item__container-list-cell-buttons {
+   justify-content: right;
+}
+
+.input {
+  /* Estilos para tus inputs si es necesario */
+  border: 1px solid rgb(187, 187, 187);
+  height: 3rem;
+  font-size: 13px;
+}
+
+.box_item__container-list-cell-buttons {
+   display: flex;
+   justify-self: end; /* Alinea el grupo de botones a la derecha */
+   cursor: pointer;
+}
+
+.redButton {
+   fill: red;
+}
+
+.blueButton {
+   fill: blue;
+}
+
+.center {
+   text-align: center;
+   justify-content: center;
+}

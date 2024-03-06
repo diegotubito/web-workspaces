@@ -3,34 +3,14 @@ import './PurchaseView.css'
 import { usePurchaseViewModel } from './usePurchaseViewModel'
 import { useTranslation } from 'react-i18next';
 import { AmountField } from '../../Components/AmountField/AmountField';
+import { BoxItem } from '../../Components/BoxItem/BoxItem';
 
 export const PurchaseView = () => {
    const { t } = useTranslation()
    const { getItems, items } = usePurchaseViewModel()
    const [selectedItem, setSelectedItem] = useState("");
    const [amount, setAmount] = useState(0)
-   const [secondaryItems, setSecondaryItems] = useState([
-      {
-         _id: Date.now().toString(), // Ensuring _id is a string
-         description: 'here comes the description',
-         quantity: 1,
-         price: 1500.55,
-         subTotal: 1500.55,
-      }
-   ])
-
-   const addSecondaryItem = () => {
-      const newSecondaryItem = {
-         _id: Date.now().toString(),
-         description: 'New item description',
-         quantity: 1,
-         price: 100.00,
-         subTotal: 100.00,
-      };
-
-      setSecondaryItems(currentItems => [...currentItems, newSecondaryItem]);
-   };
-
+  
    const handleChange = (event) => {
       const itemId = event.target.value;
       const obj = items.find(item => item._id === itemId);
@@ -68,13 +48,7 @@ export const PurchaseView = () => {
          <AmountField amount={amount} onAmountDidChanged={onAmountDidChanged} />
 
 
-         <div className='purchase_view__secondary-items'>
-            {secondaryItems.map((item) => (
-               <div key={item._id}>
-                  Description: {item.description}, Quantity: {item.quantity}, Price: {item.price}, Subtotal: {item.subTotal}
-               </div>
-            ))}
-         </div>
+         <BoxItem/>
 
 
 

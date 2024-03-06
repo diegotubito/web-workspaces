@@ -58,7 +58,7 @@
 
 @media (min-width: 1200px) {
     .home__left-sidebar {
-        max-width: 50rem;     
+        max-width: 40rem;     
     }
 }
 
@@ -78,6 +78,7 @@
 }
 
 .home__right-sidebar {
+    font-size: 13px;
     background-color: #f0f0f0;
     padding: 1rem;
     width: 100%;
@@ -85,7 +86,7 @@
 
 @media (min-width: 1200px) {
     .home__right-sidebar {
-        max-width: 50rem;
+        max-width: 40rem;
     }     
 }
 
