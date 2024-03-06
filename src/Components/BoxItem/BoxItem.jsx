@@ -1,25 +1,23 @@
 import { Button } from 'react-bootstrap';
 import './BoxItem.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ReactComponent as TrashIcon } from '../../Resources/Images/delete_icon.svg';
 import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
+import { formatCurrency } from '../../Utils/Common/formatCurrency';
 
-export const BoxItem = () => {
+export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
    const { t } = useTranslation()
    const inputRefs = useRef([]);
-   const [items, setItems] = useState([
-      {
-         _id: Date.now().toString(), // Ensuring _id is a string
-         description: '',
-         quantity: 1,
-         price: 0,
-         subTotal: 0,
-         descriptionErrorMessage: '',
-         quantityErrorMessage: '',
-         priceErrorMessage: '',
-      }
-   ])
+   const [items, setItems] = useState([])
+
+   useEffect(() => {
+      setItems(initValues)
+   }, [])
+
+   useEffect(() => {
+      onBoxItemDidChanged(items)
+   }, [items])
 
    const addSecondaryItem = () => {
       let newItem = {
@@ -90,12 +88,18 @@ export const BoxItem = () => {
    }
 
    const onChangeHandler = (event, _id) => {
-      const newValue = event.target.value;
+      let newValue = event.target.value;
       const name = event.target.name;
 
       const index = items.findIndex((item) => item._id === _id);
-
+   
       if (index !== -1) {
+         if (name === 'price_input') {
+            console.log('is currency')
+            newValue = formatCurrency(newValue);
+         }
+
+
          const newItems = [...items];
 
          newItems[index] = {
@@ -166,7 +170,7 @@ export const BoxItem = () => {
                         <input
                            ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
                            className="input center"
-                           type="number"
+                           type="currency"
                            name='price_input'
                            placeholder='Price'
                            value={item.price}

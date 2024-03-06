@@ -28,6 +28,10 @@ export const PurchaseView = () => {
       console.log(value)
    }
 
+   const onBoxItemDidChanged = (items) => {
+      console.log(items)
+   }
+
    return (
       <div className='purchase_view__main'>
          <h1>Purchase View</h1>
@@ -46,12 +50,21 @@ export const PurchaseView = () => {
          </div>
 
          <AmountField amount={amount} onAmountDidChanged={onAmountDidChanged} />
-
-
-         <BoxItem/>
-
-
-
+         <BoxItem
+            initValues={[
+               {
+                  _id: Date.now().toString(), // Ensuring _id is a string
+                  description: '',
+                  quantity: 1,
+                  price: 0,
+                  subTotal: 0,
+                  descriptionErrorMessage: '',
+                  quantityErrorMessage: '',
+                  priceErrorMessage: '',
+               }
+            ]}
+            onBoxItemDidChanged={onBoxItemDidChanged}
+         />
       </div >
    )
 }
