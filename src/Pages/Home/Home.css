@@ -44,7 +44,7 @@
     flex-direction: column;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1200px) {
      .home__main-container {
         flex-direction: row;
      }
@@ -56,9 +56,9 @@
     padding: 3rem;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1200px) {
     .home__left-sidebar {
-        max-width: 40rem;     
+        max-width: 50rem;     
     }
 }
 
@@ -83,9 +83,9 @@
     width: 100%;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1200px) {
     .home__right-sidebar {
-        width: 50rem;
+        max-width: 50rem;
     }     
 }
 
