@@ -74,7 +74,7 @@
     background-color: white;
     flex-grow: 1; /* Take up the remaining space */
     padding: 0rem; /* Add some padding */
-    width: 400rem;
+    width: 100%;
 }
 
 .home__right-sidebar {
@@ -83,9 +83,9 @@
     width: 100%;
 }
 
-@media (min-width: 800) {
+@media (min-width: 800px) {
     .home__right-sidebar {
-        width: 100%;
+        width: 50rem;
     }     
 }
 

@@ -9,6 +9,27 @@ export const PurchaseView = () => {
    const { getItems, items } = usePurchaseViewModel()
    const [selectedItem, setSelectedItem] = useState("");
    const [amount, setAmount] = useState(0)
+   const [secondaryItems, setSecondaryItems] = useState([
+      {
+         _id: Date.now().toString(), // Ensuring _id is a string
+         description: 'here comes the description',
+         quantity: 1,
+         price: 1500.55,
+         subTotal: 1500.55,
+      }
+   ])
+
+   const addSecondaryItem = () => {
+      const newSecondaryItem = {
+         _id: Date.now().toString(),
+         description: 'New item description',
+         quantity: 1,
+         price: 100.00,
+         subTotal: 100.00,
+      };
+
+      setSecondaryItems(currentItems => [...currentItems, newSecondaryItem]);
+   };
 
    const handleChange = (event) => {
       const itemId = event.target.value;
@@ -18,8 +39,9 @@ export const PurchaseView = () => {
    };
 
    useEffect(() => {
-      getItems()
-   }, [])
+      console.log("Getting items and creating default secondary item");
+      getItems();
+   }, []);
 
    const onAmountDidChanged = (value) => {
       setAmount(value)
@@ -29,12 +51,12 @@ export const PurchaseView = () => {
    return (
       <div className='purchase_view__main'>
          <h1>Purchase View</h1>
-        
+
          <div>
             <h3 className='purchase_view__form-title'>Elije el artículo de compra.</h3>
             <select className="form-select" value={selectedItem} onChange={handleChange}>
 
-               { items.map( (item) => {
+               {items.map((item) => {
                   return (
                      <option key={item._id} value={item._id}>{item.title}, {item.description}.</option>
                   )
@@ -43,7 +65,18 @@ export const PurchaseView = () => {
             </select>
          </div>
 
-         <AmountField amount={amount} onAmountDidChanged={onAmountDidChanged}/>
+         <AmountField amount={amount} onAmountDidChanged={onAmountDidChanged} />
+
+
+         <div className='purchase_view__secondary-items'>
+            {secondaryItems.map((item) => (
+               <div key={item._id}>
+                  Description: {item.description}, Quantity: {item.quantity}, Price: {item.price}, Subtotal: {item.subTotal}
+               </div>
+            ))}
+         </div>
+
+
 
       </div >
    )
