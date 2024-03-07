@@ -19,3 +19,15 @@ export const formatCurrency = (value) => {
    // Agregar símbolo de pesos
    return `${formatter.format(formattedValue)}`;
 };
+
+export const convertCurrencyStringToNumber = (currencyString) => {
+   // Verifica si currencyString es de tipo string
+   if (typeof currencyString !== 'string') {
+      // Retorna null o podrías lanzar un error, dependiendo de tu caso de uso
+      return currencyString;
+   }
+
+   const numberString = currencyString.replace(/[^0-9.-]+/g, '');
+   return parseFloat(numberString);
+};
+

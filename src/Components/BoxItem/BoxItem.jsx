@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { ReactComponent as TrashIcon } from '../../Resources/Images/delete_icon.svg';
 import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
-import { formatCurrency } from '../../Utils/Common/formatCurrency';
+import { formatCurrency, convertCurrencyStringToNumber } from '../../Utils/Common/formatCurrency';
 
 export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
    const { t } = useTranslation()
@@ -16,7 +16,13 @@ export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
    }, [])
 
    useEffect(() => {
-      onBoxItemDidChanged(items)
+      
+      const formattedItems = items.map((item) => {
+         return { ...item,
+             price: convertCurrencyStringToNumber(item.price),
+            subTotal: convertCurrencyStringToNumber(item.subTotal)}
+      })
+      onBoxItemDidChanged(formattedItems)
    }, [items])
 
    const addSecondaryItem = () => {
@@ -94,19 +100,26 @@ export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
       const index = items.findIndex((item) => item._id === _id);
    
       if (index !== -1) {
+         if (name === 'quantity_input' && newValue > 99) {
+            newValue = 99
+         } 
+
          if (name === 'price_input') {
-            console.log('is currency')
             newValue = formatCurrency(newValue);
          }
-
-
+         const price = convertCurrencyStringToNumber(name === 'price_input' ? newValue : items[index].price)
+         const quantity = name === 'quantity_input' ? newValue : items[index].quantity 
+         const total = parseFloat((price * quantity)).toFixed(2)
+         console.log(total)
+       
          const newItems = [...items];
 
          newItems[index] = {
             ...newItems[index],
             description: name === 'description_input' ? newValue : items[index].description,
             quantity: name === 'quantity_input' ? newValue : items[index].quantity,
-            price: name === 'price_input' ? newValue : items[index].price
+            price: name === 'price_input' ? newValue : items[index].price,
+            subTotal: formatCurrency(total.toString())
          };
 
          setItems(newItems);
@@ -134,11 +147,13 @@ export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
    return (
       <div className='box_item__container'>
 
+         <Button size='sm' className='box_item__newButton' onClick={() => onNewItem()}>+</Button>
+         
          <div className='box_item__container-list'>
             {items.map((item, index) => (
-               <div className='whole-cell'>
+               <div key={item._id} className='whole-cell'>
 
-                  <div key={item._id} className='box_item__container-list-cell'>
+                  <div className='box_item__container-list-cell'>
                      <div className='box_item__container-list-cell-input'>
                         <input
                            ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
@@ -149,6 +164,7 @@ export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
                            value={item.description}
                            onChange={(event) => onChangeHandler(event, item._id)}
                            onBlur={(event) => onBlurHandler(event, item._id)}
+                           autoComplete='off'
                         />
                         {item.descriptionErrorMessage && <div className="error-message">{item.descriptionErrorMessage}</div>}
                      </div>
@@ -162,6 +178,8 @@ export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
                            value={item.quantity}
                            onChange={(event) => onChangeHandler(event, item._id)}
                            onBlur={(event) => onBlurHandler(event, item._id)}
+                           min="1"
+                           max="99"
                         />
                         {item.quantityErrorMessage && <div className="error-message">{item.quantityErrorMessage}</div>}
                      </div>
@@ -170,12 +188,12 @@ export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
                         <input
                            ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
                            className="input center"
-                           type="currency"
                            name='price_input'
                            placeholder='Price'
                            value={item.price}
                            onChange={(event) => onChangeHandler(event, item._id)}
                            onBlur={(event) => onBlurHandler(event, item._id)}
+                           maxLength={12}
                         />
                         {item.priceErrorMessage && <div className="error-message">{item.priceErrorMessage}</div>}
                      </div>
@@ -184,8 +202,7 @@ export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
                      <div className='box_item__container-list-cell-input'>
                         <input
                            ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
-                           className="input center non-electable"
-                           type="number"
+                           className="input center .non-selectable borderless"
                            name='subTotal_input'
                            placeholder='Subtotal'
                            value={item.subTotal}
@@ -195,12 +212,6 @@ export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
                         />
                         {item.priceErrorMessage && <div className="error-message">{item.priceErrorMessage}</div>}
                      </div>
-
-
-
-
-
-
                   </div>
                   {
                      items.length > 1 &&
@@ -212,7 +223,7 @@ export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
             ))}
          </div>
 
-         <Button className='box_item__newButton' onClick={() => onNewItem()}>+</Button>
+        
 
 
       </div>

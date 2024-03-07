@@ -3,12 +3,14 @@
    display: flex;
    flex-direction: column;
    background-color: whitesmoke;
-   padding: 3rem 1rem;
+   padding: 1rem 1rem;
    gap: 1rem;
 }
 
 .box_item__newButton {
-   width: 5rem;
+   width: 3rem;
+   font-size: large !important;
+   padding: 0 !important;
 }
 
 .box_item__container-list {
@@ -24,7 +26,7 @@
 
 .box_item__container-list-cell {
    display: grid;
-   grid-template-columns: minmax(0, 4fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); /* Ajusta los valores según necesites */
+   grid-template-columns: minmax(0, 2fr) minmax(0, 0.3fr) minmax(0, 0.5fr) minmax(0, 0.5fr); /* Ajusta los valores según necesites */
    align-items: center; /* Alinea los ítems al centro verticalmente */
    gap: 5px; /* Espacio entre los elementos de la cuadrícula */
    align-items: baseline;
@@ -66,4 +68,8 @@
 
 .non-electable {
    user-select: none;
+}
+
+.borderless {
+   border: 1px solid rgb(228, 228, 228);
 }

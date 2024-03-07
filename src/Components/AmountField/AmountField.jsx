@@ -2,7 +2,7 @@ import './AmountField.css'
 import { useTranslation } from 'react-i18next';
 import { TextField } from '../TextField/TextField'
 import { useState, useEffect } from 'react'
-import { formatCurrency } from '../../Utils/Common/formatCurrency';
+import { formatCurrency, convertCurrencyStringToNumber } from '../../Utils/Common/formatCurrency';
 
 export const AmountField = ({amount, onAmountDidChanged}) => {
    const {t} = useTranslation()
@@ -30,11 +30,6 @@ export const AmountField = ({amount, onAmountDidChanged}) => {
             console.log(`Sorry, we are out of scope`);
       }
    }
-
-   const convertCurrencyStringToNumber = (currencyString) => {
-      const numberString = currencyString.replace(/[^0-9.-]+/g, '');
-      return parseFloat(numberString);
-   };
 
    const onDidBeginInput = (name, begin) => {
       if (!begin) {

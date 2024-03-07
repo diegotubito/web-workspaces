@@ -25,11 +25,10 @@ export const PurchaseView = () => {
    }, []);
 
    const onAmountDidChanged = (value) => {
-      console.log(value)
+     
    }
 
    const onBoxItemDidChanged = (items) => {
-      console.log(items)
    }
 
    return (
