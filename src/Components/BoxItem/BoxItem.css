@@ -11,6 +11,8 @@
    width: 3rem;
    font-size: large !important;
    padding: 0 !important;
+   background-color: var(--primary) !important;
+   border: none !important;
 }
 
 .box_item__container-list {
