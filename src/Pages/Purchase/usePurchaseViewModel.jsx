@@ -5,15 +5,13 @@ import { useState } from 'react'
 export const usePurchaseViewModel = () => {
    const { isLoading: purchaseItemIsLoading, fetchPurchaseItemsByWorkspace, error } = usePurchaseRepository()
    const { workspaceSession } = useWorkspaceSession()
-   const [items, setItems] = useState([])
+   const [purchaseItems, setPurchaseItems] = useState([])
    
-   const getItems = async () => {
-      console.log('loading purchase items')
-
+   const getPurchaseItems = async () => {
+   
       try {
          const response = await fetchPurchaseItemsByWorkspace(workspaceSession._id)
-         console.log(response.items)
-         setItems(response.items)
+         setPurchaseItems(response.items)
       } catch (error) {
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
@@ -22,7 +20,7 @@ export const usePurchaseViewModel = () => {
    
    return {
       purchaseItemIsLoading,
-      getItems,
-      items
+      getPurchaseItems,
+      purchaseItems
    }
 }

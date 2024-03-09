@@ -1,0 +1,20 @@
+.input_field_column__container {
+   user-select: none;
+   display: flex;
+   flex-direction: column;
+   background-color: whitesmoke;
+   padding: 1rem 1rem;
+   gap: 1rem;
+   overflow: auto
+}
+
+.input {
+   /* Estilos para tus inputs si es necesario */
+   border: 1px solid rgb(187, 187, 187);
+   height: 3rem;
+   font-size: 13px;
+}
+
+.input_field_column__scrollable {
+  
+}

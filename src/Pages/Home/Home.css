@@ -58,7 +58,8 @@
 
 @media (min-width: 1200px) {
     .home__left-sidebar {
-        max-width: 40rem;     
+    min-width: 40rem;
+    max-width: 40rem;
     }
 }
 
@@ -77,18 +78,26 @@
     width: 100%;
 }
 
+@media (min-width: 1200px) {
+     .home__main-content {
+        min-width: 0rem;
+     }
+}
+
 .home__right-sidebar {
     font-size: 13px;
     background-color: #f0f0f0;
     padding: 1rem;
     width: 100%;
 }
-
 @media (min-width: 1200px) {
     .home__right-sidebar {
+        min-width: 40rem;
         max-width: 40rem;
     }     
 }
+
+
 
 .home__footer {
     height: 5rem;

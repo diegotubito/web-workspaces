@@ -1,0 +1,34 @@
+.object_viewer__main h1 {
+   margin: 0;
+   /* Elimina el margen predeterminado */
+   padding: 0;
+   /* Si también quieres eliminar el padding */
+   /* Puedes agregar más estilos aquí según necesites */
+}
+
+.object_viewer__main {
+   background-color: yellow;
+   height: 100%;
+   width: 100%;
+   /* Ocupa el ancho de su contenedor padre */
+   overflow-x: scroll;
+   /* Habilita el desplazamiento horizontal */
+}
+
+.object_viewer__inner {
+   width: 100%;
+   /* O el ancho que necesites para tu contexto más grande */
+   height: 100%;
+   position: relative;
+   /* Posicionamiento relativo para los hijos */
+}
+
+.object_viewer__box {
+   background-color: blue;
+   width: 5rem;
+   height: 5rem;
+   position: absolute;
+   right: 0;
+   /* Posiciona la caja azul al final del contenedor interno */
+   top: 0;
+}

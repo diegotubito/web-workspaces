@@ -4,26 +4,32 @@ import { usePurchaseViewModel } from './usePurchaseViewModel'
 import { useTranslation } from 'react-i18next';
 import { AmountField } from '../../Components/AmountField/AmountField';
 import { BoxItem } from '../../Components/BoxItem/BoxItem';
+import { ObjectViewer } from '../../Components/ObjectViewer/ObjectViewer';
+import { Button } from 'react-bootstrap';
+import { InputFieldColumn } from '../../Components/InputFieldColumn/InputFieldColumn';
 
 export const PurchaseView = () => {
    const { t } = useTranslation()
-   const { getItems, items } = usePurchaseViewModel()
+   const { getPurchaseItems, purchaseItems } = usePurchaseViewModel()
    const [selectedItem, setSelectedItem] = useState("");
    const [amount, setAmount] = useState(0)
-  
+
+
+   // New Input Field variables
+   const [inputFieldColumnItems, setInputFieldColumnItems] = useState([])
+
    const handleChange = (event) => {
       const itemId = event.target.value;
-      const obj = items.find(item => item._id === itemId);
-      console.log(obj.title)
+      const obj = purchaseItems.find(item => item._id === itemId);
       setSelectedItem(itemId);
    };
 
    useEffect(() => {
-      console.log("Getting items and creating default secondary item");
-      getItems();
+      getPurchaseItems();
       setAmount(15)
    }, []);
 
+   /*
    const onAmountDidChanged = (value) => {
      
    }
@@ -35,6 +41,50 @@ export const PurchaseView = () => {
       })
       setAmount(total)
    }
+   */
+
+   const onNewItemDidPressed = () => {
+      const emptyInputField = createEmptyInputFieldItem()
+
+      setInputFieldColumnItems((currentItems) => {
+         return [...currentItems, emptyInputField]
+      })
+      console.log(inputFieldColumnItems)
+   }
+
+   const createEmptyInputFieldItem = () => {
+      return {
+         _id: Date.now().toString() + 'a', // Ensuring _id is a string
+         title: '',
+         footer: '',
+         fields: [{
+            _id: Date.now().toString() + 'b', // Ensuring _id is a string
+
+            type: 'selector',
+            selectorItems: ['uno', 'dos'],
+            minWidth: '30rem',
+            maxWidth: '2fr',
+         },
+         {
+            _id: Date.now().toString() + 'c', // Ensuring _id is a string
+            type: 'text',
+            minWidth: '10rem',
+            maxWidth: '2fr',
+         },
+         {
+            _id: Date.now().toString() + 'd', // Ensuring _id is a string
+            type: 'text',
+            minWidth: '3rem',
+            maxWidth: '0.3fr',
+         },
+         {
+            _id: Date.now().toString() + 'e', // Ensuring _id is a string
+            type: 'text',
+            minWidth: '10rem',
+            maxWidth: '0.5fr',
+         }]
+      }
+   }
 
    return (
       <div className='purchase_view__main'>
@@ -44,7 +94,7 @@ export const PurchaseView = () => {
             <h3 className='purchase_view__form-title'>Elije el artículo de compra.</h3>
             <select className="form-select" value={selectedItem} onChange={handleChange}>
 
-               {items.map((item) => {
+               {purchaseItems.map((item) => {
                   return (
                      <option key={item._id} value={item._id}>{item.title}, {item.description}.</option>
                   )
@@ -53,7 +103,15 @@ export const PurchaseView = () => {
             </select>
          </div>
 
-         <BoxItem
+         <Button size='sm' className='box_item__newButton' onClick={() => onNewItemDidPressed()}>+</Button>
+
+         <InputFieldColumn
+            items={inputFieldColumnItems}
+         />
+
+
+
+         {/* <BoxItem
             initValues={[
                {
                   _id: Date.now().toString(), // Ensuring _id is a string
@@ -70,6 +128,8 @@ export const PurchaseView = () => {
          />
 
          <AmountField amount={amount} onAmountDidChanged={onAmountDidChanged} />
+
+         <ObjectViewer className='purchase_view__object_viewer'/> */}
 
       </div >
    )

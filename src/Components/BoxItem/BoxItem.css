@@ -28,11 +28,12 @@
 
 .box_item__container-list-cell {
    display: grid;
-   grid-template-columns: minmax(0, 2fr) minmax(0, 0.3fr) minmax(0, 0.5fr) minmax(0, 0.5fr); /* Ajusta los valores según necesites */
+   grid-template-columns: minmax(30rem, 2fr) minmax(10rem, 2fr) minmax(3rem, 0.3fr) minmax(10rem, 0.5fr) minmax(10rem, 0.5fr); /* Ajusta los valores según necesites */
    align-items: center; /* Alinea los ítems al centro verticalmente */
    gap: 5px; /* Espacio entre los elementos de la cuadrícula */
    align-items: baseline;
    width: 100%;
+   overflow: scroll;
 }
 
 .box_item__container-list-cell-buttons {

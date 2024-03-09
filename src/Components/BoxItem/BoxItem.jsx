@@ -5,14 +5,18 @@ import { ReactComponent as TrashIcon } from '../../Resources/Images/delete_icon.
 import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
 import { formatCurrency, convertCurrencyStringToNumber } from '../../Utils/Common/formatCurrency';
+import { usePurchaseViewModel } from '../../Pages/Purchase/usePurchaseViewModel';
 
 export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
    const { t } = useTranslation()
    const inputRefs = useRef([]);
    const [items, setItems] = useState([])
+   const { getItems: getSaleItems, items: saleItems } = usePurchaseViewModel()
+   const [selectedSaleItem, setSelectedSaleItem] = useState()
 
    useEffect(() => {
       setItems(initValues)
+      getSaleItems()
    }, [])
 
    useEffect(() => {
@@ -154,6 +158,18 @@ export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
                <div key={item._id} className='whole-cell'>
 
                   <div className='box_item__container-list-cell'>
+                     <div className='box_item__container-list-cell-input'>
+
+                        <select className="input" id="" value={selectedSaleItem} onChange={console.log('changed')}>
+                           {saleItems.map((item) => {
+                              return (
+                                 <option key={item._id} value={item._id}>{item.title}, {item.description}.</option>
+                              )
+                           }
+                           )}
+                        </select>
+                        {item.descriptionErrorMessage && <div className="error-message">{item.descriptionErrorMessage}</div>}
+                     </div>
                      <div className='box_item__container-list-cell-input'>
                         <input
                            ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
