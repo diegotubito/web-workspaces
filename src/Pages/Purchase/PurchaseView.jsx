@@ -29,6 +29,11 @@ export const PurchaseView = () => {
    }
 
    const onBoxItemDidChanged = (items) => {
+      let total = 0
+      items.map((item) => {
+         total += item.subTotal
+      })
+      setAmount(total)
    }
 
    return (
@@ -48,7 +53,6 @@ export const PurchaseView = () => {
             </select>
          </div>
 
-         <AmountField amount={amount} onAmountDidChanged={onAmountDidChanged} />
          <BoxItem
             initValues={[
                {
@@ -64,6 +68,9 @@ export const PurchaseView = () => {
             ]}
             onBoxItemDidChanged={onBoxItemDidChanged}
          />
+
+         <AmountField amount={amount} onAmountDidChanged={onAmountDidChanged} />
+
       </div >
    )
 }
