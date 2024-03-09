@@ -29,11 +29,24 @@ export const InputFieldColumn = ({ items }) => {
                      {
                         item.fields.map((field) => {
                            return (
-                              <div key={field._id} className='input'
-                                
-                              
-                              >
-                                 <div>{field.type}</div>
+                              <div key={field._id} className='input'>
+                                 {
+                                    field.type === 'selector' ? 
+                                       
+                                       <select id="" style={{ width: '100%', boxSizing: 'border-box' }} className='input' onChange={console.log('changed')}>
+                                          {field.selectorItems.map((selectorItem) => {
+                                             return (
+                                                <option key={selectorItem._id} value={selectorItem._id}>{selectorItem.title}.</option>
+                                             )
+                                          }
+                                          )}
+                                       </select>
+                                     : null
+                                 }
+
+                                 {
+                                    field.type === 'text' ? <div> tipo text </div> : null
+                                 }
                               </div>
                            )
                         })

@@ -61,7 +61,8 @@ export const PurchaseView = () => {
             _id: Date.now().toString() + 'b', // Ensuring _id is a string
 
             type: 'selector',
-            selectorItems: ['uno', 'dos'],
+            selectorItems: [{ _id: Date.now().toString() + 'f', title: 'uno' },
+                            { _id: Date.now().toString() + 'g', title: 'dos' }],
             minWidth: '30rem',
             maxWidth: '2fr',
          },
