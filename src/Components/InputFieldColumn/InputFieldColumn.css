@@ -15,9 +15,11 @@
    font-size: 13px;
    display: flex;
    align-items: center;
+
+   width: 100%;
+   box-sizing: border-box;
 }
 
-.option {
-   display: flex;
-   width: 100%;
+.borderless {
+   border: none;
 }

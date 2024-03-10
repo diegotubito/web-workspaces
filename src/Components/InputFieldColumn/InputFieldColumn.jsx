@@ -1,6 +1,12 @@
 import './InputFieldColumn.css';
 
-export const InputFieldColumn = ({ items }) => {
+export const InputFieldColumn = ({ items, onUpdateItemField }) => {
+
+   const onChangeHandler = (event, itemId, fieldId) => {
+      const newValue = event.target.value;
+      onUpdateItemField(itemId, fieldId, newValue);
+   };
+
    return (
       <div className='input_field_column__container'>
          {/* Title */}
@@ -13,8 +19,8 @@ export const InputFieldColumn = ({ items }) => {
 
             return (
                <div key={item._id} >
-                  
-                  { item.title && <div>{item.title}</div>}
+
+                  {item.title && <div>{item.title}</div>}
 
                   <div className='input_field_column__cell'
                      style={{
@@ -29,23 +35,40 @@ export const InputFieldColumn = ({ items }) => {
                      {
                         item.fields.map((field) => {
                            return (
-                              <div key={field._id} className='input'>
+                              <div key={field._id} className='input borderless'>
                                  {
-                                    field.type === 'selector' ? 
-                                       
-                                       <select id="" style={{ width: '100%', boxSizing: 'border-box' }} className='input' onChange={console.log('changed')}>
+                                    field.type === 'selector' ?
+
+                                       <select id="" className='input' onChange={console.log('changed')}>
                                           {field.selectorItems.map((selectorItem) => {
                                              return (
-                                                <option key={selectorItem._id} value={selectorItem._id}>{selectorItem.title}.</option>
+                                                <option
+                                                   key={selectorItem._id}
+                                                   value={selectorItem._id}
+                                                >{selectorItem.title}</option>
                                              )
                                           }
                                           )}
                                        </select>
-                                     : null
+                                       : null
                                  }
 
                                  {
-                                    field.type === 'text' ? <div> tipo text </div> : null
+                                    field.type === 'text' ?
+
+                                       <div className='input borderless'>
+                                          <input
+                                             // ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
+                                             className='input '
+                                             type="text"
+                                             placeholder='Description'
+                                             value={field.value}
+                                             onChange={(event) => onChangeHandler(event, item._id, field._id)}
+                                             //    onBlur={(event) => onBlurHandler(event, field._id)}
+                                             autoComplete='off'
+                                          />
+
+                                       </div> : null
                                  }
                               </div>
                            )

@@ -14,9 +14,7 @@ export const PurchaseView = () => {
    const [selectedItem, setSelectedItem] = useState("");
    const [amount, setAmount] = useState(0)
 
-
-   // New Input Field variables
-   const [inputFieldColumnItems, setInputFieldColumnItems] = useState([])
+   const [items, setItems] = useState([]);
 
    const handleChange = (event) => {
       const itemId = event.target.value;
@@ -46,10 +44,9 @@ export const PurchaseView = () => {
    const onNewItemDidPressed = () => {
       const emptyInputField = createEmptyInputFieldItem()
 
-      setInputFieldColumnItems((currentItems) => {
+      setItems((currentItems) => {
          return [...currentItems, emptyInputField]
       })
-      console.log(inputFieldColumnItems)
    }
 
    const createEmptyInputFieldItem = () => {
@@ -65,27 +62,50 @@ export const PurchaseView = () => {
                             { _id: Date.now().toString() + 'g', title: 'dos' }],
             minWidth: '30rem',
             maxWidth: '2fr',
+            selectedValue: 1
          },
          {
             _id: Date.now().toString() + 'c', // Ensuring _id is a string
             type: 'text',
             minWidth: '10rem',
             maxWidth: '2fr',
+            value: 'some value'
          },
          {
             _id: Date.now().toString() + 'd', // Ensuring _id is a string
             type: 'text',
             minWidth: '3rem',
             maxWidth: '0.3fr',
+            value: 'some value'
          },
          {
             _id: Date.now().toString() + 'e', // Ensuring _id is a string
             type: 'text',
             minWidth: '10rem',
             maxWidth: '0.5fr',
+            value: 'some value'
          }]
       }
    }
+
+   const updateItemField = (itemId, fieldId, newValue) => {
+      const updatedItems = items.map(item => {
+         if (item._id === itemId) {
+            return {
+               ...item,
+               fields: item.fields.map(field => {
+                  if (field._id === fieldId) {
+                     return { ...field, value: newValue };
+                  }
+                  return field;
+               }),
+            };
+         }
+         return item;
+      });
+
+      setItems(updatedItems);
+   };
 
    return (
       <div className='purchase_view__main'>
@@ -107,7 +127,8 @@ export const PurchaseView = () => {
          <Button size='sm' className='box_item__newButton' onClick={() => onNewItemDidPressed()}>+</Button>
 
          <InputFieldColumn
-            items={inputFieldColumnItems}
+            onUpdateItemField={updateItemField}
+            items={items}
          />
 
 
