@@ -66,7 +66,7 @@ export const PurchaseView = () => {
                             { _id: Date.now().toString() + 'g', title: 'dos' }],
             minWidth: '30rem',
             maxWidth: '2fr',
-            selectedValue: 1
+            value: ''
          },
          {
             _id: Date.now().toString() + 'c', // Ensuring _id is a string
