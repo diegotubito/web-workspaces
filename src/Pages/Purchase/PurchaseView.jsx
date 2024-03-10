@@ -87,7 +87,7 @@ export const PurchaseView = () => {
          },
          {
             _id: Date.now().toString() + 'e', // Ensuring _id is a string
-            type: 'text',
+            type: 'currency',
             minWidth: '10rem',
             maxWidth: '0.5fr',
             value: '',

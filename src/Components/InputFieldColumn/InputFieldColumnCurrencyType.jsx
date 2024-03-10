@@ -1,4 +1,6 @@
-export const InputFieldColumnTextType = ({settings, items, setItems, item, field}) => {
+import { convertCurrencyStringToNumber, formatCurrency } from "../../Utils/Common/formatCurrency";
+
+export const InputFieldColumnCurrencyType = ({ settings, items, setItems, item, field }) => {
 
    const onChangeHandler = (event, itemId, fieldId) => {
       const newValue = event.target.value;
@@ -13,6 +15,9 @@ export const InputFieldColumnTextType = ({settings, items, setItems, item, field
                ...item,
                fields: item.fields.map(field => {
                   if (field._id === fieldId) {
+
+                     newValue = formatCurrency(newValue)
+
                      return { ...field, value: newValue };
                   }
                   return field;
@@ -36,20 +41,21 @@ export const InputFieldColumnTextType = ({settings, items, setItems, item, field
                style={{
                   width: '100%',
                   border: '1px solid rgb(180, 180, 180)',
-                  height: settings.inputHeight
+                  height: settings.inputHeight,
+                  textAlign: 'center',
                }}
                type="text"
-               placeholder='Description'
+               placeholder='$ 0.00'
                value={field.value}
                onChange={(event) => onChangeHandler(event, item._id, field._id)}
                //    onBlur={(event) => onBlurHandler(event, field._id)}
                autoComplete='off'
             />
 
-            {field.errorMessage && <div 
-            style={{
-               color: 'red',
-            }}
+            {field.errorMessage && <div
+               style={{
+                  color: 'red',
+               }}
             >{field.errorMessage}</div>}
 
          </div>

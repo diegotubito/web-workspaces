@@ -4,14 +4,12 @@ import { InputFieldColumnTextType } from './InputFieldColumnTextType';
 import { InputFieldColumnSelectorType } from './InputFieldColumnSelectorType';
 
 import { InputFieldColumnRemove } from './InputFieldColumnRemove';
+import { InputFieldColumnCurrencyType } from './InputFieldColumnCurrencyType';
 
 export const InputFieldColumn = ({ items, setItems }) => {
    const settings = {
       inputHeight: '3rem'
    }
-
-
-  
 
    const getGridValues = (item) => {
       const result = item.fields.map(field => `minmax(${field.minWidth}, ${field.maxWidth})`).join(' ') + ' minmax(1rem, 1rem)'
@@ -73,6 +71,17 @@ export const InputFieldColumn = ({ items, setItems }) => {
                                              field={field}
                                              item={item}
                                           /> : null
+                                    }
+
+                                    {
+                                       field.type === 'currency' ?
+                                       <InputFieldColumnCurrencyType
+                                             settings={settings}
+                                             items={items}
+                                             setItems={setItems}
+                                             field={field}
+                                             item={item}
+                                       /> : null
                                     }
                                  </div>
                               )
