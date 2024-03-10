@@ -1,11 +1,34 @@
+import { useEffect, useState } from 'react';
 import './InputFieldColumn.css';
 
-export const InputFieldColumn = ({ items, onUpdateItemField }) => {
+export const InputFieldColumn = ({ items, setItems }) => {
 
+   
    const onChangeHandler = (event, itemId, fieldId) => {
       const newValue = event.target.value;
-      onUpdateItemField(itemId, fieldId, newValue);
+      const updatedItems = updateItemField(itemId, fieldId, newValue);
+      setItems(updatedItems);
    };
+
+   const updateItemField = (itemId, fieldId, newValue) => {
+      const updatedItems = items.map(item => {
+         if (item._id === itemId) {
+            return {
+               ...item,
+               fields: item.fields.map(field => {
+                  if (field._id === fieldId) {
+                     return { ...field, value: newValue };
+                  }
+                  return field;
+               }),
+            };
+         }
+         return item;
+      });
+
+      return updatedItems
+   };
+
 
    return (
       <div className='input_field_column__container'>

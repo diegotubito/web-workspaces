@@ -13,7 +13,7 @@ export const PurchaseView = () => {
    const { getPurchaseItems, purchaseItems } = usePurchaseViewModel()
    const [selectedItem, setSelectedItem] = useState("");
    const [amount, setAmount] = useState(0)
-
+      
    const [items, setItems] = useState([]);
 
    const handleChange = (event) => {
@@ -26,6 +26,10 @@ export const PurchaseView = () => {
       getPurchaseItems();
       setAmount(15)
    }, []);
+
+   useEffect(() => {
+      console.log(items)
+   }, [items])
 
    /*
    const onAmountDidChanged = (value) => {
@@ -88,25 +92,7 @@ export const PurchaseView = () => {
       }
    }
 
-   const updateItemField = (itemId, fieldId, newValue) => {
-      const updatedItems = items.map(item => {
-         if (item._id === itemId) {
-            return {
-               ...item,
-               fields: item.fields.map(field => {
-                  if (field._id === fieldId) {
-                     return { ...field, value: newValue };
-                  }
-                  return field;
-               }),
-            };
-         }
-         return item;
-      });
-
-      setItems(updatedItems);
-   };
-
+ 
    return (
       <div className='purchase_view__main'>
          <h1>Purchase View</h1>
@@ -127,8 +113,8 @@ export const PurchaseView = () => {
          <Button size='sm' className='box_item__newButton' onClick={() => onNewItemDidPressed()}>+</Button>
 
          <InputFieldColumn
-            onUpdateItemField={updateItemField}
             items={items}
+            setItems={setItems}
          />
 
 
