@@ -6,67 +6,73 @@ import { InputFieldColumnSelectorType } from './InputFieldColumnSelectorType';
 export const InputFieldColumn = ({ items, setItems }) => {
 
    return (
-      <div className='input_field_column__container'>
+
+      <div className='input_field_column__main'>
          {/* Title */}
          <h1>Input Field Column</h1>
 
-         {/* Traversing Items */}
-         {items.map((item) => {
 
-            {/* Traversing Fields */ }
+         <div className='input_field_column__container'>
+            
+            {/* Traversing Items */}
+            {items.map((item) => {
 
-            return (
-               <div key={item._id} >
+               {/* Traversing Fields */ }
 
-                  {item.title && <div>{item.title}</div>}
+               return (
+                  <div key={item._id} >
 
-                  <div className='input_field_column__cell'
-                     style={{
-                        display: 'grid',
-                        gridTemplateColumns: item.fields.map(field => `minmax(${field.minWidth}, ${field.maxWidth})`).join(' '),
-                        alignItems: 'center',
-                        gap: '5px',
-                        width: '100%'
-                     }}
-                  >
+                     {item.title && <div>{item.title}</div>}
 
-                     {
-                        item.fields.map((field) => {
-                           return (
-                              <div key={field._id} className='input_field_column__input input_field_column__borderless'>
-                                 {
-                                    field.type === 'selector' ?
-                                       <InputFieldColumnSelectorType
-                                          items={items}
-                                          setItems={setItems}
-                                          field={field}
-                                          item={item}
-                                       /> : null
-                                 }
+                     <div
+                        style={{
+                           display: 'grid',
+                           gridTemplateColumns: item.fields.map(field => `minmax(${field.minWidth}, ${field.maxWidth})`).join(' '),
+                           alignItems: 'center',
+                           gap: '5px',
+                           width: '100%'
+                        }}
+                     >
+
+                        {
+                           item.fields.map((field) => {
+                              return (
+                                 <div key={field._id} className='input_field_column__input input_field_column__borderless'>
+                                    {
+                                       field.type === 'selector' ?
+                                          <InputFieldColumnSelectorType
+                                             items={items}
+                                             setItems={setItems}
+                                             field={field}
+                                             item={item}
+                                          /> : null
+                                    }
 
 
-                                 {
-                                    field.type === 'text' ?
-                                       <InputFieldColumnTextType
-                                          items={items}
-                                          setItems={setItems}
-                                          field={field}
-                                          item={item}
-                                       /> : null
-                                 }
-                              </div>
-                           )
-                        })
-                     }
+                                    {
+                                       field.type === 'text' ?
+                                          <InputFieldColumnTextType
+                                             items={items}
+                                             setItems={setItems}
+                                             field={field}
+                                             item={item}
+                                          /> : null
+                                    }
+                                 </div>
+                              )
+                           })
+                        }
+
+                     </div>
+
+                     {item.footer && <div>{item.footer}</div>}
 
                   </div>
+               )
 
-                  {item.footer && <div>{item.footer}</div>}
+            })}
 
-               </div>
-            )
-
-         })}
+         </div>
 
       </div>
    );
