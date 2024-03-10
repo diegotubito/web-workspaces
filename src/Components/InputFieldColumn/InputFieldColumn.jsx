@@ -2,8 +2,23 @@ import { useEffect, useState } from 'react';
 import './InputFieldColumn.css';
 import { InputFieldColumnTextType } from './InputFieldColumnTextType';
 import { InputFieldColumnSelectorType } from './InputFieldColumnSelectorType';
+import { ReactComponent as TrashIcon } from '../../Resources/Images/delete_icon.svg';
 
 export const InputFieldColumn = ({ items, setItems }) => {
+
+   const onRemoveButtonClicked = (_id) => {
+      const index = items.findIndex((item) => { return item._id === _id })
+      if (index !== -1) {
+         const newItems = [...items];
+         newItems.splice(index, 1);
+         setItems(newItems);
+      }
+   }
+
+   const getGridValues = (item) => {
+      const result = item.fields.map(field => `minmax(${field.minWidth}, ${field.maxWidth})`).join(' ') + ' minmax(1rem, 1rem)'
+      return result + ' minmax(1rem, 1rem)'
+   }
 
    return (
 
@@ -13,7 +28,7 @@ export const InputFieldColumn = ({ items, setItems }) => {
 
 
          <div className='input_field_column__container'>
-            
+
             {/* Traversing Items */}
             {items.map((item) => {
 
@@ -24,10 +39,11 @@ export const InputFieldColumn = ({ items, setItems }) => {
 
                      {item.title && <div>{item.title}</div>}
 
+
                      <div
                         style={{
                            display: 'grid',
-                           gridTemplateColumns: item.fields.map(field => `minmax(${field.minWidth}, ${field.maxWidth})`).join(' '),
+                           gridTemplateColumns: getGridValues(item),
                            alignItems: 'center',
                            gap: '5px',
                            width: '100%'
@@ -63,7 +79,17 @@ export const InputFieldColumn = ({ items, setItems }) => {
                            })
                         }
 
+                        {
+                           items.length > 1 &&
+                           <div>
+                              <TrashIcon className='input_field_column__trash-button' onClick={() => onRemoveButtonClicked(item._id)} />
+                           </div>
+                        }
+
                      </div>
+
+
+
 
                      {item.footer && <div>{item.footer}</div>}
 

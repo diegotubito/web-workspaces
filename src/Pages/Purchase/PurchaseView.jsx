@@ -67,7 +67,7 @@ export const PurchaseView = () => {
             minWidth: '30rem',
             maxWidth: '2fr',
             value: '',
-            errorMessage: ''
+            errorMessage: 'asdf'
          },
          {
             _id: Date.now().toString() + 'c', // Ensuring _id is a string

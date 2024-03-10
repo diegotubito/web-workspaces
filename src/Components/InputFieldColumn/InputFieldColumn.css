@@ -9,9 +9,12 @@
 
 .input_field_column__container {
    overflow: auto;
+   display: flex;
+   flex-direction: column;
+   gap: 1rem;
+
 }
 
-/* this is done so that every row is at the same level, the error message shows at the same level, too. */
-.input_field_column__cell-height {
-   height: 4.5rem;
-}
+.input_field_column__trash-button {
+   fill: red;
+ }
