@@ -67,7 +67,9 @@ export const PurchaseView = () => {
             minWidth: '30rem',
             maxWidth: '2fr',
             value: '',
-            errorMessage: 'dfasdfasdf'
+            errorMessage: 'dfasdfasdf',
+            isEnabled: false,
+            placeholder: ''
          },
          {
             _id: Date.now().toString() + 'c', // Ensuring _id is a string
@@ -75,7 +77,9 @@ export const PurchaseView = () => {
             minWidth: '10rem',
             maxWidth: '2fr',
             value: '',
-            errorMessage: ''
+            errorMessage: '',
+            isEnabled: false,
+            placeholder: 'Description'
          },
          {
             _id: Date.now().toString() + 'd', // Ensuring _id is a string
@@ -83,7 +87,9 @@ export const PurchaseView = () => {
             minWidth: '3rem',
             maxWidth: '0.3fr',
             value: '',
-            errorMessage: ''
+            errorMessage: '',
+            isEnabled: true,
+            placeholder: ''
          },
          {
             _id: Date.now().toString() + 'e', // Ensuring _id is a string
@@ -91,7 +97,9 @@ export const PurchaseView = () => {
             minWidth: '10rem',
             maxWidth: '0.5fr',
             value: '',
-            errorMessage: ''
+            errorMessage: '',
+            isEnabled: false,
+            placeholder: '$ 0.00'
          }]
       }
    }

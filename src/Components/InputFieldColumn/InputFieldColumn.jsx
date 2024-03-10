@@ -8,7 +8,9 @@ import { InputFieldColumnCurrencyType } from './InputFieldColumnCurrencyType';
 
 export const InputFieldColumn = ({ items, setItems }) => {
    const settings = {
-      inputHeight: '3rem'
+      inputHeight: '3rem',
+      inputBorderColorEnabled: 'rgb(180, 180, 180)',
+      inputBorderColorDisabled: 'rgb(200, 200, 200)',
    }
 
    const getGridValues = (item) => {

@@ -35,15 +35,18 @@ export const InputFieldColumnTextType = ({settings, items, setItems, item, field
                // ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
                style={{
                   width: '100%',
-                  border: '1px solid rgb(180, 180, 180)',
-                  height: settings.inputHeight
+                  border: '1px solid ' + `${field.isEnabled ? settings.inputBorderColorEnabled : settings.inputBorderColorDisabled}`,
+                  height: settings.inputHeight,
+                  userSelect: `${field.isEnabled ? 'revert' : 'none'}`,
+                  outline: `${field.isEnabled ? 'revert' : 'none'}`
                }}
                type="text"
-               placeholder='Description'
+               placeholder={field.placeholder}
                value={field.value}
                onChange={(event) => onChangeHandler(event, item._id, field._id)}
                //    onBlur={(event) => onBlurHandler(event, field._id)}
                autoComplete='off'
+               readOnly={!field.isEnabled}
             />
 
             {field.errorMessage && <div 
