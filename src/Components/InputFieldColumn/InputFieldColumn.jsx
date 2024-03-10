@@ -44,7 +44,7 @@ export const InputFieldColumn = ({ items, setItems }) => {
                         style={{
                            display: 'grid',
                            gridTemplateColumns: getGridValues(item),
-                           alignItems: 'center',
+                           alignItems: 'basement',
                            gap: '5px',
                            width: '100%'
                         }}
@@ -81,9 +81,12 @@ export const InputFieldColumn = ({ items, setItems }) => {
 
                         {
                            items.length > 1 &&
-                           <div>
-                              <TrashIcon className='input_field_column__trash-button' onClick={() => onRemoveButtonClicked(item._id)} />
-                           </div>
+                           <TrashIcon
+                              style={{
+                                 height: '3rem'
+                              }}
+                              className='input_field_column__trash-button'
+                              onClick={() => onRemoveButtonClicked(item._id)} />
                         }
 
                      </div>

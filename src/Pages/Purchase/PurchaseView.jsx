@@ -67,14 +67,14 @@ export const PurchaseView = () => {
             minWidth: '30rem',
             maxWidth: '2fr',
             value: '',
-            errorMessage: 'asdf'
+            errorMessage: 'dfasdfasdf'
          },
          {
             _id: Date.now().toString() + 'c', // Ensuring _id is a string
             type: 'text',
             minWidth: '10rem',
             maxWidth: '2fr',
-            value: 'some value',
+            value: '',
             errorMessage: ''
          },
          {
@@ -82,7 +82,7 @@ export const PurchaseView = () => {
             type: 'text',
             minWidth: '3rem',
             maxWidth: '0.3fr',
-            value: 'some value',
+            value: '',
             errorMessage: ''
          },
          {
@@ -96,7 +96,6 @@ export const PurchaseView = () => {
       }
    }
 
- 
    return (
       <div className='purchase_view__main'>
          <h1>Purchase View</h1>
