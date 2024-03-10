@@ -1,6 +1,6 @@
 import { convertCurrencyStringToNumber, formatCurrency } from "../../Utils/Common/formatCurrency";
 
-export const InputFieldColumnCurrencyType = ({ settings, items, setItems, item, field }) => {
+export const InputFieldColumnQuantityType = ({ settings, items, setItems, item, field }) => {
 
    const onChangeHandler = (event, itemId, fieldId) => {
       const newValue = event.target.value;
@@ -13,7 +13,11 @@ export const InputFieldColumnCurrencyType = ({ settings, items, setItems, item, 
          if (item._id === itemId) {
             let updatedFields = item.fields.map(field => {
                if (field._id === fieldId) {
-                  return { ...field, value: formatCurrency(newValue) };
+                  // Allow empty string, a single '-', or a valid number
+                  const isValidNumber = newValue === "" || /^-?\d+(\.\d+)?$/.test(newValue);
+                  const valueToUpdate = isValidNumber ? newValue : field.value;
+
+                  return { ...field, value: valueToUpdate };
                }
                return field;
             });
@@ -58,7 +62,7 @@ export const InputFieldColumnCurrencyType = ({ settings, items, setItems, item, 
                //    onBlur={(event) => onBlurHandler(event, field._id)}
                autoComplete='off'
                readOnly={!field.isEnabled}
-               maxLength={`${field.maxLength ? field.maxLength : 12}`}
+               maxLength={`${ field.maxLength ? field.maxLength : 5}`}
             />
 
             {field.errorMessage && <div

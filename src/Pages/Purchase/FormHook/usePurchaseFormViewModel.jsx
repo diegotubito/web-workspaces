@@ -1,5 +1,7 @@
-export const usePurchaseFormViewModel = ({setItems}) => {
-   
+import { useEffect, useState } from 'react'
+
+export const usePurchaseFormViewModel = ({items, setItems}) => {
+   const [processedItems, setProcessedItems] = useState([]); // Items con los totales calculados
 
    const createProductItem = () => {
       const emptyInputField = createEmptyProduct()
@@ -23,7 +25,7 @@ export const usePurchaseFormViewModel = ({setItems}) => {
          removeIsAllowed: true,
          fields: [{
             _id: Date.now().toString() + 'b', // Ensuring _id is a string
-
+            name: 'description',
             type: 'selector',
             selectorItems: [{ _id: Date.now().toString() + 'f', title: 'uno' },
             { _id: Date.now().toString() + 'g', title: 'dos' }],
@@ -36,26 +38,31 @@ export const usePurchaseFormViewModel = ({setItems}) => {
          },
          {
             _id: Date.now().toString() + 'd', // Ensuring _id is a string
-            type: 'text',
+            name: 'quantity',
+            type: 'quantity',
             minWidth: '3rem',
             maxWidth: '0.3fr',
             value: '',
             errorMessage: '',
             isEnabled: true,
-            placeholder: ''
+            placeholder: '0',
+            maxLength: '3'
          },
          {
             _id: Date.now().toString() + 'e', // Ensuring _id is a string
+            name: 'sub_total',
             type: 'currency',
             minWidth: '10rem',
             maxWidth: '0.5fr',
             value: '',
             errorMessage: '',
             isEnabled: true,
-            placeholder: '$ 0.00'
+            placeholder: '$ 0.00',
+            maxLength: '12'
          },
          {
             _id: Date.now().toString() + 'f', // Ensuring _id is a string
+            name: 'total',
             type: 'currency',
             minWidth: '10rem',
             maxWidth: '0.5fr',
@@ -75,7 +82,7 @@ export const usePurchaseFormViewModel = ({setItems}) => {
          removeIsAllowed: true,
          fields: [{
             _id: Date.now().toString() + 'b', // Ensuring _id is a string
-
+            name: 'description',
             type: 'text',
             minWidth: '20rem',
             maxWidth: '2fr',
@@ -85,33 +92,14 @@ export const usePurchaseFormViewModel = ({setItems}) => {
             placeholder: 'Description'
          },
          {
-            _id: Date.now().toString() + 'd', // Ensuring _id is a string
-            type: 'text',
-            minWidth: '3rem',
-            maxWidth: '0.3fr',
-            value: '',
-            errorMessage: '',
-            isEnabled: true,
-            placeholder: ''
-         },
-         {
-            _id: Date.now().toString() + 'e', // Ensuring _id is a string
-            type: 'currency',
-            minWidth: '10rem',
-            maxWidth: '0.5fr',
-            value: '',
-            errorMessage: '',
-            isEnabled: true,
-            placeholder: '$ 0.00'
-         },
-         {
             _id: Date.now().toString() + 'f', // Ensuring _id is a string
+            name: 'total',
             type: 'currency',
             minWidth: '10rem',
             maxWidth: '0.5fr',
             value: '',
             errorMessage: '',
-            isEnabled: false,
+            isEnabled: true,
             placeholder: '$ 0.00'
          }]
       }

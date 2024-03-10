@@ -5,6 +5,7 @@ import { InputFieldColumnSelectorType } from './InputFieldColumnSelectorType';
 
 import { InputFieldColumnRemove } from './InputFieldColumnRemove';
 import { InputFieldColumnCurrencyType } from './InputFieldColumnCurrencyType';
+import { InputFieldColumnQuantityType } from './InputFieldColumnQuantity';
 
 export const InputFieldColumn = ({ items, setItems }) => {
    const settings = {
@@ -87,6 +88,19 @@ export const InputFieldColumn = ({ items, setItems }) => {
                                              item={item}
                                        /> : null
                                     }
+
+                                    {
+                                       field.type === 'quantity' ?
+                                          <InputFieldColumnQuantityType
+                                             settings={settings}
+                                             items={items}
+                                             setItems={setItems}
+                                             field={field}
+                                             item={item}
+                                          /> : null
+                                    }
+
+
                                  </div>
                               )
                            })

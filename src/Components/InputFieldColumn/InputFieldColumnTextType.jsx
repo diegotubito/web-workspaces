@@ -47,6 +47,7 @@ export const InputFieldColumnTextType = ({settings, items, setItems, item, field
                //    onBlur={(event) => onBlurHandler(event, field._id)}
                autoComplete='off'
                readOnly={!field.isEnabled}
+               maxLength={`${field.maxLength ? field.maxLength : 300}`}
             />
 
             {field.errorMessage && <div 

@@ -14,7 +14,7 @@ export const PurchaseView = () => {
    const { getPurchaseItems, purchaseItems } = usePurchaseViewModel()
    const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
    const [items, setItems] = useState([]);
-   const { createProductItem, createServiceItem } = usePurchaseFormViewModel({setItems})
+   const { createProductItem, createServiceItem, updateTotal } = usePurchaseFormViewModel({items, setItems})
       
    // 1 - Fetch All Purchase Items From API 
    useEffect(() => {
@@ -23,7 +23,7 @@ export const PurchaseView = () => {
 
    // 2 - We programmatically select a default option, in this case, the first option. 
    useEffect(() => {
-      if (!purchaseItems.isEmpty) {
+      if (purchaseItems.length > 0) {
          setSelectedPurchaseItem(purchaseItems[0]._id)
       }
    }, [purchaseItems])
@@ -60,7 +60,8 @@ export const PurchaseView = () => {
 
    // 1 - This is when items change
    useEffect(() => {
-
+     // here I can't modify items, endless loop.
+      
    }, [items])
 
    return (
