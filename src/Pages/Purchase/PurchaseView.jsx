@@ -15,7 +15,7 @@ export const PurchaseView = () => {
    const [amount, setAmount] = useState(0)
       
    const [items, setItems] = useState([]);
-
+ 
    const handleChange = (event) => {
       const itemId = event.target.value;
       const obj = purchaseItems.find(item => item._id === itemId);
@@ -90,7 +90,7 @@ export const PurchaseView = () => {
             type: 'text',
             minWidth: '10rem',
             maxWidth: '0.5fr',
-            value: 'some value',
+            value: '',
             errorMessage: ''
          }]
       }

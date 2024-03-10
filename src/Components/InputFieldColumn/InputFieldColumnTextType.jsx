@@ -1,4 +1,4 @@
-export const InputFieldColumnTextType = ({items, setItems, item, field}) => {
+export const InputFieldColumnTextType = ({settings, items, setItems, item, field}) => {
 
    const onChangeHandler = (event, itemId, fieldId) => {
       const newValue = event.target.value;
@@ -36,7 +36,7 @@ export const InputFieldColumnTextType = ({items, setItems, item, field}) => {
                style={{
                   width: '100%',
                   border: '1px solid rgb(180, 180, 180)',
-                  height: '3rem'
+                  height: settings.inputHeight
                }}
                type="text"
                placeholder='Description'

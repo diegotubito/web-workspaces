@@ -1,4 +1,4 @@
-export const InputFieldColumnSelectorType = ({ items, setItems, item: receivedItem, field: receivedField }) => {
+export const InputFieldColumnSelectorType = ({ settings, items, setItems, item: receivedItem, field: receivedField }) => {
    const handleSelectorChange = (event) => {
       const selectedOptionId = event.target.value
       const updatedItem = updateItemField(selectedOptionId)
@@ -31,7 +31,7 @@ export const InputFieldColumnSelectorType = ({ items, setItems, item: receivedIt
             style={{
                width: '100%',
                border: '1px solid rgb(180, 180, 180)',
-               height: '3rem'
+               height: settings.inputHeight
             }}
             id=""
             onChange={(event) => handleSelectorChange(event)}>

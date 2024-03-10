@@ -5,6 +5,10 @@ import { InputFieldColumnSelectorType } from './InputFieldColumnSelectorType';
 import { ReactComponent as TrashIcon } from '../../Resources/Images/delete_icon.svg';
 
 export const InputFieldColumn = ({ items, setItems }) => {
+   const settings = {
+      inputHeight: '3rem'
+   }
+
 
    const onRemoveButtonClicked = (_id) => {
       const index = items.findIndex((item) => { return item._id === _id })
@@ -57,6 +61,7 @@ export const InputFieldColumn = ({ items, setItems }) => {
                                     {
                                        field.type === 'selector' ?
                                           <InputFieldColumnSelectorType
+                                             settings={settings}
                                              items={items}
                                              setItems={setItems}
                                              field={field}
@@ -68,6 +73,7 @@ export const InputFieldColumn = ({ items, setItems }) => {
                                     {
                                        field.type === 'text' ?
                                           <InputFieldColumnTextType
+                                             settings={settings}
                                              items={items}
                                              setItems={setItems}
                                              field={field}
@@ -83,26 +89,18 @@ export const InputFieldColumn = ({ items, setItems }) => {
                            items.length > 1 &&
                            <TrashIcon
                               style={{
-                                 height: '3rem'
+                                 height: settings.inputHeight
                               }}
                               className='input_field_column__trash-button'
                               onClick={() => onRemoveButtonClicked(item._id)} />
                         }
 
                      </div>
-
-
-
-
                      {item.footer && <div>{item.footer}</div>}
-
                   </div>
                )
-
             })}
-
          </div>
-
       </div>
    );
 };
