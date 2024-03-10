@@ -27,17 +27,33 @@ export const InputFieldColumnTextType = ({items, setItems, item, field}) => {
 
 
    return (
-      <div className='input_field_column__input input_field_column__borderless'>
-         <input
-            // ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
-            className='input_field_column__input '
-            type="text"
-            placeholder='Description'
-            value={field.value}
-            onChange={(event) => onChangeHandler(event, item._id, field._id)}
-            //    onBlur={(event) => onBlurHandler(event, field._id)}
-            autoComplete='off'
-         />
+      <div>
+
+         <div className='input_field_column__cell-height'>
+
+            <input
+               // ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
+               style={{
+                  width: '100%',
+                  border: '1px solid rgb(180, 180, 180)',
+                  height: '3rem'
+               }}
+               type="text"
+               placeholder='Description'
+               value={field.value}
+               onChange={(event) => onChangeHandler(event, item._id, field._id)}
+               //    onBlur={(event) => onBlurHandler(event, field._id)}
+               autoComplete='off'
+            />
+
+            {field.errorMessage && <div 
+            style={{
+               color: 'red',
+            }}
+            >{field.errorMessage}</div>}
+
+         </div>
+
 
       </div>
    )

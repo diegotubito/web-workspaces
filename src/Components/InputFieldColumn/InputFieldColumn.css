@@ -11,18 +11,7 @@
    overflow: auto;
 }
 
-.input_field_column__input {
-   /* Estilos para tus inputs si es necesario */
-   border: 1px solid rgb(180, 180, 180);
-   height: 3rem;
-   font-size: 13px;
-   display: flex;
- 
-   width: 100%;
-   box-sizing: border-box;
-   margin-bottom: 2rem;
-}
-
-.input_field_column__borderless {
-   border: none;
+/* this is done so that every row is at the same level, the error message shows at the same level, too. */
+.input_field_column__cell-height {
+   height: 4.5rem;
 }

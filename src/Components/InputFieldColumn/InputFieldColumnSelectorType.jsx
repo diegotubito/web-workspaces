@@ -1,4 +1,4 @@
-export const InputFieldColumnSelectorType = ({items, setItems, item:receivedItem, field: receivedField}) => {
+export const InputFieldColumnSelectorType = ({ items, setItems, item: receivedItem, field: receivedField }) => {
    const handleSelectorChange = (event) => {
       const selectedOptionId = event.target.value
       const updatedItem = updateItemField(selectedOptionId)
@@ -8,14 +8,16 @@ export const InputFieldColumnSelectorType = ({items, setItems, item:receivedItem
    const updateItemField = (selectedOptionId) => {
       const updatedItem = items.map((item) => {
          if (item._id === receivedItem._id) {
-            return { ...item, fields: item.fields.map((field) => {
-               if (field._id === receivedField._id) {
-                  return { ...field, value: selectedOptionId }
-               }
-               return field
+            return {
+               ...item, fields: item.fields.map((field) => {
+                  if (field._id === receivedField._id) {
+                     return { ...field, value: selectedOptionId }
+                  }
+                  return field
 
-            })}
-         } 
+               })
+            }
+         }
          return item
       })
 
@@ -23,16 +25,33 @@ export const InputFieldColumnSelectorType = ({items, setItems, item:receivedItem
    }
 
    return (
-      <select id="" className='input_field_column__input' onChange={(event)=>handleSelectorChange(event)}>
-         {receivedField.selectorItems.map((selectorItem) => {
-            return (
-               <option
-                  key={selectorItem._id}
-                  value={selectorItem._id}
-               >{selectorItem.title}</option>
-            )
-         }
-         )}
-      </select>
+      <div className='input_field_column__cell-height'>
+
+         <select
+            style={{
+               width: '100%',
+               border: '1px solid rgb(180, 180, 180)',
+               height: '3rem'
+            }}
+            id=""
+            onChange={(event) => handleSelectorChange(event)}>
+            {receivedField.selectorItems.map((selectorItem) => {
+               return (
+                  <option
+                     key={selectorItem._id}
+                     value={selectorItem._id}
+                  >{selectorItem.title}</option>
+               )
+            }
+            )}
+         </select>
+
+         {receivedField.errorMessage && <div
+            style={{
+               color: 'red',
+            }}
+         >{receivedField.errorMessage}</div>}
+
+      </div>
    )
 }

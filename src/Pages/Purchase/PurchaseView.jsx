@@ -66,28 +66,32 @@ export const PurchaseView = () => {
                             { _id: Date.now().toString() + 'g', title: 'dos' }],
             minWidth: '30rem',
             maxWidth: '2fr',
-            value: ''
+            value: '',
+            errorMessage: ''
          },
          {
             _id: Date.now().toString() + 'c', // Ensuring _id is a string
             type: 'text',
             minWidth: '10rem',
             maxWidth: '2fr',
-            value: 'some value'
+            value: 'some value',
+            errorMessage: ''
          },
          {
             _id: Date.now().toString() + 'd', // Ensuring _id is a string
             type: 'text',
             minWidth: '3rem',
             maxWidth: '0.3fr',
-            value: 'some value'
+            value: 'some value',
+            errorMessage: ''
          },
          {
             _id: Date.now().toString() + 'e', // Ensuring _id is a string
             type: 'text',
             minWidth: '10rem',
             maxWidth: '0.5fr',
-            value: 'some value'
+            value: 'some value',
+            errorMessage: ''
          }]
       }
    }

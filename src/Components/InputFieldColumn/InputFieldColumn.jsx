@@ -37,7 +37,7 @@ export const InputFieldColumn = ({ items, setItems }) => {
                         {
                            item.fields.map((field) => {
                               return (
-                                 <div key={field._id} className='input_field_column__input input_field_column__borderless'>
+                                 <div key={field._id}>
                                     {
                                        field.type === 'selector' ?
                                           <InputFieldColumnSelectorType
