@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import './InputFieldColumn.css';
 import { InputFieldColumnTextType } from './InputFieldColumnTextType';
 import { InputFieldColumnSelectorType } from './InputFieldColumnSelectorType';
-import { ReactComponent as TrashIcon } from '../../Resources/Images/delete_icon.svg';
+
+import { InputFieldColumnRemove } from './InputFieldColumnRemove';
 
 export const InputFieldColumn = ({ items, setItems }) => {
    const settings = {
@@ -10,14 +11,7 @@ export const InputFieldColumn = ({ items, setItems }) => {
    }
 
 
-   const onRemoveButtonClicked = (_id) => {
-      const index = items.findIndex((item) => { return item._id === _id })
-      if (index !== -1) {
-         const newItems = [...items];
-         newItems.splice(index, 1);
-         setItems(newItems);
-      }
-   }
+  
 
    const getGridValues = (item) => {
       const result = item.fields.map(field => `minmax(${field.minWidth}, ${field.maxWidth})`).join(' ') + ' minmax(1rem, 1rem)'
@@ -87,12 +81,12 @@ export const InputFieldColumn = ({ items, setItems }) => {
 
                         {
                            items.length > 1 &&
-                           <TrashIcon
-                              style={{
-                                 height: settings.inputHeight
-                              }}
-                              className='input_field_column__trash-button'
-                              onClick={() => onRemoveButtonClicked(item._id)} />
+                           <InputFieldColumnRemove 
+                              settings={settings}
+                              items={items}
+                              setItems={setItems}
+                              item={item}
+                           />
                         }
 
                      </div>
