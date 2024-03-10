@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './InputFieldColumn.css';
 import { InputFieldColumnTextType } from './InputFieldColumnTextType';
+import { InputFieldColumnSelectorType } from './InputFieldColumnSelectorType';
 
 export const InputFieldColumn = ({ items, setItems }) => {
 
@@ -35,20 +36,14 @@ export const InputFieldColumn = ({ items, setItems }) => {
                               <div key={field._id} className='input_field_column__input input_field_column__borderless'>
                                  {
                                     field.type === 'selector' ?
-
-                                       <select id="" className='input_field_column__input' onChange={console.log('changed')}>
-                                          {field.selectorItems.map((selectorItem) => {
-                                             return (
-                                                <option
-                                                   key={selectorItem._id}
-                                                   value={selectorItem._id}
-                                                >{selectorItem.title}</option>
-                                             )
-                                          }
-                                          )}
-                                       </select>
-                                       : null
+                                       <InputFieldColumnSelectorType
+                                          items={items}
+                                          setItems={setItems}
+                                          field={field}
+                                          item={item}
+                                       /> : null
                                  }
+
 
                                  {
                                     field.type === 'text' ?
