@@ -58,6 +58,7 @@ export const PurchaseView = () => {
          _id: Date.now().toString() + 'a', // Ensuring _id is a string
          title: '',
          footer: '',
+         removeIsAllowed: true,
          fields: [{
             _id: Date.now().toString() + 'b', // Ensuring _id is a string
 
@@ -68,7 +69,7 @@ export const PurchaseView = () => {
             maxWidth: '2fr',
             value: '',
             errorMessage: 'dfasdfasdf',
-            isEnabled: false,
+            isEnabled: true,
             placeholder: ''
          },
          {

@@ -14,8 +14,10 @@ export const InputFieldColumn = ({ items, setItems }) => {
    }
 
    const getGridValues = (item) => {
-      const result = item.fields.map(field => `minmax(${field.minWidth}, ${field.maxWidth})`).join(' ') + ' minmax(1rem, 1rem)'
-      return result + ' minmax(1rem, 1rem)'
+      const forInputs = item.fields.map(field => `minmax(${field.minWidth}, ${field.maxWidth})`).join(' ')
+      const forInputsWithRemoveButton = forInputs + ' minmax(1rem, 1rem) minmax(1rem, 1rem)'
+
+      return item.removeIsAllowed ? forInputsWithRemoveButton : forInputs
    }
 
    return (
@@ -91,7 +93,7 @@ export const InputFieldColumn = ({ items, setItems }) => {
                         }
 
                         {
-                           items.length > 1 &&
+                           items.length > 1 && item.removeIsAllowed &&
                            <InputFieldColumnRemove 
                               settings={settings}
                               items={items}

@@ -17,6 +17,7 @@ export const InputFieldColumnRemove = ({ settings, items, setItems, item }) => {
             height: settings.inputHeight
          }}
          className='input_field_column__trash-button'
-         onClick={() => onRemoveButtonClicked(item._id)} />
+         onClick={() => onRemoveButtonClicked(item._id)} 
+         />
    )
 }

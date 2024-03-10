@@ -34,7 +34,9 @@ export const InputFieldColumnSelectorType = ({ settings, items, setItems, item: 
                height: settings.inputHeight
             }}
             id=""
-            onChange={(event) => handleSelectorChange(event)}>
+            onChange={(event) => handleSelectorChange(event)}
+            disabled={!receivedField.isEnabled}
+            >
             {receivedField.selectorItems.map((selectorItem) => {
                return (
                   <option
