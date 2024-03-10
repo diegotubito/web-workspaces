@@ -10,7 +10,7 @@ export const InputFieldColumn = ({ items, setItems }) => {
    const settings = {
       inputHeight: '3rem',
       inputBorderColorEnabled: 'rgb(180, 180, 180)',
-      inputBorderColorDisabled: 'rgb(200, 200, 200)',
+      inputBorderColorDisabled: 'rgb(220, 220, 220)',
    }
 
    const getGridValues = (item) => {
