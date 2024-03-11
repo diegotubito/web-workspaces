@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const usePurchaseFormViewModel = ({items, setItems}) => {
+export const usePurchaseFormViewModel = ({ items, setItems, saleItems }) => {
    const [processedItems, setProcessedItems] = useState([]); // Items con los totales calculados
 
    const createProductItem = () => {
@@ -18,6 +18,7 @@ export const usePurchaseFormViewModel = ({items, setItems}) => {
    }
 
    const createEmptyProduct = () => {
+
       return {
          _id: Date.now().toString() + 'a', // Ensuring _id is a string
          title: '',
@@ -27,8 +28,12 @@ export const usePurchaseFormViewModel = ({items, setItems}) => {
             _id: Date.now().toString() + 'b', // Ensuring _id is a string
             name: 'description',
             type: 'selector',
-            selectorItems: [{ _id: Date.now().toString() + 'f', title: 'uno' },
-            { _id: Date.now().toString() + 'g', title: 'dos' }],
+            selectorItems: saleItems
+               .filter(saleItem => saleItem.itemType === 'BE_ITEMTYPE_PHYSICAL')
+               .map(saleItem => ({
+                  _id: saleItem._id,
+                  title: saleItem.title
+               })),
             minWidth: '20rem',
             maxWidth: '2fr',
             value: '',

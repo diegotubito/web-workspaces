@@ -1,25 +1,29 @@
 import { useEffect, useState } from 'react'
 import './PurchaseView.css'
-import { usePurchaseViewModel } from './usePurchaseViewModel'
+import { usePurchaseViewModel } from '../../Hooks/PurchaseItem/usePurchaseViewModel'
 import { useTranslation } from 'react-i18next';
-import { AmountField } from '../../Components/AmountField/AmountField';
-import { BoxItem } from '../../Components/BoxItem/BoxItem';
-import { ObjectViewer } from '../../Components/ObjectViewer/ObjectViewer';
 import { Button } from 'react-bootstrap';
 import { usePurchaseFormViewModel } from './FormHook/usePurchaseFormViewModel';
 import { InputFieldColumn } from '../../Components/InputFieldColumn/InputFieldColumn'
+import { useSaleItemViewModel } from '../../Hooks/SaleItem/useSaleItemViewModel';
 
 export const PurchaseView = () => {
    const { t } = useTranslation()
+   const { getSaleItems, saleItems, saleItemsIsLoading } = useSaleItemViewModel()
    const { getPurchaseItems, purchaseItems } = usePurchaseViewModel()
    const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
    const [items, setItems] = useState([]);
-   const { createProductItem, createServiceItem, updateTotal } = usePurchaseFormViewModel({items, setItems})
+   const { createProductItem, createServiceItem, updateTotal } = usePurchaseFormViewModel({ items, setItems, saleItems })
       
    // 1 - Fetch All Purchase Items From API 
    useEffect(() => {
       getPurchaseItems();
+      getSaleItems();
    }, []);
+
+   useEffect(() => {
+      console.log(saleItems)
+   }, [saleItems])
 
    // 2 - We programmatically select a default option, in this case, the first option. 
    useEffect(() => {
@@ -45,8 +49,8 @@ export const PurchaseView = () => {
       const obj = purchaseItems.find(item => item._id === selectedPurchaseItem);
       if (!obj) { return }
 
-      if (obj.itemType === 'BE_ITEMTYPE_PHSYSICAL') {
-         createProductItem()
+      if (obj.itemType === 'BE_ITEMTYPE_PHYSICAL') {
+        createProductItem()
       } else if (obj.itemType === 'BE_ITEMTYPE_SERVICE') {
          createServiceItem()
       }
@@ -61,6 +65,7 @@ export const PurchaseView = () => {
    // 1 - This is when items change
    useEffect(() => {
      // here I can't modify items, endless loop.
+     console.log(items)
       
    }, [items])
 

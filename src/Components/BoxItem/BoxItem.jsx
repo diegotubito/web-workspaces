@@ -5,7 +5,7 @@ import { ReactComponent as TrashIcon } from '../../Resources/Images/delete_icon.
 import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
 import { formatCurrency, convertCurrencyStringToNumber } from '../../Utils/Common/formatCurrency';
-import { usePurchaseViewModel } from '../../Pages/Purchase/usePurchaseViewModel';
+import { usePurchaseViewModel } from '../../Hooks/PurchaseItem/usePurchaseViewModel';
 
 export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
    const { t } = useTranslation()
