@@ -12,7 +12,7 @@ import { convertCurrencyStringToNumber, formatCurrency } from '../../Utils/Commo
 export const PurchaseView = () => {
    const { t } = useTranslation()
    const { getSaleItems, saleItems, saleItemsIsLoading, error } = useSaleItemViewModel()
-   const { getPurchaseItems, purchaseItems } = usePurchaseViewModel()
+   const { getPurchaseItems, purchaseItems, createPurchaseOrder } = usePurchaseViewModel()
    const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
    const [items, setItems] = useState([]);
    const { createProductItem, createServiceItem, updateTotal } = usePurchaseFormViewModel({ items, setItems, saleItems })
@@ -91,6 +91,10 @@ export const PurchaseView = () => {
       }
    }
 
+   const onCreateOrderDidPressed = () => {
+      createPurchaseOrder(items, convertCurrencyStringToNumber(totalAmount))
+   }
+
    return (
       <div className='purchase_view__main purchase_view__gap'>
          <h1>Purchase View</h1>
@@ -123,7 +127,7 @@ export const PurchaseView = () => {
                   <h3 className='purchase_view__total-amount'>{formatCurrency(totalAmount.toFixed(2).toString())}</h3>
                </div>
 
-               <Button className='purchase_view__create-button' size='lr' onClick={() => onNewItemDidPressed()}>Create New Purchase Order</Button>
+               <Button className='purchase_view__create-button' size='lr' onClick={() => onCreateOrderDidPressed()}>Create New Purchase Order</Button>
             </div>
          }
       </div >
