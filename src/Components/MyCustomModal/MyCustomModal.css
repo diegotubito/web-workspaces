@@ -11,6 +11,8 @@
      justify-content: center;
      flex-direction: column;
      align-items: center;
+
+     z-index: 1001;
 }
 
 .custom-modal__content {

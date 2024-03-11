@@ -25,7 +25,7 @@ export const PurchaseView = () => {
    }, []);
 
    useEffect(() => {
-    
+
    }, [saleItems])
 
    // 2 - We programmatically select a default option, in this case, the first option. 
@@ -68,7 +68,7 @@ export const PurchaseView = () => {
    // 1 - This is when items change
    useEffect(() => {
       // here I can't modify items, endless loop.
-     updateTotalAmount()
+      updateTotalAmount()
 
    }, [items])
 
@@ -112,7 +112,7 @@ export const PurchaseView = () => {
                <Button className='purchase_view__add-button' size='lr' onClick={() => onNewItemDidPressed()}>Add New</Button>
 
                <InputFieldColumn
-               title="Your items"
+                  title="Your items"
                   items={items}
                   setItems={setItems}
                />
@@ -121,7 +121,9 @@ export const PurchaseView = () => {
                <div className='purchase_view__total-amount-main'>
                   <h3>Total</h3>
                   <h3 className='purchase_view__total-amount'>{formatCurrency(totalAmount.toFixed(2).toString())}</h3>
-                  </div>   
+               </div>
+
+               <Button className='purchase_view__create-button' size='lr' onClick={() => onNewItemDidPressed()}>Create New Purchase Order</Button>
             </div>
          }
       </div >

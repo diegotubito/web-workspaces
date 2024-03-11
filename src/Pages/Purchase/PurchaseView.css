@@ -60,3 +60,9 @@
    width: 10rem;
    font-size: 17px !important;
 }
+.purchase_view__create-button {
+   width: 30rem;
+   font-size: 17px !important;
+   background-color: rgb(213, 88, 21) !important;
+   border: none !important;
+}
