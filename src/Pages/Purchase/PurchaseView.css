@@ -53,3 +53,7 @@
    width: 20rem;
    text-align: end;
 }
+
+.purchase_view__add-button {
+   width: 10rem;
+}

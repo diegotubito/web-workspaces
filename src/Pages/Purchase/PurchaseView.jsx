@@ -109,7 +109,7 @@ export const PurchaseView = () => {
                   </select>
                </div>
 
-               <Button size='lr' onClick={() => onNewItemDidPressed()}>Add New</Button>
+               <Button className='purchase_view__add-button' size='lr' onClick={() => onNewItemDidPressed()}>Add New</Button>
 
                <InputFieldColumn
                   items={items}
