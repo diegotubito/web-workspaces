@@ -1,6 +1,6 @@
 import { convertCurrencyStringToNumber, formatCurrency } from "../../Utils/Common/formatCurrency";
 
-export const InputFieldColumnCurrencyType = ({ settings, items, setItems, item, field }) => {
+export const InputFieldColumnCurrencyType = ({ settings, items, setItems, item, field, setTotal }) => {
 
    const onChangeHandler = (event, itemId, fieldId) => {
       const newValue = event.target.value;
@@ -47,7 +47,8 @@ export const InputFieldColumnCurrencyType = ({ settings, items, setItems, item, 
                   width: '100%',
                   border: '1px solid ' + `${field.isEnabled ? settings.inputBorderColorEnabled : settings.inputBorderColorDisabled}`,
                   height: settings.inputHeight,
-                  textAlign: 'center',
+                  textAlign: 'end',
+                  padding: '0rem 0.5rem',
                   userSelect: `${field.isEnabled ? 'revert' : 'none'}`,
                   outline: `${field.isEnabled ? 'revert' : 'none'}`
                }}

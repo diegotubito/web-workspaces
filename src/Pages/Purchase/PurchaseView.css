@@ -5,13 +5,18 @@
     background-color: rgb(205, 223, 227);
     overflow: scroll;
     padding: 2rem;
-    gap: 1.5rem;
 }
 
 .purchase_view__form-title {
    font-size: 14px;
-   margin: 0rem; /* Explicitly remove margin from <p> */
+   margin-bottom: 0.5rem; /* Explicitly remove margin from <p> */
    font-weight: 700;
+}
+
+.purchase_view__gap {
+   display: flex;
+      flex-direction: column;
+      gap: 2rem;
 }
 
 .form-select {
@@ -31,6 +36,20 @@
    max-width: 20rem;
 }
 
-.purchase_view__object_viewer {
-  
+.purchase_view__total-amount-main {
+   display: flex;
+   justify-content: end;
+   align-items: center;
+   gap: 1rem;
+   color: gray;
+   user-select: none;
+
+}
+
+.purchase_view__total-amount {
+   background-color: whitesmoke;
+   padding: 1rem;
+   border-radius: 4px;
+   width: 20rem;
+   text-align: end;
 }

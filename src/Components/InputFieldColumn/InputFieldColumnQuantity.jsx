@@ -1,6 +1,6 @@
 import { convertCurrencyStringToNumber, formatCurrency } from "../../Utils/Common/formatCurrency";
 
-export const InputFieldColumnQuantityType = ({ settings, items, setItems, item, field }) => {
+export const InputFieldColumnQuantityType = ({ settings, items, setItems, item, field, setTotal }) => {
 
    const onChangeHandler = (event, itemId, fieldId) => {
       const newValue = event.target.value;

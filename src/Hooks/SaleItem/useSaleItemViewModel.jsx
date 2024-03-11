@@ -17,5 +17,5 @@ export const useSaleItemViewModel = () => {
       }
    }
 
-   return { getSaleItems, saleItems, saleItemsIsLoading: isLoading }
+   return { getSaleItems, saleItems, saleItemsIsLoading: isLoading, error }
 }

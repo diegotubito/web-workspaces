@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 
 export const usePurchaseFormViewModel = ({ items, setItems, saleItems }) => {
-   const [processedItems, setProcessedItems] = useState([]); // Items con los totales calculados
-
    const createProductItem = () => {
       const emptyInputField = createEmptyProduct()
       setItems((currentItems) => {

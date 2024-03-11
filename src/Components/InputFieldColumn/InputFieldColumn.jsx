@@ -6,6 +6,7 @@ import { InputFieldColumnSelectorType } from './InputFieldColumnSelectorType';
 import { InputFieldColumnRemove } from './InputFieldColumnRemove';
 import { InputFieldColumnCurrencyType } from './InputFieldColumnCurrencyType';
 import { InputFieldColumnQuantityType } from './InputFieldColumnQuantity';
+import { formatCurrency } from '../../Utils/Common/formatCurrency';
 
 export const InputFieldColumn = ({ items, setItems }) => {
    const settings = {
@@ -121,7 +122,9 @@ export const InputFieldColumn = ({ items, setItems }) => {
                   </div>
                )
             })}
+
          </div>
+         
       </div>
    );
 };

@@ -37,6 +37,7 @@ export const InputFieldColumnTextType = ({settings, items, setItems, item, field
                   width: '100%',
                   border: '1px solid ' + `${field.isEnabled ? settings.inputBorderColorEnabled : settings.inputBorderColorDisabled}`,
                   height: settings.inputHeight,
+                  padding: '0rem 0.5rem',
                   userSelect: `${field.isEnabled ? 'revert' : 'none'}`,
                   outline: `${field.isEnabled ? 'revert' : 'none'}`
                }}

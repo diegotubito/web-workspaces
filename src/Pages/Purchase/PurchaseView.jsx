@@ -6,15 +6,18 @@ import { Button } from 'react-bootstrap';
 import { usePurchaseFormViewModel } from './FormHook/usePurchaseFormViewModel';
 import { InputFieldColumn } from '../../Components/InputFieldColumn/InputFieldColumn'
 import { useSaleItemViewModel } from '../../Hooks/SaleItem/useSaleItemViewModel';
+import { AmountField } from '../../Components/AmountField/AmountField'
+import { convertCurrencyStringToNumber, formatCurrency } from '../../Utils/Common/formatCurrency';
 
 export const PurchaseView = () => {
    const { t } = useTranslation()
-   const { getSaleItems, saleItems, saleItemsIsLoading } = useSaleItemViewModel()
+   const { getSaleItems, saleItems, saleItemsIsLoading, error } = useSaleItemViewModel()
    const { getPurchaseItems, purchaseItems } = usePurchaseViewModel()
    const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
    const [items, setItems] = useState([]);
    const { createProductItem, createServiceItem, updateTotal } = usePurchaseFormViewModel({ items, setItems, saleItems })
-      
+   const [totalAmount, setTotalAmount] = useState(0)
+
    // 1 - Fetch All Purchase Items From API 
    useEffect(() => {
       getPurchaseItems();
@@ -22,7 +25,7 @@ export const PurchaseView = () => {
    }, []);
 
    useEffect(() => {
-      console.log(saleItems)
+    
    }, [saleItems])
 
    // 2 - We programmatically select a default option, in this case, the first option. 
@@ -50,7 +53,7 @@ export const PurchaseView = () => {
       if (!obj) { return }
 
       if (obj.itemType === 'BE_ITEMTYPE_PHYSICAL') {
-        createProductItem()
+         createProductItem()
       } else if (obj.itemType === 'BE_ITEMTYPE_SERVICE') {
          createServiceItem()
       }
@@ -64,35 +67,62 @@ export const PurchaseView = () => {
 
    // 1 - This is when items change
    useEffect(() => {
-     // here I can't modify items, endless loop.
-     console.log(items)
-      
+      // here I can't modify items, endless loop.
+     updateTotalAmount()
+
    }, [items])
 
+   const updateTotalAmount = () => {
+      let total = 0
+      let shouldUpdate = false
+      items.forEach((item) => {
+         item.fields.forEach((field) => {
+            if (field.name === 'total') {
+               const value = convertCurrencyStringToNumber(field.value).toFixed(2)
+               const parsedValue = parseFloat(value) || 0
+               total += parsedValue
+               shouldUpdate = true
+            }
+         })
+      })
+
+      if (shouldUpdate) {
+         setTotalAmount(total)
+      }
+   }
+
    return (
-      <div className='purchase_view__main'>
+      <div className='purchase_view__main purchase_view__gap'>
          <h1>Purchase View</h1>
+         {error && <div className="alert alert-danger" role="alert">{error.message}</div>}
+         {!error &&
+            <div className='purchase_view__gap'>
+               <div>
+                  <h3 className='purchase_view__form-title'>Elije el artículo de compra.</h3>
+                  <select className="form-select" value={selectedPurchaseItem} onChange={handleChange}>
+                     {purchaseItems.map((item) => {
+                        return (
+                           <option key={item._id} value={item._id}>{item.title}, {item.description}.</option>
+                        )
+                     }
+                     )}
+                  </select>
+               </div>
 
-         <div>
-            <h3 className='purchase_view__form-title'>Elije el artículo de compra.</h3>
-            <select className="form-select" value={selectedPurchaseItem} onChange={handleChange}>
+               <Button size='lr' onClick={() => onNewItemDidPressed()}>Add New</Button>
 
-               {purchaseItems.map((item) => {
-                  return (
-                     <option key={item._id} value={item._id}>{item.title}, {item.description}.</option>
-                  )
-               }
-               )}
-            </select>
-         </div>
+               <InputFieldColumn
+                  items={items}
+                  setItems={setItems}
+               />
 
-         <Button size='sm' className='box_item__newButton' onClick={() => onNewItemDidPressed()}>+</Button>
 
-         <InputFieldColumn
-            items={items}
-            setItems={setItems}
-         />
-
+               <div className='purchase_view__total-amount-main'>
+                  <h3>Total</h3>
+                  <h3 className='purchase_view__total-amount'>{formatCurrency(totalAmount.toFixed(2).toString())}</h3>
+                  </div>   
+            </div>
+         }
       </div >
    )
 }
