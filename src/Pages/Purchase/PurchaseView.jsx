@@ -112,6 +112,7 @@ export const PurchaseView = () => {
                <Button className='purchase_view__add-button' size='lr' onClick={() => onNewItemDidPressed()}>Add New</Button>
 
                <InputFieldColumn
+               title="Your items"
                   items={items}
                   setItems={setItems}
                />

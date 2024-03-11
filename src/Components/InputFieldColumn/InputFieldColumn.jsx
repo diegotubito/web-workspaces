@@ -8,7 +8,7 @@ import { InputFieldColumnCurrencyType } from './InputFieldColumnCurrencyType';
 import { InputFieldColumnQuantityType } from './InputFieldColumnQuantity';
 import { formatCurrency } from '../../Utils/Common/formatCurrency';
 
-export const InputFieldColumn = ({ items, setItems }) => {
+export const InputFieldColumn = ({ title, items, setItems }) => {
    const settings = {
       inputHeight: '3rem',
       inputBorderColorEnabled: 'rgb(180, 180, 180)',
@@ -26,7 +26,9 @@ export const InputFieldColumn = ({ items, setItems }) => {
 
       <div className='input_field_column__main'>
          {/* Title */}
-         <h1>Input Field Column</h1>
+         { title &&
+            <h1 className='input_field_column__title'>{title}</h1>         
+         }
 
 
          <div className='input_field_column__container'>
