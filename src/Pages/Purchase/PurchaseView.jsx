@@ -8,6 +8,7 @@ import { InputFieldColumn } from '../../Components/InputFieldColumn/InputFieldCo
 import { useSaleItemViewModel } from '../../Hooks/SaleItem/useSaleItemViewModel';
 import { AmountField } from '../../Components/AmountField/AmountField'
 import { convertCurrencyStringToNumber, formatCurrency } from '../../Utils/Common/formatCurrency';
+import { PurchaseCrudView } from './CrudView/PurchaseCrudView';
 
 export const PurchaseView = () => {
    const { t } = useTranslation()
@@ -17,6 +18,7 @@ export const PurchaseView = () => {
    const [items, setItems] = useState([]);
    const { createProductItem, createServiceItem, updateTotal } = usePurchaseFormViewModel({ items, setItems, saleItems })
    const [totalAmount, setTotalAmount] = useState(0)
+   const [shouldOpenPurchaseCrudView, setShouldPurchaseOpenCrudView] = useState(false)
 
    // 1 - Fetch All Purchase Items From API 
    useEffect(() => {
@@ -95,6 +97,10 @@ export const PurchaseView = () => {
       createPurchaseOrder(items, convertCurrencyStringToNumber(totalAmount))
    }
 
+   const openPurchaseCrudView = () => {
+      setShouldPurchaseOpenCrudView(true)
+   }
+
    return (
       <div className='purchase_view__main purchase_view__gap'>
          <h1>Purchase View</h1>
@@ -128,7 +134,14 @@ export const PurchaseView = () => {
                </div>
 
                <Button className='purchase_view__create-button' size='lr' onClick={() => onCreateOrderDidPressed()}>Create New Purchase Order</Button>
+
+               <Button size='lr' onClick={() => openPurchaseCrudView()}>Open Pop Up</Button>
+
+               <PurchaseCrudView 
+                  isOpen={shouldOpenPurchaseCrudView}
+               />
             </div>
+
          }
       </div >
    )
