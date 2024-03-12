@@ -15,11 +15,17 @@
 
 .purchase_crud_view__container {
    position: relative;
-   width: 80%;
+   width: 95%;
    height: 80%;
    background-color: rgb(205, 223, 227);
    padding: 2rem;
    overflow: auto;
+}
+
+@media (min-width: 1200px) {
+   .purchase_crud_view__container {
+      width: 80%;
+   }
 }
 
 .purchase_view__form-title {
