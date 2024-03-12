@@ -26,7 +26,8 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
       createPurchaseOrder,
       purchaseItemIsLoading,
       onPurchaseFailed,
-      setOnPurchaseFailed
+      setOnPurchaseFailed,
+      onPurchaseSuccess
    } = usePurchaseViewModel()
 
    const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
@@ -38,7 +39,8 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
    useEffect(() => {
       getPurchaseItems();
       getSaleItems();
-   }, []);
+
+   }, [isOpen])
 
    useEffect(() => {
 
@@ -113,9 +115,11 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
 
    const onCancelDidPressed = () => {
       setIsOpen(false)
-
    }
 
+   useEffect(() => {
+      setIsOpen(false)
+   }, [onPurchaseSuccess])
 
    {
       return (!isOpen) ? null : (

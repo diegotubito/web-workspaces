@@ -30,7 +30,7 @@
 
 .purchase_view__form-title {
    font-size: 17px;
-   margin-left: 1rem;
+   margin-left: 0.0rem;
    margin-bottom: 0.5rem;
    /* Explicitly remove margin from <p> */
    font-weight: 400;

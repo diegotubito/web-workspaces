@@ -15,6 +15,7 @@ export const usePurchaseViewModel = () => {
    const { userSession } = useUserSession()
    const [purchaseItems, setPurchaseItems] = useState([])
    const [onPurchaseFailed, setOnPurchaseFailed] = useState(null)
+   const [onPurchaseSuccess, setOnPurchaseSuccess] = useState(false)
 
    const getPurchaseItems = async () => {
 
@@ -40,7 +41,7 @@ export const usePurchaseViewModel = () => {
 
       try {
          const response = await createPurchaseOrderRepository(body)
-         
+         setOnPurchaseSuccess(true)
       } catch (error) {
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
@@ -103,6 +104,8 @@ export const usePurchaseViewModel = () => {
       purchaseItems,
       createPurchaseOrder,
       onPurchaseFailed,
-      setOnPurchaseFailed
+      setOnPurchaseFailed,
+      onPurchaseSuccess,
+      setOnPurchaseSuccess
    }
 }
