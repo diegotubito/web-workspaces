@@ -27,7 +27,8 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
       purchaseItemIsLoading,
       onPurchaseFailed,
       setOnPurchaseFailed,
-      onPurchaseSuccess
+      onPurchaseSuccess,
+      setOnPurchaseSuccess
    } = usePurchaseViewModel()
 
    const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
@@ -37,10 +38,18 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
 
    // 1 - Fetch All Purchase Items From API 
    useEffect(() => {
+      setSelectedPurchaseItem(null)
       getPurchaseItems();
       getSaleItems();
 
    }, [isOpen])
+
+   useEffect(() => {
+      if (onPurchaseSuccess) {
+         setIsOpen(false)
+         setOnPurchaseSuccess(null)
+      }
+   }, [onPurchaseSuccess])
 
    useEffect(() => {
 
@@ -117,9 +126,7 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
       setIsOpen(false)
    }
 
-   useEffect(() => {
-      setIsOpen(false)
-   }, [onPurchaseSuccess])
+   
 
    {
       return (!isOpen) ? null : (
