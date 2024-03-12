@@ -38,7 +38,7 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
 
    // 1 - Fetch All Purchase Items From API 
    useEffect(() => {
-      setSelectedPurchaseItem(null)
+      setSelectedPurchaseItem('')
       getPurchaseItems();
       getSaleItems();
 
