@@ -6,7 +6,7 @@
    right: 0;
    bottom: 0;
    z-index: 1001;
-
+  
    display: flex;
    justify-content: center;
    flex-direction: column;
@@ -14,7 +14,86 @@
 }
 
 .purchase_crud_view__container {
+   position: relative;
    width: 80%;
    height: 80%;
+   background-color: rgb(205, 223, 227);
+   padding: 2rem;
+   overflow: auto;
+}
+
+.purchase_view__form-title {
+   font-size: 17px;
+   margin-left: 1rem;
+   margin-bottom: 0.5rem;
+   /* Explicitly remove margin from <p> */
+   font-weight: 400;
+}
+
+.purchase_view__gap {
+   display: flex;
+   flex-direction: column;
+   gap: 2rem;
+}
+
+.form-select {
+   width: 100% !important;
+   max-width: 50rem;
+   text-wrap: wrap;
+}
+
+.form-select {
+   font-size: 17px !important;
+   /* Ajusta esto a tu preferencia */
+   height: auto !important;
+   /* Esto permite que el select se ajuste al tamaño del contenido */
+   padding: 1rem !important;
+   /* Añade algo de padding para mejor manejo */
+}
+
+.purchase_view__amount-textfield {
+   width: 100%;
+   max-width: 20rem;
+}
+
+.purchase_view__total-amount-main {
+   display: flex;
+   justify-content: end;
+   align-items: center;
+   gap: 1rem;
+   color: gray;
+   user-select: none;
+
+}
+
+.purchase_view__total-amount {
    background-color: whitesmoke;
+   padding: 1rem;
+   border-radius: 4px;
+   width: 20rem;
+   text-align: end;
+   font-size: 17px;
+}
+
+.purchase_view__add-button {
+   width: 10rem;
+   font-size: 17px !important;
+}
+
+.purchase_view__create-button {
+   width: 20rem;
+   font-size: 17px !important;
+   background-color: rgb(213, 88, 21) !important;
+   border: none !important;
+   padding: 1rem !important;
+   font-weight: 600 !important;
+}
+
+.purchase_view__cancel-button {
+   width: 20rem;
+   font-size: 17px !important;
+   background-color: rgb(175, 175, 175) !important;
+   border: none !important;
+   padding: 1rem !important;
+   font-weight: 600 !important;
 }

@@ -1,7 +1,3 @@
-.alert-container {
-    width: 50%; /* Or any other width you prefer */
-    z-index: 1050; /* Ensure it's above other content, similar to a modal */
-}
 
 .home__main {
     display: flex;

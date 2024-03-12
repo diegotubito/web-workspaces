@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const usePurchaseFormViewModel = ({ items, setItems, saleItems }) => {
+export const usePurchaseFormViewModel = ({ setItems, saleItems }) => {
    const createProductItem = () => {
       const emptyInputField = createEmptyProduct()
       setItems((currentItems) => {
@@ -34,7 +34,7 @@ export const usePurchaseFormViewModel = ({ items, setItems, saleItems }) => {
                })),
             minWidth: '20rem',
             maxWidth: '2fr',
-            value: '',
+            value: (saleItems.length > 0) ? saleItems[0]._id: '',
             errorMessage: '',
             isEnabled: true,
             placeholder: ''

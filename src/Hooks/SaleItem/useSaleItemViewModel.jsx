@@ -3,9 +3,11 @@ import { useWorkspaceSession } from '../../Utils/Contexts/workspaceSessionContex
 import { useState } from 'react'
 
 export const useSaleItemViewModel = () => {
-   const { getItemsByWorkspace, isLoading, error } = useSaleItemRepository()
+   const { getItemsByWorkspace, isLoading, error: saleItemError } = useSaleItemRepository()
    const { workspaceSession } = useWorkspaceSession()
    const [saleItems, setSaleItems] = useState([])
+
+   const [onGetSaleFailed, setOnGetSaleFailed] = useState(null)
 
    const getSaleItems = async () => {
       try {
@@ -14,8 +16,9 @@ export const useSaleItemViewModel = () => {
       } catch (error) {
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
+         setOnGetSaleFailed(error)
       }
    }
 
-   return { getSaleItems, saleItems, saleItemsIsLoading: isLoading, error }
+   return { getSaleItems, saleItems, saleItemsIsLoading: isLoading, onGetSaleFailed, setOnGetSaleFailed }
 }

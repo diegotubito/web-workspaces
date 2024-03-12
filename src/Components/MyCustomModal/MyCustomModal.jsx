@@ -13,10 +13,10 @@ export const MyCustomModal = ({ array, isLoading = false, isOpen, onCustomModalS
 
     return (
         <div className='custom-modal__background'>
-             
+
             <div className='custom-modal__content'>
                 <h1>Select Your Workspace</h1>
-                {isLoading && <Spinner/>}
+                {isLoading && <Spinner />}
                 <div>
                     <ul>
                         {array.map((register) => {
