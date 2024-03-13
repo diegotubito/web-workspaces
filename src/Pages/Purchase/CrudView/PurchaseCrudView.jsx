@@ -119,15 +119,13 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
    }
 
    const onCreateOrderDidPressed = () => {
-      createPurchaseOrder(items, convertCurrencyStringToNumber(totalAmount))
+      createPurchaseOrder(items, convertCurrencyStringToNumber(totalAmount), selectedPurchaseItem)
    }
 
    const onCancelDidPressed = () => {
       setIsOpen(false)
    }
-
    
-
    {
       return (!isOpen) ? null : (
          <div className='purchase_crud_view__main'>

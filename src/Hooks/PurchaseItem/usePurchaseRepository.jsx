@@ -20,5 +20,19 @@ export const usePurchaseRepository = () => {
       })
    }
 
-   return { fetchPurchaseItemsByWorkspace, createPurchaseOrder, isLoading, error }
+   const fetchPurchaseOrdersByWorkspace = (workspace) => {
+      return apiCall({
+         path: `/api/v1/purchase-order-workspace?workspace=${workspace}`,
+         method: 'GET',
+         isLogin: true
+      })
+   }
+
+   return {
+      fetchPurchaseItemsByWorkspace,
+      createPurchaseOrder,
+      isLoading,
+      error,
+      fetchPurchaseOrdersByWorkspace
+   }
 }

@@ -8,6 +8,7 @@ export const usePurchaseViewModel = () => {
    const {
       isLoading: purchaseItemIsLoading,
       fetchPurchaseItemsByWorkspace,
+      fetchPurchaseOrdersByWorkspace,
       createPurchaseOrder: createPurchaseOrderRepository,
       error: purchaseItemError
    } = usePurchaseRepository()
@@ -16,6 +17,7 @@ export const usePurchaseViewModel = () => {
    const [purchaseItems, setPurchaseItems] = useState([])
    const [onPurchaseFailed, setOnPurchaseFailed] = useState(null)
    const [onPurchaseSuccess, setOnPurchaseSuccess] = useState(false)
+   const [ orders, setOrders] = useState([])
 
    const getPurchaseItems = async () => {
 
@@ -28,12 +30,24 @@ export const usePurchaseViewModel = () => {
       }
    }
 
-   const createPurchaseOrder = async (items, totalAmount) => {
+   const getPurchaseOrders = async () => {
+      try {
+         const response = await fetchPurchaseOrdersByWorkspace(workspaceSession._id)
+         setOrders(response.orders)
+      } catch (error) {
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
+         setOnPurchaseFailed(error)
+      }
+   }
+
+   const createPurchaseOrder = async (items, totalAmount, purchaseItemId) => {
 
       const body = {
          user: userSession.user._id,
          workspace: workspaceSession._id,
          date: Date.now(),
+         purchaseItem: purchaseItemId,
          items: mapItems(items),
          totalAmount: totalAmount,
          status: 'pending_approval'
@@ -53,15 +67,15 @@ export const usePurchaseViewModel = () => {
       let result = []
 
       items.forEach((item) => {
-         let purchaseItem = null
-         const purchaseItemIndex = item.fields.findIndex((field) => field.type === 'selector')
-         if (purchaseItemIndex !== -1) {
-            purchaseItem = item.fields[purchaseItemIndex].value
+         let saleItem = null
+         const saleItemIndex = item.fields.findIndex((field) => field.type === 'selector')
+         if (saleItemIndex !== -1) {
+            saleItem = item.fields[saleItemIndex].value
          }
 
          let description = null
          const descriptionIndex = item.fields.findIndex((field) => field.name === 'description')
-         if (descriptionIndex !== -1 && purchaseItemIndex === -1) {
+         if (descriptionIndex !== -1 && saleItemIndex === -1) {
             description = item.fields[descriptionIndex].value
          }
 
@@ -86,7 +100,7 @@ export const usePurchaseViewModel = () => {
          }
 
          const newItem = {
-            purchaseItem: purchaseItem,
+            saleItem: saleItem,
             description: description,
             quantity: quantity,
             subTotal: subTotal,
@@ -106,6 +120,9 @@ export const usePurchaseViewModel = () => {
       onPurchaseFailed,
       setOnPurchaseFailed,
       onPurchaseSuccess,
-      setOnPurchaseSuccess
+      setOnPurchaseSuccess,
+      getPurchaseOrders,
+      orders,
+       setOrders
    }
 }
