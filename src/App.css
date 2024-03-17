@@ -5,7 +5,9 @@
     --primary: rgb(96, 164, 209);
     --secondary: rgb(229, 226, 68);
     --gray: #757575;
-
+    --grayEven: rgb(190, 190, 190);
+    --grayPair: rgb(200, 200, 200);
+    --highlightBlue: rgba(41, 81, 181, 1.0);
 }
 
 html {

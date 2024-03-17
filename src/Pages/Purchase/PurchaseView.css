@@ -2,11 +2,11 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: rgb(205, 223, 227);
+    background-color: rgb(227, 227, 227);
    
     padding: 1rem;
 }
 
-.purchase_view__cell-title {
-   
+.purchase__view-order-list {
+   width: 50%;
 }

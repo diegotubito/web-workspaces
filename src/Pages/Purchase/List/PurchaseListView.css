@@ -1,0 +1,5 @@
+.purchase_order__container {
+   display: flex;
+   flex-direction: column;
+   overflow: auto;
+}
