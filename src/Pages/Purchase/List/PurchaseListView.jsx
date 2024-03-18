@@ -1,22 +1,26 @@
 import { useEffect, useState } from 'react'
 import './PurchaseListView.css'
 
-export const PurchaseListView = ({ items, selectedItem, setSelectedItem }) => {
-   const itemDidSelect = (itemIndex) => {
-     if (itemIndex === selectedItem) {
-      setSelectedItem(null)
-     } else {
-      setSelectedItem(itemIndex)
-     }
+export const PurchaseListView = ({ gap, items, setItems }) => {
+
+   const itemDidSelect = (item) => {
+      const updatedItems = items.map((i) => {
+         if (i._id === item._id) {
+            return { ...i, isSelected: !item.isSelected }
+         } else {
+            return i
+         }
+      })
+      setItems(updatedItems)
    }
 
-   const getBackgroundColor = (itemIndex, fieldIndex) => {
+   const getBackgroundColor = (item, fieldIndex) => {
       let result = ''
-      
-      if (itemIndex === selectedItem) {
-         return 'var(--highlightBlue)'
+
+      if (item.isSelected) {
+         result = 'blue'
       } else {
-         if (fieldIndex%2===0) {
+         if (fieldIndex % 2 === 0) {
             result = 'var(--grayPair)'
          } else {
             result = 'var(--grayEven)'
@@ -26,46 +30,41 @@ export const PurchaseListView = ({ items, selectedItem, setSelectedItem }) => {
       return result
    }
 
-   const getForegroundColor = (itemIndex, fieldIndex) => {
-      let result = 'yellow'
-
-      if (itemIndex === selectedItem) {
-         result = 'white'
-      } else {
-         if (fieldIndex % 2 === 0) {
-            result = 'dark'
-         } else {
-            result = 'dark'
-         }
-      }
-
-      return result
+   const getForegroundColor = (item) => { 
+      let isSelected = item.isSelected ? 'white' : 'dark' 
+      return isSelected
    }
 
+   const getGridValues = (item) => {
+      const forInputs = item.fields.map(field => `minmax(${field.minWidth}, ${field.maxWidth})`).join(' ')
+      const forInputsWithRemoveButton = forInputs + ' minmax(1rem, 1rem) minmax(1rem, 1rem)'
+
+      return item.removeIsAllowed ? forInputsWithRemoveButton : forInputs
+   }
 
    return (
 
       <div style={{
          fontSize: 'small',
-         gap: '1px',
+         gap: gap,
          background: 'none'
       }}
          className='purchase_order__container'
       >
-         {items.map((item, itemIndex) => {
+         {items.map((item) => {
             return (
                <div
-                  onClick={() => itemDidSelect(itemIndex)}
+                  onClick={() => itemDidSelect(item)}
                   style={{
                      display: 'grid',
-                     gridTemplateColumns: 'minmax(5rem, 1fr) minmax(10rem, 1fr) minmax(10rem, 1fr) minmax(10rem, 1fr) minmax(10rem, 1fr)',
-                     gap: '1px',
-                    
+                     gridTemplateColumns: getGridValues(item),
+                     gap: gap,
+                     color: getForegroundColor(item),
                   }}
-                  
-                  key={item._id}
+
+                  key={`${item._id}-${item.isSelected}`}
                   className='purchase_order__cell'
-                 
+
                >
 
                   {item.fields.map((field, fieldIndex) => {
@@ -73,8 +72,9 @@ export const PurchaseListView = ({ items, selectedItem, setSelectedItem }) => {
                         <span key={field._id} style={{
                            overflow: 'auto',
                            padding: '0.7rem',
-                           background: getBackgroundColor(itemIndex, fieldIndex),
-                           color: getForegroundColor(itemIndex, fieldIndex),
+                           textAlign: field.alignment,
+                           background: getBackgroundColor(item, fieldIndex),
+                           
                         }} >{field.value} </span>
                      )
                   })}
