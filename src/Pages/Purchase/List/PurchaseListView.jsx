@@ -1,17 +1,23 @@
 import { useEffect, useState } from 'react'
 import './PurchaseListView.css'
 
-export const PurchaseListView = ({ gap, items, setItems }) => {
+export const PurchaseListView = ({ gap, items, setItems, selectionMode }) => {
    useEffect(() => {
       console.log('items updated')
    }, [items])
 
    const itemDidSelect = (item) => {
+      if (selectionMode === 'none') { return }
+      
       const updatedItems = items.map((i) => {
          if (i._id === item._id) {
             return { ...i, isSelected: !item.isSelected }
          } else {
-            return i
+            if (selectionMode === 'single') {
+               return { ...i, isSelected: false}
+            } else {
+               return i
+            }
          }
       })
       setItems(updatedItems)
