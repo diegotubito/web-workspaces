@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import './PurchaseListView.css'
 
 export const PurchaseListView = ({ gap, items, setItems }) => {
+   useEffect(() => {
+      console.log('items updated')
+   }, [items])
 
    const itemDidSelect = (item) => {
       const updatedItems = items.map((i) => {
@@ -18,7 +21,7 @@ export const PurchaseListView = ({ gap, items, setItems }) => {
       let result = ''
 
       if (item.isSelected) {
-         result = 'blue'
+         result = 'var(--primary)'
       } else {
          if (fieldIndex % 2 === 0) {
             result = 'var(--grayPair)'
@@ -30,10 +33,7 @@ export const PurchaseListView = ({ gap, items, setItems }) => {
       return result
    }
 
-   const getForegroundColor = (item) => { 
-      let isSelected = item.isSelected ? 'white' : 'dark' 
-      return isSelected
-   }
+   const getForegroundColor = (item) => item.isSelected ? 'var(--white)' : 'dark'
 
    const getGridValues = (item) => {
       const forInputs = item.fields.map(field => `minmax(${field.minWidth}, ${field.maxWidth})`).join(' ')
@@ -54,6 +54,8 @@ export const PurchaseListView = ({ gap, items, setItems }) => {
          {items.map((item) => {
             return (
                <div
+                  className='purchase_order__cell'
+                  key={`${item._id}-${item.isSelected}`}
                   onClick={() => itemDidSelect(item)}
                   style={{
                      display: 'grid',
@@ -61,21 +63,19 @@ export const PurchaseListView = ({ gap, items, setItems }) => {
                      gap: gap,
                      color: getForegroundColor(item),
                   }}
-
-                  key={`${item._id}-${item.isSelected}`}
-                  className='purchase_order__cell'
-
                >
 
                   {item.fields.map((field, fieldIndex) => {
                      return (
-                        <span key={field._id} style={{
-                           overflow: 'auto',
-                           padding: '0.7rem',
-                           textAlign: field.alignment,
-                           background: getBackgroundColor(item, fieldIndex),
-                           
-                        }} >{field.value} </span>
+                        <span
+                           key={field._id}
+                           style={{
+                              overflow: 'auto',
+                              padding: '0.7rem',
+                              textAlign: field.alignment,
+                              background: getBackgroundColor(item, fieldIndex),
+                           }}
+                        > {field.value} </span>
                      )
                   })}
 

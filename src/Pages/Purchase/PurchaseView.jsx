@@ -5,7 +5,6 @@ import { usePurchaseViewModel } from '../../Hooks/PurchaseItem/usePurchaseViewMo
 import { dateAndTimeFormat, stringMonthFormat } from '../../Utils/Common/dateUtils';
 import { PurchaseListView } from './List/PurchaseListView';
 import './PurchaseView.css'
-import { mockItems } from './PurchaseViewMockData'
 import { formatCurrency } from '../../Utils/Common/formatCurrency';
 
 export const PurchaseView = () => {
@@ -19,7 +18,6 @@ export const PurchaseView = () => {
 
    useEffect(() => {
       getPurchaseOrders()
-      setItems(mockItems)
    }, [])
 
    useEffect(() => {
