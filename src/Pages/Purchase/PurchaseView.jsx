@@ -6,10 +6,12 @@ import './PurchaseView.css'
 import { usePurchaseListViewModel } from './usePurchaseListViewModel'
 import { useTranslation } from 'react-i18next';
 import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton'
+import { PaymentView } from './Pay/PaymentView';
 
 export const PurchaseView = () => {
    const { t } = useTranslation()
    const [shouldOpenPurchaseCrudView, setShouldPurchaseOpenCrudView] = useState(false)
+   const [shouldOpenPaymentView, setShouldOpenPaymentView] = useState(false)
 
    const { getPurchaseOrders, items, setItems } = usePurchaseListViewModel()
 
@@ -29,6 +31,10 @@ export const PurchaseView = () => {
       console.log('will disable')
    }
 
+   const onPayemntDidClicked = () => {
+      setShouldOpenPaymentView(true)
+   }
+
    return (
       <div className='purchase_view__main purchase_view__gap'>
          <div className='purchase_view__button-container'>
@@ -43,6 +49,11 @@ export const PurchaseView = () => {
          <PurchaseCrudView
             isOpen={shouldOpenPurchaseCrudView}
             setIsOpen={setShouldPurchaseOpenCrudView}
+         />
+
+         <PaymentView
+            isOpen={shouldOpenPaymentView}
+            setIsOpen={setShouldOpenPaymentView}
          />
 
          <GridView
@@ -63,7 +74,7 @@ export const PurchaseView = () => {
             <SimpleButton
                style='primary'
                title='Pay'
-               onClick={onDisabledDidClicked}
+               onClick={onPayemntDidClicked}
                disabled={false}
             />
            

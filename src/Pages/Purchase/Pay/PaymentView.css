@@ -1,0 +1,46 @@
+.payment_view__main {
+   background-color: rgba(0, 0, 0, 0.80);
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   z-index: 1001;
+
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+}
+
+.payment_view__container {
+   position: relative;
+   width: 95%;
+   height: 80%;
+   background-color: rgb(205, 223, 227);
+   padding: 2rem;
+   overflow: auto;
+   border-radius: 10px;
+}
+
+@media (min-width: 1200px) {
+   .payment_view__container {
+      width: 80%;
+   }
+}
+
+.payment_view__form-title {
+   font-size: 17px;
+   margin-left: 1.0rem;
+   margin-bottom: 0.5rem;
+   /* Explicitly remove margin from <p> */
+   font-weight: 400;
+}
+
+.payment_crud_view__title {
+   font-size: 29px;
+   margin-left: 1.0rem;
+   margin-bottom: 2rem;
+   /* Explicitly remove margin from <p> */
+   font-weight: 700;
+}
