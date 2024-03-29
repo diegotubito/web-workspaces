@@ -7,9 +7,10 @@
     --gray: #757575;
     --grayEven: rgb(190, 190, 190);
     --grayPair: rgb(200, 200, 200);
-    --highlightBlue: rgba(41, 81, 181, 1.0);
-    --destructive: rgb(192, 18, 18);
-    --orange: rgb(213, 88, 21);
+    --primarySimpleButton: rgb(60, 125, 155);
+    --secondarySimpleButton: rgb(213, 88, 21);
+    --destructiveSimpleButton: rgb(212, 54, 54);
+    --cancelSimpleButton: #757575;
 }
 
 html {

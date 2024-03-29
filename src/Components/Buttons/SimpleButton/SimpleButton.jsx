@@ -36,13 +36,13 @@ export const SimpleButton = ({ style, title, onClick, disabled }) => {
    const getBackgroundColor = () => {
       switch (style) {
          case Style.primary:
-            return 'var(--highlightBlue)'
+            return 'var(--primarySimpleButton)'
          case Style.secondary:
-            return 'var(--orange)'
+            return 'var(--secondarySimpleButton)'
          case Style.destructive:
-            return 'var(--destructive)'
+            return 'var(--destructiveSimpleButton)'
          case Style.cancel:
-            return 'var(--gray)'
+            return 'var(--cancelSimpleButton)'
          default:
             return 'clear'
       }
