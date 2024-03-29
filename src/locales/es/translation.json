@@ -19,5 +19,10 @@
   "PURCHASE_BUTTON": "Orden de Compra",
   "INCOME_BUTTON": "Ingresos",
   "OUTCOME_BUTTON": "Egresos",
-  "CASH_BUTTON": "Cierre de Caja"
+  "CASH_BUTTON": "Cierre de Caja",
+
+  "_comment_purchase_status": "Purchase Status",
+  
+  "pending_approval": "Pendiente de Aprobación"
+
 }

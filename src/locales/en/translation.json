@@ -19,5 +19,10 @@
      "INCOME_BUTTON": "Cash Income",
      "OUTCOME_BUTTON": "Cash Outcome",
      "SALE_BUTTON": "Sales",
-     "CASH_BUTTON": "Closing Cash Balance"
+     "CASH_BUTTON": "Closing Cash Balance",
+
+     "_comment_purchase_status": "Purchase Status",
+  
+     "pending_approval": "Pending Approval"
+
 }

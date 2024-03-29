@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
 import './PurchaseListView.css'
+import { useTranslation } from 'react-i18next';
 
 export const PurchaseListView = ({ gap, items, setItems, selectionMode }) => {
+   const { t } = useTranslation()
+
    useEffect(() => {
       console.log('items updated')
    }, [items])
@@ -81,7 +84,7 @@ export const PurchaseListView = ({ gap, items, setItems, selectionMode }) => {
                               textAlign: field.alignment,
                               background: getBackgroundColor(item, fieldIndex),
                            }}
-                        > {field.value} </span>
+                        > {t(`${field.value}`)} </span>
                      )
                   })}
 
