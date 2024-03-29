@@ -172,8 +172,8 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
                <div className='purchase_view__gap'>
 
                   <div className='purchase_crud_view__container-scroll'>
-                     <h1>Purchase View</h1>
-
+                     <h1 className='purchase_crud_view__title'>Purchase View</h1>
+                 
                      <div className='purchase_view__gap'>
                         <div>
                            <h3 className='purchase_view__form-title'>Elije el artículo de compra.</h3>

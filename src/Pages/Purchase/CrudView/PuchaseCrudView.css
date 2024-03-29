@@ -20,6 +20,7 @@
    background-color: rgb(205, 223, 227);
    padding: 2rem;
    overflow: auto;
+   border-radius: 10px;
 }
 
 @media (min-width: 1200px) {
@@ -30,10 +31,18 @@
 
 .purchase_view__form-title {
    font-size: 17px;
-   margin-left: 0.0rem;
+   margin-left: 1.0rem;
    margin-bottom: 0.5rem;
    /* Explicitly remove margin from <p> */
    font-weight: 400;
+}
+
+.purchase_crud_view__title {
+   font-size: 29px;
+   margin-left: 1.0rem;
+   margin-bottom: 2rem;
+   /* Explicitly remove margin from <p> */
+   font-weight: 700;
 }
 
 .purchase_view__gap {
