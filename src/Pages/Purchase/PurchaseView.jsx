@@ -4,9 +4,11 @@ import { Button } from 'react-bootstrap';
 import { PurchaseListView } from './List/PurchaseListView';
 import './PurchaseView.css'
 import { usePurchaseListViewModel } from './usePurchaseListViewModel'
-
+import { useTranslation } from 'react-i18next';
+import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton'
 
 export const PurchaseView = () => {
+   const { t } = useTranslation()
    const [shouldOpenPurchaseCrudView, setShouldPurchaseOpenCrudView] = useState(false)
 
    const { getPurchaseOrders, items, setItems } = usePurchaseListViewModel()
@@ -23,10 +25,19 @@ export const PurchaseView = () => {
       setShouldPurchaseOpenCrudView(true)
    }
 
+   const onDisabledDidClicked = () => {
+      console.log('will disable')
+   }
+
    return (
       <div className='purchase_view__main purchase_view__gap'>
-         <div>
-            <Button size='lr' onClick={() => openPurchaseCrudView()}>Create New Order</Button>
+         <div className='purchase_view__button-container'>
+            <SimpleButton
+               style='primary'
+               title='Create New Order'
+               onClick={() => openPurchaseCrudView()}
+               disabled={false}
+            />
          </div>
 
          <PurchaseCrudView
@@ -42,9 +53,20 @@ export const PurchaseView = () => {
             selectionMode={'single'}  // none, single, multiple.
          />
 
-         <div>
-            <Button size='lr' onClick={() => openPurchaseCrudView()}>Disable</Button>
-            <Button size='lr' onClick={() => openPurchaseCrudView()}>Pay</Button>
+         <div class="purchase_view__button-container">
+            <SimpleButton
+               style='destructive'
+               title='Disable'
+               onClick={onDisabledDidClicked}
+               disabled={false}
+            />
+            <SimpleButton
+               style='primary'
+               title='Pay'
+               onClick={onDisabledDidClicked}
+               disabled={false}
+            />
+           
          </div>
       </div >
    )

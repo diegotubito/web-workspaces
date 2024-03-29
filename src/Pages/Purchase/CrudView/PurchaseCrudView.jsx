@@ -8,6 +8,7 @@ import { InputFieldColumn } from '../../../Components/InputFieldColumn/InputFiel
 import { useSaleItemViewModel } from '../../../Hooks/SaleItem/useSaleItemViewModel';
 import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Common/formatCurrency';
 import { Spinner } from '../../../Components/Spinner/spinner'
+import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton';
 
 export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
 
@@ -125,7 +126,7 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
    const onCancelDidPressed = () => {
       setIsOpen(false)
    }
-   
+
    {
       return (!isOpen) ? null : (
          <div className='purchase_crud_view__main'>
@@ -186,7 +187,13 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
                            </select>
                         </div>
 
-                        <Button className='purchase_view__add-button' size='lr' onClick={() => onNewItemDidPressed()}>Add New</Button>
+                        <div className='purchase_view__buttons'>
+                           <SimpleButton
+                              title='Add New'
+                              style='primary'
+                              onClick={() => onNewItemDidPressed()}
+                           />
+                        </div>
 
                         <InputFieldColumn
                            title="Your items"
@@ -200,18 +207,22 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
                            <h3 className='purchase_view__total-amount'>{formatCurrency(totalAmount.toFixed(2).toString())}</h3>
                         </div>
 
-                        <Button className='purchase_view__create-button' size='lr' onClick={() => onCreateOrderDidPressed()}>CREATE ORDER</Button>
+                        <div className='purchase_view__buttons'>
+                           <SimpleButton
+                              title='Cancel'
+                              style='cancel'
+                              onClick={() => onCancelDidPressed()}
+                           />
 
+                           <SimpleButton
+                              title='Create Order'
+                              style='secondary'
+                              onClick={() => onCreateOrderDidPressed()}
+                           />
 
-                        <Button className='purchase_view__cancel-button' size='lr' onClick={() => onCancelDidPressed()}>CANCEL</Button>
-
-
+                        </div>
                      </div>
-
-
                   </div >
-
-
                </div>
             </div>
          </div>

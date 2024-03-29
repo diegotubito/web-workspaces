@@ -10,3 +10,9 @@
 .purchase__view-order-list {
    width: 50%;
 }
+
+.purchase_view__button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}

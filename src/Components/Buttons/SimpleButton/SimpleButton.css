@@ -1,0 +1,25 @@
+.simple_button__style {
+   user-select: none;
+   padding: 0.7rem 1rem;
+   border-radius: 4px;
+   font-size: 13px;
+   font-weight: 500;
+   transition: transform 0.1s ease;
+   min-width: 10rem;
+   text-align: center;
+   /* Smooth transition for transform changes */
+   cursor: pointer;
+   /* Changes cursor to pointer to indicate it's clickable */
+}
+
+.simple_button__style:active {
+   transform: scale(0.95);
+   /* Scales down the button to 95% of its original size when clicked */
+}
+
+.simple_button__style.disabled {
+   transform: none;
+   cursor: default;
+   opacity: 0.3;
+   /* Optional: to visually indicate the button is disabled */
+}

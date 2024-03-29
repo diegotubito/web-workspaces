@@ -6,7 +6,7 @@
    right: 0;
    bottom: 0;
    z-index: 1001;
-  
+
    display: flex;
    justify-content: center;
    flex-direction: column;
@@ -69,6 +69,7 @@
    gap: 1rem;
    color: gray;
    user-select: none;
+   margin-bottom: 3rem;
 
 }
 
@@ -86,20 +87,9 @@
    font-size: 17px !important;
 }
 
-.purchase_view__create-button {
-   width: 20rem;
-   font-size: 17px !important;
-   background-color: rgb(213, 88, 21) !important;
-   border: none !important;
-   padding: 1rem !important;
-   font-weight: 600 !important;
-}
 
-.purchase_view__cancel-button {
-   width: 20rem;
-   font-size: 17px !important;
-   background-color: rgb(175, 175, 175) !important;
-   border: none !important;
-   padding: 1rem !important;
-   font-weight: 600 !important;
+.purchase_view__buttons {
+   display: flex;
+   justify-content: flex-end;
+   gap: 1rem;
 }
