@@ -1,55 +1,55 @@
 import { useEffect, useState } from 'react'
-import './PurchaseListView.css'
+import './GridView.css'
 import { useTranslation } from 'react-i18next';
 
-export const PurchaseListView = ({ gap, items, setItems, selectionMode }) => {
-   const { t } = useTranslation()
+export function GridView({ gap, items, setItems, selectionMode }) {
+   const { t } = useTranslation();
 
    useEffect(() => {
-      console.log('items updated')
-   }, [items])
+      console.log('items updated');
+   }, [items]);
 
    const itemDidSelect = (item) => {
-      if (selectionMode === 'none') { return }
-      
+      if (selectionMode === 'none') { return; }
+
       const updatedItems = items.map((i) => {
          if (i._id === item._id) {
-            return { ...i, isSelected: !item.isSelected }
+            return { ...i, isSelected: !item.isSelected };
          } else {
             if (selectionMode === 'single') {
-               return { ...i, isSelected: false}
+               return { ...i, isSelected: false };
             } else {
-               return i
+               return i;
             }
          }
-      })
-      setItems(updatedItems)
-   }
+      });
+      setItems(updatedItems);
+   };
 
    const getBackgroundColor = (item, fieldIndex) => {
-      let result = ''
+      let result = '';
 
       if (item.isSelected) {
-         result = 'var(--primary)'
+         result = 'var(--primary)';
       } else {
          if (fieldIndex % 2 === 0) {
-            result = 'var(--grayPair)'
+            result = 'var(--grayPair)';
          } else {
-            result = 'var(--grayEven)'
+            result = 'var(--grayEven)';
          }
       }
 
-      return result
-   }
+      return result;
+   };
 
-   const getForegroundColor = (item) => item.isSelected ? 'var(--white)' : 'dark'
+   const getForegroundColor = (item) => item.isSelected ? 'var(--white)' : 'dark';
 
    const getGridValues = (item) => {
-      const forInputs = item.fields.map(field => `minmax(${field.minWidth}, ${field.maxWidth})`).join(' ')
-      const forInputsWithRemoveButton = forInputs + ' minmax(1rem, 1rem) minmax(1rem, 1rem)'
+      const forInputs = item.fields.map(field => `minmax(${field.minWidth}, ${field.maxWidth})`).join(' ');
+      const forInputsWithRemoveButton = forInputs + ' minmax(1rem, 1rem) minmax(1rem, 1rem)';
 
-      return item.removeIsAllowed ? forInputsWithRemoveButton : forInputs
-   }
+      return item.removeIsAllowed ? forInputsWithRemoveButton : forInputs;
+   };
 
    return (
 
@@ -85,12 +85,12 @@ export const PurchaseListView = ({ gap, items, setItems, selectionMode }) => {
                               background: getBackgroundColor(item, fieldIndex),
                            }}
                         > {t(`${field.value}`)} </span>
-                     )
+                     );
                   })}
 
                </div>
-            )
+            );
          })}
       </div>
-   )
+   );
 }

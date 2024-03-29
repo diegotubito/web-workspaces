@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { PurchaseCrudView } from './CrudView/PurchaseCrudView'
 import { Button } from 'react-bootstrap';
-import { PurchaseListView } from './List/PurchaseListView';
+import { GridView } from '../../Components/GridView/GridView';
 import './PurchaseView.css'
 import { usePurchaseListViewModel } from './usePurchaseListViewModel'
 import { useTranslation } from 'react-i18next';
@@ -45,7 +45,7 @@ export const PurchaseView = () => {
             setIsOpen={setShouldPurchaseOpenCrudView}
          />
 
-         <PurchaseListView
+         <GridView
             className='purchase__view-order-list '
             items={items}
             setItems={setItems}
