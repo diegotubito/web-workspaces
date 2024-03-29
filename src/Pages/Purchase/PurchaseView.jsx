@@ -64,7 +64,7 @@ export const PurchaseView = () => {
             selectionMode={'single'}  // none, single, multiple.
          />
 
-         <div class="purchase_view__button-container">
+         <div className="purchase_view__button-container">
             <SimpleButton
                style='destructive'
                title='Disable'
