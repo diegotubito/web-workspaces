@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './PaymentView.css'
 import { usePaymentViewModel } from './PaymentViewModel';
 import { usePhysicalAccountViewModel } from '../../../Hooks/PhysicalAccount/usePhysicalAccountViewModel';
+import { useTransactionViewModel } from '../../../Hooks/Transaction/useTransactionViewModel';
 
 export const PaymentView = ({ isOpen, setIsOpen }) => {
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
@@ -10,10 +11,12 @@ export const PaymentView = ({ isOpen, setIsOpen }) => {
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
    const { getAllAccounts, accounts } = usePhysicalAccountViewModel()
    const [currencies, setCurrencies] = useState([])
+   const { getPayments, payments } = useTransactionViewModel()
 
    useEffect(() => {
       fetchAllMethods()
       getAllAccounts()
+      getPayments('65f0ea2693c35c90ae9238f7')
    }, [])
 
    useEffect(() => {
@@ -33,6 +36,14 @@ export const PaymentView = ({ isOpen, setIsOpen }) => {
    useEffect(() => {
       mapCurrencies()
    }, [selectedPhysicalAccount])
+
+   useEffect(() => {
+      const suma = payments.reduce((accumulator, pay) => {
+         return accumulator + pay.amount;
+      }, 0); // Inicializa el acumulador en 0
+
+      console.log(`Suma de pagos: ${suma}`);
+   }, [payments])
 
    const handleOnPaymentMethodChange = (event) => {
       const itemId = event.target.value;
@@ -64,7 +75,6 @@ export const PaymentView = ({ isOpen, setIsOpen }) => {
          return
       }
 
-      console.log(account)
       const items = account.balances.map(balance => ({
          _id: balance.currency._id,
          name: balance.currency.name,
