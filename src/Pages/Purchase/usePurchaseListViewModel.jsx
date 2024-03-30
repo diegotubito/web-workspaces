@@ -1,22 +1,9 @@
-import { usePurchaseViewModel } from '../../Hooks/PurchaseItem/usePurchaseViewModel';
 import { formatCurrency } from '../../Utils/Common/formatCurrency';
 import { dateAndTimeFormat, stringMonthFormat } from '../../Utils/Common/dateUtils';
-import { useEffect, useState } from 'react';
 
 export const usePurchaseListViewModel = () => {
-   const { getPurchaseOrders, orders } = usePurchaseViewModel()
-   const [items, setItems] = useState([])
 
-   useEffect(() => {
-      mapItems()
-   }, [orders])
-
-   const getOrder = (_id) => {
-      const order = orders.filter((obj) => obj._id === _id)
-      return order[0]
-   }
-
-   const mapItems = () => {
+   const mapOrders = (orders) => {
       const newItems = orders.map((order) => {
          return {
             _id: order._id,
@@ -72,8 +59,8 @@ export const usePurchaseListViewModel = () => {
          }
       })
 
-      setItems(newItems)
+      return newItems
    }
 
-   return { getPurchaseOrders, items, setItems, getOrder }
+   return { mapOrders }
 }

@@ -136,7 +136,7 @@ export const usePurchaseViewModel = () => {
       setOnPurchaseSuccess,
       getPurchaseOrders,
       orders,
-       setOrders,
+      setOrders,
       getPurchaseOrderById,
       order
    }

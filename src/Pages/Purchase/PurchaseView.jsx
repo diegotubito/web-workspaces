@@ -8,6 +8,7 @@ import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton
 import { useNavigate } from 'react-router-dom';
 import { useTransactionViewModel } from '../../Hooks/Transaction/useTransactionViewModel'
 import { usePaymentsListViewModel } from './usePaymentsListViewModel'
+import { usePurchaseViewModel } from '../../Hooks/PurchaseItem/usePurchaseViewModel';
 
 export const PurchaseView = () => {
    const navigate = useNavigate();
@@ -15,7 +16,9 @@ export const PurchaseView = () => {
    const [selectedOrder, setSelectedOrder] = useState()
    const [payButtonEnabled, setPayButtonEnabled] = useState(false)
 
-   const { getPurchaseOrders, items, setItems, getOrder } = usePurchaseListViewModel()
+   const { getPurchaseOrders, orders } = usePurchaseViewModel()
+   const { mapOrders } = usePurchaseListViewModel()
+   const [ mappedOrders, setMappedOrders ] = useState([])
    
    const { getPayments, payments } = useTransactionViewModel()
    const { mapTransactions } = usePaymentsListViewModel()
@@ -26,8 +29,12 @@ export const PurchaseView = () => {
    }, [])
 
    useEffect(() => {
+      setMappedOrders(mapOrders(orders))
+   }, [orders])
+
+   useEffect(() => {
       determineSelectionItem()
-   }, [items])
+   }, [mappedOrders])
 
    useEffect(() => {
       setMappedTransactions([])
@@ -41,7 +48,7 @@ export const PurchaseView = () => {
    }, [payments])
 
    const determineSelectionItem = () => {
-      const selectedItem = items.filter( (item) => {
+      const selectedItem = mappedOrders.filter( (item) => {
          if (item.isSelected) {
             return item
          }
@@ -71,6 +78,10 @@ export const PurchaseView = () => {
       }
    }
 
+   const getOrder = (_id) => {
+      return orders.filter((obj) => obj._id === _id)[0]
+   }
+
    return (
       <div className='purchase_view__main purchase_view__gap'>
          <div className='purchase_view__button-container'>
@@ -84,8 +95,8 @@ export const PurchaseView = () => {
 
          <GridView
             className='purchase__view-order-list '
-            items={items}
-            setItems={setItems}
+            items={mappedOrders}
+            setItems={setMappedOrders}
             gap={'1px'}
             selectionMode={'single'}  // none, single, multiple.
          />
