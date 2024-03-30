@@ -7,6 +7,7 @@ import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Co
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton'
 import { AmountField } from '../../../Components/AmountField/AmountField';
 import { useTranslation } from 'react-i18next';
+import { dateAndTimeFormat } from '../../../Utils/Common/dateUtils';
 
 export const PaymentView = ({ selectedOrder, isOpen, setIsOpen }) => {
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
@@ -120,12 +121,24 @@ export const PaymentView = ({ selectedOrder, isOpen, setIsOpen }) => {
    const onAmountDidChanged = (value) => {
       setAmount(value)
    }
+
+   const getOrderInfo = () => {
+      const itemInfo = `Item: ${selectedOrder.purchaseItem.title} ${selectedOrder.purchaseItem.description}`
+      const ownerInfo = `User: ${selectedOrder.user.username}`
+      const dateInfo = `Created At: ${dateAndTimeFormat(selectedOrder.date)}`
+      const dueInfo = `Due Date: ${dateAndTimeFormat(selectedOrder.dueDate)}`
+      const statusInfo = `Status: ${selectedOrder.status}`
+
+      return `${itemInfo} | ${ownerInfo} | ${dateInfo} | ${dueInfo} | ${statusInfo}`
+   }
    
    return (!isOpen) ? null : (
       <div className='purchase_crud_view__main'>
          <div className='purchase_crud_view__container  payment_view__gap'>
             <h1 className='purchase_crud_view__title'>Purchase Payment</h1>
 
+            <h3> {getOrderInfo()} </h3>
+            
             <div>
                <h3 className='purchase_view__form-title'>Select Payment Method</h3>
                <select className="form-select" value={selectedPaymentItem} onChange={handleOnPaymentMethodChange}>

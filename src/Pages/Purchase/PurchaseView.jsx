@@ -13,6 +13,7 @@ export const PurchaseView = () => {
    const [shouldOpenPurchaseCrudView, setShouldPurchaseOpenCrudView] = useState(false)
    const [shouldOpenPaymentView, setShouldOpenPaymentView] = useState(false)
    const [selectedOrder, setSelectedOrder] = useState()
+   const [payButtonEnabled, setPayButtonEnabled] = useState(false)
 
    const { getPurchaseOrders, items, setItems, getOrder } = usePurchaseListViewModel()
 
@@ -33,9 +34,11 @@ export const PurchaseView = () => {
 
       if (selectedItem.length === 0) { 
          setSelectedOrder(null)
+         setPayButtonEnabled(false)
          return 
       }
 
+      setPayButtonEnabled(true)
       setSelectedOrder(getOrder(selectedItem[0]._id))
    }
    const openPurchaseCrudView = () => {
@@ -91,7 +94,7 @@ export const PurchaseView = () => {
                style='primary'
                title='Pay'
                onClick={onPayemntDidClicked}
-               disabled={false}
+               disabled={!payButtonEnabled}
             />
            
          </div>
