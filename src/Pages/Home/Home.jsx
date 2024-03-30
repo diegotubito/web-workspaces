@@ -41,6 +41,10 @@ export const Home = () => {
     } = useWorkspaceViewModel()
 
     useEffect(() => {
+        setPurchaseView()
+    }, [])
+
+    useEffect(() => {
         if (routeToLogin) {
             updateUserSession(null)
             updateWorkspaceSession(null)

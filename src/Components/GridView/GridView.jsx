@@ -5,10 +5,6 @@ import { useTranslation } from 'react-i18next';
 export function GridView({ gap, items, setItems, selectionMode }) {
    const { t } = useTranslation();
 
-   useEffect(() => {
-      console.log('items updated');
-   }, [items]);
-
    const itemDidSelect = (item) => {
       if (selectionMode === 'none') { return; }
 

@@ -8,11 +8,16 @@ import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleBut
 import { AmountField } from '../../../Components/AmountField/AmountField';
 import { useTranslation } from 'react-i18next';
 import { dateAndTimeFormat } from '../../../Utils/Common/dateUtils';
+import { useParams, useNavigate } from 'react-router-dom';
+import { usePurchaseViewModel } from '../../../Hooks/PurchaseItem/usePurchaseViewModel';
 
-export const PaymentView = ({ selectedOrder, isOpen, setIsOpen }) => {
+export const PaymentView = () => {
+   const navigate = useNavigate();
+   const { orderId } = useParams()
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
    const [selectedPhysicalAccount, setSelectedPhysicalAccount] = useState("");
    const [selectedCurrency, setSelectedCurrency] = useState("")
+   const { getPurchaseOrderById, order } = usePurchaseViewModel()
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
    const { getAllAccounts, accounts } = usePhysicalAccountViewModel()
    const [currencies, setCurrencies] = useState([])
@@ -22,16 +27,16 @@ export const PaymentView = ({ selectedOrder, isOpen, setIsOpen }) => {
    const { t } = useTranslation()
 
    useEffect(() => {
-      fetchAllMethods()
-      getAllAccounts()
-      
+      getPurchaseOrderById(orderId) 
    }, [])
 
    useEffect(() => {
-      if (selectedOrder) {
-         getPayments(selectedOrder._id)
+      if (order._id) {
+         getPayments(order._id)
+         fetchAllMethods()
+         getAllAccounts()
       }
-   }, [selectedOrder])
+   }, [order])
 
    useEffect(() => {
       // default payment method
@@ -105,17 +110,17 @@ export const PaymentView = ({ selectedOrder, isOpen, setIsOpen }) => {
       setCurrencies(items)
    }
 
-   const totalToPay = () => formatCurrency((selectedOrder.totalAmount).toFixed(2).toString())
-   const totalPaid = () => formatCurrency((totalPayment).toFixed(2).toString())
-   const netToPay = () => formatCurrency((selectedOrder.totalAmount - totalPayment).toFixed(2).toString())
+   const totalToPay = () => formatCurrency(((order?.totalAmount || 0).toFixed(2)).toString());
+   const totalPaid = () => formatCurrency(((totalPayment || 0).toFixed(2)).toString());
+   const netToPay = () => formatCurrency(((order?.totalAmount || 0) - (totalPayment || 0)).toFixed(2).toString());
+
 
    const onCreatePaymentDidPressed = () => {
-      createPayment(amount, selectedOrder._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency)
+      createPayment(amount, order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency)
    }
 
    const onCancelDidPressed = () => {
-      setAmount(null)
-      setIsOpen(false)
+      navigate(-1)
    }
 
    const onAmountDidChanged = (value) => {
@@ -123,17 +128,18 @@ export const PaymentView = ({ selectedOrder, isOpen, setIsOpen }) => {
    }
 
    const getOrderInfo = () => {
-      const itemInfo = `Item: ${selectedOrder.purchaseItem.title} ${selectedOrder.purchaseItem.description}`
-      const ownerInfo = `User: ${selectedOrder.user.username}`
-      const dateInfo = `Created At: ${dateAndTimeFormat(selectedOrder.date)}`
-      const dueInfo = `Due Date: ${dateAndTimeFormat(selectedOrder.dueDate)}`
-      const statusInfo = `Status: ${selectedOrder.status}`
+      const itemInfo = `Item: ${order?.purchaseItem?.title} ${order.purchaseItem?.description}`
+      const ownerInfo = `User: ${order?.user?.username}`
+      const dateInfo = `Created At: ${dateAndTimeFormat(order?.date)}`
+      const dueInfo = `Due Date: ${dateAndTimeFormat(order?.dueDate)}`
+      const statusInfo = `Status: ${order?.status || ''}`
 
       return `${itemInfo} | ${ownerInfo} | ${dateInfo} | ${dueInfo} | ${statusInfo}`
    }
    
-   return (!isOpen) ? null : (
+   return (
       <div className='purchase_crud_view__main'>
+         
          <div className='purchase_crud_view__container  payment_view__gap'>
             <h1 className='purchase_crud_view__title'>Purchase Payment</h1>
 

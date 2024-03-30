@@ -28,11 +28,19 @@ export const usePurchaseRepository = () => {
       })
    }
 
+   const fetchPurchaseOrdersById = (_id) => {
+      return apiCall({
+         path: `/api/v1/purchase-order?_id=${_id}`,
+         method: 'GET'
+      })
+   }
+
    return {
       fetchPurchaseItemsByWorkspace,
       createPurchaseOrder,
       isLoading,
       error,
-      fetchPurchaseOrdersByWorkspace
+      fetchPurchaseOrdersByWorkspace,
+      fetchPurchaseOrdersById
    }
 }

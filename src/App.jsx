@@ -6,6 +6,7 @@ import { Home } from './Pages/Home/Home';
 import { useUserSession } from './Utils/Contexts/userSessionContext'; // Import the hook
 import './i18n'; // The path to your i18n config file
 import { useEffect } from 'react';
+import { PaymentView } from './Pages/Purchase/Pay/PaymentView'
 
 function App() {
   /* With the default route and protected routes set up, you may not need the useEffect hook in your App component to navigate to /home immediately.
@@ -22,6 +23,7 @@ function App() {
 
         <Route path="/" element={<Navigate replace to="/home" />} /> {/* Redirect from / to /home */}
         <Route path="/login" element={<LoginView />} />
+        <Route path='/payment/:orderId' element={<PaymentView/>} />
 
         <Route path="/home" element={
           <ProtectedRoute>

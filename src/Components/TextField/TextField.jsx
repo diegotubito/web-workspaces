@@ -59,7 +59,7 @@ export const TextField = ({ title, placeholder, onInputChange, onDidBegin, onRet
       }));
     }
   }
-console.log(form.type)
+
   return (
     <div>
       <p className={`${form.size === 'small' ? 'titleSmall' : ''} ${form.size === 'large' ? 'titleLarge' : ''}`}>{title}</p>

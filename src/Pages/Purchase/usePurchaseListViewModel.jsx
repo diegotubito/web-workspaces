@@ -29,7 +29,7 @@ export const usePurchaseListViewModel = () => {
                value: order._id,
                alignment: 'left'
             }, {
-               _id: order._id + 'a',
+               _id: order._id + 'b',
                name: '_id',
                minWidth: '5rem',
                maxWidth: '0.5fr',
@@ -37,7 +37,7 @@ export const usePurchaseListViewModel = () => {
                alignment: 'left'
             },
             {
-               _id: order._id + 'b',
+               _id: order._id + 'c',
                name: '_id',
                minWidth: '10rem',
                maxWidth: '1fr',
@@ -54,7 +54,7 @@ export const usePurchaseListViewModel = () => {
             }
                ,
             {
-               _id: order._id + 'c',
+               _id: order._id + 'e',
                name: '_id',
                minWidth: '10rem',
                maxWidth: '1fr',
@@ -62,7 +62,7 @@ export const usePurchaseListViewModel = () => {
                alignment: 'center'
             },
             {
-               _id: order._id + 'd',
+               _id: order._id + 'f',
                name: '_id',
                minWidth: '15rem',
                maxWidth: '1fr',

@@ -10,7 +10,8 @@ export const usePurchaseViewModel = () => {
       fetchPurchaseItemsByWorkspace,
       fetchPurchaseOrdersByWorkspace,
       createPurchaseOrder: createPurchaseOrderRepository,
-      error: purchaseItemError
+      error: purchaseItemError,
+      fetchPurchaseOrdersById
    } = usePurchaseRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
@@ -18,6 +19,7 @@ export const usePurchaseViewModel = () => {
    const [onPurchaseFailed, setOnPurchaseFailed] = useState(null)
    const [onPurchaseSuccess, setOnPurchaseSuccess] = useState(false)
    const [ orders, setOrders] = useState([])
+   const [order, setOrder] = useState({})
 
    const getPurchaseItems = async () => {
 
@@ -34,6 +36,17 @@ export const usePurchaseViewModel = () => {
       try {
          const response = await fetchPurchaseOrdersByWorkspace(workspaceSession._id)
          setOrders(response.orders)
+      } catch (error) {
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
+         setOnPurchaseFailed(error)
+      }
+   }
+
+   const getPurchaseOrderById = async (_id) => {
+      try {
+         const response = await fetchPurchaseOrdersById(_id)
+         setOrder(response.order)
       } catch (error) {
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
@@ -123,6 +136,8 @@ export const usePurchaseViewModel = () => {
       setOnPurchaseSuccess,
       getPurchaseOrders,
       orders,
-       setOrders
+       setOrders,
+      getPurchaseOrderById,
+      order
    }
 }

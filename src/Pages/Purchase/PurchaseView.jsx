@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
 import { PurchaseCrudView } from './CrudView/PurchaseCrudView'
-import { Button } from 'react-bootstrap';
 import { GridView } from '../../Components/GridView/GridView';
 import './PurchaseView.css'
 import { usePurchaseListViewModel } from './usePurchaseListViewModel'
 import { useTranslation } from 'react-i18next';
 import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton'
-import { PaymentView } from './Pay/PaymentView';
+import { useNavigate } from 'react-router-dom';
 
 export const PurchaseView = () => {
+   const navigate = useNavigate();
    const { t } = useTranslation()
    const [shouldOpenPurchaseCrudView, setShouldPurchaseOpenCrudView] = useState(false)
-   const [shouldOpenPaymentView, setShouldOpenPaymentView] = useState(false)
    const [selectedOrder, setSelectedOrder] = useState()
    const [payButtonEnabled, setPayButtonEnabled] = useState(false)
 
@@ -50,7 +49,9 @@ export const PurchaseView = () => {
    }
 
    const onPayemntDidClicked = () => {
-      setShouldOpenPaymentView(true)
+      if (selectedOrder) {
+         navigate(`/payment/${selectedOrder._id}`)
+      }
    }
 
    return (
@@ -68,13 +69,6 @@ export const PurchaseView = () => {
             isOpen={shouldOpenPurchaseCrudView}
             setIsOpen={setShouldPurchaseOpenCrudView}
          />
-
-         <PaymentView
-            selectedOrder={selectedOrder}
-            isOpen={shouldOpenPaymentView}
-            setIsOpen={setShouldOpenPaymentView}
-         />
-
          <GridView
             className='purchase__view-order-list '
             items={items}
