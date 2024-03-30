@@ -23,6 +23,18 @@
 
      "_comment_purchase_status": "Purchase Status",
   
-     "pending_approval": "Pending Approval"
+     "pending_approval": "Pending Approval",
 
+     "_comment_payment_view": "Payment View",
+
+     "PAYMENT_VIEW_TITLE": "Purchase Payment",
+     "PAYMENT_VIEW_PAYMENT_METHOD_TITLE": "Select Payment Method",
+     "PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE": "Select Physical Account",
+     "PAYMENT_VIEW_CURRENCY_TITLE": "Select Currency",
+     "PAYMENT_VIEW_TOTAL_TO_PAY_TITLE": "Total Amount",
+     "PAYMENT_VIEW_TOTAL_PAID_TITLE": "Total Paid",
+     "PAYMENT_VIEW_BALANCE_TO_PAY_TITLE": "Balance To Pay",
+     "PAYMENT_VIEW_NEW_PAYMENT_AMOUNT_TITLE": "New Payment Amount",
+     "PAYMENT_VIEW_CREATE_PAYMENT_BUTTON_TITLE": "Create Payment",
+     "PAYMENT_VIEW_CANCEL_BUTTON_TITLE": "Cancel"
 }

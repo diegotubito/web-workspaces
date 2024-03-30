@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 export const PurchaseView = () => {
    const navigate = useNavigate();
    const { t } = useTranslation()
-   const [shouldOpenPurchaseCrudView, setShouldPurchaseOpenCrudView] = useState(false)
    const [selectedOrder, setSelectedOrder] = useState()
    const [payButtonEnabled, setPayButtonEnabled] = useState(false)
 
@@ -41,7 +40,7 @@ export const PurchaseView = () => {
       setSelectedOrder(getOrder(selectedItem[0]._id))
    }
    const openPurchaseCrudView = () => {
-      setShouldPurchaseOpenCrudView(true)
+      navigate(`/purchase_crud_view`)
    }
 
    const onDisabledDidClicked = () => {
@@ -65,10 +64,6 @@ export const PurchaseView = () => {
             />
          </div>
 
-         <PurchaseCrudView
-            isOpen={shouldOpenPurchaseCrudView}
-            setIsOpen={setShouldPurchaseOpenCrudView}
-         />
          <GridView
             className='purchase__view-order-list '
             items={items}

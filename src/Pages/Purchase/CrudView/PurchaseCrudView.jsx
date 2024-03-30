@@ -9,9 +9,10 @@ import { useSaleItemViewModel } from '../../../Hooks/SaleItem/useSaleItemViewMod
 import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Common/formatCurrency';
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton';
+import { useNavigate } from 'react-router-dom';
 
-export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
-
+export const PurchaseCrudView = () => {
+   const navigate = useNavigate()
    const { t } = useTranslation()
    const {
       getSaleItems,
@@ -43,12 +44,11 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
       getPurchaseItems();
       getSaleItems();
 
-   }, [isOpen])
+   }, [])
 
    useEffect(() => {
       if (onPurchaseSuccess) {
-         setIsOpen(false)
-         setOnPurchaseSuccess(null)
+         navigate(-1)
       }
    }, [onPurchaseSuccess])
 
@@ -124,11 +124,11 @@ export const PurchaseCrudView = ({ isOpen, setIsOpen }) => {
    }
 
    const onCancelDidPressed = () => {
-      setIsOpen(false)
+      navigate(-1)
    }
 
    {
-      return (!isOpen) ? null : (
+      return(
          <div className='purchase_crud_view__main'>
             <div className='purchase_crud_view__container'>
 

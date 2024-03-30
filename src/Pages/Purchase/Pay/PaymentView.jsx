@@ -141,12 +141,12 @@ export const PaymentView = () => {
       <div className='purchase_crud_view__main'>
          
          <div className='purchase_crud_view__container  payment_view__gap'>
-            <h1 className='purchase_crud_view__title'>Purchase Payment</h1>
+            <h1 className='purchase_crud_view__title'>{t('PAYMENT_VIEW_TITLE')}</h1>
 
             <h3> {getOrderInfo()} </h3>
             
             <div>
-               <h3 className='purchase_view__form-title'>Select Payment Method</h3>
+               <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}</h3>
                <select className="form-select" value={selectedPaymentItem} onChange={handleOnPaymentMethodChange}>
                   {paymentMethods.map((item) => {
                      return (
@@ -158,7 +158,7 @@ export const PaymentView = () => {
             </div>
 
             <div>
-               <h3 className='purchase_view__form-title'>Select Phsycial Account</h3>
+               <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE')}</h3>
                <select className="form-select" value={selectedPhysicalAccount} onChange={handleOnPhysicalAccountChange}>
                   {accounts.map((item) => {
                      return (
@@ -170,9 +170,9 @@ export const PaymentView = () => {
             </div>
 
             <div>
-               <h3 className='purchase_view__form-title'>Select Currency</h3>
+               <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</h3>
                <select className="form-select" value={selectedCurrency} onChange={handleOnCurrencyChange}>
-                  <option value="" disabled>Select a currency</option>
+                  <option value="" disabled>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</option>
                   {currencies.map((item) => (
                      <option key={item._id} value={item._id}>{item.name}</option>
                   ))}
@@ -180,23 +180,23 @@ export const PaymentView = () => {
             </div>
 
             <div className='payment_view__total-amount-main'>
-               <h3>Total to pay</h3>
+               <h3>{t('PAYMENT_VIEW_TOTAL_TO_PAY_TITLE')}</h3>
                <h3 className='payment_view__total-amount'>{totalToPay()}</h3>
             </div>
 
             <div className='payment_view__total-amount-main'>
-               <h3>Total Paid</h3>
+               <h3>{t('PAYMENT_VIEW_TOTAL_PAID_TITLE')}</h3>
                <h3 className='payment_view__total-amount'>{totalPaid()}</h3>
             </div>
 
             <div className='payment_view__total-amount-main'>
-               <h3>Total Paid</h3>
+               <h3>{t('PAYMENT_VIEW_BALANCE_TO_PAY_TITLE')}</h3>
                <h3 className='payment_view__total-amount'>{netToPay()}</h3>
             </div>
             
             <div className='payment_view__total-amount-main'>
                <AmountField 
-                  title={'Amount To Pay'}
+                  title={t('PAYMENT_VIEW_NEW_PAYMENT_AMOUNT_TITLE') }
                   amount={amount}
                   onAmountDidChanged={onAmountDidChanged}
                   textAlign={'end'}
@@ -205,13 +205,13 @@ export const PaymentView = () => {
 
             <div className='payment_view__buttons'>
                <SimpleButton
-                  title='Cancel'
+                  title={t('PAYMENT_VIEW_CANCEL_BUTTON_TITLE')}
                   style='cancel'
                   onClick={() => onCancelDidPressed()}
                />
 
                <SimpleButton
-                  title='Create Payment'
+                  title={t('PAYMENT_VIEW_CREATE_PAYMENT_BUTTON_TITLE')}
                   style='secondary'
                   onClick={() => onCreatePaymentDidPressed()}
                />

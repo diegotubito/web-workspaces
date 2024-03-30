@@ -23,6 +23,19 @@
 
   "_comment_purchase_status": "Purchase Status",
   
-  "pending_approval": "Pendiente de Aprobación"
+  "pending_approval": "Pendiente de Aprobación",
+
+  "_comment_payment_view": "Payment View",
+
+  "PAYMENT_VIEW_TITLE": "Pago De Compras",
+  "PAYMENT_VIEW_PAYMENT_METHOD_TITLE": "Metodo De Pago",
+  "PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE": "Caja",
+  "PAYMENT_VIEW_CURRENCY_TITLE": "Seleccione La Moneda",
+  "PAYMENT_VIEW_TOTAL_TO_PAY_TITLE": "Monto Total",
+  "PAYMENT_VIEW_TOTAL_PAID_TITLE": "Total Pagado",
+  "PAYMENT_VIEW_BALANCE_TO_PAY_TITLE": "Saldo a Pagar",
+  "PAYMENT_VIEW_NEW_PAYMENT_AMOUNT_TITLE": "Nuevo Monto",
+  "PAYMENT_VIEW_CREATE_PAYMENT_BUTTON_TITLE": "Crear Pago",
+  "PAYMENT_VIEW_CANCEL_BUTTON_TITLE": "Cancelar"
 
 }
