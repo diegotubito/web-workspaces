@@ -172,11 +172,11 @@ export const PurchaseCrudView = () => {
                <div className='purchase_view__gap'>
 
                   <div className='purchase_crud_view__container-scroll'>
-                     <h1 className='purchase_crud_view__title'>Purchase View</h1>
+                     <h1 className='purchase_crud_view__title'>{t('PURCHASE_ORDER_CRUD_VIEW_TITLE')}</h1>
                  
                      <div className='purchase_view__gap'>
                         <div>
-                           <h3 className='purchase_view__form-title'>Elije el artículo de compra.</h3>
+                           <h3 className='purchase_view__form-title'>{t('PURCHASE_ORDER_CRUD_VIEW_SELECT_ARTICLE_TITLE')}</h3>
                            <select className="form-select" value={selectedPurchaseItem} onChange={handleChange}>
                               {purchaseItems.map((item) => {
                                  return (
@@ -189,38 +189,40 @@ export const PurchaseCrudView = () => {
 
                         <div className='purchase_view__buttons'>
                            <SimpleButton
-                              title='Add New'
+                              title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
                               style='primary'
                               onClick={() => onNewItemDidPressed()}
                            />
                         </div>
 
                         <InputFieldColumn
-                           title="Your items"
+                           title={t('PURCHASE_ORDER_CRUD_VIEW_ITEMS_TITLE')}
                            items={items}
                            setItems={setItems}
                         />
 
 
                         <div className='purchase_view__total-amount-main'>
-                           <h3>Total</h3>
+                           <h3>{t('PURCHASE_ORDER_CRUD_VIEW_TOTAL_TO_PAY_TITLE')}</h3>
                            <h3 className='purchase_view__total-amount'>{formatCurrency(totalAmount.toFixed(2).toString())}</h3>
                         </div>
 
                         <div className='purchase_view__buttons'>
                            <SimpleButton
-                              title='Cancel'
+                              title={t('PURCHASE_ORDER_CRUD_VIEW_CANCEL_ORDER_BUTTON_TITLE')}
                               style='cancel'
                               onClick={() => onCancelDidPressed()}
                            />
 
                            <SimpleButton
-                              title='Create Order'
+                              title={t('PURCHASE_ORDER_CRUD_VIEW_CREATE_ORDER_BUTTON_TITLE')}
                               style='secondary'
                               onClick={() => onCreateOrderDidPressed()}
                            />
 
                         </div>
+
+                        
                      </div>
                   </div >
                </div>

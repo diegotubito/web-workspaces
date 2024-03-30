@@ -22,12 +22,12 @@ export const PaymentView = () => {
    const { getAllAccounts, accounts } = usePhysicalAccountViewModel()
    const [currencies, setCurrencies] = useState([])
    const { getPayments, payments, createPayment } = useTransactionViewModel()
-   const [ totalPayment, setTotalPayment] = useState()
+   const [totalPayment, setTotalPayment] = useState()
    const [amount, setAmount] = useState()
    const { t } = useTranslation()
 
    useEffect(() => {
-      getPurchaseOrderById(orderId) 
+      getPurchaseOrderById(orderId)
    }, [])
 
    useEffect(() => {
@@ -136,15 +136,15 @@ export const PaymentView = () => {
 
       return `${itemInfo} | ${ownerInfo} | ${dateInfo} | ${dueInfo} | ${statusInfo}`
    }
-   
+
    return (
       <div className='purchase_crud_view__main'>
-         
+
          <div className='purchase_crud_view__container  payment_view__gap'>
             <h1 className='purchase_crud_view__title'>{t('PAYMENT_VIEW_TITLE')}</h1>
 
             <h3> {getOrderInfo()} </h3>
-            
+
             <div>
                <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}</h3>
                <select className="form-select" value={selectedPaymentItem} onChange={handleOnPaymentMethodChange}>
@@ -193,15 +193,19 @@ export const PaymentView = () => {
                <h3>{t('PAYMENT_VIEW_BALANCE_TO_PAY_TITLE')}</h3>
                <h3 className='payment_view__total-amount'>{netToPay()}</h3>
             </div>
-            
-            <div className='payment_view__total-amount-main'>
-               <AmountField 
-                  title={t('PAYMENT_VIEW_NEW_PAYMENT_AMOUNT_TITLE') }
-                  amount={amount}
-                  onAmountDidChanged={onAmountDidChanged}
-                  textAlign={'end'}
-               />
-            </div>
+
+            {order.status === 'pending_payment' && (
+               <>
+                  <div className='payment_view__total-amount-main'>
+                     <AmountField
+                        title={t('PAYMENT_VIEW_NEW_PAYMENT_AMOUNT_TITLE')}
+                        amount={amount}
+                        onAmountDidChanged={onAmountDidChanged}
+                        textAlign={'end'}
+                     />
+                  </div>
+               </>
+            )}
 
             <div className='payment_view__buttons'>
                <SimpleButton
@@ -214,12 +218,9 @@ export const PaymentView = () => {
                   title={t('PAYMENT_VIEW_CREATE_PAYMENT_BUTTON_TITLE')}
                   style='secondary'
                   onClick={() => onCreatePaymentDidPressed()}
+                  disabled={!(order.status === 'pending_payment')}
                />
-
             </div>
-
-            
-
          </div>
       </div>
    )
