@@ -3,21 +3,34 @@ import './PaymentView.css'
 import { usePaymentViewModel } from './PaymentViewModel';
 import { usePhysicalAccountViewModel } from '../../../Hooks/PhysicalAccount/usePhysicalAccountViewModel';
 import { useTransactionViewModel } from '../../../Hooks/Transaction/useTransactionViewModel';
+import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Common/formatCurrency';
+import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton'
+import { AmountField } from '../../../Components/AmountField/AmountField';
+import { useTranslation } from 'react-i18next';
 
-export const PaymentView = ({ isOpen, setIsOpen }) => {
+export const PaymentView = ({ selectedOrder, isOpen, setIsOpen }) => {
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
    const [selectedPhysicalAccount, setSelectedPhysicalAccount] = useState("");
    const [selectedCurrency, setSelectedCurrency] = useState("")
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
    const { getAllAccounts, accounts } = usePhysicalAccountViewModel()
    const [currencies, setCurrencies] = useState([])
-   const { getPayments, payments } = useTransactionViewModel()
+   const { getPayments, payments, createPayment } = useTransactionViewModel()
+   const [ totalPayment, setTotalPayment] = useState()
+   const [amount, setAmount] = useState()
+   const { t } = useTranslation()
 
    useEffect(() => {
       fetchAllMethods()
       getAllAccounts()
-      getPayments('65f0ea2693c35c90ae9238f7')
+      
    }, [])
+
+   useEffect(() => {
+      if (selectedOrder) {
+         getPayments(selectedOrder._id)
+      }
+   }, [selectedOrder])
 
    useEffect(() => {
       // default payment method
@@ -38,11 +51,15 @@ export const PaymentView = ({ isOpen, setIsOpen }) => {
    }, [selectedPhysicalAccount])
 
    useEffect(() => {
+      console.log(amount)
+   }, [amount])
+
+   useEffect(() => {
       const suma = payments.reduce((accumulator, pay) => {
          return accumulator + pay.amount;
       }, 0); // Inicializa el acumulador en 0
 
-      console.log(`Suma de pagos: ${suma}`);
+      setTotalPayment(suma)
    }, [payments])
 
    const handleOnPaymentMethodChange = (event) => {
@@ -87,9 +104,26 @@ export const PaymentView = ({ isOpen, setIsOpen }) => {
       setCurrencies(items)
    }
 
+   const totalToPay = () => formatCurrency((selectedOrder.totalAmount).toFixed(2).toString())
+   const totalPaid = () => formatCurrency((totalPayment).toFixed(2).toString())
+   const netToPay = () => formatCurrency((selectedOrder.totalAmount - totalPayment).toFixed(2).toString())
+
+   const onCreatePaymentDidPressed = () => {
+      createPayment(amount, selectedOrder._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency)
+   }
+
+   const onCancelDidPressed = () => {
+      setAmount(null)
+      setIsOpen(false)
+   }
+
+   const onAmountDidChanged = (value) => {
+      setAmount(value)
+   }
+   
    return (!isOpen) ? null : (
       <div className='purchase_crud_view__main'>
-         <div className='purchase_crud_view__container'>
+         <div className='purchase_crud_view__container  payment_view__gap'>
             <h1 className='purchase_crud_view__title'>Purchase Payment</h1>
 
             <div>
@@ -126,6 +160,46 @@ export const PaymentView = ({ isOpen, setIsOpen }) => {
                </select>
             </div>
 
+            <div className='payment_view__total-amount-main'>
+               <h3>Total to pay</h3>
+               <h3 className='payment_view__total-amount'>{totalToPay()}</h3>
+            </div>
+
+            <div className='payment_view__total-amount-main'>
+               <h3>Total Paid</h3>
+               <h3 className='payment_view__total-amount'>{totalPaid()}</h3>
+            </div>
+
+            <div className='payment_view__total-amount-main'>
+               <h3>Total Paid</h3>
+               <h3 className='payment_view__total-amount'>{netToPay()}</h3>
+            </div>
+            
+            <div className='payment_view__total-amount-main'>
+               <AmountField 
+                  title={'Amount To Pay'}
+                  amount={amount}
+                  onAmountDidChanged={onAmountDidChanged}
+                  textAlign={'end'}
+               />
+            </div>
+
+            <div className='payment_view__buttons'>
+               <SimpleButton
+                  title='Cancel'
+                  style='cancel'
+                  onClick={() => onCancelDidPressed()}
+               />
+
+               <SimpleButton
+                  title='Create Payment'
+                  style='secondary'
+                  onClick={() => onCreatePaymentDidPressed()}
+               />
+
+            </div>
+
+            
 
          </div>
       </div>

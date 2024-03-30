@@ -12,17 +12,32 @@ export const PurchaseView = () => {
    const { t } = useTranslation()
    const [shouldOpenPurchaseCrudView, setShouldPurchaseOpenCrudView] = useState(false)
    const [shouldOpenPaymentView, setShouldOpenPaymentView] = useState(false)
+   const [selectedOrder, setSelectedOrder] = useState()
 
-   const { getPurchaseOrders, items, setItems } = usePurchaseListViewModel()
+   const { getPurchaseOrders, items, setItems, getOrder } = usePurchaseListViewModel()
 
    useEffect(() => {
       getPurchaseOrders()
    }, [])
 
    useEffect(() => {
-      console.log(items)
+      determineSelectionItem()
    }, [items])
 
+   const determineSelectionItem = () => {
+      const selectedItem = items.filter( (item) => {
+         if (item.isSelected) {
+            return item
+         }
+      })
+
+      if (selectedItem.length === 0) { 
+         setSelectedOrder(null)
+         return 
+      }
+
+      setSelectedOrder(getOrder(selectedItem[0]._id))
+   }
    const openPurchaseCrudView = () => {
       setShouldPurchaseOpenCrudView(true)
    }
@@ -52,6 +67,7 @@ export const PurchaseView = () => {
          />
 
          <PaymentView
+            selectedOrder={selectedOrder}
             isOpen={shouldOpenPaymentView}
             setIsOpen={setShouldOpenPaymentView}
          />

@@ -44,3 +44,34 @@
    /* Explicitly remove margin from <p> */
    font-weight: 700;
 }
+
+.payment_view__total-amount-main {
+   display: flex;
+   justify-content: end;
+   align-items: center;
+   gap: 1rem;
+   color: gray;
+   user-select: none;
+}
+
+.payment_view__total-amount {
+   background-color: whitesmoke;
+   padding: 1rem;
+   border-radius: 4px;
+   min-width: 15rem;
+   text-align: end;
+   font-size: 17px;
+}
+
+.payment_view__gap {
+   display: flex;
+   flex-direction: column;
+   gap: 1rem;
+}
+
+.payment_view__buttons {
+   margin-top: 3rem;
+   display: flex;
+   justify-content: flex-end;
+   gap: 1rem;
+}

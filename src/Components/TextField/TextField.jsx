@@ -17,7 +17,7 @@ week: Teclado para la entrada de semanas.
 time: Teclado para la entrada de horas.
 */
 
-export const TextField = ({ title, placeholder, onInputChange, onDidBegin, onReturnPressed, form, setForm }) => {
+export const TextField = ({ title, placeholder, onInputChange, onDidBegin, onReturnPressed, form, setForm, textAlign }) => {
   const onChangeHandler = (event) => {
     let newValue = event.target.value;
     if (form.type === 'currency') {
@@ -76,6 +76,7 @@ console.log(form.type)
         autoComplete={form.type === 'password' ? 'current-password' : form.autocomplete}
         maxLength={form.maxLength ? form.maxLength : -1} // Maximum length
         autoCapitalize={form.autoCapitalize}
+        style={{ textAlign: textAlign }}
       />
       {form.errorMessage && <p className='errorMessage'>{form.errorMessage}</p>}
     </div>

@@ -11,6 +11,11 @@ export const usePurchaseListViewModel = () => {
       mapItems()
    }, [orders])
 
+   const getOrder = (_id) => {
+      const order = orders.filter((obj) => obj._id === _id)
+      return order[0]
+   } 
+
    const mapItems = () => {
       const newItems = orders.map((order) => {
          return {
@@ -54,5 +59,5 @@ export const usePurchaseListViewModel = () => {
       setItems(newItems)
    }
 
-   return { getPurchaseOrders, items, setItems }
+   return { getPurchaseOrders, items, setItems, getOrder }
 }

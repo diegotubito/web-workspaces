@@ -10,5 +10,13 @@ export const useTransactionRepository = () => {
       })
    }
 
-   return { fetchTransactionByEntity, isLoading, error }
+   const createNewPayment = (body) => {
+      return apiCall({
+         path: `/api/v1/transaction`,
+         method: 'POST',
+         body: body
+      })
+   }
+
+   return { fetchTransactionByEntity, isLoading, error, createNewPayment }
 }

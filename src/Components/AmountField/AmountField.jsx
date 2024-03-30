@@ -4,7 +4,7 @@ import { TextField } from '../TextField/TextField'
 import { useState, useEffect } from 'react'
 import { formatCurrency, convertCurrencyStringToNumber } from '../../Utils/Common/formatCurrency';
 
-export const AmountField = ({amount, onAmountDidChanged}) => {
+export const AmountField = ({ title, amount, onAmountDidChanged, textAlign }) => {
    const {t} = useTranslation()
    const [amountForm, setAmountForm] = useState({
       name: 'amount_input',
@@ -68,15 +68,16 @@ export const AmountField = ({amount, onAmountDidChanged}) => {
    }
 
    return (
-      <div className='purchase_view__amount-textfield'>
+      <div className='amount_field__textfield' style={{textAlign: textAlign}}>
          <TextField
-            title={t('Amount')}
+            title={t(title)}
             placeholder={''}
             onInputChange={onInputChange}
             onDidBegin={onDidBeginInput}
             onReturnPressed={onReturnPressed}
             form={amountForm}
             setForm={setAmountForm}
+            textAlign={textAlign}
          />
       </div>
 

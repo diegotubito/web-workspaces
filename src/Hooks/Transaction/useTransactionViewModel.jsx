@@ -1,11 +1,14 @@
 import { useTransactionRepository } from "./useTransactionRepository";
 import { useState } from "react";
 import { useWorkspaceSession } from "../../Utils/Contexts/workspaceSessionContext";
+import { useUserSession } from "../../Utils/Contexts/userSessionContext";
 
 export const useTransactionViewModel = () => {
-   const { fetchTransactionByEntity } = useTransactionRepository()
+   const { fetchTransactionByEntity, createNewPayment } = useTransactionRepository()
    const { workspaceSession } = useWorkspaceSession()
+   const { userSession } = useUserSession()
    const [payments, setPayments] = useState([])
+   const [onCreatePaymentSuccess, setOnCreatePaymentSuccess] = useState(false)
 
    const getPayments = async (purchaseOrderId) => {
       try {
@@ -17,5 +20,30 @@ export const useTransactionViewModel = () => {
       }
    }
 
-   return { getPayments, payments }
+   const createPayment = async (amount, orderId, paymentMethodId, accountId, currencyId) => {
+      try {
+         const body = {
+            workspace: workspaceSession._id,
+            user: userSession.user._id,
+            amount: amount,
+            type: "purchase",
+            entity: orderId,
+            entityModel: "purchase_order",
+            description: "pagando las deudas",
+            paymentMethod: paymentMethodId,
+            physicalAccount: accountId,
+            currency: currencyId
+         }
+         console.log('bodyyyyy')  
+         console.log(body)  
+         const response = await createNewPayment(body)
+         setOnCreatePaymentSuccess(true)
+      } catch (error) {
+         setOnCreatePaymentSuccess(false)
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
+      }
+   }
+
+   return { getPayments, payments, createPayment }
 }
