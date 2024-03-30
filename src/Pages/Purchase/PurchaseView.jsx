@@ -6,6 +6,8 @@ import { usePurchaseListViewModel } from './usePurchaseListViewModel'
 import { useTranslation } from 'react-i18next';
 import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton'
 import { useNavigate } from 'react-router-dom';
+import { useTransactionViewModel } from '../../Hooks/Transaction/useTransactionViewModel'
+import { usePaymentsListViewModel } from './usePaymentsListViewModel'
 
 export const PurchaseView = () => {
    const navigate = useNavigate();
@@ -14,7 +16,11 @@ export const PurchaseView = () => {
    const [payButtonEnabled, setPayButtonEnabled] = useState(false)
 
    const { getPurchaseOrders, items, setItems, getOrder } = usePurchaseListViewModel()
-
+   
+   const { getPayments, payments } = useTransactionViewModel()
+   const { mapTransactions } = usePaymentsListViewModel()
+   const [ mappedTransactions, setMappedTransactions ] = useState([])
+ 
    useEffect(() => {
       getPurchaseOrders()
    }, [])
@@ -22,6 +28,17 @@ export const PurchaseView = () => {
    useEffect(() => {
       determineSelectionItem()
    }, [items])
+
+   useEffect(() => {
+      setMappedTransactions([])
+      if (selectedOrder) {
+         getPayments(selectedOrder._id)
+      }
+   }, [selectedOrder])
+
+   useEffect(() => {
+      setMappedTransactions(mapTransactions(payments))
+   }, [payments])
 
    const determineSelectionItem = () => {
       const selectedItem = items.filter( (item) => {
@@ -39,6 +56,7 @@ export const PurchaseView = () => {
       setPayButtonEnabled(true)
       setSelectedOrder(getOrder(selectedItem[0]._id))
    }
+
    const openPurchaseCrudView = () => {
       navigate(`/purchase_crud_view`)
    }
@@ -87,6 +105,15 @@ export const PurchaseView = () => {
             />
            
          </div>
+
+         <GridView
+            className='purchase__view-order-list '
+            items={mappedTransactions}
+            setItems={setMappedTransactions}
+            gap={'1px'}
+            selectionMode={'single'}  // none, single, multiple.
+         />
+
       </div >
    )
 }
