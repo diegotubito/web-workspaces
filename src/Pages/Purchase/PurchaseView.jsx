@@ -148,7 +148,7 @@ export const PurchaseView = () => {
          return 
       }
 
-      if (selectedOrder.status === 'cancelled' || selectedOrder.status === 'pending_approval' || selectedOrder.status === 'rejected') {
+      if (selectedOrder.status === 'cancelled' || selectedOrder.status === 'pending_approval' || selectedOrder.status === 'rejected' || selectedOrder.status === 'completed') {
          setPayButtonState(false)
          return
       }
