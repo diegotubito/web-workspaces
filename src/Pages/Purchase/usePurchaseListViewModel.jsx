@@ -31,6 +31,12 @@ export const usePurchaseListViewModel = () => {
          // Si los elementos tienen el mismo estado, se ordenan por createdAt de forma descendente
          return new Date(b.createdAt) - new Date(a.createdAt);
       });
+      
+      const getAmount = (order) => {
+         const amountText = formatCurrency(order.totalAmount.toFixed(2).toString())
+         const currency = order.currency.code
+         return `(${currency}) ${amountText}`
+      }
 
       const newItems = sortedOrders.map((order) => {
          return {
@@ -75,11 +81,19 @@ export const usePurchaseListViewModel = () => {
                   name: 'Total Amount',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
-                  value: formatCurrency(order.totalAmount.toFixed(2).toString()),
-                  alignment: 'end'
+                  value: order.paymentMethod.name,
+                  alignment: 'start'
                },
                {
                   _id: order._id + 'f',
+                  name: 'Total Amount',
+                  minWidth: '5rem',
+                  maxWidth: '0.5fr',
+                  value: getAmount(order),
+                  alignment: 'end'
+               },
+               {
+                  _id: order._id + 'g',
                   name: 'Status',
                   minWidth: '15rem',
                   maxWidth: '0.7fr',

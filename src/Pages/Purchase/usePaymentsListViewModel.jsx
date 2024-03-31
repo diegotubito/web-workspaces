@@ -8,6 +8,13 @@ export const usePaymentsListViewModel = () => {
       const sortedTransactions = transactions.sort((a, b) => {
          return new Date(b.createdAt) - new Date(a.createdAt)
       }) 
+
+      const getAmount = (transaction) => {
+         const amountText = formatCurrency(transaction.amount.toFixed(2).toString())
+         const currency = transaction.currency.code
+         return `(${currency}) ${amountText}`
+      }
+
       const newItems = sortedTransactions.map((transaction) => {
          return {
             _id: transaction._id,
@@ -37,23 +44,6 @@ export const usePaymentsListViewModel = () => {
                alignment: 'start'
                },
                {
-                  _id: transaction._id + 'd',
-                  name: '_id',
-                  minWidth: '5rem',
-                  maxWidth: '0.5fr',
-                  value: `${transaction.paymentMethod.name}`,
-                  alignment: 'start'
-               },
-               {
-                  _id: transaction._id + 'd1',
-                  name: '_id',
-                  minWidth: '5rem',
-                  maxWidth: '0.1fr',
-                  value: `${transaction.currency.code}`,
-                  alignment: 'center'
-               }
-               , 
-               {
                   _id: transaction._id + 'e',
                   name: '_id',
                   minWidth: '5rem',
@@ -61,12 +51,21 @@ export const usePaymentsListViewModel = () => {
                   value: `${transaction.physicalAccount.name}`,
                   alignment: 'start'
                },
+               {
+                  _id: transaction._id + 'd',
+                  name: '_id',
+                  minWidth: '5rem',
+                  maxWidth: '0.5fr',
+                  value: `${transaction.paymentMethod.name}`,
+                  alignment: 'start'
+               }, 
+              
             {
                _id: transaction._id + 'f',
                name: '_id',
                minWidth: '5rem',
                maxWidth: '0.5fr',
-               value: formatCurrency(transaction.amount.toFixed(2).toString()),
+               value: getAmount(transaction),
                alignment: 'end'
             },
             {
