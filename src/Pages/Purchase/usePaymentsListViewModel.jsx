@@ -29,7 +29,7 @@ export const usePaymentsListViewModel = () => {
                alignment: 'left'
             },
             {
-               _id: transaction._id + 'c',
+               _id: transaction._id + 'b',
                name: '_id',
                minWidth: '5rem',
                maxWidth: '0.5fr',
@@ -37,14 +37,14 @@ export const usePaymentsListViewModel = () => {
                alignment: 'start'
             },
             {
-               _id: transaction._id + 'c2',
+               _id: transaction._id + 'c',
                name: '_id',
                minWidth: '5rem',
                maxWidth: '0.5fr',
                value: dateAndTimeFormat(transaction.updatedAt),
                alignment: 'start'
             }, {
-               _id: transaction._id + 'b',
+               _id: transaction._id + 'd',
                name: '_id',
                minWidth: '5rem',
                maxWidth: '0.5fr',
@@ -60,7 +60,7 @@ export const usePaymentsListViewModel = () => {
                alignment: 'start'
             },
             {
-               _id: transaction._id + 'd',
+               _id: transaction._id + 'f',
                name: '_id',
                minWidth: '5rem',
                maxWidth: '0.5fr',
@@ -76,7 +76,7 @@ export const usePaymentsListViewModel = () => {
                alignment: 'start'
             },
             {
-               _id: transaction._id + 'f',
+               _id: transaction._id + 'h',
                name: '_id',
                minWidth: '5rem',
                maxWidth: '0.7fr',

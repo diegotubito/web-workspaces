@@ -61,7 +61,7 @@ export const usePurchaseListViewModel = () => {
                   alignment: 'start'
                },
                {
-                  _id: order._id + 'c',
+                  _id: order._id + 'd',
                   name: 'Date',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
@@ -69,7 +69,7 @@ export const usePurchaseListViewModel = () => {
                   alignment: 'start'
                },
                {
-                  _id: order._id + 'b',
+                  _id: order._id + 'e',
                   name: 'Username',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
@@ -77,7 +77,7 @@ export const usePurchaseListViewModel = () => {
                   alignment: 'left'
                },
                {
-                  _id: order._id + 'd',
+                  _id: order._id + 'f',
                   name: 'Item Details',
                   minWidth: '10rem',
                   maxWidth: '1fr',
@@ -85,7 +85,7 @@ export const usePurchaseListViewModel = () => {
                   alignment: 'start'
                },
                {
-                  _id: order._id + 'e',
+                  _id: order._id + 'g',
                   name: 'Total Amount',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
@@ -93,7 +93,7 @@ export const usePurchaseListViewModel = () => {
                   alignment: 'start'
                },
                {
-                  _id: order._id + 'g',
+                  _id: order._id + 'h',
                   name: 'Status',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
@@ -101,7 +101,7 @@ export const usePurchaseListViewModel = () => {
                   alignment: 'center'
                },
                {
-                  _id: order._id + 'f',
+                  _id: order._id + 'i',
                   name: 'Total Amount',
                   minWidth: '5rem',
                   maxWidth: '0.7fr',
