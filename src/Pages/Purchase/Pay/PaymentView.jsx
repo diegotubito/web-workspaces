@@ -194,7 +194,7 @@ export const PaymentView = () => {
                <h3 className='payment_view__total-amount'>{netToPay()}</h3>
             </div>
 
-            {order.status === 'pending_payment' && (
+            {(order.status === 'pending_payment' || order.status === 'ready_to_pay') && (
                <>
                   <div className='payment_view__total-amount-main'>
                      <AmountField
@@ -218,7 +218,7 @@ export const PaymentView = () => {
                   title={t('PAYMENT_VIEW_CREATE_PAYMENT_BUTTON_TITLE')}
                   style='secondary'
                   onClick={() => onCreatePaymentDidPressed()}
-                  disabled={!(order.status === 'pending_payment')}
+                  disabled={ false }
                />
             </div>
          </div>

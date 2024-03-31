@@ -12,7 +12,7 @@ export const useTransactionRepository = () => {
 
    const createNewPayment = (body) => {
       return apiCall({
-         path: `/api/v1/transaction`,
+         path: `/api/v1/transaction-payment`,
          method: 'POST',
          body: body
       })
