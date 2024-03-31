@@ -59,14 +59,16 @@ export function GridView({ gap, items, setItems, selectionMode }) {
          {items.map((item) => {
             return (
                <div
-                  className='purchase_order__cell'
+                  className={`purchase_order__cell ${!item.isEnabled ? 'disabled' : ''}`}
                   key={`${item._id}-${item.isSelected}`}
-                  onClick={() => itemDidSelect(item)}
+                  onClick={() => item.isEnabled && itemDidSelect(item)}
                   style={{
                      display: 'grid',
                      gridTemplateColumns: getGridValues(item),
                      gap: gap,
                      color: getForegroundColor(item),
+                     cursor: item.isEnabled ? 'pointer' : 'not-allowed', // Change cursor based on item.isEnabled
+                     opacity: item.isEnabled ? 1 : 0.5, // Optional: Change opacity to indicate disabled state
                   }}
                >
 

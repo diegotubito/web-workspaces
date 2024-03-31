@@ -5,8 +5,10 @@
     --primary: rgb(96, 164, 209);
     --secondary: rgb(229, 226, 68);
     --gray: #757575;
-    --grayEven: rgb(190, 190, 190);
-    --grayPair: rgb(200, 200, 200);
+    --grayEven: rgb(190, 190, 190, 1);
+    --grayPair: rgb(200, 200, 200, 1);
+    --grayEvenDisabled: rgb(190, 190, 190, 0.3);
+    --grayPairDisabled: rgb(200, 200, 200, 0.3);
     --primarySimpleButton: rgb(60, 125, 155);
     --secondarySimpleButton: rgb(213, 88, 21);
     --destructiveSimpleButton: rgb(212, 54, 54);
