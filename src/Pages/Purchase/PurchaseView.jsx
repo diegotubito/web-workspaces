@@ -19,7 +19,7 @@ export const PurchaseView = () => {
    const [ mappedOrders, setMappedOrders ] = useState([])
    const [selectedOrder, setSelectedOrder] = useState()
 
-   const { getPayments, payments } = useTransactionViewModel()
+   const { getPayments, payments, removePayment } = useTransactionViewModel()
    const { mapTransactions } = usePaymentsListViewModel()
    const [ mappedTransactions, setMappedTransactions ] = useState([])
    const [ selectedPayment, setSelectedPayment] = useState()
@@ -59,7 +59,7 @@ export const PurchaseView = () => {
    }, [mappedTransactions])
 
    useEffect(() => {
-      validatePaymentButtons()
+      validateRemovePaymentButton()
    }, [selectedPayment])
 
    const getOrder = (_id) => {
@@ -129,7 +129,9 @@ export const PurchaseView = () => {
    }
 
    const onRemovePaymentDidClicked = () => {
-      console.log('will remove payment')
+      if (selectedPayment) {
+         removePayment(selectedPayment._id)
+      }
    }
 
    const validateOrderButtons = () => {
@@ -137,14 +139,7 @@ export const PurchaseView = () => {
       validateApproveButton()
       validateRejectedButton()
       validateRemoveOrderButton()
-   }
-
-   const validatePaymentButtons = () => {
-      if (!selectedPayment || !selectedOrder ) {
-         setRemovePaymentButtonState(false)
-      } else {
-         setRemovePaymentButtonState(true)
-      }
+      validateRemovePaymentButton()
    }
 
    const validatePayButton = () => {
@@ -210,7 +205,7 @@ export const PurchaseView = () => {
          return
       }
 
-      if (!selectedOrder.isEnabled) {
+      if (selectedPayment.isEnabled) {
          setRemovePaymentButtonState(true)
          return
       }

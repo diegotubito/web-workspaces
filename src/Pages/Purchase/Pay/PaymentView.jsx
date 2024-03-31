@@ -62,11 +62,13 @@ export const PaymentView = () => {
 
    useEffect(() => {
       const suma = payments.reduce((accumulator, pay) => {
-         return accumulator + pay.amount;
+         // Suma solo si isEnabled no es false
+         return pay.isEnabled !== false ? accumulator + pay.amount : accumulator;
       }, 0); // Inicializa el acumulador en 0
 
-      setTotalPayment(suma)
-   }, [payments])
+      setTotalPayment(suma);
+   }, [payments]);
+
 
    const handleOnPaymentMethodChange = (event) => {
       const itemId = event.target.value;
@@ -194,7 +196,7 @@ export const PaymentView = () => {
                <h3 className='payment_view__total-amount'>{netToPay()}</h3>
             </div>
 
-            {(order.status === 'pending_payment' || order.status === 'ready_to_pay') && (
+            {(order.status === 'partial_payment' || order.status === 'ready_to_pay') && (
                <>
                   <div className='payment_view__total-amount-main'>
                      <AmountField

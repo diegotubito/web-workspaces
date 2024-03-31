@@ -12,7 +12,7 @@ export const usePurchaseListViewModel = () => {
    const mapOrders = (orders) => {
       const orderStatusPriority = {
          'ready_to_pay': 1,
-         'pending_payment': 2,
+         'partial_payment': 2,
          'pending_approval': 3,
          'completed': 4,
          'rejected': 5,
@@ -51,14 +51,14 @@ export const usePurchaseListViewModel = () => {
                   name: 'Username',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
-                  value: order.user.username,
+                  value: `${order.user.lastName} ${order.user.firstName}`,
                   alignment: 'left'
                },
                {
                   _id: order._id + 'c',
                   name: 'Date',
-                  minWidth: '10rem',
-                  maxWidth: '1fr',
+                  minWidth: '5rem',
+                  maxWidth: '0.5fr',
                   value: dateAndTimeFormat(order.date),
                   alignment: 'start'
                },
@@ -73,16 +73,16 @@ export const usePurchaseListViewModel = () => {
                {
                   _id: order._id + 'e',
                   name: 'Total Amount',
-                  minWidth: '10rem',
-                  maxWidth: '1fr',
+                  minWidth: '5rem',
+                  maxWidth: '0.5fr',
                   value: formatCurrency(order.totalAmount.toFixed(2).toString()),
-                  alignment: 'center'
+                  alignment: 'end'
                },
                {
                   _id: order._id + 'f',
                   name: 'Status',
                   minWidth: '15rem',
-                  maxWidth: '1fr',
+                  maxWidth: '0.7fr',
                   value: order.status,
                   alignment: 'center'
                }

@@ -81,6 +81,8 @@ export function GridView({ gap, items, setItems, selectionMode }) {
                               padding: '0.7rem',
                               textAlign: field.alignment,
                               background: getBackgroundColor(item, fieldIndex),
+                              whiteSpace: 'nowrap', /* Evita que el texto se corte en nuevas líneas */
+                              overflow: 'auto', /* Habilita el desplazamiento si el contenido excede el ancho del elemento */
                            }}
                         > {t(`${field.value}`)} </span>
                      );

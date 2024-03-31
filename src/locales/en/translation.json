@@ -24,6 +24,11 @@
      "_comment_purchase_status": "Purchase Status",
   
      "pending_approval": "Pending Approval",
+     "ready_to_pay": "Ready To Pay",
+     "rejected": "Rejected",
+     "partial_payment": "Partial Pay",
+     "completed": "Completed",
+     "cancelled": "Cancelled",
 
      "_comment_payment_view": "Payment View",
 

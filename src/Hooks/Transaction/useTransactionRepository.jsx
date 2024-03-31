@@ -18,5 +18,12 @@ export const useTransactionRepository = () => {
       })
    }
 
-   return { fetchTransactionByEntity, isLoading, error, createNewPayment }
+   const disablePayment = (_id) => {
+      return apiCall({
+         path: `/api/v1/transaction-disable?_id=${_id}`,
+         method: 'PUT'
+      })
+   }
+
+   return { fetchTransactionByEntity, isLoading, error, createNewPayment, disablePayment }
 }

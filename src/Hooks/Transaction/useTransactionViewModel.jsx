@@ -4,7 +4,7 @@ import { useWorkspaceSession } from "../../Utils/Contexts/workspaceSessionContex
 import { useUserSession } from "../../Utils/Contexts/userSessionContext";
 
 export const useTransactionViewModel = () => {
-   const { fetchTransactionByEntity, createNewPayment } = useTransactionRepository()
+   const { fetchTransactionByEntity, createNewPayment, disablePayment } = useTransactionRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
    const [payments, setPayments] = useState([])
@@ -43,5 +43,15 @@ export const useTransactionViewModel = () => {
       }
    }
 
-   return { getPayments, payments, createPayment }
+   const removePayment = async (_id) => {
+      try {
+         const response = await disablePayment(_id)
+
+      } catch (error) {
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
+      }
+   }
+
+   return { getPayments, payments, createPayment, removePayment }
 }
