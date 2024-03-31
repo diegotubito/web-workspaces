@@ -3,11 +3,11 @@ import { formatCurrency } from '../../Utils/Common/formatCurrency';
 import { dateAndTimeFormat, stringMonthFormat } from '../../Utils/Common/dateUtils';
 
 export const usePaymentsListViewModel = () => {
-   
+
    const mapTransactions = (transactions) => {
       const sortedTransactions = transactions.sort((a, b) => {
          return new Date(b.createdAt) - new Date(a.createdAt)
-      }) 
+      })
 
       const getAmount = (transaction) => {
          const amountText = formatCurrency(transaction.amount.toFixed(2).toString())
@@ -27,13 +27,6 @@ export const usePaymentsListViewModel = () => {
                maxWidth: '0.5fr',
                value: transaction._id,
                alignment: 'left'
-            }, {
-               _id: transaction._id + 'b',
-               name: '_id',
-               minWidth: '5rem',
-               maxWidth: '0.5fr',
-               value: `${transaction.user.lastName} ${transaction.user.firstName}` ,
-               alignment: 'left'
             },
             {
                _id: transaction._id + 'c',
@@ -42,39 +35,53 @@ export const usePaymentsListViewModel = () => {
                maxWidth: '0.5fr',
                value: dateAndTimeFormat(transaction.date),
                alignment: 'start'
-               },
-               {
-                  _id: transaction._id + 'e',
-                  name: '_id',
-                  minWidth: '5rem',
-                  maxWidth: '0.5fr',
-                  value: `${transaction.physicalAccount.name}`,
-                  alignment: 'start'
-               },
-               {
-                  _id: transaction._id + 'd',
-                  name: '_id',
-                  minWidth: '5rem',
-                  maxWidth: '0.5fr',
-                  value: `${transaction.paymentMethod.name}`,
-                  alignment: 'start'
-               }, 
-              
+            },
             {
-               _id: transaction._id + 'f',
+               _id: transaction._id + 'c2',
                name: '_id',
                minWidth: '5rem',
                maxWidth: '0.5fr',
-               value: getAmount(transaction),
-               alignment: 'end'
+               value: dateAndTimeFormat(transaction.updatedAt),
+               alignment: 'start'
+            }, {
+               _id: transaction._id + 'b',
+               name: '_id',
+               minWidth: '5rem',
+               maxWidth: '0.5fr',
+               value: `${transaction.user.lastName} ${transaction.user.firstName}`,
+               alignment: 'left'
+            },
+            {
+               _id: transaction._id + 'e',
+               name: '_id',
+               minWidth: '5rem',
+               maxWidth: '0.5fr',
+               value: `${transaction.physicalAccount.name}`,
+               alignment: 'start'
+            },
+            {
+               _id: transaction._id + 'd',
+               name: '_id',
+               minWidth: '5rem',
+               maxWidth: '0.5fr',
+               value: `${transaction.paymentMethod.name}`,
+               alignment: 'start'
             },
             {
                _id: transaction._id + 'g',
                name: '_id',
                minWidth: '15rem',
                maxWidth: '1fr',
-               value: transaction.isEnabled,
-               alignment: 'center'
+               value: transaction.description,
+               alignment: 'start'
+            },
+            {
+               _id: transaction._id + 'f',
+               name: '_id',
+               minWidth: '5rem',
+               maxWidth: '0.7fr',
+               value: getAmount(transaction),
+               alignment: 'end'
             }]
          }
       })

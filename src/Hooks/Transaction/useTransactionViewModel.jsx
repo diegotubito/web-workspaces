@@ -20,14 +20,14 @@ export const useTransactionViewModel = () => {
       }
    }
 
-   const createPayment = async (amount, orderId, paymentMethodId, accountId, currencyId) => {
+   const createPayment = async (amount, orderId, paymentMethodId, accountId, currencyId, description) => {
       try {
          const body = {
             workspace: workspaceSession._id,
             user: userSession.user._id,
             amount: amount,
             entity: orderId,
-            description: "pagando las deudas",
+            description: description,
             paymentMethod: paymentMethodId,
             physicalAccount: accountId,
             currency: currencyId

@@ -25,6 +25,8 @@ export const PaymentView = () => {
    const [totalPayment, setTotalPayment] = useState()
    const [amount, setAmount] = useState()
    const { t } = useTranslation()
+   const [description, setDescription] = useState()
+   const [finalDescription, setFinalDescription] = useState()
 
    useEffect(() => {
       getPurchaseOrderById(orderId)
@@ -118,7 +120,7 @@ export const PaymentView = () => {
 
 
    const onCreatePaymentDidPressed = () => {
-      createPayment(amount, order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency)
+      createPayment(amount, order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency, finalDescription)
    }
 
    const onCancelDidPressed = () => {
@@ -127,6 +129,11 @@ export const PaymentView = () => {
 
    const onAmountDidChanged = (value) => {
       setAmount(value)
+   }
+
+   const onDescriptionChangeHandler = (event) => {
+      const value = event.target.value;
+      setFinalDescription(value)
    }
 
    const getOrderInfo = () => {
@@ -147,6 +154,27 @@ export const PaymentView = () => {
 
             <h3> {getOrderInfo()} </h3>
 
+            <div>
+
+               <input
+                  // ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
+                  style={{
+                     width: '100%',
+                     border: '1px solid ' + `${'gray'}`,
+                     height: '3rem',
+                     padding: '0rem 0.5rem',
+                  }}
+                  type="text"
+                  placeholder={'descripcion'}
+                  value={description}
+                  onChange={(event) => onDescriptionChangeHandler(event)}
+                  //    onBlur={(event) => onBlurHandler(event, field._id)}
+                  autoComplete='off'
+                
+                  maxLength={`${300}`}
+               />
+
+            </div>
 
             <div>
                <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE')}</h3>

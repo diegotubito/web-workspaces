@@ -31,7 +31,7 @@ export const usePurchaseListViewModel = () => {
          // Si los elementos tienen el mismo estado, se ordenan por createdAt de forma descendente
          return new Date(b.createdAt) - new Date(a.createdAt);
       });
-      
+
       const getAmount = (order) => {
          const amountText = formatCurrency(order.totalAmount.toFixed(2).toString())
          const currency = order.currency.code
@@ -53,20 +53,28 @@ export const usePurchaseListViewModel = () => {
                   alignment: 'left'
                },
                {
-                  _id: order._id + 'b',
-                  name: 'Username',
-                  minWidth: '5rem',
-                  maxWidth: '0.5fr',
-                  value: `${order.user.lastName} ${order.user.firstName}`,
-                  alignment: 'left'
-               },
-               {
                   _id: order._id + 'c',
                   name: 'Date',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
                   value: dateAndTimeFormat(order.date),
                   alignment: 'start'
+               },
+               {
+                  _id: order._id + 'c',
+                  name: 'Date',
+                  minWidth: '5rem',
+                  maxWidth: '0.5fr',
+                  value: dateAndTimeFormat(order.updatedAt),
+                  alignment: 'start'
+               },
+               {
+                  _id: order._id + 'b',
+                  name: 'Username',
+                  minWidth: '5rem',
+                  maxWidth: '0.5fr',
+                  value: `${order.user.lastName} ${order.user.firstName}`,
+                  alignment: 'left'
                },
                {
                   _id: order._id + 'd',
@@ -85,21 +93,22 @@ export const usePurchaseListViewModel = () => {
                   alignment: 'start'
                },
                {
+                  _id: order._id + 'g',
+                  name: 'Status',
+                  minWidth: '5rem',
+                  maxWidth: '0.5fr',
+                  value: order.status,
+                  alignment: 'center'
+               },
+               {
                   _id: order._id + 'f',
                   name: 'Total Amount',
                   minWidth: '5rem',
-                  maxWidth: '0.5fr',
+                  maxWidth: '0.7fr',
                   value: getAmount(order),
                   alignment: 'end'
-               },
-               {
-                  _id: order._id + 'g',
-                  name: 'Status',
-                  minWidth: '15rem',
-                  maxWidth: '0.7fr',
-                  value: order.status,
-                  alignment: 'center'
                }
+
             ]
          }
       });
