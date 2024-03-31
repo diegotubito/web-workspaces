@@ -147,10 +147,11 @@ export const PaymentView = () => {
 
             <h3> {getOrderInfo()} </h3>
 
+
             <div>
-               <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}</h3>
-               <select className="form-select" value={selectedPaymentItem} onChange={handleOnPaymentMethodChange}>
-                  {paymentMethods.map((item) => {
+               <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE')}</h3>
+               <select className="form-select" value={selectedPhysicalAccount} onChange={handleOnPhysicalAccountChange}>
+                  {accounts.map((item) => {
                      return (
                         <option key={item._id} value={item._id}>{item.name}</option>
                      )
@@ -160,9 +161,9 @@ export const PaymentView = () => {
             </div>
 
             <div>
-               <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE')}</h3>
-               <select className="form-select" value={selectedPhysicalAccount} onChange={handleOnPhysicalAccountChange}>
-                  {accounts.map((item) => {
+               <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}</h3>
+               <select className="form-select" value={selectedPaymentItem} onChange={handleOnPaymentMethodChange}>
+                  {paymentMethods.map((item) => {
                      return (
                         <option key={item._id} value={item._id}>{item.name}</option>
                      )

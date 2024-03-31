@@ -10,6 +10,7 @@ import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Co
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton';
 import { useNavigate } from 'react-router-dom';
+import { usePaymentViewModel } from '../Pay/PaymentViewModel';
 
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
@@ -38,12 +39,17 @@ export const PurchaseCrudView = () => {
    const { createProductItem, createServiceItem } = usePurchaseFormViewModel({ items, setItems, saleItems })
    const [totalAmount, setTotalAmount] = useState(0)
 
+   const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
+   const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
+
+   const [selectedCurrency, setSelectedCurrency] = useState("")
+
    // 1 - Fetch All Purchase Items From API 
    useEffect(() => {
       setSelectedPurchaseItem('')
       getPurchaseItems();
       getSaleItems();
-
+      fetchAllMethods()
    }, [])
 
    useEffect(() => {
@@ -62,6 +68,13 @@ export const PurchaseCrudView = () => {
          setSelectedPurchaseItem(purchaseItems[0]._id)
       }
    }, [purchaseItems])
+
+   useEffect(() => {
+      // default payment method
+      if (paymentMethods.length > 0) {
+         setSelectedPaymentItem(paymentMethods[0]._id)
+      }
+   }, [paymentMethods])
 
    // 3A - When picking a selector element, we create a default blank item.
    useEffect(() => {
@@ -120,12 +133,17 @@ export const PurchaseCrudView = () => {
    }
 
    const onCreateOrderDidPressed = () => {
-      createPurchaseOrder(items, convertCurrencyStringToNumber(totalAmount), selectedPurchaseItem)
+      createPurchaseOrder(items, convertCurrencyStringToNumber(totalAmount), selectedPurchaseItem, selectedPaymentItem, selectedCurrency)
    }
 
    const onCancelDidPressed = () => {
       navigate(-1)
    }
+
+   const handleOnPaymentMethodChange = (event) => {
+      const itemId = event.target.value;
+      setSelectedPaymentItem(itemId);
+   };
 
    {
       return(
@@ -175,12 +193,25 @@ export const PurchaseCrudView = () => {
                      <h1 className='purchase_crud_view__title'>{t('PURCHASE_ORDER_CRUD_VIEW_TITLE')}</h1>
                  
                      <div className='purchase_view__gap'>
+
                         <div>
                            <h3 className='purchase_view__form-title'>{t('PURCHASE_ORDER_CRUD_VIEW_SELECT_ARTICLE_TITLE')}</h3>
                            <select className="form-select" value={selectedPurchaseItem} onChange={handleChange}>
                               {purchaseItems.map((item) => {
                                  return (
                                     <option key={item._id} value={item._id}>{item.title}, {item.description}.</option>
+                                 )
+                              }
+                              )}
+                           </select>
+                        </div>
+
+                        <div>
+                           <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}</h3>
+                           <select className="form-select" value={selectedPaymentItem} onChange={handleOnPaymentMethodChange}>
+                              {paymentMethods.map((item) => {
+                                 return (
+                                    <option key={item._id} value={item._id}>{item.name}</option>
                                  )
                               }
                               )}
