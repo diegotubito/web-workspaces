@@ -11,7 +11,9 @@ export const usePurchaseViewModel = () => {
       fetchPurchaseOrdersByWorkspace,
       createPurchaseOrder: createPurchaseOrderRepository,
       error: purchaseItemError,
-      fetchPurchaseOrdersById
+      fetchPurchaseOrdersById,
+      disablePurchaseOrder,
+      enablePurchaseOrder
    } = usePurchaseRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
@@ -51,6 +53,26 @@ export const usePurchaseViewModel = () => {
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
          setOnPurchaseFailed(error)
+      }
+   }
+
+   const enableOrder = async (_id) => {
+      try {
+         const response = await enablePurchaseOrder(_id)
+         
+      } catch (error) {
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
+      }
+   }
+
+   const disableOrder = async (_id) => {
+      try {
+         const response = await disablePurchaseOrder(_id)
+
+      } catch (error) {
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
       }
    }
 
@@ -138,6 +160,8 @@ export const usePurchaseViewModel = () => {
       orders,
       setOrders,
       getPurchaseOrderById,
-      order
+      order,
+      disableOrder,
+      enableOrder
    }
 }

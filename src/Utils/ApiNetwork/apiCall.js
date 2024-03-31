@@ -28,7 +28,7 @@ export const useApiCall = () => {
    const apiCall = async ({
       path,
       method = "GET",
-      body = null,
+      body = {},
       headers = {},
       isLogin = false
    }) => {
@@ -53,7 +53,7 @@ export const useApiCall = () => {
    };
 
    const performApiCall = async (
-      { path, method = "GET", body = null, headers = {} }
+      { path, method = "GET", body = {}, headers = {} }
    ) => {
       setIsLoading(true);
       setError(null); // Ensure error state is reset at the start of the call

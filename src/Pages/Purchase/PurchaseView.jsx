@@ -14,7 +14,7 @@ export const PurchaseView = () => {
    const navigate = useNavigate();
    const { t } = useTranslation()
 
-   const { getPurchaseOrders, orders } = usePurchaseViewModel()
+   const { getPurchaseOrders, orders, disableOrder, enableOrder } = usePurchaseViewModel()
    const { mapOrders } = usePurchaseListViewModel()
    const [ mappedOrders, setMappedOrders ] = useState([])
    const [selectedOrder, setSelectedOrder] = useState()
@@ -103,7 +103,10 @@ export const PurchaseView = () => {
 
 
    const onRemoveDidClicked = () => {
-      console.log('will remove')
+      if (selectedOrder) {
+         console.log(selectedOrder._id)
+         disableOrder(selectedOrder._id)
+      }
    }
 
    const onApproveDidClicked = () => {

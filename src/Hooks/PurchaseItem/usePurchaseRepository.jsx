@@ -35,12 +35,28 @@ export const usePurchaseRepository = () => {
       })
    }
 
+   const disablePurchaseOrder = (_id) => {
+      return apiCall({
+         path: `/api/v1/purchase-order-disable?_id=65f10db78656d470c1184b6d`,
+         method:'PUT'
+      })
+   }
+
+   const enablePurchaseOrder = (_id) => {
+      return apiCall({
+         path: `/api/v1/purchase-order-enable?_id=${_id}`,
+         method: 'PUT'
+      })
+   }
+
    return {
       fetchPurchaseItemsByWorkspace,
       createPurchaseOrder,
       isLoading,
       error,
       fetchPurchaseOrdersByWorkspace,
-      fetchPurchaseOrdersById
+      fetchPurchaseOrdersById,
+      enablePurchaseOrder,
+      disablePurchaseOrder
    }
 }
