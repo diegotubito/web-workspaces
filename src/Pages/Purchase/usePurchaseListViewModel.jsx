@@ -2,25 +2,41 @@ import { formatCurrency } from '../../Utils/Common/formatCurrency';
 import { dateAndTimeFormat } from '../../Utils/Common/dateUtils';
 
 export const usePurchaseListViewModel = () => {
+   const shouldBeSelected = (order) => {
+      if (order.status === 'cancelled' || order.status === 'rejected' || order.status === 'completed') {
+         return false
+      }
+      return true
+   }
+
    const mapOrders = (orders) => {
-      // Sort orders before mapping
-      // Items not enabled are sent to the end, and then we sort by createdAt
+      const orderStatusPriority = {
+         'ready_to_pay': 1,
+         'pending_payment': 2,
+         'pending_approval': 3,
+         'completed': 4,
+         'rejected': 5,
+         'cancelled': 6
+      };
+
       const sortedOrders = orders.sort((a, b) => {
-         if (a.isEnabled && !b.isEnabled) {
-            return -1;
-         } else if (!a.isEnabled && b.isEnabled) {
-            return 1;
-         } else {
-            // Assuming createdAt is a date string or a timestamp
-            return new Date(a.createdAt) - new Date(b.createdAt);
+         // Comparar por prioridad de estado
+         const priorityA = orderStatusPriority[a.status];
+         const priorityB = orderStatusPriority[b.status];
+
+         if (priorityA !== priorityB) {
+            return priorityA - priorityB;
          }
+
+         // Si los elementos tienen el mismo estado, se ordenan por createdAt de forma descendente
+         return new Date(b.createdAt) - new Date(a.createdAt);
       });
 
       const newItems = sortedOrders.map((order) => {
          return {
             _id: order._id,
             isSelected: false,
-            isEnabled: order.isEnabled,
+            isSelectable: shouldBeSelected(order),
             fields: [
                {
                   _id: order._id + 'a',

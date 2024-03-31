@@ -35,17 +35,10 @@ export const usePurchaseRepository = () => {
       })
    }
 
-   const disablePurchaseOrder = (_id) => {
+   const updatePurchaseOrderStatus = (_id, status) => {
       return apiCall({
-         path: `/api/v1/purchase-order-disable?_id=${_id}`,
+         path: `/api/v1/purchase-order-status?_id=${_id}&status=${status}`,
          method:'PUT'
-      })
-   }
-
-   const enablePurchaseOrder = (_id) => {
-      return apiCall({
-         path: `/api/v1/purchase-order-enable?_id=${_id}`,
-         method: 'PUT'
       })
    }
 
@@ -56,7 +49,6 @@ export const usePurchaseRepository = () => {
       error,
       fetchPurchaseOrdersByWorkspace,
       fetchPurchaseOrdersById,
-      enablePurchaseOrder,
-      disablePurchaseOrder
+      updatePurchaseOrderStatus
    }
 }

@@ -14,7 +14,7 @@ export const PurchaseView = () => {
    const navigate = useNavigate();
    const { t } = useTranslation()
 
-   const { getPurchaseOrders, orders, disableOrder, enableOrder } = usePurchaseViewModel()
+   const { getPurchaseOrders, orders, updateOrderStatus } = usePurchaseViewModel()
    const { mapOrders } = usePurchaseListViewModel()
    const [ mappedOrders, setMappedOrders ] = useState([])
    const [selectedOrder, setSelectedOrder] = useState()
@@ -100,21 +100,22 @@ export const PurchaseView = () => {
       setSelectedPayment(getPayment(selectedItems[0]._id))
    }
 
-
-
    const onRemoveDidClicked = () => {
       if (selectedOrder) {
-         console.log(selectedOrder._id)
-         disableOrder(selectedOrder._id)
+         updateOrderStatus(selectedOrder._id, 'cancelled')
       }
    }
 
    const onApproveDidClicked = () => {
-      console.log('will approve')
+      if (selectedOrder) {
+         updateOrderStatus(selectedOrder._id, 'ready_to_pay')
+      }
    }
 
    const onRejectDidClicked = () => {
-      console.log('will reject')
+      if (selectedOrder) {
+         updateOrderStatus(selectedOrder._id, 'rejected')
+      }
    }
 
    const onPayemntDidClicked = () => {
@@ -132,21 +133,10 @@ export const PurchaseView = () => {
    }
 
    const validateOrderButtons = () => {
-      if (!selectedOrder || selectedOrder.status !== 'pending_payment') {
-         setPayButtonState(false)
-      } else {
-         setPayButtonState(true)
-      }
-
-      if (!selectedOrder || selectedOrder.status === 'pending_approval') {
-         setApproveButtonState(true)
-         setRejectButtonState(true)
-      } else {
-         setApproveButtonState(false)
-         setRejectButtonState(false)
-      }
-
-
+      validatePayButton()
+      validateApproveButton()
+      validateRejectedButton()
+      validateRemoveOrderButton()
    }
 
    const validatePaymentButtons = () => {
@@ -157,6 +147,76 @@ export const PurchaseView = () => {
       }
    }
 
+   const validatePayButton = () => {
+      if (!selectedOrder) {
+         setPayButtonState(false)
+         return 
+      }
+
+      if (selectedOrder.status === 'cancelled' || selectedOrder.status === 'pending_approval' || selectedOrder.status === 'rejected') {
+         setPayButtonState(false)
+         return
+      }
+
+      setPayButtonState(true)
+   }
+
+   const validateApproveButton = () => {
+      if (!selectedOrder) {
+         setApproveButtonState(false)
+         return
+      }
+
+      if (selectedOrder.status === 'pending_approval') {
+         setApproveButtonState(true)
+         return
+      }
+
+      setApproveButtonState(false)
+   }
+
+   const validateRejectedButton = () => {
+      if (!selectedOrder) {
+         setRejectButtonState(false)
+         return
+      }
+
+      if (selectedOrder.status === 'pending_approval') {
+         setRejectButtonState(true)
+         return
+      }
+
+      setRejectButtonState(false)
+   }
+
+
+   const validateRemoveOrderButton = () => {
+      if (!selectedOrder) {
+         setRemoveButtonState(false)
+         return
+      }
+
+      if (selectedOrder.status === 'ready_to_pay' || selectedOrder.status === 'pending_approval') {
+         setRemoveButtonState(true)
+         return
+      }
+
+      setRemoveButtonState(false)
+   }
+
+   const validateRemovePaymentButton = () => {
+      if (!selectedPayment) {
+         setRemovePaymentButtonState(false)
+         return
+      }
+
+      if (!selectedOrder.isEnabled) {
+         setRemovePaymentButtonState(true)
+         return
+      }
+
+      setRemovePaymentButtonState(false)
+   }
 
 
    return (

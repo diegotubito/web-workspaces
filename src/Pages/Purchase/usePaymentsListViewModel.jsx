@@ -9,7 +9,7 @@ export const usePaymentsListViewModel = () => {
          return {
             _id: transaction._id,
             isSelected: false,
-            isEnabled: transaction.isEnabled,
+            isSelectable: transaction.isEnabled,
             fields: [{
                _id: transaction._id + 'a',
                name: '_id',
