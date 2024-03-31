@@ -11,6 +11,7 @@ import { Spinner } from '../../../Components/Spinner/spinner'
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton';
 import { useNavigate } from 'react-router-dom';
 import { usePaymentViewModel } from '../Pay/PaymentViewModel';
+import { useCurrencyViewModel } from '../../../Hooks/Currency/useCurrencyViewModel';
 
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
@@ -42,6 +43,7 @@ export const PurchaseCrudView = () => {
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
 
+   const { getCurrencies, currencies} = useCurrencyViewModel()
    const [selectedCurrency, setSelectedCurrency] = useState("")
 
    // 1 - Fetch All Purchase Items From API 
@@ -50,6 +52,7 @@ export const PurchaseCrudView = () => {
       getPurchaseItems();
       getSaleItems();
       fetchAllMethods()
+      getCurrencies()
    }, [])
 
    useEffect(() => {
@@ -75,6 +78,13 @@ export const PurchaseCrudView = () => {
          setSelectedPaymentItem(paymentMethods[0]._id)
       }
    }, [paymentMethods])
+
+   useEffect(() => {
+      // default payment method
+      if (currencies.length > 0) {
+         setSelectedCurrency(currencies[0]._id)
+      }
+   }, [currencies])
 
    // 3A - When picking a selector element, we create a default blank item.
    useEffect(() => {
@@ -143,6 +153,11 @@ export const PurchaseCrudView = () => {
    const handleOnPaymentMethodChange = (event) => {
       const itemId = event.target.value;
       setSelectedPaymentItem(itemId);
+   };
+
+   const handleOnCurrencyChange = (event) => {
+      const itemId = event.target.value;
+      setSelectedCurrency(itemId);
    };
 
    {
@@ -217,6 +232,18 @@ export const PurchaseCrudView = () => {
                               )}
                            </select>
                         </div>
+ 
+                        <div>
+                           <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</h3>
+                           <select className="form-select" value={selectedCurrency} onChange={handleOnCurrencyChange}>
+                              <option value="" disabled>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</option>
+                              {currencies.map((item) => (
+                                 <option key={item._id} value={item._id}>{item.name}</option>
+                              ))}
+                           </select>
+                        </div>
+
+
 
                         <div className='purchase_view__buttons'>
                            <SimpleButton
