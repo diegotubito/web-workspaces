@@ -20,14 +20,7 @@ export const usePaymentsListViewModel = () => {
             _id: transaction._id,
             isSelected: false,
             isSelectable: transaction.isEnabled,
-            fields: [{
-               _id: transaction._id + 'a',
-               name: '_id',
-               minWidth: '5rem',
-               maxWidth: '0.5fr',
-               value: transaction._id,
-               alignment: 'left'
-            },
+            fields: [
             {
                _id: transaction._id + 'b',
                name: '_id',

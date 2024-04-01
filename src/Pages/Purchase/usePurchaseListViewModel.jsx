@@ -32,10 +32,10 @@ export const usePurchaseListViewModel = () => {
          return new Date(b.createdAt) - new Date(a.createdAt);
       });
 
-      const getAmount = (order) => {
-         const amountText = formatCurrency(order.totalAmount.toFixed(2).toString())
-         const currency = order.currency.code
-         return `(${currency}) ${amountText}`
+      const getAmount = (amount, currency) => {
+         const amountText = formatCurrency(amount.toFixed(2).toString())
+         const currencyText = currency.code
+         return `(${currencyText}) ${amountText}`
       }
 
       const newItems = sortedOrders.map((order) => {
@@ -105,7 +105,23 @@ export const usePurchaseListViewModel = () => {
                   name: 'Total Amount',
                   minWidth: '5rem',
                   maxWidth: '0.7fr',
-                  value: getAmount(order),
+                  value: getAmount(order.totalAmount, order.currency),
+                  alignment: 'end'
+               },
+               {
+                  _id: order._id + 'j',
+                  name: 'Total Amount',
+                  minWidth: '5rem',
+                  maxWidth: '0.7fr',
+                  value: getAmount(order.remainingAmount, order.currency),
+                  alignment: 'end'
+               },
+               {
+                  _id: order._id + 'k',
+                  name: 'Total Amount',
+                  minWidth: '5rem',
+                  maxWidth: '0.7fr',
+                  value: getAmount(order.paidAmount, order.currency),
                   alignment: 'end'
                }
 

@@ -115,8 +115,8 @@ export const PaymentView = () => {
    }
 
    const totalToPay = () => formatCurrency(((installment?.amount || 0).toFixed(2)).toString());
-   const totalPaid = () => formatCurrency(((totalPayment || 0).toFixed(2)).toString());
-   const netToPay = () => formatCurrency(((installment?.amount || 0) - (totalPayment || 0)).toFixed(2).toString());
+   const totalPaid = () => formatCurrency(((installment.paidAmount || 0).toFixed(2)).toString());
+   const netToPay = () => formatCurrency(((installment?.remainingAmount || 0)).toFixed(2).toString());
 
 
    const onCreatePaymentDidPressed = () => {

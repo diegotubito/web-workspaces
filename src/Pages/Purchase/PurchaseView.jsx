@@ -22,7 +22,7 @@ export const PurchaseView = () => {
    const [ mappedOrders, setMappedOrders ] = useState([])
    const [selectedOrder, setSelectedOrder] = useState()
 
-   const { getPayments, payments, removePayment } = useTransactionViewModel()
+   const { getPayments, payments, removePayment, getPaymentsByInstallment } = useTransactionViewModel()
    const { mapTransactions } = usePaymentsListViewModel()
    const [ mappedTransactions, setMappedTransactions ] = useState([])
    const [ selectedPayment, setSelectedPayment] = useState()
@@ -91,7 +91,7 @@ export const PurchaseView = () => {
    useEffect(() => {
       setMappedTransactions([])
       if (selectedInstallment) {
-         getPayments(selectedOrder._id)
+         getPaymentsByInstallment(selectedInstallment._id)
       }
       validateInstallmentButtons()
    }, [selectedInstallment])
@@ -303,12 +303,6 @@ export const PurchaseView = () => {
                title='Approve'
                onClick={onApproveDidClicked}
                disabled={!approveButtonState}
-            />
-            <SimpleButton
-               style='primary'
-               title='Pay'
-               onClick={onPayemntDidClicked}
-               disabled={!payButtonState}
             />
            
          </div>

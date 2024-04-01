@@ -30,3 +30,15 @@ export const stringMonthFormat = (dateString) => {
     // Construct the formatted string in local time
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   };
+
+export const dateFormat = (dateString) => {
+  const date = new Date(dateString);
+
+  // Extract local date components
+  const day = date.getDate().toString().padStart(2, '0'); // Ensures two digits
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed, add 1
+  const year = date.getFullYear();
+
+  // Construct the formatted string in local time
+  return `${day}/${month}/${year}`;
+};

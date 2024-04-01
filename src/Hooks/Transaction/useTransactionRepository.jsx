@@ -10,6 +10,13 @@ export const useTransactionRepository = () => {
       })
    }
 
+   const fetchTransactionByInstallment = (installmentId) => {
+      return apiCall({
+         path: `/api/v1/transaction-by-installment?installmentId=${installmentId}`,
+         method: 'GET'
+      })
+   }
+
    const createNewPayment = (body) => {
       return apiCall({
          path: `/api/v1/transaction-payment`,
@@ -25,5 +32,5 @@ export const useTransactionRepository = () => {
       })
    }
 
-   return { fetchTransactionByEntity, isLoading, error, createNewPayment, disablePayment }
+   return { fetchTransactionByEntity, isLoading, error, createNewPayment, disablePayment, fetchTransactionByInstallment }
 }
