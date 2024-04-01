@@ -93,14 +93,6 @@ export const usePurchaseListViewModel = () => {
                   alignment: 'start'
                },
                {
-                  _id: order._id + 'h',
-                  name: 'Status',
-                  minWidth: '5rem',
-                  maxWidth: '0.5fr',
-                  value: order.status,
-                  alignment: 'center'
-               },
-               {
                   _id: order._id + 'i',
                   name: 'Total Amount',
                   minWidth: '5rem',
@@ -123,6 +115,14 @@ export const usePurchaseListViewModel = () => {
                   maxWidth: '0.7fr',
                   value: getAmount(order.paidAmount, order.currency),
                   alignment: 'end'
+               },
+               {
+                  _id: order._id + 'h',
+                  name: 'Status',
+                  minWidth: '5rem',
+                  maxWidth: '0.5fr',
+                  value: order.status,
+                  alignment: 'center'
                }
 
             ]

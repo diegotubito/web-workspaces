@@ -4,6 +4,13 @@ import { dateAndTimeFormat, stringMonthFormat, dateFormat } from '../../Utils/Co
 export const useInstallmentMapping = () => {
 
    const mapInstallments = (installments) => {
+      const shouldBeSelected = (installment) => {
+         if (installment.status === 'paid') {
+            return false
+         }
+         return true
+      }
+
       const sortedInstallments = installments.sort((a, b) => {
          return new Date(a.number) - new Date(b.number)
       })
@@ -18,7 +25,7 @@ export const useInstallmentMapping = () => {
          return {
             _id: installment._id,
             isSelected: false,
-            isSelectable: true,
+            isSelectable: shouldBeSelected(installment),
             fields: [{
                _id: installment._id + 'a',
                name: '_id',
@@ -26,22 +33,6 @@ export const useInstallmentMapping = () => {
                maxWidth: '0.2fr',
                value: installment.number,
                alignment: 'center'
-            },
-            {
-               _id: installment._id + 'b',
-               name: '_id',
-               minWidth: '5rem',
-               maxWidth: '0.3fr',
-               value: dateFormat(installment.dueDate),
-               alignment: 'start'
-            },
-            {
-               _id: installment._id + 'c',
-               name: '_id',
-               minWidth: '5rem',
-               maxWidth: '0.3fr',
-               value: installment.status,
-               alignment: 'start'
             },
             {
                _id: installment._id + 'd',
@@ -74,6 +65,14 @@ export const useInstallmentMapping = () => {
                maxWidth: '0.7fr',
                value: getAmount(installment.paidAmount, installment.currency),
                alignment: 'end'
+            },
+            {
+               _id: installment._id + 'c',
+               name: '_id',
+               minWidth: '5rem',
+               maxWidth: '0.3fr',
+               value: installment.status,
+               alignment: 'center'
             }]
          }
       })
