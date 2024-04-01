@@ -26,45 +26,52 @@ export const useInstallmentMapping = () => {
             _id: installment._id,
             isSelected: false,
             isSelectable: shouldBeSelected(installment),
+            titleBackgroundColor: 'blue',
+            titleForegroundColor: 'white',
             fields: [{
                _id: installment._id + 'a',
-               name: '_id',
+               name: 'Inst. Number',
                minWidth: '5rem',
                maxWidth: '0.2fr',
                value: installment.number,
-               alignment: 'center'
+               alignment: 'center',
+               titleAlignment: 'center',
             },
             {
                _id: installment._id + 'e',
-               name: '_id',
+               name: 'Total Amount',
                minWidth: '5rem',
                maxWidth: '0.7fr',
                value: getAmount(installment.amount, installment.currency),
-               alignment: 'end'
+               alignment: 'end',
+               titleAlignment: 'center',
             },
             {
                _id: installment._id + 'f',
-               name: '_id',
+               name: 'Remaining Amount',
                minWidth: '5rem',
                maxWidth: '0.7fr',
                value: getAmount(installment.remainingAmount, installment.currency),
-               alignment: 'end'
+               alignment: 'end',
+               titleAlignment: 'center',
             },
             {
                _id: installment._id + 'g',
-               name: '_id',
+               name: 'Paid Amount',
                minWidth: '5rem',
                maxWidth: '0.7fr',
                value: getAmount(installment.paidAmount, installment.currency),
-               alignment: 'end'
+               alignment: 'end',
+               titleAlignment: 'center',
             },
             {
                _id: installment._id + 'c',
-               name: '_id',
+               name: 'Status',
                minWidth: '5rem',
                maxWidth: '0.3fr',
                value: installment.status,
-               alignment: 'center'
+               alignment: 'center',
+               titleAlignment: 'center',
             }]
          }
       })

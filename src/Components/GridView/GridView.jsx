@@ -48,7 +48,6 @@ export function GridView({ gap, items, setItems, selectionMode }) {
    };
 
    return (
-
       <div style={{
          fontSize: 'small',
          gap: gap,
@@ -56,22 +55,52 @@ export function GridView({ gap, items, setItems, selectionMode }) {
       }}
          className='purchase_order__container'
       >
+         {/* TITULOS */}
+         {items[0] != null &&
+            <div className="purchase_order__header"
+               style={{
+                  gap: gap,
+                  display: 'grid',
+                  gridTemplateColumns: getGridValues(items[0])
+               }}>
+               {items[0].fields.map((field, fieldIndex) => {
+                  return (
+                     <span
+                        key={field._id}
+                        style={{
+                           overflow: 'auto',
+                           padding: '0.7rem',
+                           textAlign: field.titleAlignment,
+                           backgroundColor: items[0].titleBackgroundColor,
+                           color: items[0].titleForegroundColor,
+                           fontWeight: '600',
+                           whiteSpace: 'nowrap',
+                           overflow: 'auto',
+                        }}
+                     >
+                        {field.name}
+                     </span>
+                  );
+               })}
+            </div>
+         }
+
+         {/* GRID */}
          {items.map((item) => {
             return (
                <div
                   className={`purchase_order__cell ${!item.isEnabled ? 'disabled' : ''}`}
                   key={`${item._id}-${item.isSelected}`}
-                  onClick={() => /*item.isSelectable && */itemDidSelect(item)}
+                  onClick={() => itemDidSelect(item)}
                   style={{
                      display: 'grid',
                      gridTemplateColumns: getGridValues(item),
                      gap: gap,
                      color: getForegroundColor(item),
-                     cursor: item.isSelectable ? 'pointer' : 'not-allowed', // Change cursor based on item.isEnabled
-                     opacity: item.isSelectable ? 1 : 0.5, // Optional: Change opacity to indicate disabled state
+                     cursor: item.isSelectable ? 'pointer' : 'not-allowed',
+                     opacity: item.isSelectable ? 1 : 0.5,
                   }}
                >
-
                   {item.fields.map((field, fieldIndex) => {
                      return (
                         <span
@@ -81,16 +110,18 @@ export function GridView({ gap, items, setItems, selectionMode }) {
                               padding: '0.7rem',
                               textAlign: field.alignment,
                               background: getBackgroundColor(item, fieldIndex),
-                              whiteSpace: 'nowrap', /* Evita que el texto se corte en nuevas líneas */
-                              overflow: 'auto', /* Habilita el desplazamiento si el contenido excede el ancho del elemento */
+                              whiteSpace: 'nowrap',
+                              overflow: 'auto',
                            }}
-                        > {t(`${field.value}`)} </span>
+                        >
+                           {t(`${field.value}`)}
+                        </span>
                      );
                   })}
-
                </div>
             );
          })}
       </div>
    );
+
 }

@@ -38,11 +38,18 @@ export const usePurchaseMapping = () => {
          return `(${currencyText}) ${amountText}`
       }
 
+      const getInstallmentNumber = (order) => {
+         return order.installments.length;
+      }
+
       const newItems = sortedOrders.map((order) => {
          return {
             _id: order._id,
             isSelected: false,
             isSelectable: shouldBeSelected(order),
+            titleTextAlign: 'center',
+            titleBackgroundColor: 'blue',
+            titleForegroundColor: 'white',
             fields: [
                {
                   _id: order._id + 'c',
@@ -50,7 +57,8 @@ export const usePurchaseMapping = () => {
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
                   value: dateAndTimeFormat(order.date),
-                  alignment: 'start'
+                  alignment: 'start',
+                  titleAlignment: 'center',
                },
                {
                   _id: order._id + 'e',
@@ -58,7 +66,8 @@ export const usePurchaseMapping = () => {
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
                   value: `${order.user.lastName} ${order.user.firstName}`,
-                  alignment: 'left'
+                  alignment: 'left',
+                  titleAlignment: 'center',
                },
                {
                   _id: order._id + 'f',
@@ -66,15 +75,26 @@ export const usePurchaseMapping = () => {
                   minWidth: '10rem',
                   maxWidth: '1fr',
                   value: `${order.purchaseItem.title}, ${order.purchaseItem.description}`,
-                  alignment: 'start'
+                  alignment: 'start',
+                  titleAlignment: 'center',
                },
                {
                   _id: order._id + 'g',
-                  name: 'Total Amount',
+                  name: 'Payment Method',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
                   value: order.paymentMethod.name,
-                  alignment: 'start'
+                  alignment: 'start',
+                  titleAlignment: 'center',
+               },
+               {
+                  _id: order._id + 'g',
+                  name: 'Installments',
+                  minWidth: '5rem',
+                  maxWidth: '0.2fr',
+                  value: getInstallmentNumber(order),
+                  alignment: 'center',
+                  titleAlignment: 'center',
                },
                {
                   _id: order._id + 'i',
@@ -82,23 +102,26 @@ export const usePurchaseMapping = () => {
                   minWidth: '5rem',
                   maxWidth: '0.7fr',
                   value: getAmount(order.totalAmount, order.currency),
-                  alignment: 'end'
-               },
-               {
-                  _id: order._id + 'j',
-                  name: 'Total Amount',
-                  minWidth: '5rem',
-                  maxWidth: '0.7fr',
-                  value: getAmount(order.remainingAmount, order.currency),
-                  alignment: 'end'
-               },
+                  alignment: 'end',
+                  titleAlignment: 'center',
+               }, 
                {
                   _id: order._id + 'k',
-                  name: 'Total Amount',
+                  name: 'Paid Amount',
                   minWidth: '5rem',
                   maxWidth: '0.7fr',
                   value: getAmount(order.paidAmount, order.currency),
-                  alignment: 'end'
+                  alignment: 'end',
+                  titleAlignment: 'center',
+               },
+               {
+                  _id: order._id + 'j',
+                  name: 'Remaining Amount',
+                  minWidth: '5rem',
+                  maxWidth: '0.7fr',
+                  value: getAmount(order.remainingAmount, order.currency),
+                  alignment: 'end',
+                  titleAlignment: 'center',
                },
                {
                   _id: order._id + 'h',
@@ -106,7 +129,8 @@ export const usePurchaseMapping = () => {
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
                   value: order.status,
-                  alignment: 'center'
+                  alignment: 'center',
+                  titleAlignment: 'center',
                }
 
             ]
