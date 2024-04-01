@@ -37,9 +37,10 @@
      "PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE": "Select Physical Account",
      "PAYMENT_VIEW_CURRENCY_TITLE": "Select Currency",
      "PAYMENT_VIEW_TOTAL_TO_PAY_TITLE": "Total Amount",
-     "PAYMENT_VIEW_TOTAL_PAID_TITLE": "Total Paid",
-     "PAYMENT_VIEW_BALANCE_TO_PAY_TITLE": "Balance To Pay",
+     "PAYMENT_VIEW_TOTAL_PAID_TITLE": "Paid Amount",
+     "PAYMENT_VIEW_BALANCE_TO_PAY_TITLE": "Remaining Amount",
      "PAYMENT_VIEW_NEW_PAYMENT_AMOUNT_TITLE": "New Payment Amount",
+     "PAYMENT_VIEW_EXCHANGE_RATE_TITLE": "Exchange Rate",
      "PAYMENT_VIEW_CREATE_PAYMENT_BUTTON_TITLE": "Create Payment",
      "PAYMENT_VIEW_CANCEL_BUTTON_TITLE": "Cancel",
 

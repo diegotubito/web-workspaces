@@ -38,7 +38,7 @@ export const useInstallmentMapping = () => {
                titleAlignment: 'center',
             },
             {
-               _id: installment._id + 'e',
+               _id: installment._id + 'b',
                name: 'Total Amount',
                minWidth: '5rem',
                maxWidth: '0.7fr',
@@ -47,7 +47,7 @@ export const useInstallmentMapping = () => {
                titleAlignment: 'center',
             },
             {
-               _id: installment._id + 'g',
+               _id: installment._id + 'c',
                name: 'Paid Amount',
                minWidth: '5rem',
                maxWidth: '0.7fr',
@@ -56,7 +56,7 @@ export const useInstallmentMapping = () => {
                titleAlignment: 'center',
             },
             {
-               _id: installment._id + 'f',
+               _id: installment._id + 'd',
                name: 'Remaining Amount',
                minWidth: '5rem',
                maxWidth: '0.7fr',
@@ -65,7 +65,7 @@ export const useInstallmentMapping = () => {
                titleAlignment: 'center',
             },
             {
-               _id: installment._id + 'c',
+               _id: installment._id + 'e',
                name: 'Status',
                minWidth: '5rem',
                maxWidth: '0.3fr',

@@ -69,6 +69,14 @@ export const PaymentView = () => {
       }
    }, [onCreatedTransactionSuccess])
 
+   useEffect(() => {
+      const currencyItem = currencies.find((c) => c._id === selectedCurrency)
+      const originExchageRate = installment?.currency?.exchangeRate
+      const destinyExchangeRate = currencyItem?.exchangeRate
+
+      setExchangeRate(destinyExchangeRate / originExchageRate)
+   }, [selectedCurrency])
+
 
    const handleOnPaymentMethodChange = (event) => {
       const itemId = event.target.value;
@@ -106,6 +114,7 @@ export const PaymentView = () => {
          symbol: balance.currency.symbol,
          code: balance.currency.code,
          isEnabled: balance.currency.isEnabled,
+         exchangeRate: balance.currency.exchangeRate
       }));
 
 
@@ -160,11 +169,6 @@ export const PaymentView = () => {
    }
    const getErrorMessage = (error) => {
       return error.message
-   }
-
-   const onExchangeRateDidChanged = (event) => {
-      const value = event.target.value
-      setExchangeRate(value)
    }
 
    return (
@@ -267,33 +271,13 @@ export const PaymentView = () => {
                <h3 className='payment_view__total-amount'>{netToPay()}</h3>
             </div>
 
+            <div className='payment_view__total-amount-main'>
+               <h3>{t('PAYMENT_VIEW_EXCHANGE_RATE_TITLE')}</h3>
+               <h3 className='payment_view__total-amount'>{exchangeRate}</h3>
+            </div>
+
             {(installment?.order?.status === 'partial_payment' || installment?.order?.status === 'ready_to_pay') && (
                <>
-
-                  {installment?.currency?.code !== getCurrencyCode() && (
-
-                     <input
-                        // ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
-                        style={{
-                           width: '5rem',
-                           border: '1px solid ' + `${'gray'}`,
-                           height: '4rem',
-                           padding: '0rem 0.5rem',
-
-                        }}
-                        type="number"
-                        placeholder={'Exchange Rate'}
-                        value={exchangeRate}
-                        onChange={(event) => onExchangeRateDidChanged(event)}
-                        //    onBlur={(event) => onBlurHandler(event, field._id)}
-                        autoComplete='off'
-
-                        maxLength={`${300}`}
-                     />
-
-                  )}
-
-
                   <div className='payment_view__total-amount-main'>
                      <AmountField
                         title={t('PAYMENT_VIEW_NEW_PAYMENT_AMOUNT_TITLE')}

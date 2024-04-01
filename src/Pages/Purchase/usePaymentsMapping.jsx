@@ -24,7 +24,7 @@ export const usePaymentsMapping = () => {
             titleForegroundColor: 'white',
             fields: [
                {
-                  _id: transaction._id + 'b',
+                  _id: transaction._id + 'a',
                   name: 'Date',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
@@ -33,7 +33,7 @@ export const usePaymentsMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: transaction._id + 'd',
+                  _id: transaction._id + 'b',
                   name: 'Username',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
@@ -42,7 +42,7 @@ export const usePaymentsMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: transaction._id + 'e',
+                  _id: transaction._id + 'c',
                   name: 'Physical Account',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
@@ -51,7 +51,7 @@ export const usePaymentsMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: transaction._id + 'f',
+                  _id: transaction._id + 'd',
                   name: 'Payment Method',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
@@ -60,7 +60,7 @@ export const usePaymentsMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: transaction._id + 'g',
+                  _id: transaction._id + 'e',
                   name: 'Description',
                   minWidth: '15rem',
                   maxWidth: '1fr',
@@ -69,7 +69,7 @@ export const usePaymentsMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: transaction._id + 'h',
+                  _id: transaction._id + 'f',
                   name: 'Exchange',
                   minWidth: '5rem',
                   maxWidth: '0.3fr',
@@ -78,7 +78,7 @@ export const usePaymentsMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: transaction._id + 'i',
+                  _id: transaction._id + 'g',
                   name: 'Paid',
                   minWidth: '5rem',
                   maxWidth: '0.7fr',

@@ -52,7 +52,7 @@ export const usePurchaseMapping = () => {
             titleForegroundColor: 'white',
             fields: [
                {
-                  _id: order._id + 'c',
+                  _id: order._id + 'a',
                   name: 'Date',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
@@ -61,7 +61,7 @@ export const usePurchaseMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: order._id + 'e',
+                  _id: order._id + 'b',
                   name: 'Username',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
@@ -70,7 +70,7 @@ export const usePurchaseMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: order._id + 'f',
+                  _id: order._id + 'c',
                   name: 'Item Details',
                   minWidth: '10rem',
                   maxWidth: '1fr',
@@ -79,7 +79,7 @@ export const usePurchaseMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: order._id + 'g',
+                  _id: order._id + 'd',
                   name: 'Payment Method',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
@@ -88,7 +88,7 @@ export const usePurchaseMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: order._id + 'g',
+                  _id: order._id + 'e',
                   name: 'Installments',
                   minWidth: '5rem',
                   maxWidth: '0.2fr',
@@ -97,7 +97,7 @@ export const usePurchaseMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: order._id + 'i',
+                  _id: order._id + 'f',
                   name: 'Total Amount',
                   minWidth: '5rem',
                   maxWidth: '0.7fr',
@@ -106,7 +106,7 @@ export const usePurchaseMapping = () => {
                   titleAlignment: 'center',
                }, 
                {
-                  _id: order._id + 'k',
+                  _id: order._id + 'g',
                   name: 'Paid Amount',
                   minWidth: '5rem',
                   maxWidth: '0.7fr',
@@ -115,7 +115,7 @@ export const usePurchaseMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: order._id + 'j',
+                  _id: order._id + 'h',
                   name: 'Remaining Amount',
                   minWidth: '5rem',
                   maxWidth: '0.7fr',
@@ -124,7 +124,7 @@ export const usePurchaseMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: order._id + 'h',
+                  _id: order._id + 'i',
                   name: 'Status',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
