@@ -12,6 +12,7 @@ import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleBut
 import { useNavigate } from 'react-router-dom';
 import { usePaymentViewModel } from '../Pay/PaymentViewModel';
 import { useCurrencyViewModel } from '../../../Hooks/Currency/useCurrencyViewModel';
+import { QuantityTextField } from '../../../Components/TextField/QuantityTextField/QuantityTextField';
 
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
@@ -162,8 +163,7 @@ export const PurchaseCrudView = () => {
       setSelectedCurrency(itemId);
    };
 
-   const onInstallmentNumberChangeHandler = (event) => {
-      const value = event.target.value
+   const onInstallmentNumberChangeHandler = (value) => {
       setInstallmentNumber(value)
    }
 
@@ -180,9 +180,9 @@ export const PurchaseCrudView = () => {
                {onPurchaseFailed && (
                   <div className="alert-container">
                      <Alert variant="warning">
-                        <Alert.Heading>{onPurchaseFailed.title}</Alert.Heading>
+                        <Alert.Heading>{t(onPurchaseFailed.title)}</Alert.Heading>
                         <h3>
-                           {onPurchaseFailed.message}
+                           {t(onPurchaseFailed.message)}
                         </h3>
                         <hr />
                         <div className="d-flex justify-content-end">
@@ -254,23 +254,12 @@ export const PurchaseCrudView = () => {
                         </div>
 
                         <div>
-
-                           <input
-                              // ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
-                              style={{
-                                 width: '5rem',
-                                 border: '1px solid ' + `${'gray'}`,
-                                 height: '3rem',
-                                 padding: '0rem 0.5rem',
-                              }}
-                              type="number"
-                              placeholder={'Installments'}
+                           <h3 className='purchase_view__form-title'>{t('Installments')}</h3>
+                           <QuantityTextField
                               value={installmentNumber}
-                              onChange={(event) => onInstallmentNumberChangeHandler(event)}
-                              //    onBlur={(event) => onBlurHandler(event, field._id)}
-                              autoComplete='off'
-
-                              maxLength={`${300}`}
+                              onChangeValue={onInstallmentNumberChangeHandler}
+                              minValue={0}
+                              maxValue={18}
                            />
 
                         </div>

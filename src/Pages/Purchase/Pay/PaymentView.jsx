@@ -12,6 +12,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useInstallmentViewModel } from '../../../Hooks/Installment/useInstallmentViewModel';
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { Button, Alert } from 'react-bootstrap';
+import { NoteTextField } from '../../../Components/TextField/NoteTextField/NoteTextField';
 
 export const PaymentView = () => {
    const navigate = useNavigate();
@@ -26,8 +27,7 @@ export const PaymentView = () => {
    const { createPayment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess } = useTransactionViewModel()
    const [amount, setAmount] = useState()
    const { t } = useTranslation()
-   const [description, setDescription] = useState()
-   const [finalDescription, setFinalDescription] = useState()
+   const [description, setDescription] = useState('')
    const [exchangeRate, setExchangeRate] = useState()
 
    useEffect(() => {
@@ -127,7 +127,7 @@ export const PaymentView = () => {
 
 
    const onCreatePaymentDidPressed = () => {
-      createPayment(amount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency, finalDescription, installment._id, exchangeRate)
+      createPayment(amount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency, description, installment._id, exchangeRate)
    }
 
    const onCancelDidPressed = () => {
@@ -142,9 +142,8 @@ export const PaymentView = () => {
       setAmount(value)
    }
 
-   const onDescriptionChangeHandler = (event) => {
-      const value = event.target.value;
-      setFinalDescription(value)
+   const onDescriptionChangeHandler = (value) => {
+      setDescription(value)
    }
 
    const getOrderInfo = () => {
@@ -194,28 +193,6 @@ export const PaymentView = () => {
             <h1 className='purchase_crud_view__title'>{t('PAYMENT_VIEW_TITLE')}</h1>
 
             <h3> {getOrderInfo()} </h3>
-
-            <div>
-
-               <input
-                  // ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
-                  style={{
-                     width: '20rem',
-                     border: '1px solid ' + `${'gray'}`,
-                     height: '3rem',
-                     padding: '0rem 0.5rem',
-                  }}
-                  type="text"
-                  placeholder={'descripcion'}
-                  value={description}
-                  onChange={(event) => onDescriptionChangeHandler(event)}
-                  //    onBlur={(event) => onBlurHandler(event, field._id)}
-                  autoComplete='off'
-
-                  maxLength={`${300}`}
-               />
-
-            </div>
 
             <div>
                <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE')}</h3>
@@ -270,6 +247,14 @@ export const PaymentView = () => {
                <h3>{t('PAYMENT_VIEW_EXCHANGE_RATE_TITLE')}</h3>
                <h3 className='payment_view__total-amount'>{exchangeRate}</h3>
             </div>
+
+            <NoteTextField
+               value={description}
+               onChangeValue={onDescriptionChangeHandler}
+               placeholder={'Description'}
+               minLength={0}
+               maxLength={300}
+            />
 
             {(installment?.order?.status === 'partial_payment' || installment?.order?.status === 'ready_to_pay') && (
                <>

@@ -67,7 +67,7 @@ export const usePurchaseViewModel = () => {
    }
 
    const createPurchaseOrder = async (items, totalAmount, purchaseItemId, selectedPaymentItem, selectedCurrency, installmentNumber) => {
-
+    
       const body = {
          user: userSession.user._id,
          workspace: workspaceSession._id,
