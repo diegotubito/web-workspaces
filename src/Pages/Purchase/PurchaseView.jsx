@@ -199,7 +199,7 @@ export const PurchaseView = () => {
          return 
       }
 
-      if (selectedInstallment.status === 'paid' || selectedOrder.status === 'pending_approval' || selectedOrder.status === 'rejected' || selectedOrder.status === 'completed') {
+      if (selectedInstallment.status === 'paid' || selectedOrder.status === 'pending_approval' || selectedOrder.status === 'rejected' || selectedOrder.status === 'completed' || selectedOrder.status === 'cancelled') {
          setPayButtonState(false)
          return
       }
@@ -275,7 +275,8 @@ export const PurchaseView = () => {
                disabled={false}
             />
          </div>
-
+         
+         <h3>Orders</h3>
          <GridView
             className='purchase__view-order-list '
             items={mappedOrders}
@@ -307,8 +308,11 @@ export const PurchaseView = () => {
            
          </div>
 
+        
+
          {selectedOrder && (
             <>
+               <h3>Installments</h3>
                <GridView
                   className='purchase__view-order-list '
                   items={mappedInstallments}
@@ -333,6 +337,7 @@ export const PurchaseView = () => {
 
         { selectedInstallment && (
          <>
+               <h3>Payments</h3>
                <GridView
                   className='purchase__view-order-list '
                   items={mappedTransactions}

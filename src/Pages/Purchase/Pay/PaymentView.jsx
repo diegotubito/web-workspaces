@@ -149,9 +149,9 @@ export const PaymentView = () => {
    }
 
    return (
-      <div className='purchase_crud_view__main'>
+      <div className='payment_view__main '>
 
-         <div className='purchase_crud_view__container  payment_view__gap'>
+         <div className='payment_view__container   payment_view__gap'>
             <h1 className='purchase_crud_view__title'>{t('PAYMENT_VIEW_TITLE')}</h1>
 
             <h3> {getOrderInfo()} </h3>
@@ -161,7 +161,7 @@ export const PaymentView = () => {
                <input
                   // ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
                   style={{
-                     width: '100%',
+                     width: '20rem',
                      border: '1px solid ' + `${'gray'}`,
                      height: '3rem',
                      padding: '0rem 0.5rem',

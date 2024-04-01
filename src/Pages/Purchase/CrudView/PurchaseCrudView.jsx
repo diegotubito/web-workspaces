@@ -46,6 +46,8 @@ export const PurchaseCrudView = () => {
    const { getCurrencies, currencies} = useCurrencyViewModel()
    const [selectedCurrency, setSelectedCurrency] = useState("")
 
+   const [installmentNumber, setInstallmentNumber] = useState(1)
+
    // 1 - Fetch All Purchase Items From API 
    useEffect(() => {
       setSelectedPurchaseItem('')
@@ -143,7 +145,7 @@ export const PurchaseCrudView = () => {
    }
 
    const onCreateOrderDidPressed = () => {
-      createPurchaseOrder(items, convertCurrencyStringToNumber(totalAmount), selectedPurchaseItem, selectedPaymentItem, selectedCurrency)
+      createPurchaseOrder(items, convertCurrencyStringToNumber(totalAmount), selectedPurchaseItem, selectedPaymentItem, selectedCurrency, installmentNumber)
    }
 
    const onCancelDidPressed = () => {
@@ -159,6 +161,12 @@ export const PurchaseCrudView = () => {
       const itemId = event.target.value;
       setSelectedCurrency(itemId);
    };
+
+   const onInstallmentNumberChangeHandler = (event) => {
+      const value = event.target.value
+      setInstallmentNumber(value)
+   }
+
 
    {
       return(
@@ -202,6 +210,8 @@ export const PurchaseCrudView = () => {
                   </div>
                )}
 
+              
+
                <div className='purchase_view__gap'>
 
                   <div className='purchase_crud_view__container-scroll'>
@@ -241,6 +251,28 @@ export const PurchaseCrudView = () => {
                                  <option key={item._id} value={item._id}>{item.name}</option>
                               ))}
                            </select>
+                        </div>
+
+                        <div>
+
+                           <input
+                              // ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
+                              style={{
+                                 width: '5rem',
+                                 border: '1px solid ' + `${'gray'}`,
+                                 height: '3rem',
+                                 padding: '0rem 0.5rem',
+                              }}
+                              type="number"
+                              placeholder={'Installments'}
+                              value={installmentNumber}
+                              onChange={(event) => onInstallmentNumberChangeHandler(event)}
+                              //    onBlur={(event) => onBlurHandler(event, field._id)}
+                              autoComplete='off'
+
+                              maxLength={`${300}`}
+                           />
+
                         </div>
 
 

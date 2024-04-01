@@ -65,7 +65,7 @@ export const usePurchaseViewModel = () => {
       }
    }
 
-   const createPurchaseOrder = async (items, totalAmount, purchaseItemId, selectedPaymentItem, selectedCurrency) => {
+   const createPurchaseOrder = async (items, totalAmount, purchaseItemId, selectedPaymentItem, selectedCurrency, installmentNumber) => {
 
       const body = {
          user: userSession.user._id,
@@ -77,7 +77,7 @@ export const usePurchaseViewModel = () => {
          status: 'pending_approval',
          paymentMethod: selectedPaymentItem,
          currency: selectedCurrency,
-         numberOfInstallments: 6
+         numberOfInstallments: installmentNumber
       }
 
       try {
