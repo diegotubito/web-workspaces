@@ -1,7 +1,7 @@
 import { formatCurrency } from '../../Utils/Common/formatCurrency';
 import { dateAndTimeFormat } from '../../Utils/Common/dateUtils';
 
-export const usePurchaseListViewModel = () => {
+export const usePurchaseMapping = () => {
    const shouldBeSelected = (order) => {
       if (order.status === 'cancelled' || order.status === 'rejected' || order.status === 'completed') {
          return false
@@ -45,27 +45,11 @@ export const usePurchaseListViewModel = () => {
             isSelectable: shouldBeSelected(order),
             fields: [
                {
-                  _id: order._id + 'a',
-                  name: 'Order ID',
-                  minWidth: '5rem',
-                  maxWidth: '0.5fr',
-                  value: order._id,
-                  alignment: 'left'
-               },
-               {
                   _id: order._id + 'c',
                   name: 'Date',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
                   value: dateAndTimeFormat(order.date),
-                  alignment: 'start'
-               },
-               {
-                  _id: order._id + 'd',
-                  name: 'Date',
-                  minWidth: '5rem',
-                  maxWidth: '0.5fr',
-                  value: dateAndTimeFormat(order.updatedAt),
                   alignment: 'start'
                },
                {

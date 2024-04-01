@@ -2,7 +2,7 @@
 import { formatCurrency } from '../../Utils/Common/formatCurrency';
 import { dateAndTimeFormat, stringMonthFormat } from '../../Utils/Common/dateUtils';
 
-export const usePaymentsListViewModel = () => {
+export const usePaymentsMapping = () => {
 
    const mapTransactions = (transactions) => {
       const sortedTransactions = transactions.sort((a, b) => {
@@ -29,14 +29,7 @@ export const usePaymentsListViewModel = () => {
                value: dateAndTimeFormat(transaction.date),
                alignment: 'start'
             },
-            {
-               _id: transaction._id + 'c',
-               name: '_id',
-               minWidth: '5rem',
-               maxWidth: '0.5fr',
-               value: dateAndTimeFormat(transaction.updatedAt),
-               alignment: 'start'
-            }, {
+             {
                _id: transaction._id + 'd',
                name: '_id',
                minWidth: '5rem',
