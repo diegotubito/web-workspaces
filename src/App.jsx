@@ -25,7 +25,7 @@ function App() {
         <Route path="/" element={<Navigate replace to="/home" />} /> {/* Redirect from / to /home */}
         <Route path="/login" element={<LoginView />} />
         
-        <Route path='/payment/:orderId' element={<PaymentView/>} />
+        <Route path='/payment/:installmentId' element={<PaymentView/>} />
         <Route path='/purchase_crud_view' element={<PurchaseCrudView />} />
 
         <Route path="/home" element={

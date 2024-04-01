@@ -55,7 +55,7 @@ export const PurchaseView = () => {
       if (selectedOrder) {
          getInstallments(selectedOrder._id)
       }
-      // should validate buttons here
+      validateOrderButtons()
    }, [selectedOrder])
 
    useEffect(() => {
@@ -78,7 +78,7 @@ export const PurchaseView = () => {
          return
       }
 
-      setSelectedInstallment(getOrder(selectedItems[0]._id))
+      setSelectedInstallment(getInstallment(selectedItems[0]._id))
    }
 
    const getInstallment = (_id) => {
@@ -93,7 +93,7 @@ export const PurchaseView = () => {
       if (selectedInstallment) {
          getPayments(selectedOrder._id)
       }
-      validateOrderButtons()
+      validateInstallmentButtons()
    }, [selectedInstallment])
 
    useEffect(() => {
@@ -119,6 +119,8 @@ export const PurchaseView = () => {
          }
       })
 
+      setSelectedInstallment(null)
+      
       if (selectedItems.length === 0) {
          setSelectedOrder(null)
          return
@@ -166,7 +168,7 @@ export const PurchaseView = () => {
 
    const onPayemntDidClicked = () => {
       if (selectedOrder) {
-         navigate(`/payment/${selectedOrder._id}`)
+         navigate(`/payment/${selectedInstallment._id}`)
       }
    }
 
@@ -181,20 +183,23 @@ export const PurchaseView = () => {
    }
 
    const validateOrderButtons = () => {
-      validatePayButton()
       validateApproveButton()
       validateRejectedButton()
       validateRemoveOrderButton()
       validateRemovePaymentButton()
    }
 
+   const validateInstallmentButtons = () => {
+      validatePayButton()
+   }
+
    const validatePayButton = () => {
-      if (!selectedOrder) {
+      if (!selectedInstallment || !selectedOrder) {
          setPayButtonState(false)
          return 
       }
 
-      if (selectedOrder.status === 'cancelled' || selectedOrder.status === 'pending_approval' || selectedOrder.status === 'rejected' || selectedOrder.status === 'completed') {
+      if (selectedInstallment.status === 'paid' || selectedOrder.status === 'pending_approval' || selectedOrder.status === 'rejected' || selectedOrder.status === 'completed') {
          setPayButtonState(false)
          return
       }

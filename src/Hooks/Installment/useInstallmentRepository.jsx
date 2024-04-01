@@ -10,5 +10,12 @@ export const useInstallmentRepository = () => {
       })
    }
 
-   return { fetchInstallmentByWorkspaceAndOrderId, isLoading, error }
+   const fetchInstallmentById = (_id) => {
+      return apiCall({
+         path: `/api/v1/installment-id?_id=${_id}`,
+         method: 'GET'
+      })
+   }
+
+   return { fetchInstallmentByWorkspaceAndOrderId, isLoading, error, fetchInstallmentById }
 }

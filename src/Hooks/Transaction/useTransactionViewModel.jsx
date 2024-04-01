@@ -20,7 +20,7 @@ export const useTransactionViewModel = () => {
       }
    }
 
-   const createPayment = async (amount, orderId, paymentMethodId, accountId, currencyId, description) => {
+   const createPayment = async (amount, orderId, paymentMethodId, accountId, currencyId, description, installmentId) => {
       try {
          const body = {
             workspace: workspaceSession._id,
@@ -30,10 +30,9 @@ export const useTransactionViewModel = () => {
             description: description,
             paymentMethod: paymentMethodId,
             physicalAccount: accountId,
-            currency: currencyId
+            currency: currencyId,
+            installment: installmentId
          }
-         console.log('bodyyyyy')  
-         console.log(body)  
          const response = await createNewPayment(body)
          setOnCreatePaymentSuccess(true)
       } catch (error) {

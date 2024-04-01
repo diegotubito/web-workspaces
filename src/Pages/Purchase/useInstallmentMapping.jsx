@@ -32,7 +32,7 @@ export const useInstallmentMapping = () => {
                name: '_id',
                minWidth: '5rem',
                maxWidth: '0.5fr',
-               value: dateAndTimeFormat(installment.date),
+               value: dateAndTimeFormat(installment.createdAt),
                alignment: 'start'
             },
             {

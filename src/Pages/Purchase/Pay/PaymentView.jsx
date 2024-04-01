@@ -9,15 +9,15 @@ import { AmountField } from '../../../Components/AmountField/AmountField';
 import { useTranslation } from 'react-i18next';
 import { dateAndTimeFormat } from '../../../Utils/Common/dateUtils';
 import { useParams, useNavigate } from 'react-router-dom';
-import { usePurchaseViewModel } from '../../../Hooks/PurchaseItem/usePurchaseViewModel';
+import { useInstallmentViewModel } from '../../../Hooks/Installment/useInstallmentViewModel';
 
 export const PaymentView = () => {
    const navigate = useNavigate();
-   const { orderId } = useParams()
+   const { installmentId } = useParams()
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
    const [selectedPhysicalAccount, setSelectedPhysicalAccount] = useState("");
    const [selectedCurrency, setSelectedCurrency] = useState("")
-   const { getPurchaseOrderById, order } = usePurchaseViewModel()
+   const { getInstallmentById, installment } = useInstallmentViewModel()
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
    const { getAllAccounts, accounts } = usePhysicalAccountViewModel()
    const [currencies, setCurrencies] = useState([])
@@ -29,16 +29,16 @@ export const PaymentView = () => {
    const [finalDescription, setFinalDescription] = useState()
 
    useEffect(() => {
-      getPurchaseOrderById(orderId)
+      getInstallmentById(installmentId)
    }, [])
 
    useEffect(() => {
-      if (order._id) {
-         getPayments(order._id)
+      if (installment._id) {
+         getPayments(installment._id)
          fetchAllMethods()
          getAllAccounts()
       }
-   }, [order])
+   }, [installment])
 
    useEffect(() => {
       // default payment method
@@ -114,13 +114,13 @@ export const PaymentView = () => {
       setCurrencies(items)
    }
 
-   const totalToPay = () => formatCurrency(((order?.totalAmount || 0).toFixed(2)).toString());
+   const totalToPay = () => formatCurrency(((installment?.amount || 0).toFixed(2)).toString());
    const totalPaid = () => formatCurrency(((totalPayment || 0).toFixed(2)).toString());
-   const netToPay = () => formatCurrency(((order?.totalAmount || 0) - (totalPayment || 0)).toFixed(2).toString());
+   const netToPay = () => formatCurrency(((installment?.amount || 0) - (totalPayment || 0)).toFixed(2).toString());
 
 
    const onCreatePaymentDidPressed = () => {
-      createPayment(amount, order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency, finalDescription)
+      createPayment(amount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency, finalDescription, installment._id)
    }
 
    const onCancelDidPressed = () => {
@@ -137,6 +137,7 @@ export const PaymentView = () => {
    }
 
    const getOrderInfo = () => {
+      /*
       const itemInfo = `Item: ${order?.purchaseItem?.title} ${order.purchaseItem?.description}`
       const ownerInfo = `User: ${order?.user?.username}`
       const dateInfo = `Created At: ${dateAndTimeFormat(order?.date)}`
@@ -144,6 +145,7 @@ export const PaymentView = () => {
       const statusInfo = `Status: ${order?.status || ''}`
 
       return `${itemInfo} | ${ownerInfo} | ${dateInfo} | ${dueInfo} | ${statusInfo}`
+      */
    }
 
    return (
@@ -225,7 +227,7 @@ export const PaymentView = () => {
                <h3 className='payment_view__total-amount'>{netToPay()}</h3>
             </div>
 
-            {(order.status === 'partial_payment' || order.status === 'ready_to_pay') && (
+            {(installment?.order?.status === 'partial_payment' || installment?.order?.status === 'ready_to_pay') && (
                <>
                   <div className='payment_view__total-amount-main'>
                      <AmountField
