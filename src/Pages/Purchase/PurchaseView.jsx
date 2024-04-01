@@ -19,13 +19,13 @@ export const PurchaseView = () => {
 
    const { getPurchaseOrders, orders, updateOrderStatus } = usePurchaseViewModel()
    const { mapOrders } = usePurchaseListViewModel()
-   const [ mappedOrders, setMappedOrders ] = useState([])
+   const [mappedOrders, setMappedOrders] = useState([])
    const [selectedOrder, setSelectedOrder] = useState()
 
    const { getPayments, payments, removePayment, getPaymentsByInstallment } = useTransactionViewModel()
    const { mapTransactions } = usePaymentsListViewModel()
-   const [ mappedTransactions, setMappedTransactions ] = useState([])
-   const [ selectedPayment, setSelectedPayment] = useState()
+   const [mappedTransactions, setMappedTransactions] = useState([])
+   const [selectedPayment, setSelectedPayment] = useState()
 
    const { getInstallments, installments } = useInstallmentViewModel()
    const { mapInstallments } = useInstallmentMapping()
@@ -85,7 +85,7 @@ export const PurchaseView = () => {
       return installments.filter((obj) => obj._id === _id)[0]
    }
 
- 
+
    // PAYMENTS
 
    useEffect(() => {
@@ -120,7 +120,7 @@ export const PurchaseView = () => {
       })
 
       setSelectedInstallment(null)
-      
+
       if (selectedItems.length === 0) {
          setSelectedOrder(null)
          return
@@ -196,7 +196,7 @@ export const PurchaseView = () => {
    const validatePayButton = () => {
       if (!selectedInstallment || !selectedOrder) {
          setPayButtonState(false)
-         return 
+         return
       }
 
       if (selectedInstallment.status === 'paid' || selectedOrder.status === 'pending_approval' || selectedOrder.status === 'rejected' || selectedOrder.status === 'completed' || selectedOrder.status === 'cancelled') {
@@ -275,7 +275,7 @@ export const PurchaseView = () => {
                disabled={false}
             />
          </div>
-         
+
          <h3>Orders</h3>
          <GridView
             className='purchase__view-order-list '
@@ -305,10 +305,10 @@ export const PurchaseView = () => {
                onClick={onApproveDidClicked}
                disabled={!approveButtonState}
             />
-           
+
          </div>
 
-        
+
 
          {selectedOrder && (
             <>
@@ -335,8 +335,8 @@ export const PurchaseView = () => {
             </>
          )}
 
-        { selectedInstallment && (
-         <>
+         {selectedInstallment && (
+            <>
                <h3>Payments</h3>
                <GridView
                   className='purchase__view-order-list '
@@ -346,19 +346,24 @@ export const PurchaseView = () => {
                   selectionMode={'single'}  // none, single, multiple.
                />
 
-               { payments.length > 0 && (
-                  <div className="purchase_view__button-container">
-                     <SimpleButton
-                        style='destructive'
-                        title='Remove'
-                        onClick={onRemovePaymentDidClicked}
-                        disabled={!removePaymentButtonState}
-                     />
-                  </div>
-               )}
-              
-         </>
-        )}
+               {payments.length === 0 ?
+                  (
+                     <h3> No hay pagos realizado.</h3>
+                  )
+                  :
+                  (
+                     <div className="purchase_view__button-container">
+                        <SimpleButton
+                           style='destructive'
+                           title='Remove'
+                           onClick={onRemovePaymentDidClicked}
+                           disabled={!removePaymentButtonState}
+                        />
+                     </div>
+                  )}
+
+            </>
+         )}
 
       </div >
    )
