@@ -76,7 +76,8 @@ export const usePurchaseViewModel = () => {
          totalAmount: totalAmount,
          status: 'pending_approval',
          paymentMethod: selectedPaymentItem,
-         currency: selectedCurrency
+         currency: selectedCurrency,
+         numberOfInstallments: 1
       }
 
       try {

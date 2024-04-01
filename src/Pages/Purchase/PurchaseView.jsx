@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { useTransactionViewModel } from '../../Hooks/Transaction/useTransactionViewModel'
 import { usePaymentsListViewModel } from './usePaymentsListViewModel'
 import { usePurchaseViewModel } from '../../Hooks/PurchaseItem/usePurchaseViewModel';
+// Installments
+import { useInstallmentViewModel } from '../../Hooks/Installment/useInstallmentViewModel';
+import { useInstallmentMapping } from './useInstallmentMapping';
 
 export const PurchaseView = () => {
    const navigate = useNavigate();
@@ -23,6 +26,11 @@ export const PurchaseView = () => {
    const { mapTransactions } = usePaymentsListViewModel()
    const [ mappedTransactions, setMappedTransactions ] = useState([])
    const [ selectedPayment, setSelectedPayment] = useState()
+
+   const { getInstallments, installments } = useInstallmentViewModel()
+   const { mapInstallments } = useInstallmentMapping()
+   const [mappedInstallments, setMappedInstallments] = useState([])
+   const [selectedInstallment, setSelectedInstallment] = useState()
 
    const [payButtonState, setPayButtonState] = useState(false)
    const [approveButtonState, setApproveButtonState] = useState(false)
@@ -43,12 +51,50 @@ export const PurchaseView = () => {
    }, [mappedOrders])
 
    useEffect(() => {
-      setMappedTransactions([])
+      setMappedInstallments([])
       if (selectedOrder) {
+         getInstallments(selectedOrder._id)
+      }
+      // should validate buttons here
+   }, [selectedOrder])
+
+   useEffect(() => {
+      setMappedInstallments(mapInstallments(installments))
+   }, [installments])
+
+   useEffect(() => {
+      determineSelectedInstallment()
+   }, [mappedInstallments])
+
+   const determineSelectedInstallment = () => {
+      const selectedItems = mappedInstallments.filter((item) => {
+         if (item.isSelected) {
+            return item
+         }
+      })
+
+      if (selectedItems.length === 0) {
+         setSelectedInstallment(null)
+         return
+      }
+
+      setSelectedInstallment(getOrder(selectedItems[0]._id))
+   }
+
+   const getInstallment = (_id) => {
+      return installments.filter((obj) => obj._id === _id)[0]
+   }
+
+ 
+   // PAYMENTS
+
+   useEffect(() => {
+      setMappedTransactions([])
+      if (selectedInstallment) {
          getPayments(selectedOrder._id)
       }
       validateOrderButtons()
-   }, [selectedOrder])
+   }, [selectedInstallment])
 
    useEffect(() => {
       setMappedTransactions(mapTransactions(payments))
@@ -262,7 +308,31 @@ export const PurchaseView = () => {
            
          </div>
 
-        { selectedOrder && (
+         {selectedOrder && (
+            <>
+               <GridView
+                  className='purchase__view-order-list '
+                  items={mappedInstallments}
+                  setItems={setMappedInstallments}
+                  gap={'1px'}
+                  selectionMode={'single'}  // none, single, multiple.
+               />
+
+               {installments.length > 0 && (
+                  <div className="purchase_view__button-container">
+                     <SimpleButton
+                        style='primary'
+                        title='Pay'
+                        onClick={onPayemntDidClicked}
+                        disabled={!payButtonState}
+                     />
+                  </div>
+               )}
+
+            </>
+         )}
+
+        { selectedInstallment && (
          <>
                <GridView
                   className='purchase__view-order-list '

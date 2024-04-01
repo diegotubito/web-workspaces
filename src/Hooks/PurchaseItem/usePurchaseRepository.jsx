@@ -13,7 +13,7 @@ export const usePurchaseRepository = () => {
 
    const createPurchaseOrder = (body) => {
       return apiCall({
-         path: `/api/v1/purchase-order`,
+         path: `/api/v1/purchase-installments`,
          method: 'POST',
          body: body,
          isLogin: true
