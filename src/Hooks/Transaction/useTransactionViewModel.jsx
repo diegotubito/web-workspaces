@@ -8,30 +8,44 @@ export const useTransactionViewModel = () => {
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
    const [payments, setPayments] = useState([])
-   const [onCreatePaymentSuccess, setOnCreatePaymentSuccess] = useState(false)
+   const [onTransactionError, setOnTransactionError] = useState(null)
+   const [transactionIsLoading, setTransactionIsLoading] = useState(false)
+   const [onCreatedTransactionSuccess, setOnCreatedTransactionSuccess] = useState(false)
 
    const getPayments = async (purchaseOrderId) => {
       try {
+         setTransactionIsLoading(true)
          const response = await fetchTransactionByEntity(workspaceSession._id, purchaseOrderId, 'purchase_order')
          setPayments(response.transactions)
+         setOnTransactionError(null)
       } catch (error) {
+         setOnTransactionError(error)
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
+      } finally {
+         setTransactionIsLoading(false)
       }
    }
 
    const getPaymentsByInstallment = async (installmentId) => {
       try {
+         setTransactionIsLoading(true)
          const response = await fetchTransactionByInstallment(installmentId)
          setPayments(response.transactions)
+         setOnTransactionError(null)
       } catch (error) {
+         setOnTransactionError(error)
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
+         
+      } finally {
+         setTransactionIsLoading(false)
       }
    }
 
-   const createPayment = async (amount, orderId, paymentMethodId, accountId, currencyId, description, installmentId) => {
+   const createPayment = async (amount, orderId, paymentMethodId, accountId, currencyId, description, installmentId, exchangeRate) => {
       try {
+         setTransactionIsLoading(true)
          const body = {
             workspace: workspaceSession._id,
             user: userSession.user._id,
@@ -41,26 +55,34 @@ export const useTransactionViewModel = () => {
             paymentMethod: paymentMethodId,
             physicalAccount: accountId,
             currency: currencyId,
-            installment: installmentId
+            installment: installmentId,
+            exchangeRate: exchangeRate
          }
          const response = await createNewPayment(body)
-         setOnCreatePaymentSuccess(true)
+         setOnTransactionError(null)
+         setOnCreatedTransactionSuccess(true)
       } catch (error) {
-         setOnCreatePaymentSuccess(false)
+         setOnTransactionError(error)
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
+      } finally {
+         setTransactionIsLoading(false)
       }
    }
 
    const removePayment = async (_id) => {
       try {
+         setTransactionIsLoading(true)
          const response = await disablePayment(_id)
-
+         setOnTransactionError(null)
       } catch (error) {
+         setOnTransactionError(error)
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
+      } finally {
+         setTransactionIsLoading(true)
       }
    }
 
-   return { getPayments, payments, createPayment, removePayment, getPaymentsByInstallment }
+   return { getPayments, payments, createPayment, removePayment, getPaymentsByInstallment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess }
 }

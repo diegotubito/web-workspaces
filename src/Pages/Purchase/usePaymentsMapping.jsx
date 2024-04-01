@@ -70,6 +70,15 @@ export const usePaymentsMapping = () => {
                },
                {
                   _id: transaction._id + 'h',
+                  name: 'Exchange',
+                  minWidth: '5rem',
+                  maxWidth: '0.3fr',
+                  value: transaction.exchangeRate,
+                  alignment: 'center',
+                  titleAlignment: 'center',
+               },
+               {
+                  _id: transaction._id + 'i',
                   name: 'Paid',
                   minWidth: '5rem',
                   maxWidth: '0.7fr',

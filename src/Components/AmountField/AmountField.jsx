@@ -12,7 +12,7 @@ export const AmountField = ({ title, amount, onAmountDidChanged, textAlign }) =>
       errorMessage: '',
       type: 'currency',
       autocomplete: 'off',
-      maxLength: 12,
+      maxLength: 14,
       autoCapitalize: 'words',
       size: 'large'
    })

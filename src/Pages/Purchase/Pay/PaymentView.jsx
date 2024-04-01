@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next';
 import { dateAndTimeFormat } from '../../../Utils/Common/dateUtils';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useInstallmentViewModel } from '../../../Hooks/Installment/useInstallmentViewModel';
+import { Spinner } from '../../../Components/Spinner/spinner'
+import { Button, Alert } from 'react-bootstrap';
 
 export const PaymentView = () => {
    const navigate = useNavigate();
@@ -21,12 +23,12 @@ export const PaymentView = () => {
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
    const { getAllAccounts, accounts } = usePhysicalAccountViewModel()
    const [currencies, setCurrencies] = useState([])
-   const { getPayments, payments, createPayment } = useTransactionViewModel()
-   const [totalPayment, setTotalPayment] = useState()
+   const { createPayment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess } = useTransactionViewModel()
    const [amount, setAmount] = useState()
    const { t } = useTranslation()
    const [description, setDescription] = useState()
    const [finalDescription, setFinalDescription] = useState()
+   const [exchangeRate, setExchangeRate] = useState()
 
    useEffect(() => {
       getInstallmentById(installmentId)
@@ -34,7 +36,6 @@ export const PaymentView = () => {
 
    useEffect(() => {
       if (installment._id) {
-         getPayments(installment._id)
          fetchAllMethods()
          getAllAccounts()
       }
@@ -63,13 +64,10 @@ export const PaymentView = () => {
    }, [amount])
 
    useEffect(() => {
-      const suma = payments.reduce((accumulator, pay) => {
-         // Suma solo si isEnabled no es false
-         return pay.isEnabled !== false ? accumulator + pay.amount : accumulator;
-      }, 0); // Inicializa el acumulador en 0
-
-      setTotalPayment(suma);
-   }, [payments]);
+      if (onCreatedTransactionSuccess) {
+         popNavigation()
+      }
+   }, [onCreatedTransactionSuccess])
 
 
    const handleOnPaymentMethodChange = (event) => {
@@ -120,10 +118,14 @@ export const PaymentView = () => {
 
 
    const onCreatePaymentDidPressed = () => {
-      createPayment(amount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency, finalDescription, installment._id)
+      createPayment(amount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency, finalDescription, installment._id, exchangeRate)
    }
 
    const onCancelDidPressed = () => {
+      popNavigation()
+   }
+
+   const popNavigation = () => {
       navigate(-1)
    }
 
@@ -148,8 +150,46 @@ export const PaymentView = () => {
       */
    }
 
+   const getCurrencyCode = () => {
+      const currencyItem = currencies.find((c) => c._id === selectedCurrency)
+      return currencyItem?.code
+   }
+
+   const getErrorTitle = (error) => {
+      return error.title
+   }
+   const getErrorMessage = (error) => {
+      return error.message
+   }
+
+   const onExchangeRateDidChanged = (event) => {
+      const value = event.target.value
+      setExchangeRate(value)
+   }
+
    return (
       <div className='payment_view__main '>
+
+         {transactionIsLoading && <Spinner />}
+
+
+         {onTransactionError && (
+            <div className="alert-container">
+               <Alert variant="warning">
+                  <Alert.Heading>{onTransactionError.title}</Alert.Heading>
+                  <h3>
+                     {onTransactionError.message}
+                  </h3>
+                  <hr />
+                  <div className="d-flex justify-content-end">
+                     <Button onClick={() => setOnTransactionError(null)} variant="outline-success">
+                        Close me
+                     </Button>
+                  </div>
+               </Alert>
+            </div>
+         )}
+
 
          <div className='payment_view__container   payment_view__gap'>
             <h1 className='purchase_crud_view__title'>{t('PAYMENT_VIEW_TITLE')}</h1>
@@ -172,7 +212,7 @@ export const PaymentView = () => {
                   onChange={(event) => onDescriptionChangeHandler(event)}
                   //    onBlur={(event) => onBlurHandler(event, field._id)}
                   autoComplete='off'
-                
+
                   maxLength={`${300}`}
                />
 
@@ -229,6 +269,31 @@ export const PaymentView = () => {
 
             {(installment?.order?.status === 'partial_payment' || installment?.order?.status === 'ready_to_pay') && (
                <>
+
+                  {installment?.currency?.code !== getCurrencyCode() && (
+
+                     <input
+                        // ref={el => inputRefs.current[index] = el} // Agrega la referencia aquí
+                        style={{
+                           width: '5rem',
+                           border: '1px solid ' + `${'gray'}`,
+                           height: '4rem',
+                           padding: '0rem 0.5rem',
+
+                        }}
+                        type="number"
+                        placeholder={'Exchange Rate'}
+                        value={exchangeRate}
+                        onChange={(event) => onExchangeRateDidChanged(event)}
+                        //    onBlur={(event) => onBlurHandler(event, field._id)}
+                        autoComplete='off'
+
+                        maxLength={`${300}`}
+                     />
+
+                  )}
+
+
                   <div className='payment_view__total-amount-main'>
                      <AmountField
                         title={t('PAYMENT_VIEW_NEW_PAYMENT_AMOUNT_TITLE')}
@@ -251,7 +316,7 @@ export const PaymentView = () => {
                   title={t('PAYMENT_VIEW_CREATE_PAYMENT_BUTTON_TITLE')}
                   style='secondary'
                   onClick={() => onCreatePaymentDidPressed()}
-                  disabled={ false }
+                  disabled={false}
                />
             </div>
          </div>

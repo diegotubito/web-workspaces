@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './GridView.css'
 import { useTranslation } from 'react-i18next';
 
-export function GridView({ gap, items, setItems, selectionMode }) {
+export function GridView({ gap, items, setItems, selectionMode, gridTitle }) {
    const { t } = useTranslation();
 
    const itemDidSelect = (item) => {
@@ -55,34 +55,41 @@ export function GridView({ gap, items, setItems, selectionMode }) {
       }}
          className='purchase_order__container'
       >
+
          {/* TITULOS */}
          {items[0] != null &&
-            <div className="purchase_order__header"
-               style={{
-                  gap: gap,
-                  display: 'grid',
-                  gridTemplateColumns: getGridValues(items[0])
-               }}>
-               {items[0].fields.map((field, fieldIndex) => {
-                  return (
-                     <span
-                        key={field._id}
-                        style={{
-                           overflow: 'auto',
-                           padding: '0.7rem',
-                           textAlign: field.titleAlignment,
-                           backgroundColor: items[0].titleBackgroundColor,
-                           color: items[0].titleForegroundColor,
-                           fontWeight: '600',
-                           whiteSpace: 'nowrap',
-                           overflow: 'auto',
-                        }}
-                     >
-                        {field.name}
-                     </span>
-                  );
-               })}
-            </div>
+            <>
+               
+               <h3>{gridTitle}</h3>
+
+               <div className="purchase_order__header"
+                  style={{
+                     gap: gap,
+                     display: 'grid',
+                     gridTemplateColumns: getGridValues(items[0])
+                  }}>
+                  {items[0].fields.map((field, fieldIndex) => {
+                     return (
+                        <span
+                           key={field._id}
+                           style={{
+                              overflow: 'auto',
+                              padding: '0.7rem',
+                              textAlign: field.titleAlignment,
+                              backgroundColor: items[0].titleBackgroundColor,
+                              color: items[0].titleForegroundColor,
+                              fontWeight: '600',
+                              whiteSpace: 'nowrap',
+                              overflow: 'auto',
+                           }}
+                        >
+                           {field.name}
+                        </span>
+                     );
+                  })}
+               </div>
+            </>
+
          }
 
          {/* GRID */}

@@ -276,8 +276,8 @@ export const PurchaseView = () => {
             />
          </div>
 
-         <h3>Orders</h3>
          <GridView
+            gridTitle={'Orders'}
             className='purchase__view-order-list '
             items={mappedOrders}
             setItems={setMappedOrders}
@@ -312,8 +312,8 @@ export const PurchaseView = () => {
 
          {selectedOrder && (
             <>
-               <h3>Installments</h3>
                <GridView
+                  gridTitle={'Installments'}
                   className='purchase__view-order-list '
                   items={mappedInstallments}
                   setItems={setMappedInstallments}
@@ -337,8 +337,8 @@ export const PurchaseView = () => {
 
          {selectedInstallment && (
             <>
-               <h3>Payments</h3>
                <GridView
+                  gridTitle={'Payments'}
                   className='purchase__view-order-list '
                   items={mappedTransactions}
                   setItems={setMappedTransactions}
