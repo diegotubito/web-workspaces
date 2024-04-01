@@ -11,6 +11,7 @@ export const useTransactionViewModel = () => {
    const [onTransactionError, setOnTransactionError] = useState(null)
    const [transactionIsLoading, setTransactionIsLoading] = useState(false)
    const [onCreatedTransactionSuccess, setOnCreatedTransactionSuccess] = useState(false)
+   const [onTransactionSuccess, setOnTransactionSuccess] = useState(false)
 
    const getPayments = async (purchaseOrderId) => {
       try {
@@ -75,6 +76,7 @@ export const useTransactionViewModel = () => {
          setTransactionIsLoading(true)
          const response = await disablePayment(_id)
          setOnTransactionError(null)
+         setOnTransactionSuccess(true)
       } catch (error) {
          setOnTransactionError(error)
          console.log('Error title:', error.title); // This should show the custom error class name if available
@@ -84,5 +86,5 @@ export const useTransactionViewModel = () => {
       }
    }
 
-   return { getPayments, payments, createPayment, removePayment, getPaymentsByInstallment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess }
+   return { getPayments, payments, createPayment, removePayment, getPaymentsByInstallment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess, onTransactionSuccess }
 }

@@ -17,12 +17,12 @@ export const PurchaseView = () => {
    const navigate = useNavigate();
    const { t } = useTranslation()
 
-   const { getPurchaseOrders, orders, updateOrderStatus } = usePurchaseViewModel()
+   const { getPurchaseOrders, orders, updateOrderStatus, onPurchaseOrderSuccess } = usePurchaseViewModel()
    const { mapOrders } = usePurchaseMapping()
    const [mappedOrders, setMappedOrders] = useState([])
    const [selectedOrder, setSelectedOrder] = useState()
 
-   const { getPayments, payments, removePayment, getPaymentsByInstallment } = useTransactionViewModel()
+   const { getPayments, payments, removePayment, getPaymentsByInstallment, onTransactionSuccess } = useTransactionViewModel()
    const { mapTransactions } = usePaymentsMapping()
    const [mappedTransactions, setMappedTransactions] = useState([])
    const [selectedPayment, setSelectedPayment] = useState()
@@ -65,6 +65,12 @@ export const PurchaseView = () => {
    useEffect(() => {
       determineSelectedInstallment()
    }, [mappedInstallments])
+
+   useEffect(() => {
+      if (onPurchaseOrderSuccess || onTransactionSuccess) {
+         getPurchaseOrders()
+      }
+   }, [onPurchaseOrderSuccess, onTransactionSuccess])
 
    const determineSelectedInstallment = () => {
       const selectedItems = mappedInstallments.filter((item) => {

@@ -159,11 +159,6 @@ export const PaymentView = () => {
       */
    }
 
-   const getCurrencyCode = () => {
-      const currencyItem = currencies.find((c) => c._id === selectedCurrency)
-      return currencyItem?.code
-   }
-
    const getErrorTitle = (error) => {
       return error.title
    }
