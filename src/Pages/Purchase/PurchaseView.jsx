@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import { PurchaseCrudView } from './CrudView/PurchaseCrudView'
 import { GridView } from '../../Components/GridView/GridView';
 import './PurchaseView.css'
-import { usePurchaseListViewModel } from './usePurchaseListViewModel'
+import { usePurchaseListViewModel } from './usePurchaseMapping'
 import { useTranslation } from 'react-i18next';
 import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton'
 import { useNavigate } from 'react-router-dom';
 import { useTransactionViewModel } from '../../Hooks/Transaction/useTransactionViewModel'
-import { usePaymentsListViewModel } from './usePaymentsListViewModel'
+import { usePaymentsListViewModel } from './usePaymentsMapping'
 import { usePurchaseViewModel } from '../../Hooks/PurchaseItem/usePurchaseViewModel';
 // Installments
 import { useInstallmentViewModel } from '../../Hooks/Installment/useInstallmentViewModel';

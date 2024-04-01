@@ -35,14 +35,6 @@ export const useInstallmentMapping = () => {
                alignment: 'center'
             },
             {
-               _id: installment._id + 'd',
-               name: '_id',
-               minWidth: '5rem',
-               maxWidth: '0.3fr',
-               value: installment.status,
-               alignment: 'start'
-            },
-            {
                _id: installment._id + 'e',
                name: '_id',
                minWidth: '5rem',
