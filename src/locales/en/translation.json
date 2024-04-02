@@ -56,5 +56,8 @@
 
      "_error_response": "Error Response",
 
-     "_400_ERROR_TITLE": "Request Error"
+     "_400_ERROR_TITLE": "Request Error",
+     "_400_ERROR_MESSAGE": "Some parameters are missing or have a different format. Contact help desk support.",
+     "_404_ERROR_TITLE": "Endpoint Not Found",
+     "_404_ERROR_MESSAGE": "Contact help desk support"
 }

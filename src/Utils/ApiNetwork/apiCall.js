@@ -116,13 +116,16 @@ const mapErrorToCustom = (err) => {
       const title = data.title || "Error";
       const message = data.message || "An error occurred";
 
+      console.log('estatusssss', err.response)
+      console.log('estatusssss', data.message)
+
       switch (status) {
          case 400:
             return new BadRequestError(title, message);
          case 401:
             return new AuthenticationError();
          case 404:
-            return new NotFoundError(title, message);
+            return new NotFoundError('_404_ERROR_TITLE', '_404_ERROR_MESSAGE');
          // Add more cases as needed
          default:
             return new APIError(`${status} - ${message}`);

@@ -44,7 +44,23 @@ export const useTransactionViewModel = () => {
       }
    }
 
-   const createPayment = async (amount, orderId, paymentMethodId, accountId, currencyId, description, installmentId, exchangeRate) => {
+   const createPayment = async (amount, remainingAmount, orderId, paymentMethodId, accountId, currencyId, description, installmentId, exchangeRate) => {
+      if (Number(exchangeRate * amount) > remainingAmount) {
+         setOnTransactionError({
+            title: 'Validation Error',
+            message: 'Amount exceeds remaining amount'
+         })
+         return
+      }
+
+      if (!currencyId) {
+         setOnTransactionError({
+            title: 'Validation Error',
+            message: 'You need to espicify an currency'
+         })
+         return
+      }
+
       try {
          setTransactionIsLoading(true)
          const body = {

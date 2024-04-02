@@ -14,9 +14,12 @@ export const useSaleItemViewModel = () => {
          const response = await getItemsByWorkspace(workspaceSession._id)
          setSaleItems(response.items)
       } catch (error) {
-         console.log('Error title:', error.title); // This should show the custom error class name if available
-         console.log('Error message:', error.message); // This should show the custom message
-         setOnGetSaleFailed(error)
+         console.error('Error:', error.title, error.message);
+         setOnGetSaleFailed({
+            title: error.title || "Error",
+            message: error.message || "An unexpected error occurred", 
+            action: 'pop'
+         })
       }
    }
 

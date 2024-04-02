@@ -2,7 +2,6 @@ import './PuchaseCrudView.css'
 import { useEffect, useState } from 'react'
 import { usePurchaseViewModel } from '../../../Hooks/PurchaseItem/usePurchaseViewModel'
 import { useTranslation } from 'react-i18next';
-import { Button, Alert } from 'react-bootstrap';
 import { usePurchaseFormViewModel } from '../FormHook/usePurchaseFormViewModel'
 import { InputFieldColumn } from '../../../Components/InputFieldColumn/InputFieldColumn'
 import { useSaleItemViewModel } from '../../../Hooks/SaleItem/useSaleItemViewModel';
@@ -13,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { usePaymentViewModel } from '../Pay/PaymentViewModel';
 import { useCurrencyViewModel } from '../../../Hooks/Currency/useCurrencyViewModel';
 import { QuantityTextField } from '../../../Components/TextField/QuantityTextField/QuantityTextField';
+import { CustomAlert } from '../../../Components/CustomAlert/CustomAlert'
 
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
@@ -44,7 +44,7 @@ export const PurchaseCrudView = () => {
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
 
-   const { getCurrencies, currencies} = useCurrencyViewModel()
+   const { getCurrencies, currencies } = useCurrencyViewModel()
    const [selectedCurrency, setSelectedCurrency] = useState("")
 
    const [installmentNumber, setInstallmentNumber] = useState(1)
@@ -167,9 +167,8 @@ export const PurchaseCrudView = () => {
       setInstallmentNumber(value)
    }
 
-
    {
-      return(
+      return (
          <div className='purchase_crud_view__main'>
             <div className='purchase_crud_view__container'>
 
@@ -178,45 +177,29 @@ export const PurchaseCrudView = () => {
 
 
                {onPurchaseFailed && (
-                  <div className="alert-container">
-                     <Alert variant="warning">
-                        <Alert.Heading>{t(onPurchaseFailed.title)}</Alert.Heading>
-                        <h3>
-                           {t(onPurchaseFailed.message)}
-                        </h3>
-                        <hr />
-                        <div className="d-flex justify-content-end">
-                           <Button onClick={() => setOnPurchaseFailed(null)} variant="outline-success">
-                              Close me
-                           </Button>
-                        </div>
-                     </Alert>
-                  </div>
+                  <CustomAlert
+                     title={onPurchaseFailed?.title}
+                     message={onPurchaseFailed?.message}
+                     setErrorStateToNull={setOnPurchaseFailed}
+                     action={onPurchaseFailed?.action}
+                     navigate={navigate}
+                  />
                )}
                {onGetSaleFailed && (
-                  <div className="alert-container">
-                     <Alert variant="warning">
-                        <Alert.Heading>{onPurchaseFailed.title}</Alert.Heading>
-                        <h3>
-                           {onPurchaseFailed.message}
-                        </h3>
-                        <hr />
-                        <div className="d-flex justify-content-end">
-                           <Button onClick={() => setOnGetSaleFailed(null)} variant="outline-success">
-                              Close me
-                           </Button>
-                        </div>
-                     </Alert>
-                  </div>
+                  <CustomAlert
+                     title={onGetSaleFailed?.title}
+                     message={onGetSaleFailed?.message}
+                     setErrorStateToNull={setOnGetSaleFailed}
+                     action={onGetSaleFailed?.action}
+                     navigate={navigate}
+                  />
                )}
-
-              
 
                <div className='purchase_view__gap'>
 
                   <div className='purchase_crud_view__container-scroll'>
                      <h1 className='purchase_crud_view__title'>{t('PURCHASE_ORDER_CRUD_VIEW_TITLE')}</h1>
-                 
+
                      <div className='purchase_view__gap'>
 
                         <div>
@@ -242,7 +225,7 @@ export const PurchaseCrudView = () => {
                               )}
                            </select>
                         </div>
- 
+
                         <div>
                            <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</h3>
                            <select className="form-select" value={selectedCurrency} onChange={handleOnCurrencyChange}>
@@ -301,7 +284,7 @@ export const PurchaseCrudView = () => {
 
                         </div>
 
-                        
+
                      </div>
                   </div >
                </div>

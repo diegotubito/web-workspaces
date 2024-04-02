@@ -55,7 +55,10 @@
   "PURCHASE_ORDER_CRUD_VIEW_CANCEL_ORDER_BUTTON_TITLE": "Cancelar",
 
   "_error_response": "Error Response",
-  
-  "_400_ERROR_TITLE": "Error De Requerimiento"
+
+  "_400_ERROR_TITLE": "Error De Requerimiento",
+  "_400_ERROR_MESSAGE": "Algunos parametros enviados no son correctos. Ponte en contacto con nuestro soporte técnico.",
+    "_404_ERROR_TITLE": "Url No Encontrada",
+    "_404_ERROR_MESSAGE": "Ponte en contacto con nuestro soporte técnico"
 
 }

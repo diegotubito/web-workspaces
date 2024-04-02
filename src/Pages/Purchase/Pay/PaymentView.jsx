@@ -127,7 +127,7 @@ export const PaymentView = () => {
 
 
    const onCreatePaymentDidPressed = () => {
-      createPayment(amount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency, description, installment._id, exchangeRate)
+      createPayment(amount, installment?.remainingAmount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency, description, installment._id, exchangeRate)
    }
 
    const onCancelDidPressed = () => {
@@ -188,7 +188,6 @@ export const PaymentView = () => {
             </div>
          )}
 
-
          <div className='payment_view__container   payment_view__gap'>
             <h1 className='purchase_crud_view__title'>{t('PAYMENT_VIEW_TITLE')}</h1>
 
@@ -230,17 +229,17 @@ export const PaymentView = () => {
 
             <div className='payment_view__total-amount-main'>
                <h3>{t('PAYMENT_VIEW_TOTAL_TO_PAY_TITLE')}</h3>
-               <h3 className='payment_view__total-amount'>{totalToPay()}</h3>
+               <h3 className='payment_view__total-amount'>{`(${installment?.currency?.code}) ${totalToPay()}`}</h3>
             </div>
 
             <div className='payment_view__total-amount-main'>
                <h3>{t('PAYMENT_VIEW_TOTAL_PAID_TITLE')}</h3>
-               <h3 className='payment_view__total-amount'>{totalPaid()}</h3>
+               <h3 className='payment_view__total-amount'>{`(${installment?.currency?.code}) ${totalPaid()}`}</h3>
             </div>
 
             <div className='payment_view__total-amount-main'>
                <h3>{t('PAYMENT_VIEW_BALANCE_TO_PAY_TITLE')}</h3>
-               <h3 className='payment_view__total-amount'>{netToPay()}</h3>
+               <h3 className='payment_view__total-amount'>{`(${installment?.currency?.code}) ${netToPay()}`}</h3>
             </div>
 
             <div className='payment_view__total-amount-main'>
@@ -248,18 +247,12 @@ export const PaymentView = () => {
                <h3 className='payment_view__total-amount'>{exchangeRate}</h3>
             </div>
 
-            <NoteTextField
-               value={description}
-               onChangeValue={onDescriptionChangeHandler}
-               placeholder={'Description'}
-               minLength={0}
-               maxLength={300}
-            />
+           
 
             {(installment?.order?.status === 'partial_payment' || installment?.order?.status === 'ready_to_pay') && (
                <>
-                 
-                  <div>
+
+                  <div className='payment_view__total-amount-main'>
                      <h3 className='purchase_view__form-title'>{t('Payment')}</h3>
                      <AmountTextField
                         initialValue={0}
@@ -268,6 +261,16 @@ export const PaymentView = () => {
                   </div>
                </>
             )}
+
+            <div className='payment_view__buttons'>
+               <NoteTextField
+                  value={description}
+                  onChangeValue={onDescriptionChangeHandler}
+                  placeholder={'Description'}
+                  minLength={0}
+                  maxLength={300}
+               />
+            </div>
 
             <div className='payment_view__buttons'>
                <SimpleButton

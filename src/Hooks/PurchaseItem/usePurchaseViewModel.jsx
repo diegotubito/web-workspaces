@@ -67,7 +67,15 @@ export const usePurchaseViewModel = () => {
    }
 
    const createPurchaseOrder = async (items, totalAmount, purchaseItemId, selectedPaymentItem, selectedCurrency, installmentNumber) => {
-    
+      if (!totalAmount) {
+         setOnPurchaseFailed({
+            title: "Validation Error",
+            message: "Amount must not be zero",
+            action: 'none'
+         })
+         return
+      }
+
       const body = {
          user: userSession.user._id,
          workspace: workspaceSession._id,
@@ -85,9 +93,12 @@ export const usePurchaseViewModel = () => {
          const response = await createPurchaseOrderRepository(body)
          setOnPurchaseSuccess(true)
       } catch (error) {
-         console.log('Error title:', error.title); // This should show the custom error class name if available
-         console.log('Error message:', error.message); // This should show the custom message
-         setOnPurchaseFailed(error)
+         console.error('Error:', error.title, error.message);
+         setOnPurchaseFailed({
+            title: error.title || "Error",
+            message: error.message || "An unexpected error occurred",
+            action: 'pop'
+         })
       }
    }
 
