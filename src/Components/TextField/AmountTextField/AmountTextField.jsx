@@ -43,6 +43,7 @@ export const AmountTextField = ({ initialValue, onChangeValue, placeholder = "Am
          onChange={onChangeHandler}
          onBlur={onBlurHandler}
          autoComplete='off'
+         maxLength={15}
       />
    );
 };

@@ -5,7 +5,6 @@ import { usePhysicalAccountViewModel } from '../../../Hooks/PhysicalAccount/useP
 import { useTransactionViewModel } from '../../../Hooks/Transaction/useTransactionViewModel';
 import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Common/formatCurrency';
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton'
-import { AmountField } from '../../../Components/TextField/AmountField/AmountField';
 import { useTranslation } from 'react-i18next';
 import { dateAndTimeFormat } from '../../../Utils/Common/dateUtils';
 import { useParams, useNavigate } from 'react-router-dom';

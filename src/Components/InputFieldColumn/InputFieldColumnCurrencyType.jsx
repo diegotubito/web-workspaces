@@ -59,7 +59,7 @@ export const InputFieldColumnCurrencyType = ({ settings, items, setItems, item, 
                //    onBlur={(event) => onBlurHandler(event, field._id)}
                autoComplete='off'
                readOnly={!field.isEnabled}
-               maxLength={`${field.maxLength ? field.maxLength : 12}`}
+               maxLength={`${field.maxLength ? field.maxLength : 15}`}
             />
 
             {field.errorMessage && <div

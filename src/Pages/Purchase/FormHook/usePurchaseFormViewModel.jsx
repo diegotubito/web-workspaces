@@ -61,7 +61,7 @@ export const usePurchaseFormViewModel = ({ setItems, saleItems }) => {
             errorMessage: '',
             isEnabled: true,
             placeholder: '$ 0.00',
-            maxLength: '12'
+            maxLength: '15'
          },
          {
             _id: Date.now().toString() + 'f', // Ensuring _id is a string
