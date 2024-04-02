@@ -175,22 +175,17 @@ export const PurchaseCrudView = () => {
 
                {saleItemsIsLoading || purchaseItemIsLoading && <Spinner />}
 
-
                {onPurchaseFailed && (
                   <CustomAlert
-                     title={onPurchaseFailed?.title}
-                     message={onPurchaseFailed?.message}
+                     errorDetails={onPurchaseFailed}
                      setErrorStateToNull={setOnPurchaseFailed}
-                     action={onPurchaseFailed?.action}
                      navigate={navigate}
                   />
                )}
                {onGetSaleFailed && (
                   <CustomAlert
-                     title={onGetSaleFailed?.title}
-                     message={onGetSaleFailed?.message}
+                     errorDetails={onGetSaleFailed}
                      setErrorStateToNull={setOnGetSaleFailed}
-                     action={onGetSaleFailed?.action}
                      navigate={navigate}
                   />
                )}

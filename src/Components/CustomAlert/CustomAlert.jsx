@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-export const CustomAlert = ({ title, message, setErrorStateToNull, action, navigate }) => {
+export const CustomAlert = ({ errorDetails, setErrorStateToNull, navigate }) => {
    const {t} = useTranslation()
 
    const handleOnClickOkButton = () => {
       setErrorStateToNull(null);
-      switch (action) {
+      switch (errorDetails.action) {
          case 'none':
             break;
          case 'pop':
@@ -21,9 +21,9 @@ export const CustomAlert = ({ title, message, setErrorStateToNull, action, navig
    return (
       <div className="alert-container">
          <Alert variant="warning">
-            <Alert.Heading>{t(title)}</Alert.Heading>
+            <Alert.Heading>{t(errorDetails.title)}</Alert.Heading>
             <h3>
-               {t(message)}
+               {t(errorDetails.message)}
             </h3>
             <hr />
             <div className="d-flex justify-content-end">
