@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-export const CustomAlert = ({ errorDetails, navigate }) => {
+export const ErrorAlert = ({ errorDetails, navigate }) => {
    const {t} = useTranslation()
 
    const handleOnClickOkButton = () => {

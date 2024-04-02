@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { usePaymentViewModel } from '../Pay/PaymentViewModel';
 import { useCurrencyViewModel } from '../../../Hooks/Currency/useCurrencyViewModel';
 import { QuantityTextField } from '../../../Components/TextField/QuantityTextField/QuantityTextField';
-import { CustomAlert } from '../../../Components/CustomAlert/CustomAlert'
+import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert'
 
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
@@ -175,13 +175,13 @@ export const PurchaseCrudView = () => {
                {saleItemsIsLoading || purchaseItemIsLoading && <Spinner />}
 
                {onPurchaseFailed && (
-                  <CustomAlert
+                  <ErrorAlert
                      errorDetails={onPurchaseFailed}
                      navigate={navigate}
                   />
                )}
                {onGetSaleFailed && (
-                  <CustomAlert
+                  <ErrorAlert
                      errorDetails={onGetSaleFailed}
                      navigate={navigate}
                   />

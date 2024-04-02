@@ -273,6 +273,7 @@ export const PurchaseView = () => {
 
    return (
       <div className='purchase_view__main purchase_view__gap'>
+         
          <div className='purchase_view__button-container'>
             <SimpleButton
                style='primary'
