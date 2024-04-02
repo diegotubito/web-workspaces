@@ -1,8 +1,8 @@
 import './AmountField.css'
 import { useTranslation } from 'react-i18next';
-import { TextField } from '../TextField/TextField'
+import { TextField } from '../TextField'
 import { useState, useEffect } from 'react'
-import { formatCurrency, convertCurrencyStringToNumber } from '../../Utils/Common/formatCurrency';
+import { formatCurrency, convertCurrencyStringToNumber } from '../../../Utils/Common/formatCurrency';
 
 export const AmountField = ({ title, amount, onAmountDidChanged, textAlign }) => {
    const {t} = useTranslation()

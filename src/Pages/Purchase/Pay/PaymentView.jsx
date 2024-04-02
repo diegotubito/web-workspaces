@@ -5,7 +5,7 @@ import { usePhysicalAccountViewModel } from '../../../Hooks/PhysicalAccount/useP
 import { useTransactionViewModel } from '../../../Hooks/Transaction/useTransactionViewModel';
 import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Common/formatCurrency';
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton'
-import { AmountField } from '../../../Components/AmountField/AmountField';
+import { AmountField } from '../../../Components/TextField/AmountField/AmountField';
 import { useTranslation } from 'react-i18next';
 import { dateAndTimeFormat } from '../../../Utils/Common/dateUtils';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { useInstallmentViewModel } from '../../../Hooks/Installment/useInstallme
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { Button, Alert } from 'react-bootstrap';
 import { NoteTextField } from '../../../Components/TextField/NoteTextField/NoteTextField';
+import { AmountTextField } from '../../../Components/TextField/AmountTextField/AmountTextField';
 
 export const PaymentView = () => {
    const navigate = useNavigate();
@@ -258,12 +259,12 @@ export const PaymentView = () => {
 
             {(installment?.order?.status === 'partial_payment' || installment?.order?.status === 'ready_to_pay') && (
                <>
-                  <div className='payment_view__total-amount-main'>
-                     <AmountField
-                        title={t('PAYMENT_VIEW_NEW_PAYMENT_AMOUNT_TITLE')}
-                        amount={amount}
-                        onAmountDidChanged={onAmountDidChanged}
-                        textAlign={'end'}
+                 
+                  <div>
+                     <h3 className='purchase_view__form-title'>{t('Payment')}</h3>
+                     <AmountTextField
+                        initialValue={0}
+                        onChangeValue={onAmountDidChanged}
                      />
                   </div>
                </>
