@@ -61,8 +61,13 @@ export const usePurchaseViewModel = () => {
          const response = await updatePurchaseOrderStatus(_id, status)
          setOnPurchaseOrderSuccess(true)
       } catch (error) {
-         console.log('Error title:', error.title); // This should show the custom error class name if available
-         console.log('Error message:', error.message); // This should show the custom message
+         console.error('Error:', error.title, error.message);
+         setOnPurchaseFailed({
+            title: error.title || "Error",
+            message: error.message || "An unexpected error occurred",
+            action: 'none',
+            setError: setOnPurchaseFailed
+         })
       }
    }
 

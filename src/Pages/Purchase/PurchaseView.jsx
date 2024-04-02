@@ -12,12 +12,13 @@ import { usePurchaseViewModel } from '../../Hooks/PurchaseItem/usePurchaseViewMo
 // Installments
 import { useInstallmentViewModel } from '../../Hooks/Installment/useInstallmentViewModel';
 import { useInstallmentMapping } from './useInstallmentMapping';
+import { ErrorAlert } from '../../Components/CustomAlert/ErrorAlert';
 
 export const PurchaseView = () => {
    const navigate = useNavigate();
    const { t } = useTranslation()
 
-   const { getPurchaseOrders, orders, updateOrderStatus, onPurchaseOrderSuccess } = usePurchaseViewModel()
+   const { getPurchaseOrders, orders, updateOrderStatus, onPurchaseOrderSuccess, onPurchaseFailed } = usePurchaseViewModel()
    const { mapOrders } = usePurchaseMapping()
    const [mappedOrders, setMappedOrders] = useState([])
    const [selectedOrder, setSelectedOrder] = useState()
@@ -274,6 +275,13 @@ export const PurchaseView = () => {
    return (
       <div className='purchase_view__main purchase_view__gap'>
          
+         {onPurchaseFailed && (
+            <ErrorAlert
+               errorDetails={onPurchaseFailed}
+               navigate={navigate}
+            />
+         )}
+
          <div className='purchase_view__button-container'>
             <SimpleButton
                style='primary'
