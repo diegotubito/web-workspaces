@@ -18,7 +18,8 @@ export const useSaleItemViewModel = () => {
          setOnGetSaleFailed({
             title: error.title || "Error",
             message: error.message || "An unexpected error occurred", 
-            action: 'pop'
+            action: 'pop',
+            setError: setOnGetSaleFailed
          })
       }
    }

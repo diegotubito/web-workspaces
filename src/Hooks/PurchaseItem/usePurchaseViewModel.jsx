@@ -71,7 +71,8 @@ export const usePurchaseViewModel = () => {
          setOnPurchaseFailed({
             title: "Validation Error",
             message: "Amount must not be zero",
-            action: 'none'
+            action: 'none',
+            setError: setOnPurchaseFailed
          })
          return
       }
@@ -97,7 +98,8 @@ export const usePurchaseViewModel = () => {
          setOnPurchaseFailed({
             title: error.title || "Error",
             message: error.message || "An unexpected error occurred",
-            action: 'pop'
+            action: 'pop',
+            setError: setOnPurchaseFailed
          })
       }
    }

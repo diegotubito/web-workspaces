@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-export const CustomAlert = ({ errorDetails, setErrorStateToNull, navigate }) => {
+export const CustomAlert = ({ errorDetails, navigate }) => {
    const {t} = useTranslation()
 
    const handleOnClickOkButton = () => {
-      setErrorStateToNull(null);
+      errorDetails.setError(null);
       switch (errorDetails.action) {
          case 'none':
             break;

@@ -172,20 +172,17 @@ export const PurchaseCrudView = () => {
          <div className='purchase_crud_view__main'>
             <div className='purchase_crud_view__container'>
 
-
                {saleItemsIsLoading || purchaseItemIsLoading && <Spinner />}
 
                {onPurchaseFailed && (
                   <CustomAlert
                      errorDetails={onPurchaseFailed}
-                     setErrorStateToNull={setOnPurchaseFailed}
                      navigate={navigate}
                   />
                )}
                {onGetSaleFailed && (
                   <CustomAlert
                      errorDetails={onGetSaleFailed}
-                     setErrorStateToNull={setOnGetSaleFailed}
                      navigate={navigate}
                   />
                )}
