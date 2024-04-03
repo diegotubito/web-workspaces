@@ -274,7 +274,7 @@ export const PurchaseView = () => {
 
    return (
       <div className='purchase_view__main purchase_view__gap'>
-         
+
          {onPurchaseFailed && (
             <ErrorAlert
                errorDetails={onPurchaseFailed}
@@ -291,37 +291,50 @@ export const PurchaseView = () => {
             />
          </div>
 
-         <GridView
-            gridTitle={'Orders'}
-            className='purchase__view-order-list '
-            items={mappedOrders}
-            setItems={setMappedOrders}
-            gap={'1px'}
-            selectionMode={'single'}  // none, single, multiple.
-         />
 
-         <div className="purchase_view__button-container">
-            <SimpleButton
-               style='destructive'
-               title='Remove'
-               onClick={onRemoveDidClicked}
-               disabled={!removeButtonState}
-            />
-            <SimpleButton
-               style='primary'
-               title='Reject'
-               onClick={onRejectDidClicked}
-               disabled={!rejectButtonState}
-            />
+         {mappedOrders.length === 0 ? (
+            <h3>
+               No tienes ninguna order de compra.
+            </h3>
+         ) : (
+            <>
+               <GridView
+                  gridTitle={'Orders'}
+                  className='purchase__view-order-list '
+                  items={mappedOrders}
+                  setItems={setMappedOrders}
+                  gap={'1px'}
+                  selectionMode={'single'}  // none, single, multiple.
+               />
 
-            <SimpleButton
-               style='primary'
-               title='Approve'
-               onClick={onApproveDidClicked}
-               disabled={!approveButtonState}
-            />
+               <div className="purchase_view__button-container">
+                  <SimpleButton
+                     style='destructive'
+                     title='Remove'
+                     onClick={onRemoveDidClicked}
+                     disabled={!removeButtonState}
+                  />
+                  <SimpleButton
+                     style='primary'
+                     title='Reject'
+                     onClick={onRejectDidClicked}
+                     disabled={!rejectButtonState}
+                  />
 
-         </div>
+                  <SimpleButton
+                     style='primary'
+                     title='Approve'
+                     onClick={onApproveDidClicked}
+                     disabled={!approveButtonState}
+                  />
+
+               </div>
+            </>
+
+         )}
+
+
+
 
 
 
@@ -364,9 +377,7 @@ export const PurchaseView = () => {
                {payments.length === 0 ?
                   (
                      <h3> No hay pagos realizado.</h3>
-                  )
-                  :
-                  (
+                  ) : (
                      <div className="purchase_view__button-container">
                         <SimpleButton
                            style='destructive'
