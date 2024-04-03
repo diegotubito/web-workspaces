@@ -14,14 +14,16 @@ import { useInstallmentViewModel } from '../../Hooks/Installment/useInstallmentV
 import { useInstallmentMapping } from './useInstallmentMapping';
 import { ErrorAlert } from '../../Components/CustomAlert/ErrorAlert';
 
+import { PurchaseOrderComponent } from './PurchaseComponents/PurchaseOrderComponent';
+
+
 export const PurchaseView = () => {
    const navigate = useNavigate();
    const { t } = useTranslation()
 
-   const { getPurchaseOrders, orders, updateOrderStatus, onPurchaseOrderSuccess, onPurchaseFailed } = usePurchaseViewModel()
-   const { mapOrders } = usePurchaseMapping()
-   const [mappedOrders, setMappedOrders] = useState([])
+   // NEW ORDER COMPONENT
    const [selectedOrder, setSelectedOrder] = useState()
+   const [purchaseError, setPurchaseError] = useState()
 
    const { getPayments, payments, removePayment, getPaymentsByInstallment, onTransactionSuccess } = useTransactionViewModel()
    const { mapTransactions } = usePaymentsMapping()
@@ -34,23 +36,10 @@ export const PurchaseView = () => {
    const [selectedInstallment, setSelectedInstallment] = useState()
 
    const [payButtonState, setPayButtonState] = useState(false)
-   const [approveButtonState, setApproveButtonState] = useState(false)
-   const [rejectButtonState, setRejectButtonState] = useState(false)
-   const [removeButtonState, setRemoveButtonState] = useState(true)
+   
    const [removePaymentButtonState, setRemovePaymentButtonState] = useState(false)
 
-   useEffect(() => {
-      getPurchaseOrders()
-   }, [])
-
-   useEffect(() => {
-      setMappedOrders(mapOrders(orders))
-   }, [orders])
-
-   useEffect(() => {
-      determineSelectedOrder()
-   }, [mappedOrders])
-
+   
    useEffect(() => {
       setMappedInstallments([])
       if (selectedOrder) {
@@ -66,12 +55,6 @@ export const PurchaseView = () => {
    useEffect(() => {
       determineSelectedInstallment()
    }, [mappedInstallments])
-
-   useEffect(() => {
-      if (onPurchaseOrderSuccess || onTransactionSuccess) {
-         getPurchaseOrders()
-      }
-   }, [onPurchaseOrderSuccess, onTransactionSuccess])
 
    const determineSelectedInstallment = () => {
       const selectedItems = mappedInstallments.filter((item) => {
@@ -115,27 +98,6 @@ export const PurchaseView = () => {
       validateRemovePaymentButton()
    }, [selectedPayment])
 
-   const getOrder = (_id) => {
-      return orders.filter((obj) => obj._id === _id)[0]
-   }
-
-   const determineSelectedOrder = () => {
-      const selectedItems = mappedOrders.filter((item) => {
-         if (item.isSelected) {
-            return item
-         }
-      })
-
-      setSelectedInstallment(null)
-
-      if (selectedItems.length === 0) {
-         setSelectedOrder(null)
-         return
-      }
-
-      setSelectedOrder(getOrder(selectedItems[0]._id))
-   }
-
    const getPayment = (_id) => {
       return payments.filter((obj) => obj._id === _id)[0]
    }
@@ -155,24 +117,6 @@ export const PurchaseView = () => {
       setSelectedPayment(getPayment(selectedItems[0]._id))
    }
 
-   const onRemoveDidClicked = () => {
-      if (selectedOrder) {
-         updateOrderStatus(selectedOrder._id, 'cancelled')
-      }
-   }
-
-   const onApproveDidClicked = () => {
-      if (selectedOrder) {
-         updateOrderStatus(selectedOrder._id, 'ready_to_pay')
-      }
-   }
-
-   const onRejectDidClicked = () => {
-      if (selectedOrder) {
-         updateOrderStatus(selectedOrder._id, 'rejected')
-      }
-   }
-
    const onPayemntDidClicked = () => {
       if (selectedOrder) {
          navigate(`/payment/${selectedInstallment._id}`)
@@ -190,9 +134,6 @@ export const PurchaseView = () => {
    }
 
    const validateOrderButtons = () => {
-      validateApproveButton()
-      validateRejectedButton()
-      validateRemoveOrderButton()
       validateRemovePaymentButton()
    }
 
@@ -214,49 +155,6 @@ export const PurchaseView = () => {
       setPayButtonState(true)
    }
 
-   const validateApproveButton = () => {
-      if (!selectedOrder) {
-         setApproveButtonState(false)
-         return
-      }
-
-      if (selectedOrder.status === 'pending_approval') {
-         setApproveButtonState(true)
-         return
-      }
-
-      setApproveButtonState(false)
-   }
-
-   const validateRejectedButton = () => {
-      if (!selectedOrder) {
-         setRejectButtonState(false)
-         return
-      }
-
-      if (selectedOrder.status === 'pending_approval') {
-         setRejectButtonState(true)
-         return
-      }
-
-      setRejectButtonState(false)
-   }
-
-
-   const validateRemoveOrderButton = () => {
-      if (!selectedOrder) {
-         setRemoveButtonState(false)
-         return
-      }
-
-      if (selectedOrder.status === 'ready_to_pay' || selectedOrder.status === 'pending_approval') {
-         setRemoveButtonState(true)
-         return
-      }
-
-      setRemoveButtonState(false)
-   }
-
    const validateRemovePaymentButton = () => {
       if (!selectedPayment) {
          setRemovePaymentButtonState(false)
@@ -271,16 +169,25 @@ export const PurchaseView = () => {
       setRemovePaymentButtonState(false)
    }
 
+   // Callbacks from PurchaseOrderComponent
+   const onSelectedOrder = (order) => {
+      setSelectedOrder(order)
+   }
+   // Callbacks from PurchaseOrderComponent
+   const onPurchaseOrderError = (error) => {
+      setPurchaseError(error)
+   }
 
    return (
       <div className='purchase_view__main purchase_view__gap'>
 
-         {onPurchaseFailed && (
+         {purchaseError && (
             <ErrorAlert
-               errorDetails={onPurchaseFailed}
+               errorDetails={purchaseError}
                navigate={navigate}
             />
          )}
+
 
          <div className='purchase_view__button-container'>
             <SimpleButton
@@ -292,51 +199,9 @@ export const PurchaseView = () => {
          </div>
 
 
-         {mappedOrders.length === 0 ? (
-            <h3>
-               No tienes ninguna order de compra.
-            </h3>
-         ) : (
-            <>
-               <GridView
-                  gridTitle={'Orders'}
-                  className='purchase__view-order-list '
-                  items={mappedOrders}
-                  setItems={setMappedOrders}
-                  gap={'1px'}
-                  selectionMode={'single'}  // none, single, multiple.
-               />
-
-               <div className="purchase_view__button-container">
-                  <SimpleButton
-                     style='destructive'
-                     title='Remove'
-                     onClick={onRemoveDidClicked}
-                     disabled={!removeButtonState}
-                  />
-                  <SimpleButton
-                     style='primary'
-                     title='Reject'
-                     onClick={onRejectDidClicked}
-                     disabled={!rejectButtonState}
-                  />
-
-                  <SimpleButton
-                     style='primary'
-                     title='Approve'
-                     onClick={onApproveDidClicked}
-                     disabled={!approveButtonState}
-                  />
-
-               </div>
-            </>
-
-         )}
-
-
-
-
-
+         <PurchaseOrderComponent
+            onSelectedOrder={onSelectedOrder}
+         />
 
          {selectedOrder && (
             <>
