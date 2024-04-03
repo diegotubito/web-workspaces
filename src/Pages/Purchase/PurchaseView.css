@@ -1,14 +1,16 @@
 .purchase_view__main {
+    position: relative;
+
     display: flex;
     flex-direction: column;
     height: 100%;
     background-color: rgb(227, 227, 227);
-   
+
     padding: 1rem;
 }
 
 .purchase__view-order-list {
-   width: 50%;
+    width: 50%;
 }
 
 .purchase_view__button-container {

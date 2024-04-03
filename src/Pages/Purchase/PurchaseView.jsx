@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import { Spinner } from '../../Components/Spinner/spinner'
 import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton'
 import { ErrorAlert } from '../../Components/CustomAlert/ErrorAlert';
 
@@ -13,6 +14,9 @@ import { PurchaseOrderTransactionComponent } from './PurchaseComponents/Purchase
 export const PurchaseView = () => {
    const navigate = useNavigate();
    const { t } = useTranslation()
+
+   const [isLoading, setIsLoading] = useState()
+   const [reloadTrigger, setReloadTrigger] = useState(false);
 
    // NEW ORDER COMPONENT
    const [selectedOrder, setSelectedOrder] = useState()
@@ -65,8 +69,17 @@ export const PurchaseView = () => {
       setTransactionError(error)
    }
 
+
+
+   const handleTransactionChange = () => {
+      setReloadTrigger(prev => !prev); // Cambia el valor para desencadenar una actualización
+   };
+
    return (
       <div className='purchase_view__main purchase_view__gap'>
+
+         {isLoading && <Spinner/> }
+        
 
          { purchaseError && (
             <ErrorAlert
@@ -104,6 +117,8 @@ export const PurchaseView = () => {
          <PurchaseOrderComponent
             onSelectedOrder={onSelectedOrder}
             onPurchaseOrderFailed={onPurchaseOrderError}
+            reloadTrigger={reloadTrigger}
+            setIsLoading={setIsLoading}
          />
 
          <PurchaseOrderInstallmentComponent
@@ -111,12 +126,15 @@ export const PurchaseView = () => {
             onSelectedInstallment={onSelectedInstallment}
             onInstallmentError={onInstallmentError}
             onPayemntDidClicked={onPayemntDidClicked}
+            setIsLoading={setIsLoading}
          />
 
         <PurchaseOrderTransactionComponent
             initialInstallment={selectedInstallment}
             onSelectedTransaction={onSelectedTransaction}
             onTransactionError={onTransactionError}
+            onTransactionChange={handleTransactionChange}
+            setIsLoading={setIsLoading}
         />
 
       </div >

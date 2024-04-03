@@ -3,7 +3,7 @@ import { dateAndTimeFormat, stringMonthFormat, dateFormat } from '../../Utils/Co
 
 export const useInstallmentMapping = () => {
 
-   const mapInstallments = (installments) => {
+   const mapInstallments = (installments, selectedInstallmentId) => {
       const shouldBeSelected = (installment) => {
          if (installment.status === 'paid') {
             return false
@@ -20,11 +20,11 @@ export const useInstallmentMapping = () => {
          const currencyCode = currency.code
          return `(${currencyCode}) ${amountText}`
       }
-
+      console.log('s:',selectedInstallmentId)
       const newItems = sortedInstallments.map((installment) => {
          return {
             _id: installment._id,
-            isSelected: false,
+            isSelected: installment._id === selectedInstallmentId ? true : false,
             isSelectable: shouldBeSelected(installment),
             titleBackgroundColor: 'blue',
             titleForegroundColor: 'white',

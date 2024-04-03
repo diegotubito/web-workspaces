@@ -9,7 +9,7 @@ export const usePurchaseMapping = () => {
       return true
    }
 
-   const mapOrders = (orders) => {
+   const mapOrders = (orders, selectedOrder) => {
       const orderStatusPriority = {
          'ready_to_pay': 1,
          'partial_payment': 2,
@@ -45,7 +45,7 @@ export const usePurchaseMapping = () => {
       const newItems = sortedOrders.map((order) => {
          return {
             _id: order._id,
-            isSelected: false,
+            isSelected: order._id === selectedOrder ? true : false,
             isSelectable: shouldBeSelected(order),
             titleTextAlign: 'center',
             titleBackgroundColor: 'blue',

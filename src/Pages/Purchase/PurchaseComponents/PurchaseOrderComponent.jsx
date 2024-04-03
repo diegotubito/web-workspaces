@@ -7,10 +7,10 @@ import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleBut
 import { usePurchaseViewModel } from '../../../Hooks/PurchaseItem/usePurchaseViewModel';
 
 
-export const PurchaseOrderComponent = ({ onSelectedOrder, onPurchaseOrderFailed }) => {
+export const PurchaseOrderComponent = ({ onSelectedOrder, onPurchaseOrderFailed, reloadTrigger, setIsLoading }) => {
    const { t } = useTranslation()
- 
-   const { getPurchaseOrders, orders, updateOrderStatus, onPurchaseOrderSuccess, onPurchaseFailed } = usePurchaseViewModel()
+
+   const { getPurchaseOrders, orders, updateOrderStatus, onPurchaseOrderSuccess, onPurchaseFailed, isLoading } = usePurchaseViewModel()
    const { mapOrders } = usePurchaseMapping()
    const [mappedOrders, setMappedOrders] = useState([])
    const [selectedOrder, setSelectedOrder] = useState()
@@ -20,11 +20,19 @@ export const PurchaseOrderComponent = ({ onSelectedOrder, onPurchaseOrderFailed 
    const [removeButtonState, setRemoveButtonState] = useState(true)
 
    useEffect(() => {
-      getPurchaseOrders()
-   }, [])
+      setIsLoading(isLoading)
+   }, [isLoading, setIsLoading])
 
    useEffect(() => {
-      setMappedOrders(mapOrders(orders))
+      getPurchaseOrders()
+   }, [reloadTrigger])
+
+   useEffect(() => {
+      if (selectedOrder) {
+         setMappedOrders(mapOrders(orders, selectedOrder._id))
+      } else {
+         setMappedOrders(mapOrders(orders, ''))
+      }
    }, [orders])
 
    useEffect(() => {
@@ -133,7 +141,7 @@ export const PurchaseOrderComponent = ({ onSelectedOrder, onPurchaseOrderFailed 
    }
 
    return (
-      <>
+      <>   
          {mappedOrders.length === 0 ? (
             <h3>
                No tienes ninguna order de compra.

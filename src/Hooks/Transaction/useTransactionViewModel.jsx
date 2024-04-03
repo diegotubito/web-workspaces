@@ -4,7 +4,7 @@ import { useWorkspaceSession } from "../../Utils/Contexts/workspaceSessionContex
 import { useUserSession } from "../../Utils/Contexts/userSessionContext";
 
 export const useTransactionViewModel = () => {
-   const { fetchTransactionByEntity, createNewPayment, disablePayment, fetchTransactionByInstallment } = useTransactionRepository()
+   const { fetchTransactionByEntity, createNewPayment, disablePayment, fetchTransactionByInstallment, isLoading } = useTransactionRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
    const [payments, setPayments] = useState([])
@@ -108,5 +108,5 @@ export const useTransactionViewModel = () => {
       }
    }
 
-   return { getPayments, payments, createPayment, removePayment, getPaymentsByInstallment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess, onTransactionSuccess, onTransactionFailed }
+   return { getPayments, payments, createPayment, removePayment, getPaymentsByInstallment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess, onTransactionSuccess, onTransactionFailed, isLoading }
 }

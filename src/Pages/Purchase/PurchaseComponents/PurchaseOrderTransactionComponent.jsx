@@ -6,15 +6,19 @@ import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleBut
 import { useTransactionViewModel } from '../../../Hooks/Transaction/useTransactionViewModel'
 import { usePaymentsMapping } from '../usePaymentsMapping'
 
-export const PurchaseOrderTransactionComponent = ({ initialInstallment, onSelectedTransaction, onTransactionError }) => {
+export const PurchaseOrderTransactionComponent = ({ initialInstallment, onSelectedTransaction, onTransactionError, onTransactionChange, setIsLoading }) => {
    const { t } = useTranslation()
 
-   const { getPayments, payments, removePayment, getPaymentsByInstallment, onTransactionSuccess, onTransactionFailed } = useTransactionViewModel()
+   const { getPayments, payments, removePayment, getPaymentsByInstallment, onTransactionSuccess, onTransactionFailed, isLoading } = useTransactionViewModel()
    const { mapTransactions } = usePaymentsMapping()
    const [mappedTransactions, setMappedTransactions] = useState([])
    const [selectedPayment, setSelectedPayment] = useState()
 
    const [removePaymentButtonState, setRemovePaymentButtonState] = useState(false)
+
+   useEffect(() => {
+      setIsLoading(isLoading)
+   }, [isLoading, setIsLoading])
 
    // PAYMENTS
    useEffect(() => {
@@ -39,7 +43,8 @@ export const PurchaseOrderTransactionComponent = ({ initialInstallment, onSelect
 
    useEffect(() => {
       if (onTransactionSuccess) {
-         getPaymentsByInstallment(initialInstallment._id)
+         //getPaymentsByInstallment(initialInstallment._id)
+         onTransactionChange()
       }
    }, [onTransactionSuccess])
 

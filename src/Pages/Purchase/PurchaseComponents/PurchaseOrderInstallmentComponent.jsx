@@ -7,15 +7,19 @@ import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleBut
 import { useInstallmentViewModel } from '../../../Hooks/Installment/useInstallmentViewModel';
 import { useInstallmentMapping } from '../useInstallmentMapping';
 
-export const PurchaseOrderInstallmentComponent = ({ initialOrder, onSelectedInstallment, onInstallmentError, onPayemntDidClicked }) => {
+export const PurchaseOrderInstallmentComponent = ({ initialOrder, onSelectedInstallment, onInstallmentError, onPayemntDidClicked, setIsLoading }) => {
    const { t } = useTranslation()
 
-   const { getInstallments, installments, onInstallmentFailed } = useInstallmentViewModel()
+   const { getInstallments, installments, onInstallmentFailed, isLoading } = useInstallmentViewModel()
    const { mapInstallments } = useInstallmentMapping()
    const [mappedInstallments, setMappedInstallments] = useState([])
    const [selectedInstallment, setSelectedInstallment] = useState()
 
    const [payButtonState, setPayButtonState] = useState(false)
+
+   useEffect(() => {
+      setIsLoading(isLoading)
+   }, [isLoading, setIsLoading])
 
    useEffect(() => {
       setMappedInstallments([])
@@ -25,7 +29,11 @@ export const PurchaseOrderInstallmentComponent = ({ initialOrder, onSelectedInst
    }, [initialOrder])
 
    useEffect(() => {
-      setMappedInstallments(mapInstallments(installments))
+      if (selectedInstallment) {
+         setMappedInstallments(mapInstallments(installments, selectedInstallment._id))
+      } else {
+         setMappedInstallments(mapInstallments(installments, ''))
+      }
    }, [installments])
 
    useEffect(() => {
@@ -49,7 +57,8 @@ export const PurchaseOrderInstallmentComponent = ({ initialOrder, onSelectedInst
       })
 
       if (selectedItems.length === 0) {
-         setSelectedInstallment(null)
+         // comment this line if you want to persist the installmente selected
+         //setSelectedInstallment(null)
          return
       }
 

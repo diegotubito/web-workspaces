@@ -3,7 +3,7 @@ import { useInstallmentRepository } from "./useInstallmentRepository";
 import { useWorkspaceSession } from "../../Utils/Contexts/workspaceSessionContext";
 
 export const useInstallmentViewModel = () => {
-   const { fetchInstallmentByWorkspaceAndOrderId, fetchInstallmentById } = useInstallmentRepository()
+   const { fetchInstallmentByWorkspaceAndOrderId, fetchInstallmentById, isLoading } = useInstallmentRepository()
    const { workspaceSession } = useWorkspaceSession()
    const [installments, setInstallments] = useState([])
    const [installment, setInstallment] = useState([])
@@ -39,5 +39,5 @@ export const useInstallmentViewModel = () => {
       }
    }
 
-   return { getInstallments, installments, getInstallmentById, installment, onInstallmentFailed }
+   return { getInstallments, installments, getInstallmentById, installment, onInstallmentFailed, isLoading }
 }

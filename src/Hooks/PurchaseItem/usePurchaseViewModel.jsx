@@ -12,7 +12,8 @@ export const usePurchaseViewModel = () => {
       createPurchaseOrder: createPurchaseOrderRepository,
       error: purchaseItemError,
       fetchPurchaseOrdersById,
-      updatePurchaseOrderStatus
+      updatePurchaseOrderStatus,
+      isLoading
    } = usePurchaseRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
@@ -186,6 +187,7 @@ export const usePurchaseViewModel = () => {
       getPurchaseOrderById,
       order,
       updateOrderStatus,
-      onPurchaseOrderSuccess
+      onPurchaseOrderSuccess,
+      isLoading
    }
 }
