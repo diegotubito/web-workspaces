@@ -47,6 +47,7 @@ export const PurchaseView = () => {
    // Callbacks from InstallmentComponent
    const onInstallmentError = (error) => {
       setInstallmentError(error)
+      
    }
    // Callbacks from InstallmentComponent
    const onPayemntDidClicked = () => {
@@ -54,7 +55,6 @@ export const PurchaseView = () => {
          navigate(`/payment/${selectedInstallment._id}`)
       }
    }
-
 
    // Callbacks from PurchaseOrderComponent
    const onSelectedTransaction = (transaction) => {
@@ -68,12 +68,27 @@ export const PurchaseView = () => {
    return (
       <div className='purchase_view__main purchase_view__gap'>
 
-         {purchaseError && (
+         { purchaseError && (
             <ErrorAlert
                errorDetails={purchaseError}
                navigate={navigate}
             />
          )}
+
+         {installmentError && (
+            <ErrorAlert
+               errorDetails={installmentError}
+               navigate={navigate}
+            />
+         )}
+
+         {transactionError && (
+            <ErrorAlert
+               errorDetails={transactionError}
+               navigate={navigate}
+            />
+         )}
+
 
 
          <div className='purchase_view__button-container'>
@@ -88,7 +103,7 @@ export const PurchaseView = () => {
 
          <PurchaseOrderComponent
             onSelectedOrder={onSelectedOrder}
-            onPurchaseOrderError={onPurchaseOrderError}
+            onPurchaseOrderFailed={onPurchaseOrderError}
          />
 
          <PurchaseOrderInstallmentComponent

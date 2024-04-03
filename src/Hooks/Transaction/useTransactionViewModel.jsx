@@ -13,6 +13,8 @@ export const useTransactionViewModel = () => {
    const [onCreatedTransactionSuccess, setOnCreatedTransactionSuccess] = useState(false)
    const [onTransactionSuccess, setOnTransactionSuccess] = useState(false)
 
+   const [onTransactionFailed, setOnTransactionFailed] = useState()
+
    const getPayments = async (purchaseOrderId) => {
       try {
          setTransactionIsLoading(true)
@@ -94,13 +96,17 @@ export const useTransactionViewModel = () => {
          setOnTransactionError(null)
          setOnTransactionSuccess(true)
       } catch (error) {
-         setOnTransactionError(error)
-         console.log('Error title:', error.title); // This should show the custom error class name if available
-         console.log('Error message:', error.message); // This should show the custom message
+         console.error('Error:', error.title, error.message);
+         setOnTransactionFailed({
+            title: error.title || "Error",
+            message: error.message || "An unexpected error occurred",
+            action: 'none',
+            setError: setOnTransactionFailed
+         })
       } finally {
          setTransactionIsLoading(true)
       }
    }
 
-   return { getPayments, payments, createPayment, removePayment, getPaymentsByInstallment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess, onTransactionSuccess }
+   return { getPayments, payments, createPayment, removePayment, getPaymentsByInstallment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess, onTransactionSuccess, onTransactionFailed }
 }

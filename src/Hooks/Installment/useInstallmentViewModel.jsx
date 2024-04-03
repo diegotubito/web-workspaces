@@ -7,14 +7,20 @@ export const useInstallmentViewModel = () => {
    const { workspaceSession } = useWorkspaceSession()
    const [installments, setInstallments] = useState([])
    const [installment, setInstallment] = useState([])
+   const [ onInstallmentFailed, setOnInstallmentFailed] = useState()
 
    const getInstallments = async (orderId) => {
       try {
          const response = await fetchInstallmentByWorkspaceAndOrderId(workspaceSession._id, orderId)
          setInstallments(response.installments)
       } catch (error) {
-         console.log('Error title:', error.title); // This should show the custom error class name if available
-         console.log('Error message:', error.message); // This should show the custom message
+         console.error('Error:', error.title, error.message);
+         setOnInstallmentFailed({
+            title: error.title || "Error",
+            message: error.message || "An unexpected error occurred",
+            action: 'none',
+            setError: setOnInstallmentFailed
+         })
       }
    }
 
@@ -23,10 +29,15 @@ export const useInstallmentViewModel = () => {
          const response = await fetchInstallmentById(_id)
          setInstallment(response.installment)
       } catch (error) {
-         console.log('Error title:', error.title); // This should show the custom error class name if available
-         console.log('Error message:', error.message); // This should show the custom message
+         console.error('Error:', error.title, error.message);
+         setOnInstallmentFailed({
+            title: error.title || "Error",
+            message: error.message || "An unexpected error occurred",
+            action: 'none',
+            setError: setOnInstallmentFailed
+         })
       }
    }
 
-   return { getInstallments, installments, getInstallmentById, installment }
+   return { getInstallments, installments, getInstallmentById, installment, onInstallmentFailed }
 }

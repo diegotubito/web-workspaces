@@ -7,7 +7,7 @@ import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleBut
 import { usePurchaseViewModel } from '../../../Hooks/PurchaseItem/usePurchaseViewModel';
 
 
-export const PurchaseOrderComponent = ({ onSelectedOrder }) => {
+export const PurchaseOrderComponent = ({ onSelectedOrder, onPurchaseOrderFailed }) => {
    const { t } = useTranslation()
  
    const { getPurchaseOrders, orders, updateOrderStatus, onPurchaseOrderSuccess, onPurchaseFailed } = usePurchaseViewModel()
@@ -41,6 +41,10 @@ export const PurchaseOrderComponent = ({ onSelectedOrder }) => {
       validateOrderButtons()
       onSelectedOrder(selectedOrder)
    }, [selectedOrder])
+
+   useEffect(() => {
+      onPurchaseOrderFailed(onPurchaseFailed)
+   }, onPurchaseFailed)
 
    const getOrder = (_id) => {
       return orders.filter((obj) => obj._id === _id)[0]

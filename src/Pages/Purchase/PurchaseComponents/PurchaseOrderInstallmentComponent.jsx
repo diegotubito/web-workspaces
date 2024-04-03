@@ -10,7 +10,7 @@ import { useInstallmentMapping } from '../useInstallmentMapping';
 export const PurchaseOrderInstallmentComponent = ({ initialOrder, onSelectedInstallment, onInstallmentError, onPayemntDidClicked }) => {
    const { t } = useTranslation()
 
-   const { getInstallments, installments } = useInstallmentViewModel()
+   const { getInstallments, installments, onInstallmentFailed } = useInstallmentViewModel()
    const { mapInstallments } = useInstallmentMapping()
    const [mappedInstallments, setMappedInstallments] = useState([])
    const [selectedInstallment, setSelectedInstallment] = useState()
@@ -36,6 +36,10 @@ export const PurchaseOrderInstallmentComponent = ({ initialOrder, onSelectedInst
       validateInstallmentButtons()
       onSelectedInstallment(selectedInstallment)
    }, [selectedInstallment])
+
+   useEffect(() => {
+      onInstallmentError(onInstallmentFailed)
+   }, [onInstallmentFailed])
 
    const determineSelectedInstallment = () => {
       const selectedItems = mappedInstallments.filter((item) => {

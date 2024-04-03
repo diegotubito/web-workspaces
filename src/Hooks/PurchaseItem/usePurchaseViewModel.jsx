@@ -29,8 +29,13 @@ export const usePurchaseViewModel = () => {
          const response = await fetchPurchaseItemsByWorkspace(workspaceSession._id)
          setPurchaseItems(response.items)
       } catch (error) {
-         console.log('Error title:', error.title); // This should show the custom error class name if available
-         console.log('Error message:', error.message); // This should show the custom message
+         console.error('Error:', error.title, error.message);
+         setOnPurchaseFailed({
+            title: error.title || "Error",
+            message: error.message || "An unexpected error occurred",
+            action: 'none',
+            setError: setOnPurchaseFailed
+         })
       }
    }
 
@@ -39,9 +44,13 @@ export const usePurchaseViewModel = () => {
          const response = await fetchPurchaseOrdersByWorkspace(workspaceSession._id)
          setOrders(response.orders)
       } catch (error) {
-         console.log('Error title:', error.title); // This should show the custom error class name if available
-         console.log('Error message:', error.message); // This should show the custom message
-         setOnPurchaseFailed(error)
+         console.error('Error:', error.title, error.message);
+         setOnPurchaseFailed({
+            title: error.title || "Error",
+            message: error.message || "An unexpected error occurred",
+            action: 'none',
+            setError: setOnPurchaseFailed
+         })
       }
    }
 
@@ -50,9 +59,13 @@ export const usePurchaseViewModel = () => {
          const response = await fetchPurchaseOrdersById(_id)
          setOrder(response.order)
       } catch (error) {
-         console.log('Error title:', error.title); // This should show the custom error class name if available
-         console.log('Error message:', error.message); // This should show the custom message
-         setOnPurchaseFailed(error)
+         console.error('Error:', error.title, error.message);
+         setOnPurchaseFailed({
+            title: error.title || "Error",
+            message: error.message || "An unexpected error occurred",
+            action: 'none',
+            setError: setOnPurchaseFailed
+         })
       }
    }
 

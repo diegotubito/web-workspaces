@@ -9,7 +9,7 @@ import { usePaymentsMapping } from '../usePaymentsMapping'
 export const PurchaseOrderTransactionComponent = ({ initialInstallment, onSelectedTransaction, onTransactionError }) => {
    const { t } = useTranslation()
 
-   const { getPayments, payments, removePayment, getPaymentsByInstallment, onTransactionSuccess } = useTransactionViewModel()
+   const { getPayments, payments, removePayment, getPaymentsByInstallment, onTransactionSuccess, onTransactionFailed } = useTransactionViewModel()
    const { mapTransactions } = usePaymentsMapping()
    const [mappedTransactions, setMappedTransactions] = useState([])
    const [selectedPayment, setSelectedPayment] = useState()
@@ -36,6 +36,17 @@ export const PurchaseOrderTransactionComponent = ({ initialInstallment, onSelect
       validateRemovePaymentButton()
       onSelectedTransaction(selectedPayment)
    }, [selectedPayment])
+
+   useEffect(() => {
+      if (onTransactionSuccess) {
+         getPaymentsByInstallment(initialInstallment._id)
+      }
+   }, [onTransactionSuccess])
+
+   useEffect(() => {
+      onTransactionError(onTransactionFailed)
+   }, [onTransactionFailed])
+
 
    const getPayment = (_id) => {
       return payments.filter((obj) => obj._id === _id)[0]
