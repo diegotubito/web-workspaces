@@ -15,6 +15,7 @@ import { useInstallmentMapping } from './useInstallmentMapping';
 import { ErrorAlert } from '../../Components/CustomAlert/ErrorAlert';
 
 import { PurchaseOrderComponent } from './PurchaseComponents/PurchaseOrderComponent';
+import { PurchaseOrderInstallmentComponent } from './PurchaseComponents/PurchaseOrderInstallmentComponent';
 
 
 export const PurchaseView = () => {
@@ -25,56 +26,16 @@ export const PurchaseView = () => {
    const [selectedOrder, setSelectedOrder] = useState()
    const [purchaseError, setPurchaseError] = useState()
 
+   // NEW INSTALLMENT COMPONENT
+   const [selectedInstallment, setSelectedInstallment] = useState()
+   const [installmentError, setInstallmentError] = useState()
+
    const { getPayments, payments, removePayment, getPaymentsByInstallment, onTransactionSuccess } = useTransactionViewModel()
    const { mapTransactions } = usePaymentsMapping()
    const [mappedTransactions, setMappedTransactions] = useState([])
    const [selectedPayment, setSelectedPayment] = useState()
-
-   const { getInstallments, installments } = useInstallmentViewModel()
-   const { mapInstallments } = useInstallmentMapping()
-   const [mappedInstallments, setMappedInstallments] = useState([])
-   const [selectedInstallment, setSelectedInstallment] = useState()
-
-   const [payButtonState, setPayButtonState] = useState(false)
    
    const [removePaymentButtonState, setRemovePaymentButtonState] = useState(false)
-
-   
-   useEffect(() => {
-      setMappedInstallments([])
-      if (selectedOrder) {
-         getInstallments(selectedOrder._id)
-      }
-      validateOrderButtons()
-   }, [selectedOrder])
-
-   useEffect(() => {
-      setMappedInstallments(mapInstallments(installments))
-   }, [installments])
-
-   useEffect(() => {
-      determineSelectedInstallment()
-   }, [mappedInstallments])
-
-   const determineSelectedInstallment = () => {
-      const selectedItems = mappedInstallments.filter((item) => {
-         if (item.isSelected) {
-            return item
-         }
-      })
-
-      if (selectedItems.length === 0) {
-         setSelectedInstallment(null)
-         return
-      }
-
-      setSelectedInstallment(getInstallment(selectedItems[0]._id))
-   }
-
-   const getInstallment = (_id) => {
-      return installments.filter((obj) => obj._id === _id)[0]
-   }
-
 
    // PAYMENTS
 
@@ -83,7 +44,6 @@ export const PurchaseView = () => {
       if (selectedInstallment) {
          getPaymentsByInstallment(selectedInstallment._id)
       }
-      validateInstallmentButtons()
    }, [selectedInstallment])
 
    useEffect(() => {
@@ -117,12 +77,6 @@ export const PurchaseView = () => {
       setSelectedPayment(getPayment(selectedItems[0]._id))
    }
 
-   const onPayemntDidClicked = () => {
-      if (selectedOrder) {
-         navigate(`/payment/${selectedInstallment._id}`)
-      }
-   }
-
    const onNewPurchaseDidClicked = () => {
       navigate(`/purchase_crud_view`)
    }
@@ -131,28 +85,6 @@ export const PurchaseView = () => {
       if (selectedPayment) {
          removePayment(selectedPayment._id)
       }
-   }
-
-   const validateOrderButtons = () => {
-      validateRemovePaymentButton()
-   }
-
-   const validateInstallmentButtons = () => {
-      validatePayButton()
-   }
-
-   const validatePayButton = () => {
-      if (!selectedInstallment || !selectedOrder) {
-         setPayButtonState(false)
-         return
-      }
-
-      if (selectedInstallment.status === 'paid' || selectedOrder.status === 'pending_approval' || selectedOrder.status === 'rejected' || selectedOrder.status === 'completed' || selectedOrder.status === 'cancelled') {
-         setPayButtonState(false)
-         return
-      }
-
-      setPayButtonState(true)
    }
 
    const validateRemovePaymentButton = () => {
@@ -178,6 +110,21 @@ export const PurchaseView = () => {
       setPurchaseError(error)
    }
 
+   // Callbacks from InstallmentComponent
+   const onSelectedInstallment = (installment) => {
+      setSelectedInstallment(installment)
+   }
+   // Callbacks from InstallmentComponent
+   const onInstallmentError = (error) => {
+      setInstallmentError(error)
+   }
+   // Callbacks from InstallmentComponent
+   const onPayemntDidClicked = () => {
+      if (selectedOrder) {
+         navigate(`/payment/${selectedInstallment._id}`)
+      }
+   }
+
    return (
       <div className='purchase_view__main purchase_view__gap'>
 
@@ -201,32 +148,15 @@ export const PurchaseView = () => {
 
          <PurchaseOrderComponent
             onSelectedOrder={onSelectedOrder}
+            onPurchaseOrderError={onPurchaseOrderError}
          />
 
-         {selectedOrder && (
-            <>
-               <GridView
-                  gridTitle={'Installments'}
-                  className='purchase__view-order-list '
-                  items={mappedInstallments}
-                  setItems={setMappedInstallments}
-                  gap={'1px'}
-                  selectionMode={'single'}  // none, single, multiple.
-               />
-
-               {installments.length > 0 && (
-                  <div className="purchase_view__button-container">
-                     <SimpleButton
-                        style='primary'
-                        title='Pay'
-                        onClick={onPayemntDidClicked}
-                        disabled={!payButtonState}
-                     />
-                  </div>
-               )}
-
-            </>
-         )}
+         <PurchaseOrderInstallmentComponent
+            initialOrder={selectedOrder}
+            onSelectedInstallment={onSelectedInstallment}
+            onInstallmentError={onInstallmentError}
+            onPayemntDidClicked={onPayemntDidClicked}
+         />
 
          {selectedInstallment && (
             <>

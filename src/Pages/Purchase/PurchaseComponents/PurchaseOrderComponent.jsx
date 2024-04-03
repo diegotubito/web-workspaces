@@ -38,17 +38,8 @@ export const PurchaseOrderComponent = ({ onSelectedOrder }) => {
    }, [onPurchaseOrderSuccess])
 
    useEffect(() => {
-      /*
-      setMappedInstallments([])
-      if (selectedOrder) {
-         getInstallments(selectedOrder._id)
-      }
-      */
-
       validateOrderButtons()
-
       onSelectedOrder(selectedOrder)
-
    }, [selectedOrder])
 
    const getOrder = (_id) => {
