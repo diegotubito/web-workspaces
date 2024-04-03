@@ -143,9 +143,9 @@ export const PurchaseOrderComponent = ({ onSelectedOrder, onPurchaseOrderFailed,
    return (
       <>   
          {mappedOrders.length === 0 ? (
-            <h3>
-               No tienes ninguna order de compra.
-            </h3>
+            <>
+               {!isLoading && (<h3>No tienes ninguna order de compra.</h3>)}
+            </>
          ) : (
             <>
                <GridView
