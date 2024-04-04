@@ -7,7 +7,7 @@ import { MyCustomModal } from '../../Components/MyCustomModal/MyCustomModal';
 import { useWorkspaceViewModel } from '../../Hooks/Workspaces/useWorkspaceViewModel';
 import { useWorkspaceSession } from '../../Utils/Contexts/workspaceSessionContext';
 import { PurchaseView } from '../Purchase/PurchaseView';
-import { SaleView } from '../Sales/SaleView'
+import { HomeMiddleView } from './HomeMiddleView/HomeMiddleView'
 import { useTranslation } from 'react-i18next';
 import purchaseIcon from '../../Resources/Images/logo.svg'
 import point_of_sale from '../../Resources/Images/point_of_sale.svg'
@@ -82,7 +82,11 @@ export const Home = () => {
     }
 
     const onPurchaseOrderViewDidClicked = () => {
-        navigate(`/purchase_view`)
+        navigate(`/purchase_order_view`)
+    }
+
+    const onSaleOrderViewDidClicked = () => {
+        navigate(`/sale_order_crud_view`)
     }
 
     return (
@@ -125,7 +129,7 @@ export const Home = () => {
                 <div className='home__left-sidebar'>
                     <div className='home__left-sidebar-buttons'>
 
-                        <ButtonIcon title={t('SALE_BUTTON')} reactIcon={SaleIcon} onClick={() => setCurrentView(Views.saleView)} />
+                        <ButtonIcon title={t('SALE_BUTTON')} reactIcon={SaleIcon} onClick={onSaleOrderViewDidClicked} />
 
                         <ButtonIcon title={t('PURCHASE_BUTTON')} reactIcon={PurchaseIcon} onClick={onPurchaseOrderViewDidClicked} />
                        
@@ -136,8 +140,7 @@ export const Home = () => {
                 <div className='home__main-content'>
 
                    
-                    {currentView === Views.saleView && <SaleView />}
-                    {currentView === Views.closingCash && <SaleView />}
+                     <HomeMiddleView />
                     
 
                 </div>

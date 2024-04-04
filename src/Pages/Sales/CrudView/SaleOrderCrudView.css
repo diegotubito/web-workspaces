@@ -1,0 +1,47 @@
+.sale_crud_view__main {
+   position: fixed;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+
+   background-color: red;
+}
+
+.sale_crud_view__header {
+   background-color: beige;
+   height: 4rem;
+   width: 100%;
+
+}
+
+.sale_crud_view__body {
+   flex-grow: 1;
+   /* Allows the body to take up the remaining space */
+}
+
+.sale_crud_view__footer {
+   display: flex;
+   /* Make footer a flex container */
+   justify-content: flex-end;
+   /* Center children horizontally */
+   align-items: center;
+   /* Center children vertically */
+   background-color: beige;
+   width: 100%;
+}
+
+.sale_crud_view__footer-buttons {
+   display: flex;
+   justify-content: flex-end;
+   /* Align buttons to the right within the buttons container */
+   align-items: center;
+   /* Align buttons vertically within the buttons container */
+   gap: 1rem;
+   margin: 1rem;
+}
