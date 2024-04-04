@@ -57,8 +57,7 @@ export const PurchaseOrderInstallmentComponent = ({ initialOrder, onSelectedInst
       })
 
       if (selectedItems.length === 0) {
-         // comment this line if you want to persist the installmente selected
-         //setSelectedInstallment(null)
+         setSelectedInstallment(null)
          return
       }
 

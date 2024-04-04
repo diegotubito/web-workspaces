@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import purchaseIcon from '../../Resources/Images/logo.svg'
 import point_of_sale from '../../Resources/Images/point_of_sale.svg'
 import { ButtonIcon } from '../../Components/Buttons/ButtonIcon/ButtonIcon'
+import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as SaleIcon } from '../../Resources/Images/point_of_sale.svg';
 import { ReactComponent as PurchaseIcon } from '../../Resources/Images/shopping_bag.svg'
@@ -24,6 +25,7 @@ const Views = {
 
 export const Home = () => {
     const { t } = useTranslation()
+    const navigate = useNavigate();
     const [routeToLogin, setRouteToLogin] = useState(false)
     const { userSession, updateUserSession } = useUserSession();
     const [customModalOpen, setIsOpen] = useState(false)
@@ -79,6 +81,10 @@ export const Home = () => {
         setCurrentView(Views.saleView)
     }
 
+    const onPurchaseOrderViewDidClicked = () => {
+        navigate(`/purchase_view`)
+    }
+
     return (
         <div className='home__main'>
 
@@ -121,7 +127,7 @@ export const Home = () => {
 
                         <ButtonIcon title={t('SALE_BUTTON')} reactIcon={SaleIcon} onClick={() => setCurrentView(Views.saleView)} />
 
-                        <ButtonIcon title={t('PURCHASE_BUTTON')} reactIcon={PurchaseIcon} onClick={() => setCurrentView(Views.purchaseView)} />
+                        <ButtonIcon title={t('PURCHASE_BUTTON')} reactIcon={PurchaseIcon} onClick={onPurchaseOrderViewDidClicked} />
                        
                     </div>
 
@@ -129,7 +135,7 @@ export const Home = () => {
 
                 <div className='home__main-content'>
 
-                    {currentView === Views.purchaseView && <PurchaseView />}
+                   
                     {currentView === Views.saleView && <SaleView />}
                     {currentView === Views.closingCash && <SaleView />}
                     
