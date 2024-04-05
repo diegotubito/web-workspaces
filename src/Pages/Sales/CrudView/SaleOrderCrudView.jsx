@@ -25,7 +25,15 @@ export const SaleOrderCrudView = () => {
 
       <div className='sale_crud_view__main'>
          <div className='sale_crud_view__header'>
+            <div className='sale_crud_view__footer-buttons'>
 
+               <SimpleButton
+                  title={t('PURCHASE_ORDER_CRUD_VIEW_CANCEL_ORDER_BUTTON_TITLE')}
+                  style='cancel'
+                  onClick={() => onCancelDidClicked()}
+               />
+
+            </div>
          </div>
 
          <div className='sale_crud_view__body'>

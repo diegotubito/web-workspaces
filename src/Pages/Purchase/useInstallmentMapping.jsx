@@ -26,7 +26,7 @@ export const useInstallmentMapping = () => {
             _id: installment._id,
             isSelected: installment._id === selectedInstallmentId ? true : false,
             isSelectable: shouldBeSelected(installment),
-            titleBackgroundColor: 'blue',
+            titleBackgroundColor: 'var(--gray)',
             titleForegroundColor: 'white',
             fields: [{
                _id: installment._id + 'a',

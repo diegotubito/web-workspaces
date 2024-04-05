@@ -1,16 +1,49 @@
 .purchase_view__main {
-    position: relative;
-
+    position: absolute;
     display: flex;
     flex-direction: column;
+    width: 100%;
     height: 100%;
     background-color: rgb(227, 227, 227);
-
-    padding: 1rem;
 }
 
-.purchase__view-order-list {
-    width: 50%;
+.purchase_view____header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: beige;
+    width: 100%;
+    min-height: 4rem;
+    z-index: 2;
+    /* Ensure the header is above the body content */
+}
+
+.purchase_view____body {
+    flex-grow: 1;
+    overflow-y: auto;
+    /* Add scroll to the body content only */
+    padding: 2rem;
+    background-color: white;
+    /* Optional: for better content visibility */
+}
+
+.purchase_view____footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: beige;
+    width: 100%;
+    min-height: 4rem;
+    z-index: 2;
+    /* Ensure the footer is above the body content */
+}
+
+.purchase_view____footer-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem;
 }
 
 .purchase_view__button-container {

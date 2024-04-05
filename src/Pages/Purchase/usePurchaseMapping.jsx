@@ -48,7 +48,7 @@ export const usePurchaseMapping = () => {
             isSelected: order._id === selectedOrder ? true : false,
             isSelectable: shouldBeSelected(order),
             titleTextAlign: 'center',
-            titleBackgroundColor: 'blue',
+            titleBackgroundColor: 'var(--gray)',
             titleForegroundColor: 'white',
             fields: [
                {

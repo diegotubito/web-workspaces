@@ -20,7 +20,7 @@ export const usePaymentsMapping = () => {
             _id: transaction._id,
             isSelected: false,
             isSelectable: transaction.isEnabled,
-            titleBackgroundColor: 'blue',
+            titleBackgroundColor: 'var(--gray)',
             titleForegroundColor: 'white',
             fields: [
                {

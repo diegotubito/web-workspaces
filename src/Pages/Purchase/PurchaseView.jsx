@@ -75,13 +75,16 @@ export const PurchaseView = () => {
       setReloadTrigger(prev => !prev); // Cambia el valor para desencadenar una actualización
    };
 
+   const onCancelDidClicked = () => {
+      navigate(-1)
+   }
+
    return (
-      <div className='purchase_view__main purchase_view__gap'>
+      <div className='purchase_view__main'>
+         {isLoading && <Spinner />}
 
-         {isLoading && <Spinner/> }
-        
 
-         { purchaseError && (
+         {purchaseError && (
             <ErrorAlert
                errorDetails={purchaseError}
                navigate={navigate}
@@ -104,39 +107,62 @@ export const PurchaseView = () => {
 
 
 
-         <div className='purchase_view__button-container'>
-            <SimpleButton
-               style='primary'
-               title='Create New Order'
-               onClick={() => onNewPurchaseDidClicked()}
-               disabled={false}
-            />
+         <div className='purchase_view____header'>
+            <div className='sale_crud_view__footer-buttons'>
+
+               <SimpleButton
+                  style='primary'
+                  title='Create New Order'
+                  onClick={() => onNewPurchaseDidClicked()}
+                  disabled={false}
+               />
+
+            </div>
          </div>
 
+         <div className='purchase_view____body'>
 
-         <PurchaseOrderComponent
-            onSelectedOrder={onSelectedOrder}
-            onPurchaseOrderFailed={onPurchaseOrderError}
-            reloadTrigger={reloadTrigger}
-            setIsLoading={setIsLoading}
-         />
 
-         <PurchaseOrderInstallmentComponent
-            initialOrder={selectedOrder}
-            onSelectedInstallment={onSelectedInstallment}
-            onInstallmentError={onInstallmentError}
-            onPayemntDidClicked={onPayemntDidClicked}
-            setIsLoading={setIsLoading}
-         />
+            <PurchaseOrderComponent
+               onSelectedOrder={onSelectedOrder}
+               onPurchaseOrderFailed={onPurchaseOrderError}
+               reloadTrigger={reloadTrigger}
+               setIsLoading={setIsLoading}
+            />
 
-        <PurchaseOrderTransactionComponent
-            initialInstallment={selectedInstallment}
-            onSelectedTransaction={onSelectedTransaction}
-            onTransactionError={onTransactionError}
-            onTransactionChange={handleTransactionChange}
-            setIsLoading={setIsLoading}
-        />
+            <PurchaseOrderInstallmentComponent
+               initialOrder={selectedOrder}
+               onSelectedInstallment={onSelectedInstallment}
+               onInstallmentError={onInstallmentError}
+               onPayemntDidClicked={onPayemntDidClicked}
+               setIsLoading={setIsLoading}
+            />
 
-      </div >
-   )
+            <PurchaseOrderTransactionComponent
+               initialInstallment={selectedInstallment}
+               onSelectedTransaction={onSelectedTransaction}
+               onTransactionError={onTransactionError}
+               onTransactionChange={handleTransactionChange}
+               setIsLoading={setIsLoading}
+            />
+
+         </div >
+
+
+         <div className='purchase_view____footer'>
+
+            <div className='purchase_view____footer-buttons'>
+
+               <SimpleButton
+                  title={t('PURCHASE_ORDER_CRUD_VIEW_CANCEL_ORDER_BUTTON_TITLE')}
+                  style='cancel'
+                  onClick={() => onCancelDidClicked()}
+               />
+
+            </div>
+         </div>
+      </div>
+
+
+       )
 }
