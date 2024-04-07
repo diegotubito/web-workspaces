@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
 
-export const usePurchaseFormViewModel = ({ setItems, saleItems }) => {
+export const usePurchaseFormViewModel = ({ setOrderItems, saleItems }) => {
    const createProductItem = () => {
       const emptyInputField = createEmptyProduct()
-      setItems((currentItems) => {
+      setOrderItems((currentItems) => {
          return [...currentItems, emptyInputField]
       })
    }
 
    const createServiceItem = () => {
       const emptyInputField = createEmptyService()
-      setItems((currentItems) => {
+      setOrderItems((currentItems) => {
          return [...currentItems, emptyInputField]
       })
    }
@@ -27,7 +27,6 @@ export const usePurchaseFormViewModel = ({ setItems, saleItems }) => {
             name: 'description',
             type: 'selector',
             selectorItems: saleItems
-               .filter(saleItem => saleItem.itemType === 'BE_ITEMTYPE_PHYSICAL')
                .map(saleItem => ({
                   _id: saleItem._id,
                   title: saleItem.title
@@ -77,7 +76,7 @@ export const usePurchaseFormViewModel = ({ setItems, saleItems }) => {
       }
    }
 
-   const createEmptyService = () => {
+   const createEmptyService = (saleItems) => {
       return {
          _id: Date.now().toString() + 'a', // Ensuring _id is a string
          title: '',

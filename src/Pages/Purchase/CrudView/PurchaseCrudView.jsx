@@ -18,14 +18,7 @@ import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert'
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
    const { t } = useTranslation()
-   const {
-      getSaleItems,
-      saleItems,
-      saleItemsIsLoading,
-      onGetSaleFailed,
-      setOnGetSaleFailed
-   } = useSaleItemViewModel()
-
+  
    const {
       getPurchaseItems,
       purchaseItems,
@@ -44,10 +37,13 @@ export const PurchaseCrudView = () => {
       setOnStakeholderFailed
    } = useStakeholderViewModel()
 
+   const [saleItems, setSaleItems] = useState([])
+   const [availableSaleItems, setAvailableSaleItems] = useState([])
+
    // const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
    const [selectedStakeholder, setSelectedStakeholder] = useState("")
-   const [items, setItems] = useState([]);
-   const { createProductItem, createServiceItem } = usePurchaseFormViewModel({ items, setItems, saleItems })
+   const [orderItems, setOrderItems] = useState([]);
+   const { createProductItem, createServiceItem } = usePurchaseFormViewModel({ orderItems, setOrderItems, saleItems })
    const [totalAmount, setTotalAmount] = useState(0)
 
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
@@ -80,6 +76,7 @@ export const PurchaseCrudView = () => {
    useEffect(() => {
       if (stakeholders.length > 0) {
          setSelectedStakeholder(stakeholders[0]._id)
+         
       }
    }, [stakeholders])
 
@@ -100,13 +97,17 @@ export const PurchaseCrudView = () => {
    // 3A - When picking a selector element, we create a default blank item.
    useEffect(() => {
       if (selectedStakeholder) {
-         setItems([])
-         getSaleItems(selectedStakeholder);
+         setOrderItems([])
+        
+         const stakeholder = stakeholders.filter((s) => s._id === selectedStakeholder)
+         if (stakeholder) {
+            setSaleItems(stakeholder[0].items)
+         }
       }
    }, [selectedStakeholder])
 
    useEffect(() => {
-      
+         console.log(saleItems)
    }, [saleItems])
 
    // 3B - Or we can create a defaul blank item, by clicking on the + button. 
@@ -116,14 +117,7 @@ export const PurchaseCrudView = () => {
 
    // 4 - Create a new blank item 
    const createNewItem = () => {
-      const obj = saleItems[0];
-      if (!obj) { return }
-
-      if (obj.itemType === 'BE_ITEMTYPE_PHYSICAL') {
-         createProductItem()
-      } else if (obj.itemType === 'BE_ITEMTYPE_SERVICE') {
-         createServiceItem()
-      }
+      createProductItem(saleItems)
    }
 
    // 5 - When Purchase Selector Option changed, we start again creating a default item, deleteting all first.
@@ -136,14 +130,14 @@ export const PurchaseCrudView = () => {
    useEffect(() => {
       // here I can't modify items, endless loop.
       updateTotalAmount()
-
-   }, [items])
+      console.log(orderItems)
+   }, [orderItems, setOrderItems])
 
    const updateTotalAmount = () => {
       let total = 0
       let shouldUpdate = false
-      items.forEach((item) => {
-         item.fields.forEach((field) => {
+      orderItems.forEach((orderItem) => {
+         orderItem.fields.forEach((field) => {
             if (field.name === 'total') {
                const value = convertCurrencyStringToNumber(field.value).toFixed(2)
                const parsedValue = parseFloat(value) || 0
@@ -159,7 +153,7 @@ export const PurchaseCrudView = () => {
    }
 
    const onCreateOrderDidPressed = () => {
-      createPurchaseOrder(items, convertCurrencyStringToNumber(totalAmount), selectedStakeholder, selectedPaymentItem, selectedCurrency, installmentNumber)
+      createPurchaseOrder(orderItems, convertCurrencyStringToNumber(totalAmount), selectedStakeholder, selectedPaymentItem, selectedCurrency, installmentNumber)
    }
 
    const onCancelDidPressed = () => {
@@ -185,7 +179,7 @@ export const PurchaseCrudView = () => {
          <div className='purchase_crud_view__main'>
             <div className='purchase_crud_view__container'>
 
-               {saleItemsIsLoading || purchaseItemIsLoading && <Spinner />}
+               {purchaseItemIsLoading && <Spinner />}
 
                {onPurchaseFailed && (
                   <ErrorAlert
@@ -193,13 +187,7 @@ export const PurchaseCrudView = () => {
                      navigate={navigate}
                   />
                )}
-               {onGetSaleFailed && (
-                  <ErrorAlert
-                     errorDetails={onGetSaleFailed}
-                     navigate={navigate}
-                  />
-               )}
-
+             
                <div className='purchase_view__gap'>
 
                   <div className='purchase_crud_view__container-scroll'>
@@ -264,8 +252,8 @@ export const PurchaseCrudView = () => {
 
                         <InputFieldColumn
                            title={t('PURCHASE_ORDER_CRUD_VIEW_ITEMS_TITLE')}
-                           items={items}
-                           setItems={setItems}
+                           items={orderItems}
+                           setItems={setOrderItems}
                         />
 
 
