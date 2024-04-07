@@ -5,14 +5,14 @@ export const useItemRepository = () => {
 
    const getItemsByWorkspaceAndStakeholder = (workspace, stakeholder) => {
       return apiCall({
-         path: `/api/v1/sale-item-workspace-stakeholder?workspace=${workspace}&stakeholder=${stakeholder}`,
+         path: `/api/v1/item-workspace-stakeholder?workspace=${workspace}&stakeholder=${stakeholder}`,
          method: 'GET'
       })
    }
 
    const fetchItemsByWorkspace = (workspace) => {
       return apiCall({
-         path: `/api/v1/sale-item-workspace?workspaceId=${workspace}`,
+         path: `/api/v1/item-workspace?workspaceId=${workspace}`,
          method: 'GET'
       })
    }
