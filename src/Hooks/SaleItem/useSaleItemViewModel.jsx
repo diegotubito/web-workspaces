@@ -9,9 +9,9 @@ export const useSaleItemViewModel = () => {
 
    const [onGetSaleFailed, setOnGetSaleFailed] = useState(null)
 
-   const getSaleItems = async () => {
+   const getSaleItems = async (stakeholder) => {
       try {
-         const response = await getItemsByWorkspace(workspaceSession._id)
+         const response = await getItemsByWorkspace(workspaceSession._id, stakeholder)
          setSaleItems(response.items)
       } catch (error) {
          console.error('Error:', error.title, error.message);

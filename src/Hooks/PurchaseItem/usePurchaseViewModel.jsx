@@ -85,7 +85,7 @@ export const usePurchaseViewModel = () => {
       }
    }
 
-   const createPurchaseOrder = async (items, totalAmount, purchaseItemId, selectedPaymentItem, selectedCurrency, installmentNumber) => {
+   const createPurchaseOrder = async (items, totalAmount, stakeholder, selectedPaymentItem, selectedCurrency, installmentNumber) => {
       if (!totalAmount) {
          setOnPurchaseFailed({
             title: "Validation Error",
@@ -100,7 +100,7 @@ export const usePurchaseViewModel = () => {
          user: userSession.user._id,
          workspace: workspaceSession._id,
          date: Date.now(),
-         purchaseItem: purchaseItemId,
+         stakeholder: stakeholder,
          items: mapItems(items),
          totalAmount: totalAmount,
          status: 'pending_approval',
@@ -160,7 +160,7 @@ export const usePurchaseViewModel = () => {
          }
 
          const newItem = {
-            purchaseItem: purchaseItem,
+            item: purchaseItem,
             description: description,
             quantity: quantity,
             subTotal: subTotal,

@@ -1,6 +1,7 @@
 import './PuchaseCrudView.css'
 import { useEffect, useState } from 'react'
 import { usePurchaseViewModel } from '../../../Hooks/PurchaseItem/usePurchaseViewModel'
+import { useStakeholderViewModel } from '../../../Hooks/Stakeholder/useStakeholderViewModel';
 import { useTranslation } from 'react-i18next';
 import { usePurchaseFormViewModel } from '../FormHook/usePurchaseFormViewModel'
 import { InputFieldColumn } from '../../../Components/InputFieldColumn/InputFieldColumn'
@@ -36,7 +37,15 @@ export const PurchaseCrudView = () => {
       setOnPurchaseSuccess
    } = usePurchaseViewModel()
 
-   const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
+   const {
+      stakeholders,
+      stakeholderIsLoading,
+      getStakeholdersByType,
+      setOnStakeholderFailed
+   } = useStakeholderViewModel()
+
+   // const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
+   const [selectedStakeholder, setSelectedStakeholder] = useState("")
    const [items, setItems] = useState([]);
    const { createProductItem, createServiceItem } = usePurchaseFormViewModel({ items, setItems, saleItems })
    const [totalAmount, setTotalAmount] = useState(0)
@@ -51,9 +60,10 @@ export const PurchaseCrudView = () => {
 
    // 1 - Fetch All Purchase Items From API 
    useEffect(() => {
-      setSelectedPurchaseItem('')
-      getPurchaseItems();
-      getSaleItems();
+      setSelectedStakeholder('')
+      // getPurchaseItems();
+      getStakeholdersByType()
+      
       fetchAllMethods()
       getCurrencies()
    }, [])
@@ -64,16 +74,14 @@ export const PurchaseCrudView = () => {
       }
    }, [onPurchaseSuccess])
 
-   useEffect(() => {
-
-   }, [saleItems])
+ 
 
    // 2 - We programmatically select a default option, in this case, the first option. 
    useEffect(() => {
-      if (purchaseItems.length > 0) {
-         setSelectedPurchaseItem(purchaseItems[0]._id)
+      if (stakeholders.length > 0) {
+         setSelectedStakeholder(stakeholders[0]._id)
       }
-   }, [purchaseItems])
+   }, [stakeholders])
 
    useEffect(() => {
       // default payment method
@@ -91,10 +99,15 @@ export const PurchaseCrudView = () => {
 
    // 3A - When picking a selector element, we create a default blank item.
    useEffect(() => {
-      setItems([])
-      createNewItem()
+      if (selectedStakeholder) {
+         setItems([])
+         getSaleItems(selectedStakeholder);
+      }
+   }, [selectedStakeholder])
 
-   }, [selectedPurchaseItem])
+   useEffect(() => {
+      
+   }, [saleItems])
 
    // 3B - Or we can create a defaul blank item, by clicking on the + button. 
    const onNewItemDidPressed = () => {
@@ -103,7 +116,7 @@ export const PurchaseCrudView = () => {
 
    // 4 - Create a new blank item 
    const createNewItem = () => {
-      const obj = purchaseItems.find(item => item._id === selectedPurchaseItem);
+      const obj = saleItems[0];
       if (!obj) { return }
 
       if (obj.itemType === 'BE_ITEMTYPE_PHYSICAL') {
@@ -116,7 +129,7 @@ export const PurchaseCrudView = () => {
    // 5 - When Purchase Selector Option changed, we start again creating a default item, deleteting all first.
    const handleChange = (event) => {
       const itemId = event.target.value;
-      setSelectedPurchaseItem(itemId);
+      setSelectedStakeholder(itemId);
    };
 
    // 1 - This is when items change
@@ -146,7 +159,7 @@ export const PurchaseCrudView = () => {
    }
 
    const onCreateOrderDidPressed = () => {
-      createPurchaseOrder(items, convertCurrencyStringToNumber(totalAmount), selectedPurchaseItem, selectedPaymentItem, selectedCurrency, installmentNumber)
+      createPurchaseOrder(items, convertCurrencyStringToNumber(totalAmount), selectedStakeholder, selectedPaymentItem, selectedCurrency, installmentNumber)
    }
 
    const onCancelDidPressed = () => {
@@ -196,10 +209,10 @@ export const PurchaseCrudView = () => {
 
                         <div>
                            <h3 className='purchase_view__form-title'>{t('PURCHASE_ORDER_CRUD_VIEW_SELECT_ARTICLE_TITLE')}</h3>
-                           <select className="form-select" value={selectedPurchaseItem} onChange={handleChange}>
-                              {purchaseItems.map((item) => {
+                           <select className="form-select" value={selectedStakeholder} onChange={handleChange}>
+                              {stakeholders.map((stakeholder) => {
                                  return (
-                                    <option key={item._id} value={item._id}>{item.title}, {item.description}.</option>
+                                    <option key={stakeholder._id} value={stakeholder._id}>{stakeholder.title}, {stakeholder.description}.</option>
                                  )
                               }
                               )}

@@ -74,7 +74,7 @@ export const usePurchaseMapping = () => {
                   name: 'Item Details',
                   minWidth: '10rem',
                   maxWidth: '1fr',
-                  value: `${order.purchaseItem.title}, ${order.purchaseItem.description}`,
+                  value: `${order.stakeholder.title}, ${order.stakeholder.description}`,
                   alignment: 'start',
                   titleAlignment: 'center',
                },
