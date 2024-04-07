@@ -127,15 +127,15 @@ export const usePurchaseViewModel = () => {
       let result = []
 
       items.forEach((item) => {
-         let saleItem = null
-         const saleItemIndex = item.fields.findIndex((field) => field.type === 'selector')
-         if (saleItemIndex !== -1) {
-            saleItem = item.fields[saleItemIndex].value
+         let purchaseItem = null
+         const purchaseItemIndex = item.fields.findIndex((field) => field.type === 'selector')
+         if (purchaseItemIndex !== -1) {
+            purchaseItem = item.fields[purchaseItemIndex].value
          }
 
          let description = null
          const descriptionIndex = item.fields.findIndex((field) => field.name === 'description')
-         if (descriptionIndex !== -1 && saleItemIndex === -1) {
+         if (descriptionIndex !== -1 && purchaseItemIndex === -1) {
             description = item.fields[descriptionIndex].value
          }
 
@@ -160,7 +160,7 @@ export const usePurchaseViewModel = () => {
          }
 
          const newItem = {
-            saleItem: saleItem,
+            purchaseItem: purchaseItem,
             description: description,
             quantity: quantity,
             subTotal: subTotal,

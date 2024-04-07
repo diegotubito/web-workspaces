@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton'
 import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert';
-
+import { SaleOrderCrudBodyView } from './SaleOrderCrudBodyView';
 
 export const SaleOrderCrudView = () => {
    const { t } = useTranslation()
@@ -37,7 +37,7 @@ export const SaleOrderCrudView = () => {
          </div>
 
          <div className='sale_crud_view__body'>
-
+            <SaleOrderCrudBodyView/>
          </div>
 
          <div className='sale_crud_view__footer'>
@@ -51,7 +51,7 @@ export const SaleOrderCrudView = () => {
                />
 
                <SimpleButton
-                  title={t('PURCHASE_ORDER_CRUD_VIEW_CREATE_ORDER_BUTTON_TITLE')}
+                  title={t('Create Sale')}
                   style='secondary'
                   onClick={() => onCreateSaleDidClicked()}
                />
