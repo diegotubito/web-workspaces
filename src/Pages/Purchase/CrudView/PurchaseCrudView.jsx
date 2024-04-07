@@ -43,7 +43,7 @@ export const PurchaseCrudView = () => {
    // const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
    const [selectedStakeholder, setSelectedStakeholder] = useState("")
    const [orderItems, setOrderItems] = useState([]);
-   const { createProductItem, createServiceItem } = usePurchaseFormViewModel({ orderItems, setOrderItems, saleItems })
+   const { createProductItem } = usePurchaseFormViewModel({ orderItems, setOrderItems, saleItems })
    const [totalAmount, setTotalAmount] = useState(0)
 
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
@@ -107,7 +107,7 @@ export const PurchaseCrudView = () => {
    }, [selectedStakeholder])
 
    useEffect(() => {
-         console.log(saleItems)
+         
    }, [saleItems])
 
    // 3B - Or we can create a defaul blank item, by clicking on the + button. 
@@ -117,7 +117,7 @@ export const PurchaseCrudView = () => {
 
    // 4 - Create a new blank item 
    const createNewItem = () => {
-      createProductItem(saleItems)
+      createProductItem()
    }
 
    // 5 - When Purchase Selector Option changed, we start again creating a default item, deleteting all first.
@@ -126,11 +126,8 @@ export const PurchaseCrudView = () => {
       setSelectedStakeholder(itemId);
    };
 
-   // 1 - This is when items change
    useEffect(() => {
-      // here I can't modify items, endless loop.
       updateTotalAmount()
-      console.log(orderItems)
    }, [orderItems, setOrderItems])
 
    const updateTotalAmount = () => {
@@ -200,7 +197,7 @@ export const PurchaseCrudView = () => {
                            <select className="form-select" value={selectedStakeholder} onChange={handleChange}>
                               {stakeholders.map((stakeholder) => {
                                  return (
-                                    <option key={stakeholder._id} value={stakeholder._id}>{stakeholder.title}, {stakeholder.description}.</option>
+                                    <option key={stakeholder._id} value={stakeholder._id}>{stakeholder.title} {stakeholder.subTitle}</option>
                                  )
                               }
                               )}

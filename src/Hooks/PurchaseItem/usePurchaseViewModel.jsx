@@ -86,6 +86,16 @@ export const usePurchaseViewModel = () => {
    }
 
    const createPurchaseOrder = async (items, totalAmount, stakeholder, selectedPaymentItem, selectedCurrency, installmentNumber) => {
+      if (items.length === 0) {
+         setOnPurchaseFailed({
+            title: "Validation Error",
+            message: "At least, add one item.",
+            action: 'none',
+            setError: setOnPurchaseFailed
+         })
+         return
+      }
+
       if (!totalAmount) {
          setOnPurchaseFailed({
             title: "Validation Error",
@@ -127,11 +137,17 @@ export const usePurchaseViewModel = () => {
       let result = []
 
       items.forEach((item) => {
-         let purchaseItem = null
-         const purchaseItemIndex = item.fields.findIndex((field) => field.type === 'selector')
+         let purchaseItem = null;
+         const purchaseItemIndex = item.fields.findIndex((field) => field.type === 'selector');
+         // Si encontramos un índice válido, asignamos el valor correspondiente a purchaseItem
          if (purchaseItemIndex !== -1) {
-            purchaseItem = item.fields[purchaseItemIndex].value
+            purchaseItem = item.fields[purchaseItemIndex].value;
          }
+         // Si purchaseItem es una cadena vacía, lo ajustamos a null
+         if (purchaseItem === '') {
+            purchaseItem = null;
+         }
+
 
          let description = null
          const descriptionIndex = item.fields.findIndex((field) => field.name === 'description')

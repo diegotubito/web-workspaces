@@ -8,13 +8,6 @@ export const usePurchaseFormViewModel = ({ setOrderItems, saleItems }) => {
       })
    }
 
-   const createServiceItem = () => {
-      const emptyInputField = createEmptyService()
-      setOrderItems((currentItems) => {
-         return [...currentItems, emptyInputField]
-      })
-   }
-
    const createEmptyProduct = () => {
 
       return {
@@ -29,14 +22,24 @@ export const usePurchaseFormViewModel = ({ setOrderItems, saleItems }) => {
             selectorItems: saleItems
                .map(saleItem => ({
                   _id: saleItem._id,
-                  title: saleItem.title
+                  title: `${saleItem.title} ${saleItem.description}`
                })),
             minWidth: '20rem',
-            maxWidth: '2fr',
-            value: (saleItems.length > 0) ? saleItems[0]._id: '',
+            maxWidth: '1fr',
+            value: (saleItems.length > 0) ? saleItems[0]._id : '',
             errorMessage: '',
             isEnabled: true,
             placeholder: ''
+         }, {
+            _id: Date.now().toString() + 'b', // Ensuring _id is a string
+            name: 'description',
+            type: 'text',
+            minWidth: '20rem',
+            maxWidth: '1fr',
+            value: '',
+            errorMessage: '',
+            isEnabled: true,
+            placeholder: 'Description'
          },
          {
             _id: Date.now().toString() + 'd', // Ensuring _id is a string
@@ -76,37 +79,7 @@ export const usePurchaseFormViewModel = ({ setOrderItems, saleItems }) => {
       }
    }
 
-   const createEmptyService = (saleItems) => {
-      return {
-         _id: Date.now().toString() + 'a', // Ensuring _id is a string
-         title: '',
-         footer: '',
-         removeIsAllowed: true,
-         fields: [{
-            _id: Date.now().toString() + 'b', // Ensuring _id is a string
-            name: 'description',
-            type: 'text',
-            minWidth: '20rem',
-            maxWidth: '2fr',
-            value: '',
-            errorMessage: '',
-            isEnabled: true,
-            placeholder: 'Description'
-         },
-         {
-            _id: Date.now().toString() + 'f', // Ensuring _id is a string
-            name: 'total',
-            type: 'currency',
-            minWidth: '10rem',
-            maxWidth: '0.5fr',
-            value: '',
-            errorMessage: '',
-            isEnabled: true,
-            placeholder: '$ 0.00'
-         }]
-      }
-   }
 
-   return { createProductItem, createServiceItem }
+   return { createProductItem }
 
 }
