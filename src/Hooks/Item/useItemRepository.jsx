@@ -1,6 +1,6 @@
 import { useApiCall } from "../../Utils/ApiNetwork/apiCall"
 
-export const useSaleItemRepository = () => {
+export const useItemRepository = () => {
    const { apiCall, isLoading, error } = useApiCall()
 
    const getItemsByWorkspaceAndStakeholder = (workspace, stakeholder) => {
@@ -10,11 +10,10 @@ export const useSaleItemRepository = () => {
       })
    }
 
-   const fetchPurchaseItemsByWorkspace = (workspace) => {
+   const fetchItemsByWorkspace = (workspace) => {
       return apiCall({
          path: `/api/v1/sale-item-workspace?workspaceId=${workspace}`,
-         method: 'GET',
-         isLogin: true
+         method: 'GET'
       })
    }
 
@@ -22,6 +21,6 @@ export const useSaleItemRepository = () => {
       getItemsByWorkspaceAndStakeholder,
       isLoading,
       error,
-      fetchPurchaseItemsByWorkspace
+      fetchItemsByWorkspace
    }
 }

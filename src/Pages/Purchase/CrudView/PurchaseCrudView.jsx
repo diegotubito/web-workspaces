@@ -5,7 +5,6 @@ import { useStakeholderViewModel } from '../../../Hooks/Stakeholder/useStakehold
 import { useTranslation } from 'react-i18next';
 import { usePurchaseFormViewModel } from '../FormHook/usePurchaseFormViewModel'
 import { InputFieldColumn } from '../../../Components/InputFieldColumn/InputFieldColumn'
-import { useSaleItemViewModel } from '../../../Hooks/SaleItem/useSaleItemViewModel';
 import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Common/formatCurrency';
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton';
