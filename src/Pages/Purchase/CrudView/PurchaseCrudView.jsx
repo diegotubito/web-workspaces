@@ -20,14 +20,10 @@ export const PurchaseCrudView = () => {
    const { t } = useTranslation()
   
    const {
-      getPurchaseItems,
-      purchaseItems,
       createPurchaseOrder,
       purchaseItemIsLoading,
       onPurchaseFailed,
-      setOnPurchaseFailed,
       onPurchaseSuccess,
-      setOnPurchaseSuccess
    } = usePurchaseViewModel()
 
    const {
@@ -57,7 +53,6 @@ export const PurchaseCrudView = () => {
    // 1 - Fetch All Purchase Items From API 
    useEffect(() => {
       setSelectedStakeholder('')
-      // getPurchaseItems();
       getStakeholdersByType()
       
       fetchAllMethods()

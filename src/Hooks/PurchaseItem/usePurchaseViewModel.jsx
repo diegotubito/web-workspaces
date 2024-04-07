@@ -17,28 +17,11 @@ export const usePurchaseViewModel = () => {
    } = usePurchaseRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
-   const [purchaseItems, setPurchaseItems] = useState([])
    const [onPurchaseFailed, setOnPurchaseFailed] = useState(null)
    const [onPurchaseSuccess, setOnPurchaseSuccess] = useState(false)
    const [ orders, setOrders] = useState([])
    const [order, setOrder] = useState({})
    const [onPurchaseOrderSuccess, setOnPurchaseOrderSuccess] = useState(false)
-
-   const getPurchaseItems = async () => {
-
-      try {
-         const response = await fetchPurchaseItemsByWorkspace(workspaceSession._id)
-         setPurchaseItems(response.items)
-      } catch (error) {
-         console.error('Error:', error.title, error.message);
-         setOnPurchaseFailed({
-            title: error.title || "Error",
-            message: error.message || "An unexpected error occurred",
-            action: 'none',
-            setError: setOnPurchaseFailed
-         })
-      }
-   }
 
    const getPurchaseOrders = async () => {
       try {
@@ -190,8 +173,6 @@ export const usePurchaseViewModel = () => {
 
    return {
       purchaseItemIsLoading,
-      getPurchaseItems,
-      purchaseItems,
       createPurchaseOrder,
       onPurchaseFailed,
       setOnPurchaseFailed,

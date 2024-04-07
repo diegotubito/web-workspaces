@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-
 export const usePurchaseFormViewModel = ({ setOrderItems, saleItems }) => {
    const createProductItem = () => {
       const emptyInputField = createEmptyProduct()
@@ -17,7 +15,7 @@ export const usePurchaseFormViewModel = ({ setOrderItems, saleItems }) => {
          removeIsAllowed: true,
          fields: [{
             _id: Date.now().toString() + 'b', // Ensuring _id is a string
-            name: 'description',
+            name: 'selector',
             type: 'selector',
             selectorItems: saleItems
                .map(saleItem => ({
@@ -31,7 +29,7 @@ export const usePurchaseFormViewModel = ({ setOrderItems, saleItems }) => {
             isEnabled: true,
             placeholder: ''
          }, {
-            _id: Date.now().toString() + 'b', // Ensuring _id is a string
+            _id: Date.now().toString() + 'c', // Ensuring _id is a string
             name: 'description',
             type: 'text',
             minWidth: '20rem',
