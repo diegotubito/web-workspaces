@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton'
 import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert';
-import { CustomerSelector } from './CustomerSelector';
+import { CustomerSelector } from '../../../Components/CustomerSelector/CustomerSelector';
 
 export const SaleOrderCrudView = () => {
    const { t } = useTranslation()

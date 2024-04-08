@@ -11,6 +11,7 @@ export const useStakeholderViewModel = () => {
    } = useStakeholderRepository()
    const { workspaceSession } = useWorkspaceSession()
    const [stakeholders, setStakeholders] = useState([])
+   const [stakeholderEmptyList, setStakeholderEmptyList] = useState()
 
    const [onStakeholderFailed, setOnStakeholderFailed] = useState([])
 
@@ -18,6 +19,7 @@ export const useStakeholderViewModel = () => {
 
       try {
          const response = await fetchStakeholdersByWorkspaceAndType(workspaceSession._id, stakeholderType)
+         setStakeholderEmptyList((response.stakeholders.length === 0))
          setStakeholders(response.stakeholders)
       } catch (error) {
          console.error('Error:', error.title, error.message);
@@ -34,6 +36,7 @@ export const useStakeholderViewModel = () => {
 
       try {
          const response = await fetchStakeholdersByWorkspaceAndTypePaginatedRepository(workspaceSession._id, stakeholderType, search, 1, 200)
+         setStakeholderEmptyList((response.stakeholders.length === 0))
          setStakeholders(response.stakeholders)
       } catch (error) {
          console.error('Error:', error.title, error.message);
@@ -51,6 +54,7 @@ export const useStakeholderViewModel = () => {
       stakeholderIsLoading,
       getStakeholdersByType,
       setOnStakeholderFailed,
-      fetchStakeholdersByWorkspaceAndTypePaginated
+      fetchStakeholdersByWorkspaceAndTypePaginated,
+      stakeholderEmptyList
    }
 }
