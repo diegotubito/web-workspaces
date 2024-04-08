@@ -4,9 +4,9 @@ import { Button, Spinner } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStakeholderViewModel } from '../../../Hooks/Stakeholder/useStakeholderViewModel';
-import './SaleOrderCrudBodyView.css'
+import './CustomerSelector.css'
 
-export const SaleOrderCrudBodyView = () => {
+export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer }) => {
    const { t } = useTranslation();
    const navigate = useNavigate();
    const {
@@ -26,24 +26,21 @@ export const SaleOrderCrudBodyView = () => {
       autoCapitalize: 'none',
       size: 'large'
    })
-   const [selectedCustomer, setSelectedCustomer] = useState()
    const [showSearchTextField, setShowSearchTextField] = useState(true)
    const [customers, setCustomers] = useState([])
 
    const onInputChange = (name, newValue) => {
-      console.log(newValue)
+     
    }
 
    const onDidBeginInput = (name, begin) => {
       if (!begin) {
-         console.log('ended')
+        
       } else {
-         console.log('begin')
       }
    }
 
    const onReturnPressed = (name) => {
-      console.log(customerForm)
       fetchStakeholdersByWorkspaceAndTypePaginated('CUSTOMER', customerForm.value)
    }
 
@@ -110,23 +107,70 @@ export const SaleOrderCrudBodyView = () => {
 
             {
                !showSearchTextField && (
-                  <>
-                     <div className="selected-stakeholder-card">
-                        <div className="stakeholder-info">
+                  <div className="selected-stakeholder-card">
+                     <div className="stakeholder-info-row">
+                        {/* Personal Information */}
+                        <div className="stakeholder-info-section">
                            <div className="stakeholder-name">
                               {`${selectedCustomer.firstName} ${selectedCustomer.lastName}`}
                            </div>
                            <div className="stakeholder-id">
-                              ID: {selectedCustomer.nationalId}
+                              ID: {selectedCustomer.nationalId || selectedCustomer.taxId}
                            </div>
+                           {selectedCustomer.dob && (
+                              <div className="stakeholder-dob">
+                                 DOB: {new Date(selectedCustomer.dob).toLocaleDateString()}
+                              </div>
+                           )}
                         </div>
-                        <button className="edit-stakeholder-btn" onClick={() => onChangeCustomer() }>
-                           Editar
-                        </button>
+
+                        {/* Contact Information */}
+                        <div className="stakeholder-info-section">
+                           {selectedCustomer.email && (
+                              <div className="stakeholder-email">
+                                 Email: {selectedCustomer.email}
+                              </div>
+                           )}
+                           {selectedCustomer.phoneNumber && (
+                              <div className="stakeholder-phone">
+                                 Phone: {selectedCustomer.phoneNumber}
+                              </div>
+                           )}
+                        </div>
+
+                        {/* Address Information */}
+                        {selectedCustomer.legacyAddress && (
+                           <div className="stakeholder-info-section">
+                              <div className="stakeholder-address">
+                                 Address: {selectedCustomer.legacyAddress}
+                              </div>
+                           </div>
+                        )}
+
+                        {/* Profile Image */}
+                        {selectedCustomer.profileImage && (
+                           <div className="stakeholder-info-section">
+                              <img
+                                 src={selectedCustomer.profileImage.url}
+                                 alt={`${selectedCustomer.firstName}'s profile`}
+                                 className="stakeholder-profile-image"
+                              />
+                           </div>
+                        )}
+
+                        {/* Action Buttons */}
+                        <div className="stakeholder-actions">
+                           <button className="edit-stakeholder-btn" onClick={() => onChangeCustomer()}>
+                              Editar
+                           </button>
+                           {/* Add more action buttons if needed */}
+                        </div>
                      </div>
-                  </>
+                  </div>
                )
             }
+
+
 
 
          </div>

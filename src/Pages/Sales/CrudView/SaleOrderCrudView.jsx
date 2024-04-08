@@ -1,16 +1,17 @@
 import './SaleOrderCrudView.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton'
 import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert';
-import { SaleOrderCrudBodyView } from './SaleOrderCrudBodyView';
+import { CustomerSelector } from './CustomerSelector';
 
 export const SaleOrderCrudView = () => {
    const { t } = useTranslation()
    const navigate = useNavigate()
+   const [selectedCustomer, setSelectedCustomer] = useState()
 
    const onCreateSaleDidClicked = () => {
 
@@ -19,6 +20,10 @@ export const SaleOrderCrudView = () => {
    const onCancelDidClicked = () => {
       navigate(-1)
    }
+
+   useEffect(() => {
+      console.log(selectedCustomer)
+   }, [selectedCustomer, setSelectedCustomer])
 
 
    return (
@@ -37,7 +42,10 @@ export const SaleOrderCrudView = () => {
          </div>
 
          <div className='sale_crud_view__body'>
-            <SaleOrderCrudBodyView/>
+            <CustomerSelector
+               selectedCustomer={selectedCustomer}
+               setSelectedCustomer={setSelectedCustomer}
+            />
          </div>
 
          <div className='sale_crud_view__footer'>

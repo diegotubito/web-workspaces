@@ -1,0 +1,90 @@
+.stakeholder-list {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+}
+
+.stakeholder-item {
+   cursor: pointer;
+   padding: 10px;
+   border-bottom: 1px solid #ccc;
+   transition: background-color 0.2s;
+}
+
+.stakeholder-item:hover,
+.stakeholder-item.selected {
+   background-color: #e7f4e4;
+   /* Soft color for hover or selection indication */
+}
+
+.register-content,
+.stakeholder-info {
+   display: flex;
+   align-items: center;
+}
+
+.register-title,
+.stakeholder-name {
+   font-size: 16px;
+   /* Adjusts font size */
+   font-weight: bold;
+   /* Bold font for names */
+   color: #333;
+   /* Darker text for better readability */
+}
+
+.stakeholder-id {
+   color: #666;
+   /* Lighter text color for less emphasis */
+   font-size: 14px;
+   /* Smaller font size for IDs */
+}
+
+.selected-stakeholder-card {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background: #f9f9f9;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   padding: 12px;
+   margin-top: 12px;
+   font-size: 14px;
+}
+
+.stakeholder-info-row {
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
+}
+
+.stakeholder-info-section {
+   margin-right: 20px;
+   /* Space between sections */
+}
+
+.stakeholder-profile-image {
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
+}
+
+.edit-stakeholder-btn {
+   background-color: #4CAF50;
+   /* Green */
+   border: none;
+   color: white;
+   padding: 10px 20px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 16px;
+   margin: 4px 2px;
+   cursor: pointer;
+   border-radius: 4px;
+   transition: background-color 0.2s;
+}
+
+.edit-stakeholder-btn:hover {
+   background-color: #45a049;
+}
