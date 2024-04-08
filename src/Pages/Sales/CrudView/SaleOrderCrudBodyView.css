@@ -1,0 +1,89 @@
+.stakeholder-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stakeholder-item {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  transition: background-color 0.2s;
+}
+
+.stakeholder-item:hover, .stakeholder-item.selected {
+  background-color: #e7f4e4; /* Un color suave para indicar selección o hover */
+}
+
+.register-content {
+  display: flex;
+  align-items: center;
+}
+
+.register-title {
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+/* Esto es solo un ejemplo, adapta los colores a tu diseño */
+.selected {
+  border-left: 4px solid #4CAF50; /* Borde izquierdo para el elemento seleccionado */
+  background-color: #f0f0f0; /* Fondo diferente para el elemento seleccionado */
+}
+
+
+
+
+
+
+.register-title {
+   margin-left: 10px;
+   font-size: 16px;
+   /* Adjusts font size */
+}
+
+.selected-stakeholder-card {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background: #f9f9f9;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   padding: 12px;
+   margin-top: 12px;
+}
+
+.stakeholder-info {
+   display: flex;
+   flex-direction: column;
+}
+
+.stakeholder-name {
+   font-weight: bold;
+   color: #333;
+   font-size: 18px;
+}
+
+.stakeholder-id {
+   color: #666;
+}
+
+.edit-stakeholder-btn {
+   background-color: #4CAF50;
+   /* Green */
+   border: none;
+   color: white;
+   padding: 10px 20px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 16px;
+   margin: 4px 2px;
+   cursor: pointer;
+   border-radius: 4px;
+   transition: background-color 0.2s;
+}
+
+.edit-stakeholder-btn:hover {
+   background-color: #45a049;
+}

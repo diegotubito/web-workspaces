@@ -1,6 +1,6 @@
 import './PuchaseCrudView.css'
 import { useEffect, useState } from 'react'
-import { usePurchaseViewModel } from '../../../Hooks/PurchaseItem/usePurchaseViewModel'
+import { usePurchaseViewModel } from '../../../Hooks/PurchaseOrder/usePurchaseViewModel'
 import { useStakeholderViewModel } from '../../../Hooks/Stakeholder/useStakeholderViewModel';
 import { useTranslation } from 'react-i18next';
 import { usePurchaseFormViewModel } from '../FormHook/usePurchaseFormViewModel'
@@ -52,7 +52,7 @@ export const PurchaseCrudView = () => {
    // 1 - Fetch All Purchase Items From API 
    useEffect(() => {
       setSelectedStakeholder('')
-      getStakeholdersByType()
+      getStakeholdersByType('SUPPLIER')
       
       fetchAllMethods()
       getCurrencies()

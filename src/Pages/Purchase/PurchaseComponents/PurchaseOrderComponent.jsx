@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { GridView } from '../../../Components/GridView/GridView';
 import { usePurchaseMapping } from '../usePurchaseMapping';
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton';
-import { usePurchaseViewModel } from '../../../Hooks/PurchaseItem/usePurchaseViewModel';
+import { usePurchaseViewModel } from '../../../Hooks/PurchaseOrder/usePurchaseViewModel';
 
 
 export const PurchaseOrderComponent = ({ onSelectedOrder, onPurchaseOrderFailed, reloadTrigger, setIsLoading }) => {
