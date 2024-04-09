@@ -5,11 +5,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStakeholderViewModel } from '../../Hooks/Stakeholder/useStakeholderViewModel';
 import './CustomerSelector.css'
-import defaultProfileImage from '../../Resources/Images/me.png';
+import defaultProfileImage from '../../Resources/Images/empty_profile.jpg';
+
 
 export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer }) => {
    const { t } = useTranslation();
    const navigate = useNavigate();
+
    const {
       stakeholders,
       stakeholderIsLoading,
@@ -69,7 +71,7 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer }) => {
          setShowSearchTextField(false)
       } else {
          setShowSearchTextField(true)
-      }
+      }      
    }, [selectedCustomer, setSelectedCustomer])
 
    const onSelectedCustomer = (customer) => {
@@ -120,7 +122,7 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer }) => {
                         {/* Profile Image */}
                         <div>
                            <img
-                              src={selectedCustomer.profileImage?.url || defaultProfileImage}
+                              src={selectedCustomer.profileImage?.thumbnailImage?.url || defaultProfileImage}
                               alt={selectedCustomer.firstName ? `${selectedCustomer.firstName}'s profile` : "Default Profile"}
                               className="stakeholder-profile-image"
                            />
