@@ -11,7 +11,6 @@ export const useStakeholderRepository = () => {
    }
 
    const fetchStakeholdersByWorkspaceAndTypePaginatedRepository = (workspace, stakeholderType, search, page, limit) => {
-      /*search, page = 1, limit = 10 */
       return apiCall({
          path: `/api/v1/search-stakeholder?workspace=${workspace}&stakeholderType=${stakeholderType}&search=${search}&page=${page}&limit=${limit}`,
          method: 'GET'

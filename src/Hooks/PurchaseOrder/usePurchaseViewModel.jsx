@@ -175,7 +175,6 @@ export const usePurchaseViewModel = () => {
       purchaseItemIsLoading,
       createPurchaseOrder,
       onPurchaseFailed,
-      setOnPurchaseFailed,
       onPurchaseSuccess,
       setOnPurchaseSuccess,
       getPurchaseOrders,

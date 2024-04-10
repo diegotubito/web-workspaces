@@ -6,14 +6,13 @@ export const useStakeholderViewModel = () => {
    const {
       fetchStakeholdersByWorkspaceAndType,
       fetchStakeholdersByWorkspaceAndTypePaginatedRepository,
-      error: purchaseItemError,
-      isLoading: stakeholderIsLoading,
+      isLoading,
    } = useStakeholderRepository()
    const { workspaceSession } = useWorkspaceSession()
    const [stakeholders, setStakeholders] = useState([])
    const [stakeholderEmptyList, setStakeholderEmptyList] = useState()
 
-   const [onStakeholderFailed, setOnStakeholderFailed] = useState([])
+   const [onStakeholderFailed, setOnStakeholderFailed] = useState(null)
 
    const getStakeholdersByType = async (stakeholderType) => {
 
@@ -51,9 +50,9 @@ export const useStakeholderViewModel = () => {
 
    return {
       stakeholders,
-      stakeholderIsLoading,
+      isLoading,
       getStakeholdersByType,
-      setOnStakeholderFailed,
+      onStakeholderFailed,
       fetchStakeholdersByWorkspaceAndTypePaginated,
       stakeholderEmptyList
    }

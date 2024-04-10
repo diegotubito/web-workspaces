@@ -1,11 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { SearchBar } from '../TextField/SearchBar/SearchBar';
-import { Button, Spinner } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStakeholderViewModel } from '../../Hooks/Stakeholder/useStakeholderViewModel';
 import './CustomerSelector.css'
 import defaultProfileImage from '../../Resources/Images/empty_profile.jpg';
+import { Spinner } from '../Spinner/spinner'
+import { ErrorAlert } from '../CustomAlert/ErrorAlert';
 
 
 export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer }) => {
@@ -14,9 +16,9 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer }) => {
 
    const {
       stakeholders,
-      stakeholderIsLoading,
+      isLoading: stakeholderIsLoading,
       getStakeholdersByType,
-      setOnStakeholderFailed,
+      onStakeholderFailed,
       fetchStakeholdersByWorkspaceAndTypePaginated,
       stakeholderEmptyList
    } = useStakeholderViewModel()
@@ -71,7 +73,7 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer }) => {
          setShowSearchTextField(false)
       } else {
          setShowSearchTextField(true)
-      }      
+      }
    }, [selectedCustomer, setSelectedCustomer])
 
    const onSelectedCustomer = (customer) => {
@@ -87,6 +89,15 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer }) => {
       <>
          {showSearchTextField && (
             <>
+              {stakeholderIsLoading && <Spinner />}
+
+               {onStakeholderFailed && (
+                  <ErrorAlert
+                     errorDetails={onStakeholderFailed}
+                     navigate={navigate}
+                  />
+               )}
+
                <SearchBar
                   title={t('Customer')}
                   onInputChange={onInputChange}
@@ -106,8 +117,7 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer }) => {
                      </li>
                   ))}
                </ul>
-
-            </>
+               </>
          )}
 
          {
