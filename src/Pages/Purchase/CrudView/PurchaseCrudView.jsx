@@ -13,6 +13,7 @@ import { usePaymentViewModel } from '../Pay/PaymentViewModel';
 import { useCurrencyViewModel } from '../../../Hooks/Currency/useCurrencyViewModel';
 import { QuantityTextField } from '../../../Components/TextField/QuantityTextField/QuantityTextField';
 import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert'
+import { TotalAmount } from '../../../Components/TotalAmount/TotalAmount';
 
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
@@ -248,10 +249,13 @@ export const PurchaseCrudView = () => {
                         />
 
 
-                        <div className='purchase_view__total-amount-main'>
-                           <h3>{t('PURCHASE_ORDER_CRUD_VIEW_TOTAL_TO_PAY_TITLE')}</h3>
-                           <h3 className='purchase_view__total-amount'>{formatCurrency(totalAmount.toFixed(2).toString())}</h3>
-                        </div>
+                        <TotalAmount
+                           title={t('PURCHASE_ORDER_CRUD_VIEW_TOTAL_TO_PAY_TITLE')}
+                           items={orderItems}
+                           total={totalAmount}
+                           setTotal={setTotalAmount}
+                        />
+
 
                         <div className='purchase_view__buttons'>
                            <SimpleButton

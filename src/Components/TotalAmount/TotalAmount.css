@@ -1,0 +1,18 @@
+.custom_component__total-amount-main {
+   display: flex;
+   justify-content: end;
+   align-items: center;
+   gap: 1rem;
+   color: gray;
+   user-select: none;
+   margin-bottom: 3rem;
+
+}
+.custom_component__total-amount {
+   background-color: whitesmoke;
+   padding: 1rem;
+   border-radius: 4px;
+   width: 20rem;
+   text-align: end;
+   font-size: 17px;
+}

@@ -71,26 +71,6 @@
    max-width: 20rem;
 }
 
-.purchase_view__total-amount-main {
-   display: flex;
-   justify-content: end;
-   align-items: center;
-   gap: 1rem;
-   color: gray;
-   user-select: none;
-   margin-bottom: 3rem;
-
-}
-
-.purchase_view__total-amount {
-   background-color: whitesmoke;
-   padding: 1rem;
-   border-radius: 4px;
-   width: 20rem;
-   text-align: end;
-   font-size: 17px;
-}
-
 .purchase_view__add-button {
    width: 10rem;
    font-size: 17px !important;
