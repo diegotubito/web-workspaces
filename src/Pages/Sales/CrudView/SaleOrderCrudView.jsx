@@ -7,7 +7,6 @@ import { Spinner } from '../../../Components/Spinner/spinner'
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton'
 import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert';
 import { CustomerSelector } from '../../../Components/CustomerSelector/CustomerSelector';
-import { SaleItemSelector } from '../../../Components/SaleItemSelector/SaleItemSelector';
 import { useItemViewModel } from '../../../Hooks/Item/useItemViewModel';
 import { useSaleItemFormViewModel } from './useSaleItemFormViewModel';
 import { InputFieldColumn } from '../../../Components/InputFieldColumn/InputFieldColumn';
@@ -81,11 +80,6 @@ export const SaleOrderCrudView = () => {
             <CustomerSelector
                selectedCustomer={selectedCustomer}
                setSelectedCustomer={setSelectedCustomer}
-            />
-            
-            <SaleItemSelector
-               selectedSaleItem={selectedSaleItem}
-               setSelectedSaleItem={setSelectedSaleItem}
             />
 
             <div className='purchase_view__buttons'>
