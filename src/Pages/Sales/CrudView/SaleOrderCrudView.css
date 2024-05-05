@@ -57,3 +57,11 @@
    gap: 1rem;
    margin: 1rem;
 }
+
+.sale_view__form-title {
+   font-size: 17px;
+   margin-left: 0.0rem;
+   margin-bottom: 0.5rem;
+   /* Explicitly remove margin from <p> */
+   font-weight: 400;
+}

@@ -14,6 +14,7 @@ import { TotalAmount } from '../../../Components/TotalAmount/TotalAmount';
 import { PaymentMethodSelector } from '../../../Components/PaymentMethodSelector/PaymentMehtodSelector';
 import { CurrencySelector } from '../../../Components/CurrencySelector/CurrencySelector';
 import { useSaleViewModel } from '../../../Hooks/SaleOrder/useSaleViewModel';
+import { QuantityTextField } from '../../../Components/TextField/QuantityTextField/QuantityTextField';
 
 export const SaleOrderCrudView = () => {
    const { t } = useTranslation()
@@ -46,6 +47,8 @@ export const SaleOrderCrudView = () => {
    const [selectedPaymentItem, setSelectedPaymentItem] = useState();
    const [selectedCurrency, setSelectedCurrency] = useState()
 
+   const [installmentNumber, setInstallmentNumber] = useState(1)
+
    useEffect(() => {
       fetchSaleItemsByWorkspace()
    }, [])
@@ -68,7 +71,7 @@ export const SaleOrderCrudView = () => {
 
 
    const onCreateSaleDidClicked = () => {
-      createSaleOrder(orderItems, convertCurrencyStringToNumber(totalAmount), selectedCustomer, selectedPaymentItem, selectedCurrency, 1)
+      createSaleOrder(orderItems, convertCurrencyStringToNumber(totalAmount), selectedCustomer, selectedPaymentItem, selectedCurrency, installmentNumber)
    }
 
    const onCancelDidClicked = () => {
@@ -83,11 +86,15 @@ export const SaleOrderCrudView = () => {
       createNewItem()
    }
 
+   const onInstallmentNumberChangeHandler = (value) => {
+      setInstallmentNumber(value)
+   }
+
    return (
 
       <div className='sale_crud_view__main'>
 
-         <div>
+         <div className='sale_crud_view__main'>
             {saleItemIsLoading && <Spinner />}
 
             {onSaleFailed && (
@@ -127,6 +134,17 @@ export const SaleOrderCrudView = () => {
                   selectedCurrency={selectedCurrency}
                   setSelectedCurrency={setSelectedCurrency}
                />
+
+               <div>
+                  <h3 className='sale_view__form-title'>{t('Installments')}</h3>
+                  <QuantityTextField
+                     value={installmentNumber}
+                     onChangeValue={onInstallmentNumberChangeHandler}
+                     minValue={0}
+                     maxValue={18}
+                  />
+
+               </div>
 
                <div className='sale_crud_view__body_button'>
                   <SimpleButton
