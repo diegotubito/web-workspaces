@@ -24,12 +24,6 @@ export const InputFieldColumn = ({ title, items, setItems }) => {
       return item.removeIsAllowed ? forInputsWithRemoveButton : forInputs
    }
 
-   useEffect(() => {
-      if (selectedOptionId) {
-         console.log('should put default values')
-      }
-   }, [selectedOptionId, setSelectedOptionId])
-
    return (
 
       <div className='input_field_column__main'>
