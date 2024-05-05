@@ -86,7 +86,7 @@ export const Home = () => {
     }
 
     const onSaleOrderViewDidClicked = () => {
-        navigate(`/sale_order_crud_view`)
+        navigate(`/sale_order_view`)
     }
 
     return (

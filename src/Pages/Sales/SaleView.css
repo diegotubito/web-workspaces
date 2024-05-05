@@ -1,0 +1,53 @@
+.sale_view__main {
+   position: absolute;
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   height: 100%;
+   background-color: rgb(227, 227, 227);
+}
+
+.sale_view__header {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   background-color: beige;
+   width: 100%;
+   min-height: 4rem;
+   z-index: 2;
+   /* Ensure the header is above the body content */
+}
+
+.sale_view__body {
+   flex-grow: 1;
+   overflow-y: auto;
+   /* Add scroll to the body content only */
+   padding: 2rem;
+   background-color: white;
+   /* Optional: for better content visibility */
+}
+
+.sale_view__footer {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   background-color: beige;
+   width: 100%;
+   min-height: 4rem;
+   z-index: 2;
+   /* Ensure the footer is above the body content */
+}
+
+.sale_view__footer-buttons {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   gap: 1rem;
+   margin: 1rem;
+}
+
+.sale_view__button-container {
+   display: flex;
+   justify-content: flex-end;
+   gap: 1rem;
+}
