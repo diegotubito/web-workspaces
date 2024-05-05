@@ -27,6 +27,18 @@
    /* Optional: for better content visibility */
 }
 
+.sale_crud_view__body_gap {
+   display: flex;
+   flex-direction: column;
+   gap: 1rem;
+}
+
+.sale_crud_view__body_button {
+   display: flex;
+   justify-content: flex-end;
+   gap: 1rem;
+}
+
 .sale_crud_view__footer {
    display: flex;
    justify-content: flex-end;

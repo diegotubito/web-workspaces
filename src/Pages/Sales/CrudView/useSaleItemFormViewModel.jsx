@@ -1,9 +1,17 @@
+import { convertCurrencyStringToNumber, formatCurrency } from "../../../Utils/Common/formatCurrency"
+
 export const useSaleItemFormViewModel = ({ setOrderItems, saleItems }) => {
    const createProductItem = () => {
       const emptyInputField = createEmptyProduct()
       setOrderItems((currentItems) => {
          return [...currentItems, emptyInputField]
       })
+   }
+
+   const getDefaultSalesPrice = () => {
+      const result = (saleItems.length > 0) ? saleItems[0].salePrice : ''
+      const formattedResult = formatCurrency(String(result))
+      return formattedResult
    }
 
    const createEmptyProduct = () => {
@@ -58,7 +66,7 @@ export const useSaleItemFormViewModel = ({ setOrderItems, saleItems }) => {
             type: 'currency',
             minWidth: '10rem',
             maxWidth: '0.5fr',
-            value: (saleItems.length > 0) ? saleItems[0].salePrice : '',
+            value: getDefaultSalesPrice(),
             errorMessage: '',
             isEnabled: true,
             placeholder: '$ 0.00',
@@ -70,7 +78,7 @@ export const useSaleItemFormViewModel = ({ setOrderItems, saleItems }) => {
             type: 'currency',
             minWidth: '10rem',
             maxWidth: '0.5fr',
-            value: (saleItems.length > 0) ? saleItems[0].salePrice : '',
+            value: getDefaultSalesPrice(),
             errorMessage: '',
             isEnabled: false,
             placeholder: '$ 0.00'

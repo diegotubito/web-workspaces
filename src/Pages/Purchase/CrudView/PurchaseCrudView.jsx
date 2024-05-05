@@ -14,6 +14,8 @@ import { useCurrencyViewModel } from '../../../Hooks/Currency/useCurrencyViewMod
 import { QuantityTextField } from '../../../Components/TextField/QuantityTextField/QuantityTextField';
 import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert'
 import { TotalAmount } from '../../../Components/TotalAmount/TotalAmount';
+import { PaymentMethodSelector } from '../../../Components/PaymentMethodSelector/PaymentMehtodSelector';
+import { CurrencySelector } from '../../../Components/CurrencySelector/CurrencySelector';
 
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
@@ -42,10 +44,8 @@ export const PurchaseCrudView = () => {
    const { createProductItem } = usePurchaseFormViewModel({ orderItems, setOrderItems, saleItems })
    const [totalAmount, setTotalAmount] = useState(0)
 
-   const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
 
-   const { getCurrencies, currencies } = useCurrencyViewModel()
    const [selectedCurrency, setSelectedCurrency] = useState("")
 
    const [installmentNumber, setInstallmentNumber] = useState(1)
@@ -55,8 +55,6 @@ export const PurchaseCrudView = () => {
       setSelectedStakeholder('')
       getStakeholdersByType('SUPPLIER')
       
-      fetchAllMethods()
-      getCurrencies()
    }, [])
 
    useEffect(() => {
@@ -75,20 +73,9 @@ export const PurchaseCrudView = () => {
       }
    }, [stakeholders])
 
-   useEffect(() => {
-      // default payment method
-      if (paymentMethods.length > 0) {
-         setSelectedPaymentItem(paymentMethods[0]._id)
-      }
-   }, [paymentMethods])
+  
 
-   useEffect(() => {
-      // default payment method
-      if (currencies.length > 0) {
-         setSelectedCurrency(currencies[0]._id)
-      }
-   }, [currencies])
-
+   
    // 3A - When picking a selector element, we create a default blank item.
    useEffect(() => {
       if (selectedStakeholder) {
@@ -152,16 +139,6 @@ export const PurchaseCrudView = () => {
       navigate(-1)
    }
 
-   const handleOnPaymentMethodChange = (event) => {
-      const itemId = event.target.value;
-      setSelectedPaymentItem(itemId);
-   };
-
-   const handleOnCurrencyChange = (event) => {
-      const itemId = event.target.value;
-      setSelectedCurrency(itemId);
-   };
-
    const onInstallmentNumberChangeHandler = (value) => {
       setInstallmentNumber(value)
    }
@@ -182,7 +159,7 @@ export const PurchaseCrudView = () => {
              
                <div className='purchase_view__gap'>
 
-                  <div className='purchase_crud_view__container-scroll'>
+                  <div>
                      <h1 className='purchase_crud_view__title'>{t('PURCHASE_ORDER_CRUD_VIEW_TITLE')}</h1>
 
                      <div className='purchase_view__gap'>
@@ -199,27 +176,17 @@ export const PurchaseCrudView = () => {
                            </select>
                         </div>
 
-                        <div>
-                           <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}</h3>
-                           <select className="form-select" value={selectedPaymentItem} onChange={handleOnPaymentMethodChange}>
-                              {paymentMethods.map((item) => {
-                                 return (
-                                    <option key={item._id} value={item._id}>{item.name}</option>
-                                 )
-                              }
-                              )}
-                           </select>
-                        </div>
+                        <PaymentMethodSelector
+                           title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
+                           selectedPaymentItem={selectedPaymentItem}
+                           setSelectedPaymentItem={setSelectedPaymentItem}
+                        />
 
-                        <div>
-                           <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</h3>
-                           <select className="form-select" value={selectedCurrency} onChange={handleOnCurrencyChange}>
-                              <option value="" disabled>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</option>
-                              {currencies.map((item) => (
-                                 <option key={item._id} value={item._id}>{item.name}</option>
-                              ))}
-                           </select>
-                        </div>
+                        <CurrencySelector
+                           title={t('PAYMENT_VIEW_CURRENCY_TITLE')}
+                           selectedCurrency={selectedCurrency}
+                           setSelectedCurrency={setSelectedCurrency}
+                        />
 
                         <div>
                            <h3 className='purchase_view__form-title'>{t('Installments')}</h3>
@@ -231,9 +198,7 @@ export const PurchaseCrudView = () => {
                            />
 
                         </div>
-
-
-
+                        
                         <div className='purchase_view__buttons'>
                            <SimpleButton
                               title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}

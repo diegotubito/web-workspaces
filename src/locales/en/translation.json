@@ -59,5 +59,12 @@
      "_400_ERROR_TITLE": "Request Error",
      "_400_ERROR_MESSAGE": "Some parameters are missing or have a different format. Contact help desk support.",
      "_404_ERROR_TITLE": "Endpoint Not Found",
-     "_404_ERROR_MESSAGE": "Contact help desk support"
+     "_404_ERROR_MESSAGE": "Contact help desk support",
+
+     "_currencies": "CURRENCIES",
+
+     "ARGENTINE_PESO": "Argentine Pesos",
+     "DIGITAL_WALLET":"Digital Wallet",
+     "AMERICAN_DOLLAR": "American Dollar"
+
 }

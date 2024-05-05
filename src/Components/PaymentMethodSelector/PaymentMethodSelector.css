@@ -1,0 +1,20 @@
+.payment_method_selector__form-title {
+   font-size: 17px;
+   margin-left: 0rem;
+   margin-bottom: 0.5rem;
+   /* Explicitly remove margin from <p> */
+   font-weight: 400;
+}
+
+.payment_method_selector__form-select {
+   width: 100% !important;
+   max-width: 50rem;
+   text-wrap: wrap;
+   font-size: 17px !important;
+   height: auto !important;
+   padding: 1rem 2rem 1rem 1rem !important;
+   /* Add padding to the right side */
+   border: none;
+   background-color: antiquewhite;
+   border-radius: 4px;
+}

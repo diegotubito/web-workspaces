@@ -11,6 +11,8 @@ import { useItemViewModel } from '../../../Hooks/Item/useItemViewModel';
 import { useSaleItemFormViewModel } from './useSaleItemFormViewModel';
 import { InputFieldColumn } from '../../../Components/InputFieldColumn/InputFieldColumn';
 import { TotalAmount } from '../../../Components/TotalAmount/TotalAmount';
+import { PaymentMethodSelector } from '../../../Components/PaymentMethodSelector/PaymentMehtodSelector';
+import { CurrencySelector } from '../../../Components/CurrencySelector/CurrencySelector';
 
 export const SaleOrderCrudView = () => {
    const { t } = useTranslation()
@@ -30,6 +32,9 @@ export const SaleOrderCrudView = () => {
    const { createProductItem } = useSaleItemFormViewModel({ orderItems, setOrderItems, saleItems })
   
    const [totalAmount, setTotalAmount] = useState(0)
+
+   const [selectedPaymentItem, setSelectedPaymentItem] = useState();
+   const [selectedCurrency, setSelectedCurrency] = useState()
 
    useEffect(() => {
       fetchSaleItemsByWorkspace()
@@ -76,13 +81,25 @@ export const SaleOrderCrudView = () => {
             </div>
          </div>
 
-         <div className='sale_crud_view__body'>
+         <div className='sale_crud_view__body sale_crud_view__body_gap'>
             <CustomerSelector
                selectedCustomer={selectedCustomer}
                setSelectedCustomer={setSelectedCustomer}
             />
 
-            <div className='purchase_view__buttons'>
+            <PaymentMethodSelector
+               title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
+               selectedPaymentItem={selectedPaymentItem}
+               setSelectedPaymentItem={setSelectedPaymentItem}
+            />
+
+            <CurrencySelector
+               title={t('PAYMENT_VIEW_CURRENCY_TITLE')}
+               selectedCurrency={selectedCurrency}
+               setSelectedCurrency={setSelectedCurrency}
+            />
+
+            <div className='sale_crud_view__body_button'>
                <SimpleButton
                   title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
                   style='primary'
