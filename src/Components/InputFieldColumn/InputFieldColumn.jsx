@@ -9,6 +9,8 @@ import { InputFieldColumnQuantityType } from './InputFieldColumnQuantity';
 import { formatCurrency } from '../../Utils/Common/formatCurrency';
 
 export const InputFieldColumn = ({ title, items, setItems }) => {
+   const [selectedOptionId, setSelectedOptionId] = useState()
+
    const settings = {
       inputHeight: '3rem',
       inputBorderColorEnabled: 'rgb(180, 180, 180)',
@@ -21,6 +23,12 @@ export const InputFieldColumn = ({ title, items, setItems }) => {
 
       return item.removeIsAllowed ? forInputsWithRemoveButton : forInputs
    }
+
+   useEffect(() => {
+      if (selectedOptionId) {
+         console.log('should put default values')
+      }
+   }, [selectedOptionId, setSelectedOptionId])
 
    return (
 
@@ -66,6 +74,7 @@ export const InputFieldColumn = ({ title, items, setItems }) => {
                                              setItems={setItems}
                                              field={field}
                                              item={item}
+                                             setSelectedOptionId={setSelectedOptionId}
                                           /> : null
                                     }
 

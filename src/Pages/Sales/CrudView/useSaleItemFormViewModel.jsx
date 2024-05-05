@@ -20,7 +20,8 @@ export const useSaleItemFormViewModel = ({ setOrderItems, saleItems }) => {
             selectorItems: saleItems
                .map(saleItem => ({
                   _id: saleItem._id,
-                  title: `${saleItem.title} ${saleItem.description}`
+                  title: `${saleItem.title} ${saleItem.description}`,
+                  price: saleItem.salePrice ? saleItem.salePrice: 0
                })),
             minWidth: '20rem',
             maxWidth: '1fr',
@@ -45,7 +46,7 @@ export const useSaleItemFormViewModel = ({ setOrderItems, saleItems }) => {
             type: 'quantity',
             minWidth: '3rem',
             maxWidth: '0.3fr',
-            value: '',
+            value: '1',
             errorMessage: '',
             isEnabled: true,
             placeholder: '0',
@@ -57,7 +58,7 @@ export const useSaleItemFormViewModel = ({ setOrderItems, saleItems }) => {
             type: 'currency',
             minWidth: '10rem',
             maxWidth: '0.5fr',
-            value: '',
+            value: (saleItems.length > 0) ? saleItems[0].salePrice : '',
             errorMessage: '',
             isEnabled: true,
             placeholder: '$ 0.00',
@@ -69,7 +70,7 @@ export const useSaleItemFormViewModel = ({ setOrderItems, saleItems }) => {
             type: 'currency',
             minWidth: '10rem',
             maxWidth: '0.5fr',
-            value: '',
+            value: (saleItems.length > 0) ? saleItems[0].salePrice : '',
             errorMessage: '',
             isEnabled: false,
             placeholder: '$ 0.00'

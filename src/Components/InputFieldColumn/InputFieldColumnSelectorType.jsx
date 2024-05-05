@@ -1,8 +1,9 @@
-export const InputFieldColumnSelectorType = ({ settings, items, setItems, item: receivedItem, field: receivedField }) => {
+export const InputFieldColumnSelectorType = ({ settings, items, setItems, item: receivedItem, field: receivedField, setSelectedOptionId }) => {
    const handleSelectorChange = (event) => {
       const selectedOptionId = event.target.value
       const updatedItem = updateItemField(selectedOptionId)
       setItems(updatedItem)
+      setSelectedOptionId(selectedOptionId)
    }
 
    const updateItemField = (selectedOptionId) => {
@@ -13,6 +14,24 @@ export const InputFieldColumnSelectorType = ({ settings, items, setItems, item: 
                   if (field._id === receivedField._id) {
                      return { ...field, value: selectedOptionId }
                   }
+
+                  // setting default values for sub_total when selecting a new option
+                  if (field.name === "sub_total") {
+                     const option = receivedField.selectorItems.filter((option) => option._id === selectedOptionId)[0]
+                     return { ...field, value: option.price }
+                  }
+
+                  //setting default value for total  when selecting a new option
+                  if (field.name === "total") {
+                     const option = receivedField.selectorItems.filter((option) => option._id === selectedOptionId)[0]
+                     return { ...field, value: option.price }
+                  }
+
+                  // setting default values for sub_total  when selecting a new option
+                  if (field.name === "quantity") {
+                     return { ...field, value: 1 }
+                  }
+
                   return field
 
                })
