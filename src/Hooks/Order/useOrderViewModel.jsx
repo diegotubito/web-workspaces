@@ -22,9 +22,9 @@ export const useOrderViewModel = () => {
    const [ orders, setOrders] = useState([])
    const [order, setOrder] = useState({})
 
-   const getOrders = async () => {
+   const getOrders = async (type) => {
       try {
-         const response = await fetchOrdersByWorkspace(workspaceSession._id)
+         const response = await fetchOrdersByWorkspace(workspaceSession._id, type)
          setOrders(response.orders)
       } catch (error) {
          console.error('Error:', error.title, error.message);
@@ -67,7 +67,7 @@ export const useOrderViewModel = () => {
       }
    }
 
-   const createOrder = async (items, totalAmount, stakeholder, selectedPaymentItem, selectedCurrency, installmentNumber) => {
+   const createOrder = async (type, items, totalAmount, stakeholder, selectedPaymentItem, selectedCurrency, installmentNumber) => {
       if (items.length === 0) {
          setOnOrderFailed({
             title: "Validation Error",
@@ -108,7 +108,8 @@ export const useOrderViewModel = () => {
          status: 'pending_approval',
          paymentMethod: selectedPaymentItem,
          currency: selectedCurrency,
-         numberOfInstallments: installmentNumber
+         numberOfInstallments: installmentNumber,
+         type: type
       }
 
       try {

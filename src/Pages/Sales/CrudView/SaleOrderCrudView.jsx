@@ -71,7 +71,7 @@ export const SaleOrderCrudView = () => {
 
 
    const onCreateSaleDidClicked = () => {
-      createOrder(orderItems, convertCurrencyStringToNumber(totalAmount), selectedCustomer, selectedPaymentItem, selectedCurrency, installmentNumber)
+      createOrder('sale', orderItems, convertCurrencyStringToNumber(totalAmount), selectedCustomer, selectedPaymentItem, selectedCurrency, installmentNumber)
    }
 
    const onCancelDidClicked = () => {

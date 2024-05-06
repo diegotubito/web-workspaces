@@ -124,6 +124,7 @@ export const SaleView = () => {
 
 
             <OrderComponent
+               type={'sale'}
                onSelectedOrder={onSelectedOrder}
                onOrderError={onSaleOrderError}
                reloadTrigger={reloadTrigger}

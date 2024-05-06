@@ -7,7 +7,7 @@ import { SimpleButton } from '../../Buttons/SimpleButton/SimpleButton';
 import { useOrderViewModel } from '../../../Hooks/Order/useOrderViewModel';
 
 
-export const OrderComponent = ({ onSelectedOrder, onOrderError, reloadTrigger, setIsLoading }) => {
+export const OrderComponent = ({ type, onSelectedOrder, onOrderError, reloadTrigger, setIsLoading }) => {
    const { t } = useTranslation()
 
    const { getOrders, orders, updateOrderStatus, onOrderSuccess, onOrderFailed, isLoading } = useOrderViewModel()
@@ -24,7 +24,7 @@ export const OrderComponent = ({ onSelectedOrder, onOrderError, reloadTrigger, s
    }, [isLoading, setIsLoading])
 
    useEffect(() => {
-      getOrders()
+      getOrders(type)
    }, [reloadTrigger])
 
    useEffect(() => {

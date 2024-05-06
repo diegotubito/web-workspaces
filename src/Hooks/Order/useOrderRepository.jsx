@@ -11,9 +11,9 @@ export const useOrderRepository = () => {
       })
    }
 
-   const fetchOrdersByWorkspace = (workspace) => {
+   const fetchOrdersByWorkspace = (workspace, type) => {
       return apiCall({
-         path: `/api/v1/order-workspace?workspace=${workspace}`,
+         path: `/api/v1/order-workspace?workspace=${workspace}&type=${type}`,
          method: 'GET',
          isLogin: true
       })
