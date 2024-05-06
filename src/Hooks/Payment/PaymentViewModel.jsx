@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useWorkspaceSession } from "../../../Utils/Contexts/workspaceSessionContext"
+import { useWorkspaceSession } from "../../Utils/Contexts/workspaceSessionContext"
 import { usePaymentRepository } from "./PaymentRepository"
 
 export const usePaymentViewModel = () => {

@@ -1,0 +1,78 @@
+.payment_sale_view__main {
+   background-color: rgba(0, 0, 0, 0.80);
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   z-index: 1001;
+
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+}
+
+.payment_sale_view__container {
+   position: relative;
+   width: 95%;
+   height: 80%;
+   background-color: rgb(205, 223, 227);
+   padding: 2rem;
+   overflow: auto;
+   border-radius: 10px;
+}
+
+@media (min-width: 1200px) {
+   .payment_sale_view__container {
+      width: 50%;
+      height: 90%;
+   }
+}
+
+.payment_sale_view__form-title {
+   font-size: 17px;
+   margin-left: 1.0rem;
+   margin-bottom: 0.5rem;
+   /* Explicitly remove margin from <p> */
+   font-weight: 400;
+}
+
+.payment_crud_view__title {
+   font-size: 29px;
+   margin-left: 1.0rem;
+   margin-bottom: 2rem;
+   /* Explicitly remove margin from <p> */
+   font-weight: 700;
+}
+
+.payment_sale_view__total-amount-main {
+   display: flex;
+   justify-content: end;
+   align-items: center;
+   gap: 1rem;
+   color: gray;
+   user-select: none;
+}
+
+.payment_sale_view__total-amount {
+   background-color: whitesmoke;
+   padding: 1rem;
+   border-radius: 4px;
+   min-width: 15rem;
+   text-align: end;
+   font-size: 17px;
+}
+
+.payment_sale_view__gap {
+   display: flex;
+   flex-direction: column;
+   gap: 1rem;
+}
+
+.payment_sale_view__buttons {
+   margin-top: 3rem;
+   display: flex;
+   justify-content: flex-end;
+   gap: 1rem;
+}

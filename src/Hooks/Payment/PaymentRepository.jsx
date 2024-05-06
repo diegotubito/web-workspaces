@@ -1,4 +1,4 @@
-import { useApiCall } from '../../../Utils/ApiNetwork/apiCall'
+import { useApiCall } from '../../Utils/ApiNetwork/apiCall'
 
 export const usePaymentRepository = () => {
    const { apiCall, error, isLoading } = useApiCall()

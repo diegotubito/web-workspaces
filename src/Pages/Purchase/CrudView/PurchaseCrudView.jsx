@@ -9,7 +9,7 @@ import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Co
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton';
 import { useNavigate } from 'react-router-dom';
-import { usePaymentViewModel } from '../Pay/PaymentViewModel';
+import { usePaymentViewModel } from '../../../Hooks/Payment/PaymentViewModel';
 import { useCurrencyViewModel } from '../../../Hooks/Currency/useCurrencyViewModel';
 import { QuantityTextField } from '../../../Components/TextField/QuantityTextField/QuantityTextField';
 import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert'
@@ -198,7 +198,7 @@ export const PurchaseCrudView = () => {
                            />
 
                         </div>
-                        
+
                         <div className='purchase_view__buttons'>
                            <SimpleButton
                               title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}

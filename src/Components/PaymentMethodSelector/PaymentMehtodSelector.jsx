@@ -1,6 +1,6 @@
 import './PaymentMethodSelector.css'
 import { useEffect, useState } from "react";
-import { usePaymentViewModel } from '../../Pages/Purchase/Pay/PaymentViewModel';
+import { usePaymentViewModel } from '../../Hooks/Payment/PaymentViewModel';
 
 export const PaymentMethodSelector = ({ title, selectedPaymentItem, setSelectedPaymentItem }) => {
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './PaymentView.css'
+import './PaymentSaleView.css'
 import { usePaymentViewModel } from '../../../Hooks/Payment/PaymentViewModel';
 import { usePhysicalAccountViewModel } from '../../../Hooks/PhysicalAccount/usePhysicalAccountViewModel';
 import { useTransactionViewModel } from '../../../Hooks/Transaction/useTransactionViewModel';
@@ -14,7 +14,7 @@ import { Button, Alert } from 'react-bootstrap';
 import { NoteTextField } from '../../../Components/TextField/NoteTextField/NoteTextField';
 import { AmountTextField } from '../../../Components/TextField/AmountTextField/AmountTextField';
 
-export const PaymentView = () => {
+export const PaymentSaleView = () => {
    const navigate = useNavigate();
    const { installmentId } = useParams()
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
@@ -36,6 +36,7 @@ export const PaymentView = () => {
 
    useEffect(() => {
       if (installment._id) {
+         console.log('installment es: ', installment)
          fetchAllMethods()
          getAllAccounts()
       }
@@ -166,7 +167,7 @@ export const PaymentView = () => {
    }
 
    return (
-      <div className='payment_view__main '>
+      <div className='payment_sale_view__main '>
 
          {transactionIsLoading && <Spinner />}
 
@@ -188,7 +189,7 @@ export const PaymentView = () => {
             </div>
          )}
 
-         <div className='payment_view__container   payment_view__gap'>
+         <div className='payment_sale_view__container   payment_sale_view__gap'>
             <h1 className='purchase_crud_view__title'>{t('PAYMENT_VIEW_TITLE')}</h1>
 
             <h3> {getOrderInfo()} </h3>
@@ -227,32 +228,32 @@ export const PaymentView = () => {
                </select>
             </div>
 
-            <div className='payment_view__total-amount-main'>
+            <div className='payment_sale_view__total-amount-main'>
                <h3>{t('PAYMENT_VIEW_TOTAL_TO_PAY_TITLE')}</h3>
-               <h3 className='payment_view__total-amount'>{`(${installment?.currency?.code}) ${totalToPay()}`}</h3>
+               <h3 className='payment_sale_view__total-amount'>{`(${installment?.currency?.code}) ${totalToPay()}`}</h3>
             </div>
 
-            <div className='payment_view__total-amount-main'>
+            <div className='payment_sale_view__total-amount-main'>
                <h3>{t('PAYMENT_VIEW_TOTAL_PAID_TITLE')}</h3>
-               <h3 className='payment_view__total-amount'>{`(${installment?.currency?.code}) ${totalPaid()}`}</h3>
+               <h3 className='payment_sale_view__total-amount'>{`(${installment?.currency?.code}) ${totalPaid()}`}</h3>
             </div>
 
-            <div className='payment_view__total-amount-main'>
+            <div className='payment_sale_view__total-amount-main'>
                <h3>{t('PAYMENT_VIEW_BALANCE_TO_PAY_TITLE')}</h3>
-               <h3 className='payment_view__total-amount'>{`(${installment?.currency?.code}) ${netToPay()}`}</h3>
+               <h3 className='payment_sale_view__total-amount'>{`(${installment?.currency?.code}) ${netToPay()}`}</h3>
             </div>
 
-            <div className='payment_view__total-amount-main'>
+            <div className='payment_sale_view__total-amount-main'>
                <h3>{t('PAYMENT_VIEW_EXCHANGE_RATE_TITLE')}</h3>
-               <h3 className='payment_view__total-amount'>{exchangeRate}</h3>
+               <h3 className='payment_sale_view__total-amount'>{exchangeRate}</h3>
             </div>
 
-           
+
 
             {(installment?.order?.status === 'partial_payment' || installment?.order?.status === 'ready_to_pay') && (
                <>
 
-                  <div className='payment_view__total-amount-main'>
+                  <div className='payment_sale_view__total-amount-main'>
                      <h3 className='purchase_view__form-title'>{t('Payment')}</h3>
                      <AmountTextField
                         initialValue={0}
@@ -262,7 +263,7 @@ export const PaymentView = () => {
                </>
             )}
 
-            <div className='payment_view__buttons'>
+            <div className='payment_sale_view__buttons'>
                <NoteTextField
                   value={description}
                   onChangeValue={onDescriptionChangeHandler}
@@ -272,7 +273,7 @@ export const PaymentView = () => {
                />
             </div>
 
-            <div className='payment_view__buttons'>
+            <div className='payment_sale_view__buttons'>
                <SimpleButton
                   title={t('PAYMENT_VIEW_CANCEL_BUTTON_TITLE')}
                   style='cancel'

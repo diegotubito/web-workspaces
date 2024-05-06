@@ -8,8 +8,8 @@ import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton
 import { ErrorAlert } from '../../Components/CustomAlert/ErrorAlert';
 
 import { SaleOrderComponent } from './SaleComponents/SaleOrderComponent';
-import { PurchaseOrderInstallmentComponent } from '../Purchase/PurchaseComponents/PurchaseOrderInstallmentComponent';
-import { PurchaseOrderTransactionComponent } from '../Purchase/PurchaseComponents/PurchaseOrderTransactionComponent';
+import { SaleOrderInstallmentComponent } from './SaleComponents/SaleOrderInstallmentComponent';
+import { SaleOrderTransactionComponent } from './SaleComponents/SaleOrderTransactionComponent';
 
 export const SaleView = () => {
    const navigate = useNavigate();
@@ -56,7 +56,7 @@ export const SaleView = () => {
    // Callbacks from InstallmentComponent
    const onPayemntDidClicked = () => {
       if (selectedOrder) {
-         navigate(`/payment/${selectedInstallment._id}`)
+         navigate(`/sale_payment/${selectedInstallment._id}`)
       }
    }
 
@@ -130,7 +130,7 @@ export const SaleView = () => {
                setIsLoading={setIsLoading}
             />
 
-            <PurchaseOrderInstallmentComponent
+            <SaleOrderInstallmentComponent
                initialOrder={selectedOrder}
                onSelectedInstallment={onSelectedInstallment}
                onInstallmentError={onInstallmentError}
@@ -138,7 +138,7 @@ export const SaleView = () => {
                setIsLoading={setIsLoading}
             />
 
-            <PurchaseOrderTransactionComponent
+            <SaleOrderTransactionComponent
                initialInstallment={selectedInstallment}
                onSelectedTransaction={onSelectedTransaction}
                onTransactionError={onTransactionError}
