@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
-import { GridView } from '../../../Components/GridView/GridView';
+import { GridView } from '../../GridView/GridView';
 import { useTranslation } from 'react-i18next';
 
-import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton'
+import { SimpleButton } from '../../Buttons/SimpleButton/SimpleButton'
 
 import { useInstallmentViewModel } from '../../../Hooks/Installment/useInstallmentViewModel';
-import { useInstallmentMapping } from '../useInstallmentMapping';
+import { useInstallmentMapping } from '../../../Pages/Purchase/useInstallmentMapping';
 
-export const PurchaseOrderInstallmentComponent = ({ initialOrder, onSelectedInstallment, onInstallmentError, onPayemntDidClicked, setIsLoading }) => {
+export const OrderInstallmentComponent = ({ initialOrder, onSelectedInstallment, onInstallmentError, onPayemntDidClicked, setIsLoading }) => {
    const { t } = useTranslation()
 
    const { getInstallments, installments, onInstallmentFailed, isLoading } = useInstallmentViewModel()

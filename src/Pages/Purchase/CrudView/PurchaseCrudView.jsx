@@ -1,6 +1,6 @@
 import './PuchaseCrudView.css'
 import { useEffect, useState } from 'react'
-import { usePurchaseViewModel } from '../../../Hooks/PurchaseOrder/usePurchaseViewModel'
+import { useOrderViewModel } from '../../../Hooks/Order/useOrderViewModel';
 import { useStakeholderViewModel } from '../../../Hooks/Stakeholder/useStakeholderViewModel';
 import { useTranslation } from 'react-i18next';
 import { usePurchaseFormViewModel } from '../FormHook/usePurchaseFormViewModel'
@@ -9,8 +9,6 @@ import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Co
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton';
 import { useNavigate } from 'react-router-dom';
-import { usePaymentViewModel } from '../../../Hooks/Payment/PaymentViewModel';
-import { useCurrencyViewModel } from '../../../Hooks/Currency/useCurrencyViewModel';
 import { QuantityTextField } from '../../../Components/TextField/QuantityTextField/QuantityTextField';
 import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert'
 import { TotalAmount } from '../../../Components/TotalAmount/TotalAmount';
@@ -22,11 +20,11 @@ export const PurchaseCrudView = () => {
    const { t } = useTranslation()
   
    const {
-      createPurchaseOrder,
-      purchaseItemIsLoading,
-      onPurchaseFailed,
-      onPurchaseSuccess,
-   } = usePurchaseViewModel()
+      createOrder,
+      itemIsLoading,
+      onOrderFailed,
+      onOrderSuccess,
+   } = useOrderViewModel()
 
    const {
       stakeholders,
@@ -58,10 +56,10 @@ export const PurchaseCrudView = () => {
    }, [])
 
    useEffect(() => {
-      if (onPurchaseSuccess) {
+      if (onOrderSuccess) {
          navigate(-1)
       }
-   }, [onPurchaseSuccess])
+   }, [onOrderSuccess])
 
  
 
@@ -132,7 +130,7 @@ export const PurchaseCrudView = () => {
    }
 
    const onCreateOrderDidPressed = () => {
-      createPurchaseOrder(orderItems, convertCurrencyStringToNumber(totalAmount), selectedStakeholder, selectedPaymentItem, selectedCurrency, installmentNumber)
+      createOrder(orderItems, convertCurrencyStringToNumber(totalAmount), selectedStakeholder, selectedPaymentItem, selectedCurrency, installmentNumber)
    }
 
    const onCancelDidPressed = () => {
@@ -148,11 +146,11 @@ export const PurchaseCrudView = () => {
          <div className='purchase_crud_view__main'>
             <div className='purchase_crud_view__container'>
 
-               {purchaseItemIsLoading && <Spinner />}
+               {itemIsLoading && <Spinner />}
 
-               {onPurchaseFailed && (
+               {onOrderFailed && (
                   <ErrorAlert
-                     errorDetails={onPurchaseFailed}
+                     errorDetails={onOrderFailed}
                      navigate={navigate}
                   />
                )}

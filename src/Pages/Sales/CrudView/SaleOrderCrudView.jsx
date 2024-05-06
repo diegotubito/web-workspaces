@@ -13,7 +13,7 @@ import { InputFieldColumn } from '../../../Components/InputFieldColumn/InputFiel
 import { TotalAmount } from '../../../Components/TotalAmount/TotalAmount';
 import { PaymentMethodSelector } from '../../../Components/PaymentMethodSelector/PaymentMehtodSelector';
 import { CurrencySelector } from '../../../Components/CurrencySelector/CurrencySelector';
-import { useSaleViewModel } from '../../../Hooks/SaleOrder/useSaleViewModel';
+import { useOrderViewModel } from '../../../Hooks/Order/useOrderViewModel';
 import { QuantityTextField } from '../../../Components/TextField/QuantityTextField/QuantityTextField';
 
 export const SaleOrderCrudView = () => {
@@ -23,11 +23,11 @@ export const SaleOrderCrudView = () => {
    const [selectedSaleItem, setSelectedSaleItem] = useState()
 
    const {
-      createSaleOrder,
-      saleItemIsLoading,
-      onSaleFailed,
-      onSaleSuccess,
-   } = useSaleViewModel()
+      createOrder,
+      itemIsLoading,
+      onOrderFailed,
+      onOrderSuccess,
+   } = useOrderViewModel()
 
 
    const {
@@ -54,10 +54,10 @@ export const SaleOrderCrudView = () => {
    }, [])
 
    useEffect(() => {
-      if (onSaleSuccess) {
+      if (onOrderSuccess) {
          navigate(-1)
       }
-   }, [onSaleSuccess])
+   }, [onOrderSuccess])
 
 
    useEffect(() => {
@@ -71,7 +71,7 @@ export const SaleOrderCrudView = () => {
 
 
    const onCreateSaleDidClicked = () => {
-      createSaleOrder(orderItems, convertCurrencyStringToNumber(totalAmount), selectedCustomer, selectedPaymentItem, selectedCurrency, installmentNumber)
+      createOrder(orderItems, convertCurrencyStringToNumber(totalAmount), selectedCustomer, selectedPaymentItem, selectedCurrency, installmentNumber)
    }
 
    const onCancelDidClicked = () => {
@@ -95,11 +95,11 @@ export const SaleOrderCrudView = () => {
       <div className='sale_crud_view__main'>
 
          <div className='sale_crud_view__main'>
-            {saleItemIsLoading && <Spinner />}
+            {itemIsLoading && <Spinner />}
 
-            {onSaleFailed && (
+            {onOrderFailed && (
                <ErrorAlert
-                  errorDetails={onSaleFailed}
+                  errorDetails={onOrderFailed}
                   navigate={navigate}
                />
             )}

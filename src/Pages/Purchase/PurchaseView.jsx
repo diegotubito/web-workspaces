@@ -7,9 +7,9 @@ import { Spinner } from '../../Components/Spinner/spinner'
 import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton'
 import { ErrorAlert } from '../../Components/CustomAlert/ErrorAlert';
 
-import { PurchaseOrderComponent } from './PurchaseComponents/PurchaseOrderComponent';
-import { PurchaseOrderInstallmentComponent } from './PurchaseComponents/PurchaseOrderInstallmentComponent';
-import { PurchaseOrderTransactionComponent } from './PurchaseComponents/PurchaseOrderTransactionComponent';
+import { OrderComponent } from '../../Components/OrderComponent/Order/OrderComponent';
+import { OrderInstallmentComponent } from '../../Components/OrderComponent/Installment/OrderInstallmentComponent';
+import { OrderTransactionComponent } from '../../Components/OrderComponent/Transaction/OrderTransactionComponent';
 
 export const PurchaseView = () => {
    const navigate = useNavigate();
@@ -123,14 +123,14 @@ export const PurchaseView = () => {
          <div className='purchase_view____body'>
 
 
-            <PurchaseOrderComponent
+            <OrderComponent
                onSelectedOrder={onSelectedOrder}
-               onPurchaseOrderFailed={onPurchaseOrderError}
+               onOrderError={onPurchaseOrderError}
                reloadTrigger={reloadTrigger}
                setIsLoading={setIsLoading}
             />
 
-            <PurchaseOrderInstallmentComponent
+            <OrderInstallmentComponent
                initialOrder={selectedOrder}
                onSelectedInstallment={onSelectedInstallment}
                onInstallmentError={onInstallmentError}
@@ -138,7 +138,7 @@ export const PurchaseView = () => {
                setIsLoading={setIsLoading}
             />
 
-            <PurchaseOrderTransactionComponent
+            <OrderTransactionComponent
                initialInstallment={selectedInstallment}
                onSelectedTransaction={onSelectedTransaction}
                onTransactionError={onTransactionError}

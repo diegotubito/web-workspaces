@@ -1,90 +1,99 @@
-import { usePurchaseRepository } from './usePurchaseRepository'
+import { useOrderRepository } from './useOrderRepository'
 import { useWorkspaceSession } from '../../Utils/Contexts/workspaceSessionContext'
 import { useUserSession } from '../../Utils/Contexts/userSessionContext'
 import { useState } from 'react'
 import { convertCurrencyStringToNumber } from '../../Utils/Common/formatCurrency'
 
-export const usePurchaseViewModel = () => {
+export const useOrderViewModel = () => {
    const {
-      isLoading: purchaseItemIsLoading,
-      fetchPurchaseItemsByWorkspace,
-      fetchPurchaseOrdersByWorkspace,
-      createPurchaseOrder: createPurchaseOrderRepository,
-      error: purchaseItemError,
-      fetchPurchaseOrdersById,
-      updatePurchaseOrderStatus,
+      isLoading: itemIsLoading,
+      fetchItemsByWorkspace,
+      fetchOrdersByWorkspace,
+      createOrder: createOrderRepository,
+      error: itemError,
+      fetchOrdersById,
+      updateOrderStatusFromRepo,
       isLoading
-   } = usePurchaseRepository()
+   } = useOrderRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
-   const [onPurchaseFailed, setOnPurchaseFailed] = useState(null)
-   const [onPurchaseSuccess, setOnPurchaseSuccess] = useState(false)
+   const [onOrderFailed, setOnOrderFailed] = useState(null)
+   const [onOrderSuccess, setOnOrderSuccess] = useState(false)
    const [ orders, setOrders] = useState([])
    const [order, setOrder] = useState({})
-   const [onPurchaseOrderSuccess, setOnPurchaseOrderSuccess] = useState(false)
 
-   const getPurchaseOrders = async () => {
+   const getOrders = async () => {
       try {
-         const response = await fetchPurchaseOrdersByWorkspace(workspaceSession._id)
+         const response = await fetchOrdersByWorkspace(workspaceSession._id)
          setOrders(response.orders)
       } catch (error) {
          console.error('Error:', error.title, error.message);
-         setOnPurchaseFailed({
+         setOnOrderFailed({
             title: error.title || "Error",
             message: error.message || "An unexpected error occurred",
             action: 'none',
-            setError: setOnPurchaseFailed
+            setError: setOnOrderFailed
          })
       }
    }
 
-   const getPurchaseOrderById = async (_id) => {
+   const getOrderById = async (_id) => {
       try {
-         const response = await fetchPurchaseOrdersById(_id)
+         const response = await fetchOrdersById(_id)
          setOrder(response.order)
       } catch (error) {
          console.error('Error:', error.title, error.message);
-         setOnPurchaseFailed({
+         setOnOrderFailed({
             title: error.title || "Error",
             message: error.message || "An unexpected error occurred",
             action: 'none',
-            setError: setOnPurchaseFailed
+            setError: setOnOrderFailed
          })
       }
    }
 
    const updateOrderStatus = async (_id, status) => {
       try {
-         const response = await updatePurchaseOrderStatus(_id, status)
-         setOnPurchaseOrderSuccess(true)
+         const response = await updateOrderStatusFromRepo(_id, status)
+         setOnOrderSuccess(true)
       } catch (error) {
          console.error('Error:', error.title, error.message);
-         setOnPurchaseFailed({
+         setOnOrderFailed({
             title: error.title || "Error",
             message: error.message || "An unexpected error occurred",
             action: 'none',
-            setError: setOnPurchaseFailed
+            setError: setOnOrderFailed
          })
       }
    }
 
-   const createPurchaseOrder = async (items, totalAmount, stakeholder, selectedPaymentItem, selectedCurrency, installmentNumber) => {
+   const createOrder = async (items, totalAmount, stakeholder, selectedPaymentItem, selectedCurrency, installmentNumber) => {
       if (items.length === 0) {
-         setOnPurchaseFailed({
+         setOnOrderFailed({
             title: "Validation Error",
             message: "At least, add one item.",
             action: 'none',
-            setError: setOnPurchaseFailed
+            setError: setOnOrderFailed
          })
          return
       }
 
       if (!totalAmount) {
-         setOnPurchaseFailed({
+         setOnOrderFailed({
             title: "Validation Error",
             message: "Amount must not be zero",
             action: 'none',
-            setError: setOnPurchaseFailed
+            setError: setOnOrderFailed
+         })
+         return
+      }
+
+      if (!stakeholder) {
+         setOnOrderFailed({
+            title: "Validation Error",
+            message: "Stakeholder needed",
+            action: 'none',
+            setError: setOnOrderFailed
          })
          return
       }
@@ -103,15 +112,15 @@ export const usePurchaseViewModel = () => {
       }
 
       try {
-         const response = await createPurchaseOrderRepository(body)
-         setOnPurchaseSuccess(true)
+         const response = await createOrderRepository(body)
+         setOnOrderSuccess(true)
       } catch (error) {
          console.error('Error:', error.title, error.message);
-         setOnPurchaseFailed({
+         setOnOrderFailed({
             title: error.title || "Error",
             message: error.message || "An unexpected error occurred",
             action: 'pop',
-            setError: setOnPurchaseFailed
+            setError: setOnOrderFailed
          })
       }
    }
@@ -120,21 +129,21 @@ export const usePurchaseViewModel = () => {
       let result = []
 
       items.forEach((item) => {
-         let purchaseItem = null;
-         const purchaseItemIndex = item.fields.findIndex((field) => field.type === 'selector');
+         let auxItem = null;
+         const itemIndex = item.fields.findIndex((field) => field.type === 'selector');
          // Si encontramos un índice válido, asignamos el valor correspondiente a purchaseItem
-         if (purchaseItemIndex !== -1) {
-            purchaseItem = item.fields[purchaseItemIndex].value;
+         if (itemIndex !== -1) {
+            auxItem = item.fields[itemIndex].value;
          }
          // Si purchaseItem es una cadena vacía, lo ajustamos a null
-         if (purchaseItem === '') {
-            purchaseItem = null;
+         if (auxItem === '') {
+            auxItem = null;
          }
 
 
          let description = null
          const descriptionIndex = item.fields.findIndex((field) => field.name === 'description')
-         if (descriptionIndex !== -1 && purchaseItemIndex === -1) {
+         if (descriptionIndex !== -1 && itemIndex === -1) {
             description = item.fields[descriptionIndex].value
          }
 
@@ -159,7 +168,7 @@ export const usePurchaseViewModel = () => {
          }
 
          const newItem = {
-            item: purchaseItem,
+            item: auxItem,
             description: description,
             quantity: quantity,
             subTotal: subTotal,
@@ -172,18 +181,17 @@ export const usePurchaseViewModel = () => {
    }
 
    return {
-      purchaseItemIsLoading,
-      createPurchaseOrder,
-      onPurchaseFailed,
-      onPurchaseSuccess,
-      setOnPurchaseSuccess,
-      getPurchaseOrders,
+      itemIsLoading,
+      createOrder,
+      onOrderFailed,
+      onOrderSuccess,
+      setOnOrderSuccess,
+      getOrders,
       orders,
       setOrders,
-      getPurchaseOrderById,
+      getOrderById,
       order,
       updateOrderStatus,
-      onPurchaseOrderSuccess,
       isLoading
    }
 }

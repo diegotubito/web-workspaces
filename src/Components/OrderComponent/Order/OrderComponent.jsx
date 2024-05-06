@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 
-import { GridView } from '../../../Components/GridView/GridView';
-import { useSaleMapping } from '../useSaleMapping';
-import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton';
-import { useSaleViewModel } from '../../../Hooks/SaleOrder/useSaleViewModel';
+import { GridView } from '../../GridView/GridView';
+import { usePurchaseMapping } from '../../../Pages/Purchase/usePurchaseMapping';
+import { SimpleButton } from '../../Buttons/SimpleButton/SimpleButton';
+import { useOrderViewModel } from '../../../Hooks/Order/useOrderViewModel';
 
 
-export const SaleOrderComponent = ({ onSelectedOrder, onSaleOrderFailed, reloadTrigger, setIsLoading }) => {
+export const OrderComponent = ({ onSelectedOrder, onOrderError, reloadTrigger, setIsLoading }) => {
    const { t } = useTranslation()
 
-   const { getSaleOrders, orders, updateOrderStatus, onSaleOrderSuccess, onSaleFailed, isLoading } = useSaleViewModel()
-   const { mapOrders } = useSaleMapping()
+   const { getOrders, orders, updateOrderStatus, onOrderSuccess, onOrderFailed, isLoading } = useOrderViewModel()
+   const { mapOrders } = usePurchaseMapping()
    const [mappedOrders, setMappedOrders] = useState([])
    const [selectedOrder, setSelectedOrder] = useState()
 
@@ -24,7 +24,7 @@ export const SaleOrderComponent = ({ onSelectedOrder, onSaleOrderFailed, reloadT
    }, [isLoading, setIsLoading])
 
    useEffect(() => {
-      getSaleOrders()
+      getOrders()
    }, [reloadTrigger])
 
    useEffect(() => {
@@ -40,10 +40,10 @@ export const SaleOrderComponent = ({ onSelectedOrder, onSaleOrderFailed, reloadT
    }, [mappedOrders])
 
    useEffect(() => {
-      if (onSaleOrderSuccess) {
-         getSaleOrders()
+      if (onOrderSuccess) {
+         getOrders()
       }
-   }, [onSaleOrderSuccess])
+   }, [onOrderSuccess])
 
    useEffect(() => {
       validateOrderButtons()
@@ -51,8 +51,8 @@ export const SaleOrderComponent = ({ onSelectedOrder, onSaleOrderFailed, reloadT
    }, [selectedOrder])
 
    useEffect(() => {
-      onSaleOrderFailed(onSaleFailed)
-   }, onSaleFailed)
+      onOrderError(onOrderFailed)
+   }, onOrderFailed)
 
    const getOrder = (_id) => {
       return orders.filter((obj) => obj._id === _id)[0]
@@ -141,7 +141,7 @@ export const SaleOrderComponent = ({ onSelectedOrder, onSaleOrderFailed, reloadT
    }
 
    return (
-      <>
+      <>   
          {mappedOrders.length === 0 ? (
             <>
                {!isLoading && (<h3>No tienes ninguna order de compra.</h3>)}
@@ -150,14 +150,14 @@ export const SaleOrderComponent = ({ onSelectedOrder, onSaleOrderFailed, reloadT
             <>
                <GridView
                   gridTitle={'Orders'}
-                  className='sale_view__view-order-list '
+                  className='purchase__view-order-list '
                   items={mappedOrders}
                   setItems={setMappedOrders}
                   gap={'1px'}
                   selectionMode={'single'}  // none, single, multiple.
                />
 
-               <div className="sale_view__button-container">
+               <div className="purchase_view__button-container">
                   <SimpleButton
                      style='destructive'
                      title='Remove'

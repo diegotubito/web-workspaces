@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { GridView } from '../../../Components/GridView/GridView';
+import { GridView } from '../../GridView/GridView';
 import { useTranslation } from 'react-i18next';
 
-import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton'
+import { SimpleButton } from '../../Buttons/SimpleButton/SimpleButton'
 import { useTransactionViewModel } from '../../../Hooks/Transaction/useTransactionViewModel'
-import { usePaymentsMapping } from '../usePaymentsMapping'
+import { usePaymentsMapping } from '../../../Pages/Purchase/usePaymentsMapping'
 
-export const PurchaseOrderTransactionComponent = ({ initialInstallment, onSelectedTransaction, onTransactionError, onTransactionChange, setIsLoading }) => {
+export const OrderTransactionComponent = ({ initialInstallment, onSelectedTransaction, onTransactionError, onTransactionChange, setIsLoading }) => {
    const { t } = useTranslation()
 
    const { getPayments, payments, removePayment, getPaymentsByInstallment, onTransactionSuccess, onTransactionFailed, isLoading } = useTransactionViewModel()
