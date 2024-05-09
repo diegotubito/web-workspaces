@@ -1,0 +1,89 @@
+import { useEffect, useState } from "react";
+import { usePhysicalAccountViewModel } from "../../Hooks/PhysicalAccount/usePhysicalAccountViewModel"
+import { useTranslation } from 'react-i18next';
+import { formatCurrency } from "../../Utils/Common/formatCurrency";
+
+export const PhysicalAccountSelector = ({ title, currencyTitle, selectedPhysicalAccount, setSelectedPhysicalAccount, selectedCurrency, setSelectedCurrency }) => {
+   const { t } = useTranslation()
+   const { getAllAccounts, accounts } = usePhysicalAccountViewModel()
+   const [ currencies, setCurrencies] = useState([])
+
+   useEffect(() => {
+      getAllAccounts()
+   }, [])
+
+   useEffect(() => {
+      // default payment method
+      if (accounts.length > 0) {
+         setSelectedPhysicalAccount(accounts[0]._id)
+      }
+   }, [accounts])
+
+   useEffect(() => {
+      setSelectedCurrency("")
+      mapCurrencies()
+   }, [selectedPhysicalAccount])
+
+   const handleOnPhysicalAccountChange = (event) => {
+      const item = event.target.value;
+      setSelectedPhysicalAccount(item);
+   };
+
+   const handleOnCurrencyChange = (event) => {
+      const itemId = event.target.value;
+      setSelectedCurrency(itemId);
+   };
+
+   const mapCurrencies = () => {
+      if (!selectedPhysicalAccount) {
+         setCurrencies([])
+         return
+      }
+      // Find the account with the given accountId
+      const account = accounts.find(account => account._id === selectedPhysicalAccount);
+
+      // If the account is found, map its balances to extract currency details
+      if (!account) {
+         setCurrencies([])
+         return
+      }
+
+      const items = account.balances.map(balance => ({
+         _id: balance.currency._id,
+         name: balance.currency.name,
+         symbol: balance.currency.symbol,
+         code: balance.currency.code,
+         isEnabled: balance.currency.isEnabled,
+         exchangeRate: balance.currency.exchangeRate,
+         amount: balance.amount,
+         pendingAmount: balance.pendingAmount
+      }));
+
+
+      setCurrencies(items)
+   }
+
+   return (
+      <div>
+         <h3 className='purchase_view__form-title'>{title}</h3>
+         <select className="form-select" value={selectedPhysicalAccount} onChange={handleOnPhysicalAccountChange}>
+            {accounts.map((item) => {
+               return (
+                  <option key={item._id} value={item._id}>{item.name}</option>
+               )
+            }
+            )}
+         </select>
+
+         <div>
+            <h3 className='purchase_view__form-title'>{currencyTitle}</h3>
+            <select className="form-select" value={selectedCurrency} onChange={handleOnCurrencyChange}>
+               <option value="" disabled>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</option>
+               {currencies.map((item) => (
+                  <option key={item._id} value={item._id}>{`${t(item.name)} ${formatCurrency(item.amount.toFixed(2).toString() ) }`}</option>
+               ))}
+            </select>
+         </div>
+      </div>
+   )
+}

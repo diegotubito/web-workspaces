@@ -89,6 +89,14 @@ export const Home = () => {
         navigate(`/sale_order_view`)
     }
 
+    const onTransferViewDidClicked = () => {
+        navigate(`/transfer_view`)
+    }
+
+    const onCashBalanceViewDidClicked = () => {
+        navigate(`/cash_balance_view`)
+    }
+
     return (
         <div className='home__main'>
 
@@ -132,6 +140,10 @@ export const Home = () => {
                         <ButtonIcon title={t('SALE_BUTTON')} reactIcon={SaleIcon} onClick={onSaleOrderViewDidClicked} />
 
                         <ButtonIcon title={t('PURCHASE_BUTTON')} reactIcon={PurchaseIcon} onClick={onPurchaseOrderViewDidClicked} />
+
+                        <ButtonIcon title={t('Transfers')} reactIcon={PurchaseIcon} onClick={onTransferViewDidClicked} />
+
+                        <ButtonIcon title={t('Cash Balance')} reactIcon={PurchaseIcon} onClick={onCashBalanceViewDidClicked} />
                        
                     </div>
 

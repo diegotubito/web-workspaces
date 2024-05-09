@@ -12,6 +12,8 @@ import { PurchaseView } from './Pages/Purchase/PurchaseView';
 import { SaleOrderCrudView } from './Pages/Sales/CrudView/SaleOrderCrudView';
 import { SaleView } from './Pages/Sales/SaleView'
 import { PaymentSaleView } from './Pages/Sales/Pay/PaymentSaleView';
+import { TransferView } from './Pages/Transfer/TransferView';
+import { CashBalanceView } from './Pages/CashBalance/CashBalanceView';
 
 function App() {
   /* With the default route and protected routes set up, you may not need the useEffect hook in your App component to navigate to /home immediately.
@@ -29,12 +31,18 @@ function App() {
         <Route path="/" element={<Navigate replace to="/home" />} /> {/* Redirect from / to /home */}
         <Route path="/login" element={<LoginView />} />
         
-        <Route path='/purchase_order_view' element={<PurchaseView />} />
         <Route path='/sale_order_view' element={<SaleView />} />
         <Route path='/sale_order_crud_view' element={<SaleOrderCrudView />} />
-        <Route path='/payment/:installmentId' element={<PaymentView />} />
         <Route path='/sale_payment/:installmentId' element={<PaymentSaleView />} />
+        
+        <Route path='/payment/:installmentId' element={<PaymentView />} />
+        
+        <Route path='/purchase_order_view' element={<PurchaseView />} />
         <Route path='/purchase_crud_view' element={<PurchaseCrudView />} />
+        
+        <Route path='/transfer_view' element={<TransferView />} />
+
+        <Route path='/cash_balance_view' element={<CashBalanceView />} />
 
         <Route path="/home" element={
           <ProtectedRoute>
