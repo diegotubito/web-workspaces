@@ -64,5 +64,16 @@
   "_currencies": "CURRENCIES",
   "ARGENTINE_PESO": "Peso Argentino",
   "DIGITAL_WALLET": "Billetera Digital",
-  "AMERICAN_DOLLAR": "Dolares Americanos"
+  "AMERICAN_DOLLAR": "Dolares Americanos",
+
+  "_comment_transfer_view": "Transfer View",
+
+  "TRANSFER_VIEW_TITLE": "Purchase Payment",
+  "TRANSFER_VIEW_SOURCE_PHYSICAL_ACCOUNT_TITLE": "Cuenta Origen",
+  "TRANSFER_VIEW_SOURCE_CURRENCY_TITLE": "Moneda Origen",
+  "TRANSFER_VIEW_DESTINY_PHYSICAL_ACCOUNT_TITLE": "Cuenta Destino",
+  "TRANSFER_VIEW_DESTINY_CURRENCY_TITLE": "Moneda Destino",
+  "TRANSFER_VIEW_TOTAL_TO_PAY_TITLE": "Amount",
+  "TRANSFER_VIEW_CREATE_BUTTON_TITLE": "Transferir",
+  "TRANSFER_VIEW_CANCEL_BUTTON_TITLE": "Cancelar"
 }

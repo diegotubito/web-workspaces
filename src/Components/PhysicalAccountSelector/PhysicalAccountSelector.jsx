@@ -4,10 +4,18 @@ import { usePhysicalAccountViewModel } from "../../Hooks/PhysicalAccount/usePhys
 import { useTranslation } from 'react-i18next';
 import { formatCurrency } from "../../Utils/Common/formatCurrency";
 
-export const PhysicalAccountSelector = ({ title, currencyTitle, selectedPhysicalAccount, setSelectedPhysicalAccount, selectedCurrency, setSelectedCurrency }) => {
+export const PhysicalAccountSelector = ({
+   title,
+   currencyTitle,
+   selectedPhysicalAccount,
+   setSelectedPhysicalAccount,
+   selectedCurrency,
+   setSelectedCurrency,
+   currencies,
+   setCurrencies
+}) => {
    const { t } = useTranslation()
    const { getAllAccounts, accounts } = usePhysicalAccountViewModel()
-   const [ currencies, setCurrencies] = useState([])
 
    useEffect(() => {
       getAllAccounts()
@@ -89,7 +97,7 @@ export const PhysicalAccountSelector = ({ title, currencyTitle, selectedPhysical
             <select className="physical_account_selector__form-select" value={selectedCurrency} onChange={handleOnCurrencyChange}>
                <option value="" disabled>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</option>
                {currencies.map((item) => (
-                  <option key={item._id} value={item._id}>{`${t(item.name)} (${getPendingAmount(item)}) ${getAmount(item) }`}</option>
+                  <option key={item._id} value={item._id}>{`${t(item.name)} (${getPendingAmount(item)}) ${getAmount(item)}`}</option>
                ))}
             </select>
          </div>

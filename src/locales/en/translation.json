@@ -65,6 +65,17 @@
 
      "ARGENTINE_PESO": "Argentine Pesos",
      "DIGITAL_WALLET":"Digital Wallet",
-     "AMERICAN_DOLLAR": "American Dollar"
+     "AMERICAN_DOLLAR": "American Dollar",
+
+     "_comment_transfer_view": "Transfer View",
+
+     "TRANSFER_VIEW_TITLE": "Transfers",
+     "TRANSFER_VIEW_SOURCE_PHYSICAL_ACCOUNT_TITLE": "Source Account",
+     "TRANSFER_VIEW_SOURCE_CURRENCY_TITLE": "Source Currency",
+     "TRANSFER_VIEW_DESTINY_PHYSICAL_ACCOUNT_TITLE": "Destiny Account",
+     "TRANSFER_VIEW_DESTINY_CURRENCY_TITLE": "Destiny Currency",
+     "TRANSFER_VIEW_TOTAL_TO_PAY_TITLE": "Amount",
+     "TRANSFER_VIEW_CREATE_BUTTON_TITLE": "Transfer",
+     "TRANSFER_VIEW_CANCEL_BUTTON_TITLE": "Cancel"
 
 }

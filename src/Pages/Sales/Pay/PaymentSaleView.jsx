@@ -13,6 +13,7 @@ import { Spinner } from '../../../Components/Spinner/spinner'
 import { Button, Alert } from 'react-bootstrap';
 import { NoteTextField } from '../../../Components/TextField/NoteTextField/NoteTextField';
 import { AmountTextField } from '../../../Components/TextField/AmountTextField/AmountTextField';
+import { PhysicalAccountSelector } from '../../../Components/PhysicalAccountSelector/PhysicalAccountSelector';
 
 export const PaymentSaleView = () => {
    const navigate = useNavigate();
@@ -22,7 +23,6 @@ export const PaymentSaleView = () => {
    const [selectedCurrency, setSelectedCurrency] = useState("")
    const { getInstallmentById, installment } = useInstallmentViewModel()
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
-   const { getAllAccounts, accounts } = usePhysicalAccountViewModel()
    const [currencies, setCurrencies] = useState([])
    const { createPayment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess } = useTransactionViewModel()
    const [amount, setAmount] = useState()
@@ -38,7 +38,6 @@ export const PaymentSaleView = () => {
       if (installment._id) {
          console.log('installment es: ', installment)
          fetchAllMethods()
-         getAllAccounts()
       }
    }, [installment])
 
@@ -48,17 +47,6 @@ export const PaymentSaleView = () => {
          setSelectedPaymentItem(paymentMethods[0]._id)
       }
    }, [paymentMethods])
-
-   useEffect(() => {
-      // default payment method
-      if (accounts.length > 0) {
-         setSelectedPhysicalAccount(accounts[0]._id)
-      }
-   }, [accounts])
-
-   useEffect(() => {
-      mapCurrencies()
-   }, [selectedPhysicalAccount])
 
    useEffect(() => {
       console.log(amount)
@@ -71,11 +59,13 @@ export const PaymentSaleView = () => {
    }, [onCreatedTransactionSuccess])
 
    useEffect(() => {
-      const currencyItem = currencies.find((c) => c._id === selectedCurrency)
-      const originExchageRate = installment?.currency?.exchangeRate
-      const destinyExchangeRate = currencyItem?.exchangeRate
+      if (selectedCurrency) {
+         const currencyItem = currencies.find((c) => c._id === selectedCurrency)
+         const originExchageRate = installment?.currency?.exchangeRate
+         const destinyExchangeRate = currencyItem?.exchangeRate
 
-      setExchangeRate(destinyExchangeRate / originExchageRate)
+         setExchangeRate(destinyExchangeRate / originExchageRate)
+      }
    }, [selectedCurrency])
 
 
@@ -94,33 +84,6 @@ export const PaymentSaleView = () => {
       const itemId = event.target.value;
       setSelectedCurrency(itemId);
    };
-
-   const mapCurrencies = () => {
-      if (!selectedPhysicalAccount) {
-         setCurrencies([])
-         return
-      }
-      // Find the account with the given accountId
-      const account = accounts.find(account => account._id === selectedPhysicalAccount);
-
-      // If the account is found, map its balances to extract currency details
-      if (!account) {
-         setCurrencies([])
-         return
-      }
-
-      const items = account.balances.map(balance => ({
-         _id: balance.currency._id,
-         name: balance.currency.name,
-         symbol: balance.currency.symbol,
-         code: balance.currency.code,
-         isEnabled: balance.currency.isEnabled,
-         exchangeRate: balance.currency.exchangeRate
-      }));
-
-
-      setCurrencies(items)
-   }
 
    const totalToPay = () => formatCurrency(((installment?.amount || 0).toFixed(2)).toString());
    const totalPaid = () => formatCurrency(((installment.paidAmount || 0).toFixed(2)).toString());
@@ -194,17 +157,17 @@ export const PaymentSaleView = () => {
 
             <h3> {getOrderInfo()} </h3>
 
-            <div>
-               <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE')}</h3>
-               <select className="form-select" value={selectedPhysicalAccount} onChange={handleOnPhysicalAccountChange}>
-                  {accounts.map((item) => {
-                     return (
-                        <option key={item._id} value={item._id}>{item.name}</option>
-                     )
-                  }
-                  )}
-               </select>
-            </div>
+            <PhysicalAccountSelector
+               title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
+               currencyTitle={t('PAYMENT_VIEW_CURRENCY_TITLE')}
+               selectedPhysicalAccount={selectedPhysicalAccount}
+               setSelectedPhysicalAccount={setSelectedPhysicalAccount}
+               selectedCurrency={selectedCurrency}
+               setSelectedCurrency={setSelectedCurrency}
+               currencies={currencies}
+               setCurrencies={setCurrencies}
+            />
+
 
             <div>
                <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}</h3>
@@ -215,16 +178,6 @@ export const PaymentSaleView = () => {
                      )
                   }
                   )}
-               </select>
-            </div>
-
-            <div>
-               <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</h3>
-               <select className="form-select" value={selectedCurrency} onChange={handleOnCurrencyChange}>
-                  <option value="" disabled>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</option>
-                  {currencies.map((item) => (
-                     <option key={item._id} value={item._id}>{item.name}</option>
-                  ))}
                </select>
             </div>
 
