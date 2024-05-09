@@ -39,8 +39,8 @@ export const TransferView = () => {
          <div className='transfer_view__body'>
 
             <PhysicalAccountSelector
-               title={'Physical Account'}
-               currencyTitle={'Currency'}
+               title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
+               currencyTitle={t('PAYMENT_VIEW_CURRENCY_TITLE')}
                selectedPhysicalAccount={selectedPhysicalAccount}
                setSelectedPhysicalAccount={setSelectedPhysicalAccount}
                selectedCurrency={selectedCurrency}

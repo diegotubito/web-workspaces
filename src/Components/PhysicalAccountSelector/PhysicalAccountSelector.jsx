@@ -1,3 +1,4 @@
+import './PhysicalAccountSelector.css'
 import { useEffect, useState } from "react";
 import { usePhysicalAccountViewModel } from "../../Hooks/PhysicalAccount/usePhysicalAccountViewModel"
 import { useTranslation } from 'react-i18next';
@@ -63,10 +64,18 @@ export const PhysicalAccountSelector = ({ title, currencyTitle, selectedPhysical
       setCurrencies(items)
    }
 
+   const getAmount = (item) => {
+      return formatCurrency(item.amount.toFixed(2).toString())
+   }
+
+   const getPendingAmount = (item) => {
+      return formatCurrency(item.pendingAmount.toFixed(2).toString())
+   }
+
    return (
       <div>
-         <h3 className='purchase_view__form-title'>{title}</h3>
-         <select className="form-select" value={selectedPhysicalAccount} onChange={handleOnPhysicalAccountChange}>
+         <h3 className='physical_account_selector__form-title'>{title}</h3>
+         <select className="physical_account_selector__form-select" value={selectedPhysicalAccount} onChange={handleOnPhysicalAccountChange}>
             {accounts.map((item) => {
                return (
                   <option key={item._id} value={item._id}>{item.name}</option>
@@ -76,11 +85,11 @@ export const PhysicalAccountSelector = ({ title, currencyTitle, selectedPhysical
          </select>
 
          <div>
-            <h3 className='purchase_view__form-title'>{currencyTitle}</h3>
-            <select className="form-select" value={selectedCurrency} onChange={handleOnCurrencyChange}>
+            <h3 className='physical_account_selector__form-title'>{currencyTitle}</h3>
+            <select className="physical_account_selector__form-select" value={selectedCurrency} onChange={handleOnCurrencyChange}>
                <option value="" disabled>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</option>
                {currencies.map((item) => (
-                  <option key={item._id} value={item._id}>{`${t(item.name)} ${formatCurrency(item.amount.toFixed(2).toString() ) }`}</option>
+                  <option key={item._id} value={item._id}>{`${t(item.name)} (${getPendingAmount(item)}) ${getAmount(item) }`}</option>
                ))}
             </select>
          </div>

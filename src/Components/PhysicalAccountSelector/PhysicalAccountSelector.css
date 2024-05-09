@@ -1,0 +1,22 @@
+.physical_account_selector__form-title {
+   font-size: 17px;
+   margin-left: 0rem;
+   margin-bottom: 0.5rem;
+   /* Explicitly remove margin from <p> */
+   font-weight: 400;
+
+}
+
+.physical_account_selector__form-select {
+   width: 100%;
+   max-width: 50rem;
+   text-wrap: wrap;
+   font-size: 17px;
+   height: auto;
+   padding: 1rem 6rem 1rem 1rem;
+   /* Add padding to the right side */
+   border: none;
+   background-color: antiquewhite;
+   border-radius: 4px;
+   margin-bottom: 2rem;
+}
