@@ -75,5 +75,10 @@
   "TRANSFER_VIEW_DESTINY_CURRENCY_TITLE": "Moneda Destino",
   "TRANSFER_VIEW_TOTAL_TO_PAY_TITLE": "Amount",
   "TRANSFER_VIEW_CREATE_BUTTON_TITLE": "Transferir",
-  "TRANSFER_VIEW_CANCEL_BUTTON_TITLE": "Cancelar"
+  "TRANSFER_VIEW_CANCEL_BUTTON_TITLE": "Cancelar",
+
+  "_comment_cash_balance_view": "Cash Balance View",
+
+  "CASH_BALANCE_VIEW_TITLE": "Cash Balance View",
+  "CASH_BALANCE_VIEW_CANCEL_BUTTON_TITLE": "Cancelar"
 }

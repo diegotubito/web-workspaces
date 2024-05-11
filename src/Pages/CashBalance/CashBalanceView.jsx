@@ -1,4 +1,5 @@
 
+import './CashBalanceView.css'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -18,10 +19,10 @@ export const CashBalanceView = () => {
    }
 
    return (
-      <div className='sale_view__main'>
+      <div className='cash_balance_view__main'>
          {isLoading && <Spinner />}
 
-         <div className='sale_view__header'>
+         <div className='cash_balance_view__header'>
             <div className='sale_crud_view__footer-buttons'>
 
              
@@ -29,7 +30,7 @@ export const CashBalanceView = () => {
             </div>
          </div>
 
-         <div className='sale_view__body'>
+         <div className='cash_balance_view__body'>
 
 
 
@@ -37,12 +38,12 @@ export const CashBalanceView = () => {
          </div >
 
 
-         <div className='sale_view__footer'>
+         <div className='cash_balance_view__footer'>
 
-            <div className='sale_view__footer-buttons'>
+            <div className='cash_balance_view__footer-buttons'>
 
                <SimpleButton
-                  title={t('sale_ORDER_CRUD_VIEW_CANCEL_ORDER_BUTTON_TITLE')}
+                  title={t('CASH_BALANCE_VIEW_CANCEL_BUTTON_TITLE')}
                   style='cancel'
                   onClick={() => onCancelDidClicked()}
                />
