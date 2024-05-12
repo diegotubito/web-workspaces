@@ -158,6 +158,7 @@ export const PaymentSaleView = () => {
             <h3> {getOrderInfo()} </h3>
 
             <PhysicalAccountSelector
+               destiny={'assignees'}
                title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
                currencyTitle={t('PAYMENT_VIEW_CURRENCY_TITLE')}
                selectedPhysicalAccount={selectedPhysicalAccount}

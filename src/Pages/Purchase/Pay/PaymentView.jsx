@@ -22,7 +22,7 @@ export const PaymentView = () => {
    const [selectedCurrency, setSelectedCurrency] = useState("")
    const { getInstallmentById, installment } = useInstallmentViewModel()
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
-   const { getAllAccounts, accounts } = usePhysicalAccountViewModel()
+   const { fetchAllAccountsByAssignee, accounts } = usePhysicalAccountViewModel()
    const [currencies, setCurrencies] = useState([])
    const { createPayment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess } = useTransactionViewModel()
    const [amount, setAmount] = useState()
@@ -37,7 +37,7 @@ export const PaymentView = () => {
    useEffect(() => {
       if (installment._id) {
          fetchAllMethods()
-         getAllAccounts()
+         fetchAllAccountsByAssignee()
       }
    }, [installment])
 

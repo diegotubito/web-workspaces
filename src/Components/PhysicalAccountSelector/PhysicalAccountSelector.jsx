@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { formatCurrency } from "../../Utils/Common/formatCurrency";
 
 export const PhysicalAccountSelector = ({
+   destiny,
    title,
    currencyTitle,
    selectedPhysicalAccount,
@@ -15,10 +16,14 @@ export const PhysicalAccountSelector = ({
    setCurrencies
 }) => {
    const { t } = useTranslation()
-   const { getAllAccounts, accounts } = usePhysicalAccountViewModel()
+   const { fetchAllAccountsByAssignee, fetchAllAccountsByAssigneeTransfer, accounts } = usePhysicalAccountViewModel()
 
    useEffect(() => {
-      getAllAccounts()
+      if (destiny === 'assignees') {
+         fetchAllAccountsByAssignee()
+      } else if (destiny === 'assigneesTransfer') {
+         fetchAllAccountsByAssigneeTransfer()
+      }
    }, [])
 
    useEffect(() => {
@@ -57,18 +62,19 @@ export const PhysicalAccountSelector = ({
          return
       }
 
-      const items = account.balances.map(balance => ({
-         _id: balance.currency._id,
-         name: balance.currency.name,
-         symbol: balance.currency.symbol,
-         code: balance.currency.code,
-         isEnabled: balance.currency.isEnabled,
-         exchangeRate: balance.currency.exchangeRate,
-         amount: balance.amount,
-         pendingAmount: balance.pendingAmount
-      }));
-
-
+      const items = account.balances
+         .filter(balance => balance.isEnabled) // Filter out balances where isEnabled is false
+         .map(balance => ({
+            _id: balance.currency._id,
+            name: balance.currency.name,
+            symbol: balance.currency.symbol,
+            code: balance.currency.code,
+            isEnabled: balance.isEnabled,
+            exchangeRate: balance.currency.exchangeRate,
+            amount: balance.amount,
+            pendingAmount: balance.pendingAmount
+         }));
+         
       setCurrencies(items)
    }
 

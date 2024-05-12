@@ -10,5 +10,19 @@ export const usePhysicalAccountRepository = () => {
       })
    }
 
-   return { fetchAllAccounts, isLoading, error }
+   const fetchAllAccountsByAssigneeRepo = (workspace, userId) => {
+      return apiCall({
+         path: `/api/v1/workspace_accounts_by_workspace_assignee?workspaceId=${workspace}&userId=${userId}`,
+         method: 'GET'
+      })
+   }
+
+   const fetchAllAccountsByAssigneeTransferRepo = (workspace, userId) => {
+      return apiCall({
+         path: `/api/v1/workspace_accounts_by_workspace_assignee_transfer?workspaceId=${workspace}&userId=${userId}`,
+         method: 'GET'
+      })
+   }
+
+   return { fetchAllAccountsByAssigneeTransferRepo, fetchAllAccountsByAssigneeRepo, fetchAllAccounts, isLoading, error }
 }

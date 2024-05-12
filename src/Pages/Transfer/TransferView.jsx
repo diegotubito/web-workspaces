@@ -62,6 +62,7 @@ export const TransferView = () => {
             </div>
 
             <PhysicalAccountSelector
+               destiny={'assignees'}
                title={t('TRANSFER_VIEW_SOURCE_PHYSICAL_ACCOUNT_TITLE')}
                currencyTitle={t('TRANSFER_VIEW_SOURCE_CURRENCY_TITLE')}
                selectedPhysicalAccount={selectedSourceAccount}
@@ -73,6 +74,7 @@ export const TransferView = () => {
             />
 
             <PhysicalAccountSelector
+               destiny={'assigneesTransfer'}
                title={t('TRANSFER_VIEW_DESTINY_PHYSICAL_ACCOUNT_TITLE')}
                currencyTitle={t('TRANSFER_VIEW_DESTINY_CURRENCY_TITLE')}
                selectedPhysicalAccount={selectedDestinyAccount}
