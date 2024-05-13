@@ -36,7 +36,6 @@ export const PaymentSaleView = () => {
 
    useEffect(() => {
       if (installment._id) {
-         console.log('installment es: ', installment)
          fetchAllMethods()
       }
    }, [installment])
@@ -49,7 +48,7 @@ export const PaymentSaleView = () => {
    }, [paymentMethods])
 
    useEffect(() => {
-      console.log(amount)
+  
    }, [amount])
 
    useEffect(() => {
@@ -74,24 +73,13 @@ export const PaymentSaleView = () => {
       setSelectedPaymentItem(itemId);
    };
 
-   const handleOnPhysicalAccountChange = (event) => {
-      const itemId = event.target.value;
-      setSelectedPhysicalAccount(itemId);
-      setSelectedCurrency("")
-   };
-
-   const handleOnCurrencyChange = (event) => {
-      const itemId = event.target.value;
-      setSelectedCurrency(itemId);
-   };
-
    const totalToPay = () => formatCurrency(((installment?.amount || 0).toFixed(2)).toString());
    const totalPaid = () => formatCurrency(((installment.paidAmount || 0).toFixed(2)).toString());
    const netToPay = () => formatCurrency(((installment?.remainingAmount || 0)).toFixed(2).toString());
 
 
    const onCreatePaymentDidPressed = () => {
-      createPayment(amount, installment?.remainingAmount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency, description, installment._id, exchangeRate)
+      createPayment('sale', 'order', amount, installment?.remainingAmount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency, description, installment._id, exchangeRate)
    }
 
    const onCancelDidPressed = () => {
@@ -159,7 +147,7 @@ export const PaymentSaleView = () => {
 
             <PhysicalAccountSelector
                destiny={'assignees'}
-               title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
+               title={t('PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE')}
                currencyTitle={t('PAYMENT_VIEW_CURRENCY_TITLE')}
                selectedPhysicalAccount={selectedPhysicalAccount}
                setSelectedPhysicalAccount={setSelectedPhysicalAccount}

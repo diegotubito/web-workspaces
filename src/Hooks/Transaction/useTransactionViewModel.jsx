@@ -46,7 +46,7 @@ export const useTransactionViewModel = () => {
       }
    }
 
-   const createPayment = async (amount, remainingAmount, orderId, paymentMethodId, accountId, currencyId, description, installmentId, exchangeRate) => {
+   const createPayment = async (type, entityModel, amount, remainingAmount, orderId, paymentMethodId, accountId, currencyId, description, installmentId, exchangeRate) => {
       if (Number(exchangeRate * amount) > remainingAmount) {
          setOnTransactionError({
             title: 'Validation Error',
@@ -69,7 +69,9 @@ export const useTransactionViewModel = () => {
             workspace: workspaceSession._id,
             user: userSession.user._id,
             amount: amount,
+            type: type,
             entity: orderId,
+            entityModel: entityModel,
             description: description,
             paymentMethod: paymentMethodId,
             physicalAccount: accountId,
