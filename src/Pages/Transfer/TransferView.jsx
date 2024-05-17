@@ -10,16 +10,21 @@ import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton
 import { ErrorAlert } from '../../Components/CustomAlert/ErrorAlert';
 import { PhysicalAccountSelector } from '../../Components/PhysicalAccountSelector/PhysicalAccountSelector';
 import { AmountTextField } from '../../Components/TextField/AmountTextField/AmountTextField'
+import { usePhysicalAccountViewModel } from '../../Hooks/PhysicalAccount/usePhysicalAccountViewModel';
 
 export const TransferView = () => {
    const navigate = useNavigate();
    const { t } = useTranslation()
 
+   const { transferFunds, transferSucceed} = usePhysicalAccountViewModel()
+
    const [selectedSourceAccount, setSelectedSourceAccount] = useState()
+   const [selectedSourceBalance, setSelectedSourceBalance] = useState("")
    const [selectedSourceCurrency, setSelectedSourceCurrency] = useState("")
    const [sourceCurrencies, setSourceCurrencies] = useState([])
 
    const [selectedDestinyAccount, setSelectedDestinyAccount] = useState()
+   const [selectedDestinyBalance, setSelectedDestinyBalance] = useState("")
    const [selectedDestinyCurrency, setSelectedDestinyCurrency] = useState("")
    const [destinyCurrencies, setDestinyCurrencies] = useState([])
 
@@ -27,12 +32,18 @@ export const TransferView = () => {
 
    const [isLoading, setIsLoading] = useState()
 
+   useEffect(() => {
+      if (transferSucceed) {
+         navigate(-1)
+      }
+   }, [transferSucceed])
+
    const onCancelDidClicked = () => {
       navigate(-1)
    }
 
    const onCreateDidClicked = () => {
-      
+      transferFunds(selectedSourceAccount, selectedSourceBalance, selectedDestinyAccount, selectedDestinyBalance, total, 1)
    }
 
    const onAmountDidChanged = (value) => {
@@ -71,6 +82,8 @@ export const TransferView = () => {
                setSelectedCurrency={setSelectedSourceCurrency}
                currencies={sourceCurrencies}
                setCurrencies={setSourceCurrencies}
+               selectedBalance={selectedSourceBalance}
+               setSelectedBalance={setSelectedSourceBalance}
             />
 
             <PhysicalAccountSelector
@@ -83,6 +96,8 @@ export const TransferView = () => {
                setSelectedCurrency={setSelectedDestinyCurrency}
                currencies={destinyCurrencies}
                setCurrencies={setDestinyCurrencies}
+               selectedBalance={selectedDestinyBalance}
+               setSelectedBalance={setSelectedDestinyBalance}
             />
 
          </div >

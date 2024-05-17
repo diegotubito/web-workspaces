@@ -13,7 +13,9 @@ export const PhysicalAccountSelector = ({
    selectedCurrency,
    setSelectedCurrency,
    currencies,
-   setCurrencies
+   setCurrencies,
+   selectedBalance,
+   setSelectedBalance
 }) => {
    const { t } = useTranslation()
    const { fetchAllAccountsByAssignee, fetchAllAccountsByAssigneeTransfer, accounts } = usePhysicalAccountViewModel()
@@ -32,6 +34,19 @@ export const PhysicalAccountSelector = ({
          setSelectedPhysicalAccount(accounts[0]._id)
       }
    }, [accounts])
+
+   useEffect(() => {
+      const selectedAccountObject = accounts.find((account) => account._id === selectedPhysicalAccount)
+      if (!selectedAccountObject) {
+         return
+      }
+      const balance = selectedAccountObject.balances.find((balance) => balance.currency._id === selectedCurrency)
+      if (balance) {
+         setSelectedBalance(balance._id)
+      } else {
+         setSelectedBalance("")
+      }
+   }, [selectedCurrency, setSelectedCurrency])
 
    useEffect(() => {
       setSelectedCurrency("")

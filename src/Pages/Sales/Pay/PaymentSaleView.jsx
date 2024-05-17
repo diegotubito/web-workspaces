@@ -20,6 +20,7 @@ export const PaymentSaleView = () => {
    const { installmentId } = useParams()
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
    const [selectedPhysicalAccount, setSelectedPhysicalAccount] = useState("");
+   const [selectedBalance, setSelectedBalance] = useState("")
    const [selectedCurrency, setSelectedCurrency] = useState("")
    const { getInstallmentById, installment } = useInstallmentViewModel()
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
@@ -155,6 +156,8 @@ export const PaymentSaleView = () => {
                setSelectedCurrency={setSelectedCurrency}
                currencies={currencies}
                setCurrencies={setCurrencies}
+               selectedBalance={selectedBalance}
+               setSelectedBalance={setSelectedBalance}
             />
 
 
