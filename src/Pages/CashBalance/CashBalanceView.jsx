@@ -1,22 +1,34 @@
 
 import './CashBalanceView.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Spinner } from '../../Components/Spinner/spinner'
 import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton'
 import { ErrorAlert } from '../../Components/CustomAlert/ErrorAlert';
+import { BalanceView } from '../../Components/BalanceView/BalanceView';
+
+import { usePhysicalAccountViewModel } from '../../Hooks/PhysicalAccount/usePhysicalAccountViewModel';
 
 export const CashBalanceView = () => {
    const navigate = useNavigate();
    const { t } = useTranslation()
+   const { fetchAllAccountsByAssignee, fetchAllAccountsByAssigneeTransfer, accounts } = usePhysicalAccountViewModel()
 
    const [isLoading, setIsLoading] = useState()
 
    const onCancelDidClicked = () => {
       navigate(-1)
    }
+
+   useEffect(() => {
+      fetchAllAccountsByAssignee()
+   }, [])
+
+   useEffect(() => {
+    
+   }, [accounts])
 
    return (
       <div className='cash_balance_view__main'>
@@ -32,7 +44,12 @@ export const CashBalanceView = () => {
 
          <div className='cash_balance_view__body'>
 
-
+            {accounts.map((account) => (
+               <BalanceView 
+                  key={account._id} 
+                  account={account} 
+               />
+            ))}
 
 
          </div >
