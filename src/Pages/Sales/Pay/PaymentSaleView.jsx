@@ -48,10 +48,6 @@ export const PaymentSaleView = () => {
    }, [paymentMethods])
 
    useEffect(() => {
-  
-   }, [amount])
-
-   useEffect(() => {
       if (onCreatedTransactionSuccess) {
          popNavigation()
       }

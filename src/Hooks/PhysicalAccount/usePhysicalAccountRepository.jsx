@@ -24,13 +24,5 @@ export const usePhysicalAccountRepository = () => {
       })
    }
 
-   const transferFundsRepo = (workspace, user, body) => {
-      return apiCall({
-         path: `/api/v1/workspace_accounts_transfer_funds?workspace=${workspace}&user=${user}`,
-         method: 'PUT',
-         body: body
-      })
-   }
-
-   return { transferFundsRepo, fetchAllAccountsByAssigneeTransferRepo, fetchAllAccountsByAssigneeRepo, fetchAllAccounts, isLoading, error }
+   return { fetchAllAccountsByAssigneeTransferRepo, fetchAllAccountsByAssigneeRepo, fetchAllAccounts, isLoading, error }
 }

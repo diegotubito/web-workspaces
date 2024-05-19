@@ -11,7 +11,7 @@ import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton
 import { ErrorAlert } from '../../Components/CustomAlert/ErrorAlert';
 import { PhysicalAccountSelector } from '../../Components/PhysicalAccountSelector/PhysicalAccountSelector';
 import { AmountTextField } from '../../Components/TextField/AmountTextField/AmountTextField'
-import { usePhysicalAccountViewModel } from '../../Hooks/PhysicalAccount/usePhysicalAccountViewModel';
+import { useTransactionViewModel } from '../../Hooks/Transaction/useTransactionViewModel';
 
 export const TransferView = () => {
    const navigate = useNavigate();
@@ -23,7 +23,7 @@ export const TransferView = () => {
       onTransferError,
       setOnTransferError,
       isLoading
-   } = usePhysicalAccountViewModel()
+   } = useTransactionViewModel()
 
    const [selectedSourceAccount, setSelectedSourceAccount] = useState()
    const [selectedSourceBalance, setSelectedSourceBalance] = useState("")

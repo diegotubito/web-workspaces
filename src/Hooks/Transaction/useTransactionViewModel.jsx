@@ -4,7 +4,7 @@ import { useWorkspaceSession } from "../../Utils/Contexts/workspaceSessionContex
 import { useUserSession } from "../../Utils/Contexts/userSessionContext";
 
 export const useTransactionViewModel = () => {
-   const { fetchTransactionByEntity, createNewPayment, disablePayment, fetchTransactionByInstallment, isLoading } = useTransactionRepository()
+   const { fetchTransactionByEntity, createNewPayment, disablePayment, fetchTransactionByInstallment, isLoading, transferFundsRepo } = useTransactionRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
    const [payments, setPayments] = useState([])
@@ -14,6 +14,9 @@ export const useTransactionViewModel = () => {
    const [onTransactionSuccess, setOnTransactionSuccess] = useState(false)
 
    const [onTransactionFailed, setOnTransactionFailed] = useState()
+
+   const [onTransferError, setOnTransferError] = useState(null)
+   const [transferSucceed, setTransferSucceed] = useState()
 
    const getPayments = async (purchaseOrderId) => {
       try {
@@ -40,7 +43,7 @@ export const useTransactionViewModel = () => {
          setOnTransactionError(error)
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
-         
+
       } finally {
          setTransactionIsLoading(false)
       }
@@ -110,5 +113,67 @@ export const useTransactionViewModel = () => {
       }
    }
 
-   return { getPayments, payments, createPayment, removePayment, getPaymentsByInstallment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess, onTransactionSuccess, onTransactionFailed, isLoading }
+   const transferFunds = async (fromAccountId, fromBalanceObject, toAccountId, toBalanceObject, amount, convertionRate) => {
+
+      if (!fromAccountId || !fromBalanceObject || !toAccountId || !toBalanceObject || !amount) {
+         return setOnTransferError({
+            title: 'Validation Error',
+            message: 'All fields are required.'
+         })
+      }
+
+      if (fromBalanceObject._id === toBalanceObject._id) {
+         return setOnTransferError({
+            title: 'Validation Error',
+            message: 'Balances must be different.'
+         })
+      }
+
+      if (fromBalanceObject.currency._id !== toBalanceObject.currency._id) {
+         return setOnTransferError({
+            title: 'Validation Error',
+            message: 'Currencies must be equal.'
+         })
+      }
+
+      try {
+         const body = {
+            workspace: workspaceSession._id,
+            user: userSession.user._id,
+            fromAccountId: fromAccountId,
+            fromBalanceId: fromBalanceObject._id,
+            toAccountId: toAccountId,
+            toBalanceId: toBalanceObject._id,
+            amount: amount,
+            convertionRate: convertionRate
+         }
+         const response = await transferFundsRepo(workspaceSession._id, userSession.user._id, body)
+         setTransferSucceed(true)
+         setOnTransferError(null)
+      } catch (error) {
+         setOnTransferError(error)
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
+      }
+   }
+
+   return {
+      getPayments,
+      payments,
+      createPayment,
+      removePayment,
+      getPaymentsByInstallment,
+      transactionIsLoading,
+      onTransactionError,
+      setOnTransactionError,
+      onCreatedTransactionSuccess,
+      onTransactionSuccess,
+      onTransactionFailed,
+      isLoading,
+      transferFunds,
+      onTransferError,
+      setOnTransferError,
+      transferSucceed,
+      setTransferSucceed
+   }
 }
