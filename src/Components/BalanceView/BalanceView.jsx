@@ -11,7 +11,7 @@ export const BalanceView = ({account}) => {
    }, [account])
 
    const getBalanceTitle = (balance) => {
-      const result = t(balance.currency.name)
+      const result = t(balance.displayName)
       return `${result}`
    }
 

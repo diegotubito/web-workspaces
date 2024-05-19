@@ -129,10 +129,10 @@ export const useTransactionViewModel = () => {
          })
       }
 
-      if (fromBalanceObject.currency._id !== toBalanceObject.currency._id) {
+      if (fromBalanceObject.paymentMethod._id !== toBalanceObject.paymentMethod._id) {
          return setOnTransferError({
             title: 'Validation Error',
-            message: 'Currencies must be equal.'
+            message: 'Payment method must be equal.'
          })
       }
 

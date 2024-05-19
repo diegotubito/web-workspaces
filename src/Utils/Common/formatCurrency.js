@@ -1,13 +1,12 @@
-
 export const formatCurrency = (value) => {
-   // Eliminar cualquier caracter que no sea dígito
-   let cleanedValue = value.replace(/\D+/g, '');
+   // Remove any character that is not a digit or a minus sign
+   let cleanedValue = value.replace(/[^\d-]+/g, '');
 
-   // Convertir el valor limpio a centavos
+   // Convert the cleaned value to cents
    let centValue = parseInt(cleanedValue, 10) || 0;
 
-   // Convertir a formato de moneda
-   let formattedValue = (centValue / 100).toFixed(2)
+   // Convert to currency format
+   let formattedValue = (centValue / 100).toFixed(2);
 
    // Use Intl.NumberFormat to format the number with the currency symbol and thousand separator
    const formatter = new Intl.NumberFormat('en-US', {
@@ -16,18 +15,20 @@ export const formatCurrency = (value) => {
       maximumFractionDigits: 2,
    });
 
-   // Agregar símbolo de pesos
-   return `${formatter.format(formattedValue)}`;
+   // Return the formatted currency string
+   return formatter.format(formattedValue);
 };
 
 export const convertCurrencyStringToNumber = (currencyString) => {
-   // Verifica si currencyString es de tipo string
+   // Check if currencyString is of type string
    if (typeof currencyString !== 'string') {
-      // Retorna null o podrías lanzar un error, dependiendo de tu caso de uso
+      // Return null or throw an error, depending on your use case
       return currencyString;
    }
 
+   // Extract the number part from the currency string, preserving the minus sign
    const numberString = currencyString.replace(/[^0-9.-]+/g, '');
+
+   // Parse the number part as a float
    return parseFloat(numberString);
 };
-
