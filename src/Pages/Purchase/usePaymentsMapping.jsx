@@ -11,7 +11,7 @@ export const usePaymentsMapping = () => {
 
       const getAmount = (transaction) => {
          const amountText = formatCurrency(transaction.amount.toFixed(2).toString())
-         const currency = transaction.currency.code
+         const currency = transaction.balance.currency.code
          return `(${currency}) ${amountText}`
       }
 
@@ -43,10 +43,19 @@ export const usePaymentsMapping = () => {
                },
                {
                   _id: transaction._id + 'c',
-                  name: 'Physical Account',
+                  name: 'Account',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',
-                  value: `${transaction.physicalAccount.name}`,
+                  value: `${transaction.account.name}`,
+                  alignment: 'start',
+                  titleAlignment: 'center',
+               },
+               {
+                  _id: transaction._id + 'c',
+                  name: 'Balance',
+                  minWidth: '5rem',
+                  maxWidth: '0.5fr',
+                  value: `${transaction.balance.displayName}`,
                   alignment: 'start',
                   titleAlignment: 'center',
                },

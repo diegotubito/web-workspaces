@@ -4,6 +4,7 @@ import './TransferView.css'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { Button, Alert } from 'react-bootstrap';
 
 import { Spinner } from '../../Components/Spinner/spinner'
 import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton'
@@ -16,21 +17,23 @@ export const TransferView = () => {
    const navigate = useNavigate();
    const { t } = useTranslation()
 
-   const { transferFunds, transferSucceed} = usePhysicalAccountViewModel()
+   const {
+      transferFunds,
+      transferSucceed,
+      onTransferError,
+      setOnTransferError,
+      isLoading
+   } = usePhysicalAccountViewModel()
 
    const [selectedSourceAccount, setSelectedSourceAccount] = useState()
    const [selectedSourceBalance, setSelectedSourceBalance] = useState("")
-   const [selectedSourceCurrency, setSelectedSourceCurrency] = useState("")
-   const [sourceCurrencies, setSourceCurrencies] = useState([])
+   const [sourceBalances, setSourceBalances] = useState([])
 
    const [selectedDestinyAccount, setSelectedDestinyAccount] = useState()
    const [selectedDestinyBalance, setSelectedDestinyBalance] = useState("")
-   const [selectedDestinyCurrency, setSelectedDestinyCurrency] = useState("")
-   const [destinyCurrencies, setDestinyCurrencies] = useState([])
+   const [destinyBalances, setDestinyBalances] = useState([])
 
-   const [ total, setTotal] = useState()
-
-   const [isLoading, setIsLoading] = useState()
+   const [total, setTotal] = useState()
 
    useEffect(() => {
       if (transferSucceed) {
@@ -43,7 +46,24 @@ export const TransferView = () => {
    }
 
    const onCreateDidClicked = () => {
-      transferFunds(selectedSourceAccount, selectedSourceBalance, selectedDestinyAccount, selectedDestinyBalance, total, 1)
+      const fromBalanceObject = sourceBalances.find((balance) => balance._id === selectedSourceBalance);
+      const toBalanceObject = destinyBalances.find((balance) => balance._id === selectedDestinyBalance);
+
+      if (!fromBalanceObject) {
+         return setOnTransferError({
+            title: 'Validation Error',
+            message: 'Source balance not found.'
+         });
+      }
+
+      if (!toBalanceObject) {
+         return setOnTransferError({
+            title: 'Validation Error',
+            message: 'Destiny balance not found.'
+         });
+      }
+
+      transferFunds(selectedSourceAccount, fromBalanceObject, selectedDestinyAccount, toBalanceObject, total, 1)
    }
 
    const onAmountDidChanged = (value) => {
@@ -53,6 +73,24 @@ export const TransferView = () => {
    return (
       <div className='transfer_view__main'>
          {isLoading && <Spinner />}
+
+
+         {onTransferError && (
+            <div className="alert-container">
+               <Alert variant="warning">
+                  <Alert.Heading>{onTransferError.title}</Alert.Heading>
+                  <h3>
+                     {onTransferError.message}
+                  </h3>
+                  <hr />
+                  <div className="d-flex justify-content-end">
+                     <Button onClick={() => setOnTransferError(null)} variant="outline-success">
+                        Close me
+                     </Button>
+                  </div>
+               </Alert>
+            </div>
+         )}
 
          <div className='transfer_view__header'>
             <div className='sale_crud_view__footer-buttons'>
@@ -68,36 +106,32 @@ export const TransferView = () => {
                <AmountTextField
                   initialValue={0}
                   onChangeValue={onAmountDidChanged}
-                  form={ {textAlign: "left"} }
+                  form={{ textAlign: "left" }}
                />
             </div>
 
             <PhysicalAccountSelector
                destiny={'assignees'}
                title={t('TRANSFER_VIEW_SOURCE_PHYSICAL_ACCOUNT_TITLE')}
-               currencyTitle={t('TRANSFER_VIEW_SOURCE_CURRENCY_TITLE')}
+               balanceTitle={t('TRANSFER_VIEW_SOURCE_CURRENCY_TITLE')}
                selectedPhysicalAccount={selectedSourceAccount}
                setSelectedPhysicalAccount={setSelectedSourceAccount}
-               selectedCurrency={selectedSourceCurrency}
-               setSelectedCurrency={setSelectedSourceCurrency}
-               currencies={sourceCurrencies}
-               setCurrencies={setSourceCurrencies}
                selectedBalance={selectedSourceBalance}
                setSelectedBalance={setSelectedSourceBalance}
+               balances={sourceBalances}
+               setBalances={setSourceBalances}
             />
 
             <PhysicalAccountSelector
                destiny={'assigneesTransfer'}
                title={t('TRANSFER_VIEW_DESTINY_PHYSICAL_ACCOUNT_TITLE')}
-               currencyTitle={t('TRANSFER_VIEW_DESTINY_CURRENCY_TITLE')}
+               balanceTitle={t('TRANSFER_VIEW_DESTINY_CURRENCY_TITLE')}
                selectedPhysicalAccount={selectedDestinyAccount}
                setSelectedPhysicalAccount={setSelectedDestinyAccount}
-               selectedCurrency={selectedDestinyCurrency}
-               setSelectedCurrency={setSelectedDestinyCurrency}
-               currencies={destinyCurrencies}
-               setCurrencies={setDestinyCurrencies}
                selectedBalance={selectedDestinyBalance}
                setSelectedBalance={setSelectedDestinyBalance}
+               balances={destinyBalances}
+               setBalances={setDestinyBalances}
             />
 
          </div >

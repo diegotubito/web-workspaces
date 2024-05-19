@@ -7,13 +7,11 @@ import { formatCurrency } from "../../Utils/Common/formatCurrency";
 export const PhysicalAccountSelector = ({
    destiny,
    title,
-   currencyTitle,
+   balanceTitle,
    selectedPhysicalAccount,
    setSelectedPhysicalAccount,
-   selectedCurrency,
-   setSelectedCurrency,
-   currencies,
-   setCurrencies,
+   balances,
+   setBalances,
    selectedBalance,
    setSelectedBalance
 }) => {
@@ -36,21 +34,8 @@ export const PhysicalAccountSelector = ({
    }, [accounts])
 
    useEffect(() => {
-      const selectedAccountObject = accounts.find((account) => account._id === selectedPhysicalAccount)
-      if (!selectedAccountObject) {
-         return
-      }
-      const balance = selectedAccountObject.balances.find((balance) => balance.currency._id === selectedCurrency)
-      if (balance) {
-         setSelectedBalance(balance._id)
-      } else {
-         setSelectedBalance("")
-      }
-   }, [selectedCurrency, setSelectedCurrency])
-
-   useEffect(() => {
-      setSelectedCurrency("")
-      mapCurrencies()
+      setSelectedBalance("")
+      mapbalances()
    }, [selectedPhysicalAccount])
 
    const handleOnPhysicalAccountChange = (event) => {
@@ -58,14 +43,14 @@ export const PhysicalAccountSelector = ({
       setSelectedPhysicalAccount(item);
    };
 
-   const handleOnCurrencyChange = (event) => {
+   const handleOnBalanceChange = (event) => {
       const itemId = event.target.value;
-      setSelectedCurrency(itemId);
+      setSelectedBalance(itemId);
    };
 
-   const mapCurrencies = () => {
+   const mapbalances = () => {
       if (!selectedPhysicalAccount) {
-         setCurrencies([])
+         setBalances([])
          return
       }
       // Find the account with the given accountId
@@ -73,24 +58,14 @@ export const PhysicalAccountSelector = ({
 
       // If the account is found, map its balances to extract currency details
       if (!account) {
-         setCurrencies([])
+         setBalances([])
          return
       }
 
       const items = account.balances
          .filter(balance => balance.isEnabled) // Filter out balances where isEnabled is false
-         .map(balance => ({
-            _id: balance.currency._id,
-            name: balance.currency.name,
-            symbol: balance.currency.symbol,
-            code: balance.currency.code,
-            isEnabled: balance.isEnabled,
-            exchangeRate: balance.currency.exchangeRate,
-            amount: balance.amount,
-            pendingAmount: balance.pendingAmount
-         }));
          
-      setCurrencies(items)
+      setBalances(items)
    }
 
    const getAmount = (item) => {
@@ -114,11 +89,11 @@ export const PhysicalAccountSelector = ({
          </select>
 
          <div>
-            <h3 className='physical_account_selector__form-title'>{currencyTitle}</h3>
-            <select className="physical_account_selector__form-select" value={selectedCurrency} onChange={handleOnCurrencyChange}>
+            <h3 className='physical_account_selector__form-title'>{balanceTitle}</h3>
+            <select className="physical_account_selector__form-select" value={selectedBalance} onChange={handleOnBalanceChange}>
                <option value="" disabled>{t('PAYMENT_VIEW_CURRENCY_TITLE')}</option>
-               {currencies.map((item) => (
-                  <option key={item._id} value={item._id}>{`${t(item.name)} (${getPendingAmount(item)}) ${getAmount(item)}`}</option>
+               {balances.map((item) => (
+                  <option key={item._id} value={item._id}>{`${t(item.displayName)} (${getPendingAmount(item)}) ${getAmount(item)}`}</option>
                ))}
             </select>
          </div>

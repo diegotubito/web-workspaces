@@ -21,10 +21,9 @@ export const PaymentView = () => {
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
    const [selectedPhysicalAccount, setSelectedPhysicalAccount] = useState("");
    const [selectedBalance, setSelectedBalance] = useState("")
-   const [selectedCurrency, setSelectedCurrency] = useState("")
    const { getInstallmentById, installment } = useInstallmentViewModel()
    const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
-   const [currencies, setCurrencies] = useState([])
+   const [balances, setBalances] = useState([])
    const { createPayment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess } = useTransactionViewModel()
    const [amount, setAmount] = useState()
    const { t } = useTranslation()
@@ -59,12 +58,12 @@ export const PaymentView = () => {
    }, [onCreatedTransactionSuccess])
 
    useEffect(() => {
-      const currencyItem = currencies.find((c) => c._id === selectedCurrency)
+      const balanceItem = balances.find((c) => c._id === selectedBalance)
       const originExchageRate = installment?.currency?.exchangeRate
-      const destinyExchangeRate = currencyItem?.exchangeRate
+      const destinyExchangeRate = balanceItem?.currency?.exchangeRate
 
       setExchangeRate(destinyExchangeRate / originExchageRate)
-   }, [selectedCurrency])
+   }, [selectedBalance])
 
 
    const handleOnPaymentMethodChange = (event) => {
@@ -78,7 +77,7 @@ export const PaymentView = () => {
 
 
    const onCreatePaymentDidPressed = () => {
-      createPayment('purchase', 'order', amount, installment?.remainingAmount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedCurrency, description, installment._id, exchangeRate)
+      createPayment('purchase', 'order', amount, installment?.remainingAmount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedBalance, description, installment._id, exchangeRate)
    }
 
    const onCancelDidPressed = () => {
@@ -150,12 +149,10 @@ export const PaymentView = () => {
                currencyTitle={t('PAYMENT_VIEW_CURRENCY_TITLE')}
                selectedPhysicalAccount={selectedPhysicalAccount}
                setSelectedPhysicalAccount={setSelectedPhysicalAccount}
-               selectedCurrency={selectedCurrency}
-               setSelectedCurrency={setSelectedCurrency}
-               currencies={currencies}
-               setCurrencies={setCurrencies}
                selectedBalance={selectedBalance}
                setSelectedBalance={setSelectedBalance}
+               balances={balances}
+               setBalances={setBalances}
             />
 
             <div>

@@ -46,7 +46,7 @@ export const useTransactionViewModel = () => {
       }
    }
 
-   const createPayment = async (type, entityModel, amount, remainingAmount, orderId, paymentMethodId, accountId, currencyId, description, installmentId, exchangeRate) => {
+   const createPayment = async (type, entityModel, amount, remainingAmount, orderId, paymentMethodId, accountId, balanceId, description, installmentId, exchangeRate) => {
       if (Number(exchangeRate * amount) > remainingAmount) {
          setOnTransactionError({
             title: 'Validation Error',
@@ -55,10 +55,10 @@ export const useTransactionViewModel = () => {
          return
       }
 
-      if (!currencyId) {
+      if (!balanceId) {
          setOnTransactionError({
             title: 'Validation Error',
-            message: 'You need to espicify an currency'
+            message: 'You need to espicify a balance'
          })
          return
       }
@@ -74,8 +74,8 @@ export const useTransactionViewModel = () => {
             entityModel: entityModel,
             description: description,
             paymentMethod: paymentMethodId,
-            physicalAccount: accountId,
-            currency: currencyId,
+            account: accountId,
+            balance: balanceId,
             installment: installmentId,
             exchangeRate: exchangeRate
          }
