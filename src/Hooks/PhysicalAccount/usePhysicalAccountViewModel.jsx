@@ -4,7 +4,7 @@ import { useWorkspaceSession } from "../../Utils/Contexts/workspaceSessionContex
 import { useUserSession } from "../../Utils/Contexts/userSessionContext";
 
 export const usePhysicalAccountViewModel = () => {
-   const { fetchAllAccounts, fetchAllAccountsByAssigneeRepo, fetchAllAccountsByAssigneeTransferRepo, isLoading } = usePhysicalAccountRepository()
+   const { fetchAllAccountsByAssigneeBalancesRepo, fetchAllAccounts, fetchAllAccountsByAssigneeRepo, fetchAllAccountsByAssigneeTransferRepo, isLoading } = usePhysicalAccountRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
    const [accounts, setAccounts] = useState([])
@@ -39,7 +39,17 @@ export const usePhysicalAccountViewModel = () => {
       }
    }
 
+   const fetchAllAccountsByAssigneeBalances = async () => {
+      try {
+         const response = await fetchAllAccountsByAssigneeBalancesRepo(workspaceSession._id, userSession.user._id)
+         setAccounts(response.accounts)
+      } catch (error) {
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
+      }
+   }
+
  
 
-   return { getAllAccounts, accounts, fetchAllAccountsByAssignee, fetchAllAccountsByAssigneeTransfer, isLoading }
+   return { getAllAccounts, accounts, fetchAllAccountsByAssignee, fetchAllAccountsByAssigneeTransfer, isLoading, fetchAllAccountsByAssigneeBalances }
 }

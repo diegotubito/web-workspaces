@@ -24,5 +24,12 @@ export const usePhysicalAccountRepository = () => {
       })
    }
 
-   return { fetchAllAccountsByAssigneeTransferRepo, fetchAllAccountsByAssigneeRepo, fetchAllAccounts, isLoading, error }
+   const fetchAllAccountsByAssigneeBalancesRepo = (workspace, userId) => {
+      return apiCall({
+         path: `/api/v1/workspace_accounts_by_workspace_assignee_balances?workspaceId=${workspace}&userId=${userId}`,
+         method: 'GET'
+      })
+   }
+
+   return { fetchAllAccountsByAssigneeBalancesRepo, fetchAllAccountsByAssigneeTransferRepo, fetchAllAccountsByAssigneeRepo, fetchAllAccounts, isLoading, error }
 }

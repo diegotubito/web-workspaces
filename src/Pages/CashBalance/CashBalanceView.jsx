@@ -14,7 +14,7 @@ import { usePhysicalAccountViewModel } from '../../Hooks/PhysicalAccount/usePhys
 export const CashBalanceView = () => {
    const navigate = useNavigate();
    const { t } = useTranslation()
-   const { fetchAllAccountsByAssignee, fetchAllAccountsByAssigneeTransfer, accounts } = usePhysicalAccountViewModel()
+   const { fetchAllAccountsByAssigneeBalances, accounts } = usePhysicalAccountViewModel()
 
    const [isLoading, setIsLoading] = useState()
 
@@ -23,7 +23,7 @@ export const CashBalanceView = () => {
    }
 
    useEffect(() => {
-      fetchAllAccountsByAssignee()
+      fetchAllAccountsByAssigneeBalances()
    }, [])
 
    useEffect(() => {

@@ -6,10 +6,6 @@ import { formatCurrency } from '../../Utils/Common/formatCurrency';
 export const BalanceView = ({account}) => {
    const {t} = useTranslation()
 
-   useEffect(() => {
-      console.log(account.balances)
-   }, [account])
-
    const getBalanceTitle = (balance) => {
       const result = t(balance.displayName)
       return `${result}`

@@ -86,12 +86,6 @@ export const OrderTransactionComponent = ({ initialInstallment, onSelectedTransa
       setRemovePaymentButtonState(false)
    }
 
-   const onRemovePaymentDidClicked = () => {
-      if (selectedPayment) {
-         removePayment(selectedPayment._id)
-      }
-   }
-
    return (
       <>
          {initialInstallment && (
@@ -106,18 +100,8 @@ export const OrderTransactionComponent = ({ initialInstallment, onSelectedTransa
                />
 
                {payments.length === 0 ?
-                  (
-                     <h3> No hay pagos realizado.</h3>
-                  ) : (
-                     <div className="purchase_view__button-container">
-                        <SimpleButton
-                           style='destructive'
-                           title='Remove'
-                           onClick={onRemovePaymentDidClicked}
-                           disabled={!removePaymentButtonState}
-                        />
-                     </div>
-                  )}
+                     <h3> No hay pagos realizado.</h3> : null
+               } 
 
             </>
          )}
