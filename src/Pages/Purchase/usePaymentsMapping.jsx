@@ -51,7 +51,7 @@ export const usePaymentsMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: transaction._id + 'c',
+                  _id: transaction._id + 'c1',
                   name: 'Balance',
                   minWidth: '5rem',
                   maxWidth: '0.5fr',

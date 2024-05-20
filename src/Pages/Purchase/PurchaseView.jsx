@@ -124,7 +124,7 @@ export const PurchaseView = () => {
 
 
             <OrderComponent
-               type={'purchase'}
+               type={'all'}
                onSelectedOrder={onSelectedOrder}
                onOrderError={onPurchaseOrderError}
                reloadTrigger={reloadTrigger}

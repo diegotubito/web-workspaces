@@ -10,7 +10,7 @@ export const useSaleItemFormViewModel = ({ setOrderItems, saleItems }) => {
 
    const getDefaultSalesPrice = () => {
       const result = (saleItems.length > 0) ? saleItems[0].salePrice : ''
-      const formattedResult = formatCurrency(String(result))
+      const formattedResult = formatCurrency(result.toFixed(2).toString())
       return formattedResult
    }
 
