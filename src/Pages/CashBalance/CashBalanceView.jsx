@@ -14,6 +14,7 @@ import { usePhysicalAccountViewModel } from '../../Hooks/PhysicalAccount/usePhys
 export const CashBalanceView = () => {
    const navigate = useNavigate();
    const { t } = useTranslation()
+
    const { fetchAllAccountsByAssigneeBalances, accounts } = usePhysicalAccountViewModel()
 
    const [isLoading, setIsLoading] = useState()

@@ -40,5 +40,12 @@ export const useTransactionRepository = () => {
       })
    }
 
-   return { fetchTransactionByEntity, isLoading, error, createNewPayment, disablePayment, fetchTransactionByInstallment, transferFundsRepo }
+   const fetchTransactionByWorkspaceAndAccount = (workspace, account) => {
+      return apiCall({
+         path: `/api/v1/transaction-by-worspace-account?workspace=${workspace}&account=${account}`,
+         method: 'GET'
+      })
+   }
+
+   return { fetchTransactionByWorkspaceAndAccount, fetchTransactionByEntity, isLoading, error, createNewPayment, disablePayment, fetchTransactionByInstallment, transferFundsRepo }
 }
