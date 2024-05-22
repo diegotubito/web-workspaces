@@ -44,12 +44,15 @@ export const CashBalanceView = () => {
          </div>
 
          <div className='cash_balance_view__body'>
-
             {accounts.map((account) => (
-               <BalanceView 
-                  key={account._id} 
-                  account={account} 
-               />
+               <div key={account._id} style={{
+                  marginBottom: '2rem'
+               }}>
+                  <BalanceView
+                     account={account}
+                  />
+
+               </div>
             ))}
 
 

@@ -1,0 +1,60 @@
+/* BalanceView.css */
+
+.balance_view__container {
+   padding: 1rem;
+   background-color: rgb(199, 209, 209);
+   border-radius: 8px;
+}
+
+.balance_view__main {
+   display: grid;
+   grid-template-columns: 0.25fr 0.25fr 0.5fr;
+   gap: 1rem;
+}
+
+.balance_view__balance-item {
+   margin-bottom: 1px;
+   background-color: rgba(95, 63, 127, 0.151);
+   padding: 1rem;
+}
+
+.balance_view__cash-count-item {
+   margin-bottom: 1px;
+   background-color: rgba(95, 63, 127, 0.151);
+   padding: 1rem;
+}
+
+.balance_view__cash-count-item-already-counted {
+   display: flex;
+   justify-content: space-between;
+}
+
+.balance_view__transaction-item {
+   margin-bottom: 1px;
+   display: grid;
+   grid-template-columns: 0.5fr 0.5fr 1fr 0.5fr 0.7fr 0.7fr;
+   align-items: center;
+   gap: 1rem;
+
+   background-color: rgba(95, 63, 127, 0.151);
+   padding: 1rem;
+
+}
+
+.balance_view__footer-buttons {
+   display: flex;
+   justify-content: center;
+   margin-top: 1rem;
+}
+
+.simple_button.primary {
+   background-color: #007bff;
+   color: white;
+}
+
+.balance_view__footer-buttons {
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   gap: 1rem;
+}
