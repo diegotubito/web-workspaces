@@ -81,6 +81,14 @@
      "_comment_cash_balance_view": "Cash Balance View",
 
      "CASH_BALANCE_VIEW_TITLE": "Cash Balance View",
-     "CASH_BALANCE_VIEW_CANCEL_BUTTON_TITLE": "Cancel"
+     "CASH_BALANCE_VIEW_CANCEL_BUTTON_TITLE": "Cancel",
 
+     "_comment_cash_count": "Cash Count",
+
+     "CASH_COUNT_STATUS_PENDING": "Pending",
+     "CASH_COUNT_STATUS_CLOSED": "Closed",
+     "CASH_COUNT_RESULT_BALANCED": "Balanced",
+     "CASH_COUNT_RESULT_SHORTAGE": "Shortage",
+     "CASH_COUNT_RESULT_SURPLUS": "Surplus",
+     "CASH_COUNT_RESULT_UNBALANCED": "Unbalanced"
 }

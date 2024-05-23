@@ -10,5 +10,21 @@ export const useCashCountRepository = () => {
       })
    }
 
-   return { fetchCashCountByWorkspaceAndAccount, isLoading, error }
+   const createCashCount = (body) => {
+      return apiCall({
+         path: `/api/v1/cash-count`,
+         method: 'POST',
+         body: body
+      })
+   }
+
+   const closeCashCount = (body) => {
+      return apiCall({
+         path: `/api/v1/cash-count-close`,
+         method: 'POST',
+         body: body
+      })
+   }
+
+   return { closeCashCount, createCashCount, fetchCashCountByWorkspaceAndAccount, isLoading, error }
 }

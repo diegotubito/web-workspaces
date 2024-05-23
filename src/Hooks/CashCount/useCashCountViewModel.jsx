@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { useCashCountRepository } from "./useCashCountRepository";
 import { useWorkspaceSession } from "../../Utils/Contexts/workspaceSessionContext";
+import { useUserSession } from "../../Utils/Contexts/userSessionContext";
 
 export const useCashCountViewModel = () => {
-   const { fetchCashCountByWorkspaceAndAccount: fetchCashCountByWorkspaceAndAccountRepo } = useCashCountRepository()
+   const { closeCashCount: closeCashCountRepo, createCashCount: createCashCountRepo, fetchCashCountByWorkspaceAndAccount: fetchCashCountByWorkspaceAndAccountRepo } = useCashCountRepository()
    const { workspaceSession } = useWorkspaceSession()
+   const { userSession } = useUserSession()
    const [cashCounts, setCashCounts] = useState([])
+   const [onCashCountFailed, setOnCashCountFailed] = useState(null)
+   const [onCashCountSuccess, setOnCashCountSuccess] = useState(null)
+
 
    const getCashCountsByWorkspaceAndAccount = async (account) => {
       try {
@@ -17,5 +22,38 @@ export const useCashCountViewModel = () => {
       }
    }
 
-   return { getCashCountsByWorkspaceAndAccount, cashCounts }
+   const createCashCount = async (account, counts) => {
+      try {
+         setOnCashCountSuccess(false)
+         const body = {
+            user: userSession.user._id,
+            account: account._id,
+            counts: counts
+         }
+         const response = await createCashCountRepo(body)
+         setOnCashCountSuccess(true)
+         setOnCashCountFailed(false)
+      } catch (error) {
+         setOnCashCountFailed(true)
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
+      }
+   }
+
+   const closeCashCount = async (cashCountId) => {
+      try {
+         setOnCashCountSuccess(false)
+         const body = {
+            correctedBy: userSession.user._id,
+            cashCount: cashCountId
+         }
+         const response = await closeCashCountRepo(body)
+         setOnCashCountSuccess(true)
+      } catch (error) {
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
+      }
+   }
+
+   return { closeCashCount, createCashCount, onCashCountSuccess, getCashCountsByWorkspaceAndAccount, cashCounts }
 }

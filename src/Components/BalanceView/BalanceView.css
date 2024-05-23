@@ -8,7 +8,7 @@
 
 .balance_view__main {
    display: grid;
-   grid-template-columns: 0.25fr 0.25fr 0.5fr;
+   grid-template-columns: 0.6fr 1fr 1fr;
    gap: 1rem;
 }
 
@@ -16,17 +16,6 @@
    margin-bottom: 1px;
    background-color: rgba(95, 63, 127, 0.151);
    padding: 1rem;
-}
-
-.balance_view__cash-count-item {
-   margin-bottom: 1px;
-   background-color: rgba(95, 63, 127, 0.151);
-   padding: 1rem;
-}
-
-.balance_view__cash-count-item-already-counted {
-   display: flex;
-   justify-content: space-between;
 }
 
 .balance_view__transaction-item {

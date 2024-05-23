@@ -1,83 +1,95 @@
-import { useEffect } from 'react'
-import './BalanceView.css'
+import { useEffect, useState } from 'react';
+import './BalanceView.css';
 import { useTranslation } from 'react-i18next';
 import { formatCurrency } from '../../Utils/Common/formatCurrency';
 import { useCashCountViewModel } from '../../Hooks/CashCount/useCashCountViewModel';
 import { useTransactionViewModel } from '../../Hooks/Transaction/useTransactionViewModel';
 import { dateAndTimeFormat } from '../../Utils/Common/dateUtils';
 import { SimpleButton } from '../Buttons/SimpleButton/SimpleButton';
+import { NewCashCountComponent } from './NewCashCount/NewCashCountComponent';
+import { CashCountComponent } from './CashCountComponent/CashCountComponent';
 
 export const BalanceView = ({ account }) => {
-   const { t } = useTranslation()
-
-   const { getCashCountsByWorkspaceAndAccount, cashCounts } = useCashCountViewModel()
-
-   const { fetchTransactionByWorkspaceAndAccount, payments } = useTransactionViewModel()
+   const { t } = useTranslation();
+   const { closeCashCount, createCashCount, getCashCountsByWorkspaceAndAccount, cashCounts, onCashCountSuccess } = useCashCountViewModel();
+   const { fetchTransactionByWorkspaceAndAccountAndDates, fetchTransactionByWorkspaceAndAccount, payments } = useTransactionViewModel();
+   const [lastCashCount, setLastCashCount] = useState({});
 
    useEffect(() => {
-      getCashCountsByWorkspaceAndAccount(account)
-      fetchTransactionByWorkspaceAndAccount(account)
-   }, [])
+      getCashCountsByWorkspaceAndAccount(account);
+   }, []);
 
-   const getBalanceTitle = (balance) => {
-      const result = t(balance.displayName)
-      return `${result}`
-   }
+   useEffect(() => {
+      if (cashCounts.length > 0) {
+         setLastCashCount(cashCounts[0]);
+      } else {
+         setLastCashCount({});
+      }
+   }, [cashCounts]);
 
-   const getCurrentAmount = (balance) => {
-      const result = formatCurrency(balance.amount.toFixed(2).toString())
-      return `${result}`
-   }
+   useEffect(() => {
+      let fromDate;
+      let toDate = new Date().toISOString();
 
-   const getCurrentPendingAmount = (balance) => {
-      const result = formatCurrency(balance.pendingAmount.toFixed(2).toString())
-      return `${result}`
-   }
+      if (lastCashCount && lastCashCount.closingDate) {
+         fromDate = new Date(lastCashCount.closingDate).toISOString();
+      } else {
+         fromDate = new Date('2024-01-01T00:00:00Z').toISOString();
+      }
+      fetchTransactionByWorkspaceAndAccountAndDates(account, fromDate, toDate);
+   }, [lastCashCount]);
+
+   useEffect(() => {
+      if (onCashCountSuccess) {
+         getCashCountsByWorkspaceAndAccount(account);
+      }
+   }, [onCashCountSuccess])
+
+
+   const getBalanceTitle = (balance) => t(balance.displayName);
+
+   const getCurrentAmount = (balance) => formatCurrency(balance.amount.toFixed(2).toString());
+
+   const getCurrentPendingAmount = (balance) => formatCurrency(balance.pendingAmount.toFixed(2).toString());
 
    const getSnapshotAmount = (balance) => {
-      let amount;
-      // need to get latest cash count register. If they comes in order, it is the first element of the list.
-      const lastCashAccount = cashCounts[0]
-      if (!lastCashAccount) {
-         amount = 0
-      } else {
-         const innerBalances = lastCashAccount.balances
-         const innerBalance = innerBalances.find((b) => b.balance._id === balance._id)
-         const snapshotBalance = innerBalance.balanceSnapshot
-         amount = snapshotBalance.amount
+      let amount = 0;
+      const lastCashAccount = cashCounts[0];
+      if (lastCashAccount) {
+         const innerBalances = lastCashAccount.balances;
+         const innerBalance = innerBalances.find((b) => b.balance._id === balance._id);
+         if (innerBalance) {
+            amount = innerBalance.countedAmount;
+         }
       }
-
-      const result = formatCurrency(amount.toFixed(2).toString())
-      return `${result}`
-   }
+      return formatCurrency(amount.toFixed(2).toString());
+   };
 
    const getSnapshotPendingAmount = (balance) => {
-      let amount;
-      // need to get latest cash count register. If they comes in order, it is the first element of the list.
-      const lastCashAccount = cashCounts[0]
-      if (!lastCashAccount) {
-         amount = 0
-      } else {
-         const innerBalances = lastCashAccount.balances
-         const innerBalance = innerBalances.find((b) => b.balance._id === balance._id)
-         const snapshotBalance = innerBalance.balanceSnapshot
-         amount = snapshotBalance.pendingAmount
+      let amount = 0;
+      const lastCashAccount = cashCounts[0];
+      if (lastCashAccount) {
+         const innerBalances = lastCashAccount.balances;
+         const innerBalance = innerBalances.find((b) => b.balance._id === balance._id);
+         if (innerBalance) {
+            amount = innerBalance.balanceSnapshot.pendingAmount;
+         }
       }
-
-      const result = formatCurrency(amount.toFixed(2).toString())
-      return `${result}`
-   }
+      return formatCurrency(amount.toFixed(2).toString());
+   };
 
    const getDebe = (payment) => {
       let accountType;
-      let amount = formatCurrency(payment.amount.toFixed(2).toString())
+      let amount = formatCurrency(payment.amount.toFixed(2).toString());
       switch (payment.type) {
          case 'purchase':
          case 'transfer_origin':
+         case 'adjustment_shortage':
             accountType = 'debe';
             break;
          case 'sale':
          case 'transfer_destiny':
+         case 'adjustment_surplus':
             accountType = 'haber';
             break;
          default:
@@ -85,21 +97,23 @@ export const BalanceView = ({ account }) => {
       }
 
       if (accountType === 'debe') {
-         return `${amount}`
+         return `${amount}`;
       }
-      return ''
-   }
+      return '';
+   };
 
    const getHaber = (payment) => {
       let accountType;
-      let amount = formatCurrency(payment.amount.toFixed(2).toString())
+      let amount = formatCurrency(payment.amount.toFixed(2).toString());
       switch (payment.type) {
          case 'purchase':
          case 'transfer_origin':
+         case 'adjustment_shortage':
             accountType = 'debe';
             break;
          case 'sale':
          case 'transfer_destiny':
+         case 'adjustment_surplus':
             accountType = 'haber';
             break;
          default:
@@ -107,16 +121,22 @@ export const BalanceView = ({ account }) => {
       }
 
       if (accountType === 'haber') {
-         return `${amount}`
+         return `${amount}`;
       }
+      return '';
+   };
 
-      return ''
-   }
+   const onCountedAmountsHandler = (counts) => {
+      createCashCount(account, counts);
+   };
 
+   const onCloseCashCount = (cashCount) => {
+      closeCashCount(cashCount);
+   };
 
    return (
       <div className='balance_view__container'>
-         <h1>{`${account.name}`}</h1>
+         <h1>{account.name}</h1>
 
          <div className='balance_view__main'>
             <div className='balance_view__section'>
@@ -124,87 +144,43 @@ export const BalanceView = ({ account }) => {
 
                {account.balances.filter((b) => b.isEnabled).map((balance) => (
                   <div key={balance._id} className='balance_view__balance-item'>
-                     <h3>{`${getBalanceTitle(balance)}`}</h3>
+                     <h3>{getBalanceTitle(balance)}</h3>
 
-                     <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between'
-                     }}>
-                        <h4>{`Initial`}</h4>
-                        <h4>{`(${getSnapshotPendingAmount(balance)}) ${getSnapshotAmount(balance)}`}</h4>
+                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <h4>Initial</h4>
+                        <h4>({getSnapshotPendingAmount(balance)}) {getSnapshotAmount(balance)}</h4>
                      </div>
 
-                     <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between'
-                     }}>
-                        <h4>{`Current`}</h4>
-                        <h4>{`(${getCurrentPendingAmount(balance)}) ${getCurrentAmount(balance)}`}</h4>
+                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <h4>Current</h4>
+                        <h4>({getCurrentPendingAmount(balance)}) {getCurrentAmount(balance)}</h4>
                      </div>
 
-                     <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between'
-                     }}>
-                        <h4>{`Transactions`}</h4>
-                        <h4>{`${balance.counter}`}</h4>
+                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <h4>Transactions</h4>
+                        <h4>{balance.counter}</h4>
                      </div>
-                     
-                    
-                     
-                     
                   </div>
                ))}
                <h4>{t('Total Transactions')}: {account.counter}</h4>
-               <div className='balance_view__footer-buttons'>
-                  <SimpleButton
-                     title={t('Cash Count')}
-                     style='primary'
-                     onClick={() => {/* Add click handler */ }}
-                  />
-
-               </div>
             </div>
 
             <div className='balance_view__section'>
-               <h2>{t('Cash Counts History')}</h2>
-               {cashCounts.map((cashCount) => (
-                  <div key={cashCount._id} className='balance_view__cash-count-item'>
+               <h2>{t('Cash Counts')}</h2>
 
-                     <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between'
-                     }}>
-                        <h3>{`${dateAndTimeFormat(cashCount.date)}`}</h3>
-                        <h3>{`${cashCount.status}`}</h3>
-                     </div>
+               <NewCashCountComponent
+                  title={'New Cash Count'}
+                  account={account}
+                  onCountedAmountsHandler={onCountedAmountsHandler}
+               />
 
-                     {cashCount.balances.map((balanceCounted) => (
-
-                        <div key={balanceCounted._id} className='balance_view__cash-count-item-already-counted'>
-                           <h4>{`${balanceCounted.balance.displayName}`}</h4>
-                           <h4>{`${formatCurrency(balanceCounted.countedAmount.toFixed(2).toString())}`}</h4>
-                           <h4>{`${formatCurrency(balanceCounted.discrepancies.toFixed(2).toString()) }`}</h4>
-                        </div>
-                     ))}
-
-
-                     <div style={{
-                        display: 'flex',
-                        justifyContent: 'flex-end'
-                     }}>
-                        <h4>{`Result ${formatCurrency(cashCount.totalDiscrepancies.toFixed(2).toString())}`}</h4>
-
-                     </div>
-
-                     <h5>{`Responsible ${cashCount.user.lastName} ${cashCount.user.firstName}`}</h5>
-
-                     <SimpleButton
-                        title={t('Consolidate')}
-                        style='primary'
-                        onClick={() => {/* Add click handler */ }}
-                     />
-                  </div>
+               {cashCounts.map((cashCount, index) => (
+                  <CashCountComponent
+                     key={cashCount._id}
+                     title={index === 0 ? 'Last Cash Count' : 'History'}
+                     cashCount={cashCount}
+                     onCloseCashCount={onCloseCashCount}
+                  />
                ))}
             </div>
 
@@ -212,28 +188,20 @@ export const BalanceView = ({ account }) => {
                <h2>{t('Transactions')}</h2>
                {payments.filter((b) => b.isEnabled).map((payment) => (
                   <div key={payment._id} className='balance_view__transaction-item'>
-                     <h4>{`${dateAndTimeFormat(payment.date)}`}</h4>
-                     <h4>{`${payment.user.lastName} ${payment.user.firstName}`}</h4>
-                     <h4>{`${payment.type}`}</h4>
-                     <h4>{`${payment.balance.displayName}`}</h4>
-                     <h4 style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'end',
-                     }}>{`${getDebe(payment)}`}</h4>
-                     <h4 style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'end',
-                     }}>{`${getHaber(payment)}`}</h4>
+                     <h4>{dateAndTimeFormat(payment.date)}</h4>
+                     <h4>{payment.user.lastName} {payment.user.firstName}</h4>
+                     <h4>{t(payment.type)}</h4>
+                     <h4>{payment.balance.displayName}</h4>
+                     <h4 style={{ display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
+                        {getDebe(payment)}
+                     </h4>
+                     <h4 style={{ display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
+                        {getHaber(payment)}
+                     </h4>
                   </div>
                ))}
             </div>
-
-
          </div>
-
-
       </div>
-   )
-}
+   );
+};

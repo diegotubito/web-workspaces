@@ -1,0 +1,16 @@
+.cash_count_component__item {
+   margin-bottom: 1px;
+   background-color: rgba(95, 63, 127, 0.151);
+   padding: 1rem;
+}
+
+.cash_count_component__header-titles h5 {
+   font-weight: 700 !important;
+}
+
+.cash_count_component__balances {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr 1fr;
+   gap: 0.5rem;
+   text-align: right;
+}

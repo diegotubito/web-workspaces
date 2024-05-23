@@ -47,5 +47,12 @@ export const useTransactionRepository = () => {
       })
    }
 
-   return { fetchTransactionByWorkspaceAndAccount, fetchTransactionByEntity, isLoading, error, createNewPayment, disablePayment, fetchTransactionByInstallment, transferFundsRepo }
+   const fetchTransactionByWorkspaceAndAccountAndDate = (workspace, account, fromDate, toDate) => {
+      return apiCall({
+         path: `/api/v1/transaction-by-worspace-account-date?workspace=${workspace}&account=${account}&fromDate=${fromDate}&toDate=${toDate}`,
+         method: 'GET'
+      })
+   }
+
+   return { fetchTransactionByWorkspaceAndAccountAndDate, fetchTransactionByWorkspaceAndAccount, fetchTransactionByEntity, isLoading, error, createNewPayment, disablePayment, fetchTransactionByInstallment, transferFundsRepo }
 }

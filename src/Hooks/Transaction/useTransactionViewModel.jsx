@@ -4,7 +4,7 @@ import { useWorkspaceSession } from "../../Utils/Contexts/workspaceSessionContex
 import { useUserSession } from "../../Utils/Contexts/userSessionContext";
 
 export const useTransactionViewModel = () => {
-   const { fetchTransactionByWorkspaceAndAccount: fetchTransactionByWorkspaceAndAccountRepo, fetchTransactionByEntity, createNewPayment, disablePayment, fetchTransactionByInstallment, isLoading, transferFundsRepo } = useTransactionRepository()
+   const { fetchTransactionByWorkspaceAndAccountAndDate: fetchTransactionByWorkspaceAndAccountAndDateRepo, fetchTransactionByWorkspaceAndAccount: fetchTransactionByWorkspaceAndAccountRepo, fetchTransactionByEntity, createNewPayment, disablePayment, fetchTransactionByInstallment, isLoading, transferFundsRepo } = useTransactionRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
    const [payments, setPayments] = useState([])
@@ -53,6 +53,22 @@ export const useTransactionViewModel = () => {
       try {
          setTransactionIsLoading(true)
          const response = await fetchTransactionByWorkspaceAndAccountRepo(workspaceSession._id, account._id)
+         setPayments(response.transactions)
+         setOnTransactionError(null)
+      } catch (error) {
+         setOnTransactionError(error)
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
+
+      } finally {
+         setTransactionIsLoading(false)
+      }
+   }
+
+   const fetchTransactionByWorkspaceAndAccountAndDates = async (account, fromDate, toDate) => {
+      try {
+         setTransactionIsLoading(true)
+         const response = await fetchTransactionByWorkspaceAndAccountAndDateRepo(workspaceSession._id, account._id, fromDate, toDate)
          setPayments(response.transactions)
          setOnTransactionError(null)
       } catch (error) {
@@ -191,6 +207,7 @@ export const useTransactionViewModel = () => {
       setOnTransferError,
       transferSucceed,
       setTransferSucceed,
-      fetchTransactionByWorkspaceAndAccount
+      fetchTransactionByWorkspaceAndAccount,
+      fetchTransactionByWorkspaceAndAccountAndDates
    }
 }
