@@ -10,6 +10,14 @@ export const usePhysicalAccountRepository = () => {
       })
    }
 
+   const fetchAccountById = (_id) => {
+      return apiCall({
+         path: `/api/v1/workspace_accounts/${_id}`,
+         method: 'GET'
+      })
+   }
+
+
    const fetchAllAccountsByAssigneeRepo = (workspace, userId) => {
       return apiCall({
          path: `/api/v1/workspace_accounts_by_workspace_assignee?workspaceId=${workspace}&userId=${userId}`,
@@ -31,5 +39,5 @@ export const usePhysicalAccountRepository = () => {
       })
    }
 
-   return { fetchAllAccountsByAssigneeBalancesRepo, fetchAllAccountsByAssigneeTransferRepo, fetchAllAccountsByAssigneeRepo, fetchAllAccounts, isLoading, error }
+   return { fetchAccountById, fetchAllAccountsByAssigneeBalancesRepo, fetchAllAccountsByAssigneeTransferRepo, fetchAllAccountsByAssigneeRepo, fetchAllAccounts, isLoading, error }
 }

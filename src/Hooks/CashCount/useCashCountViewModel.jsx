@@ -4,18 +4,34 @@ import { useWorkspaceSession } from "../../Utils/Contexts/workspaceSessionContex
 import { useUserSession } from "../../Utils/Contexts/userSessionContext";
 
 export const useCashCountViewModel = () => {
-   const { closeCashCount: closeCashCountRepo, createCashCount: createCashCountRepo, fetchCashCountByWorkspaceAndAccount: fetchCashCountByWorkspaceAndAccountRepo } = useCashCountRepository()
+   const {
+      fetchCashCountByWorkspaceAndAccountLastClosed: fetchCashCountByWorkspaceAndAccountLastClosedRepo,
+      closeCashCount: closeCashCountRepo,
+      createCashCount: createCashCountRepo,
+      fetchCashCountByWorkspaceAndAccount: fetchCashCountByWorkspaceAndAccountRepo
+   } = useCashCountRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
    const [cashCounts, setCashCounts] = useState([])
    const [onCashCountFailed, setOnCashCountFailed] = useState(null)
    const [onCashCountSuccess, setOnCashCountSuccess] = useState(null)
+   const [lastClosedCashCount, setLastClosedCashCount] = useState()
 
 
    const getCashCountsByWorkspaceAndAccount = async (account) => {
       try {
          const response = await fetchCashCountByWorkspaceAndAccountRepo(workspaceSession._id, account._id)
          setCashCounts(response.cashCounts)
+      } catch (error) {
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
+      }
+   }
+
+   const fetchCashCountByWorkspaceAndAccountLastClosed = async (accountId) => {
+      try {
+         const response = await fetchCashCountByWorkspaceAndAccountLastClosedRepo(workspaceSession._id, accountId)
+         setLastClosedCashCount = response.lastCashCount
       } catch (error) {
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
@@ -55,5 +71,13 @@ export const useCashCountViewModel = () => {
       }
    }
 
-   return { closeCashCount, createCashCount, onCashCountSuccess, getCashCountsByWorkspaceAndAccount, cashCounts }
+   return {
+      fetchCashCountByWorkspaceAndAccountLastClosed,
+      lastClosedCashCount,
+      closeCashCount,
+      createCashCount,
+      onCashCountSuccess,
+      getCashCountsByWorkspaceAndAccount,
+      cashCounts
+   }
 }

@@ -8,12 +8,14 @@ import { dateAndTimeFormat } from '../../Utils/Common/dateUtils';
 import { SimpleButton } from '../Buttons/SimpleButton/SimpleButton';
 import { NewCashCountComponent } from './NewCashCount/NewCashCountComponent';
 import { CashCountComponent } from './CashCountComponent/CashCountComponent';
+import { usePhysicalAccountViewModel } from '../../Hooks/PhysicalAccount/usePhysicalAccountViewModel';
 
 export const BalanceView = ({ account }) => {
    const { t } = useTranslation();
    const { closeCashCount, createCashCount, getCashCountsByWorkspaceAndAccount, cashCounts, onCashCountSuccess } = useCashCountViewModel();
    const { fetchTransactionByWorkspaceAndAccountAndDates, fetchTransactionByWorkspaceAndAccount, payments } = useTransactionViewModel();
    const [lastCashCount, setLastCashCount] = useState({});
+   const { getAccountById, account: innerAccount } = usePhysicalAccountViewModel()
 
    useEffect(() => {
       getCashCountsByWorkspaceAndAccount(account);
@@ -33,8 +35,8 @@ export const BalanceView = ({ account }) => {
 
       if (lastCashCount && lastCashCount.closingDate) {
          fromDate = new Date(lastCashCount.closingDate).toISOString();
-      } else {
-         fromDate = new Date('2024-01-01T00:00:00Z').toISOString();
+      } else if (lastCashCount && lastCashCount.date) {
+         fromDate = new Date(lastCashCount.date).toISOString();
       }
       fetchTransactionByWorkspaceAndAccountAndDates(account, fromDate, toDate);
    }, [lastCashCount]);

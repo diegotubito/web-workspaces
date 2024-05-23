@@ -4,15 +4,33 @@ import { useWorkspaceSession } from "../../Utils/Contexts/workspaceSessionContex
 import { useUserSession } from "../../Utils/Contexts/userSessionContext";
 
 export const usePhysicalAccountViewModel = () => {
-   const { fetchAllAccountsByAssigneeBalancesRepo, fetchAllAccounts, fetchAllAccountsByAssigneeRepo, fetchAllAccountsByAssigneeTransferRepo, isLoading } = usePhysicalAccountRepository()
+   const {
+      fetchAccountById: fetchAccountByIdRepo,
+      fetchAllAccountsByAssigneeBalancesRepo,
+      fetchAllAccounts,
+      fetchAllAccountsByAssigneeRepo,
+      fetchAllAccountsByAssigneeTransferRepo,
+      isLoading
+   } = usePhysicalAccountRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
    const [accounts, setAccounts] = useState([])
+   const [account, setAccount] = useState()
 
    const getAllAccounts = async () => {
       try {
          const response = await fetchAllAccounts(workspaceSession._id)
          setAccounts(response.accounts)
+      } catch (error) {
+         console.log('Error title:', error.title); // This should show the custom error class name if available
+         console.log('Error message:', error.message); // This should show the custom message
+      }
+   }
+
+   const getAccountById = async (_id) => {
+      try {
+         const response = await fetchAccountByIdRepo(_id)
+         setAccount(response.account)
       } catch (error) {
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
@@ -49,7 +67,16 @@ export const usePhysicalAccountViewModel = () => {
       }
    }
 
- 
 
-   return { getAllAccounts, accounts, fetchAllAccountsByAssignee, fetchAllAccountsByAssigneeTransfer, isLoading, fetchAllAccountsByAssigneeBalances }
+
+   return {
+      getAccountById,
+      account,
+      getAllAccounts,
+      accounts,
+      fetchAllAccountsByAssignee,
+      fetchAllAccountsByAssigneeTransfer,
+      isLoading,
+      fetchAllAccountsByAssigneeBalances
+   }
 }

@@ -10,6 +10,13 @@ export const useCashCountRepository = () => {
       })
    }
 
+   const fetchCashCountByWorkspaceAndAccountLastClosed = (workspace, account) => {
+      return apiCall({
+         path: `/api/v1/last-closed-cash-count-workspace-account?workspace=${workspace}&account=${account}`,
+         method: 'GET'
+      })
+   }
+
    const createCashCount = (body) => {
       return apiCall({
          path: `/api/v1/cash-count`,
@@ -26,5 +33,5 @@ export const useCashCountRepository = () => {
       })
    }
 
-   return { closeCashCount, createCashCount, fetchCashCountByWorkspaceAndAccount, isLoading, error }
+   return { fetchCashCountByWorkspaceAndAccountLastClosed, closeCashCount, createCashCount, fetchCashCountByWorkspaceAndAccount, isLoading, error }
 }
