@@ -1,12 +1,7 @@
 .custom_component__total-amount-main {
    display: flex;
-   justify-content: end;
-   align-items: center;
-   gap: 1rem;
-   color: gray;
+   flex-direction: column;
    user-select: none;
-   margin-bottom: 3rem;
-
 }
 .custom_component__total-amount {
    background-color: whitesmoke;

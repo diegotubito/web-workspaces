@@ -75,7 +75,11 @@
    width: 10rem;
    font-size: 17px !important;
 }
-
+.purchase_view__add-item-button {
+   display: flex;
+   justify-content: flex-start;
+   gap: 1rem;
+}
 
 .purchase_view__buttons {
    display: flex;

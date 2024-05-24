@@ -46,7 +46,7 @@
 
      "_comment_purchase_order_crud_view": "PURCHASE_ORDER_CRUD_VIEW",
 
-     "PURCHASE_ORDER_CRUD_VIEW_TITLE": "Purchase Order",
+     "PURCHASE_ORDER_CRUD_VIEW_TITLE": "New Order",
      "PURCHASE_ORDER_CRUD_VIEW_SELECT_ARTICLE_TITLE": "Select Purchase Article",
      "PURCHASE_ORDER_CRUD_VIEW_ITEMS_TITLE": "Your Items",
      "PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE": "Add New Item",
@@ -90,5 +90,10 @@
      "CASH_COUNT_RESULT_BALANCED": "Balanced",
      "CASH_COUNT_RESULT_SHORTAGE": "Shortage",
      "CASH_COUNT_RESULT_SURPLUS": "Surplus",
-     "CASH_COUNT_RESULT_UNBALANCED": "Unbalanced"
+     "CASH_COUNT_RESULT_UNBALANCED": "Unbalanced",
+
+     "_comment_stakeholder_types": "Stakeholder Types",
+     "STAKEHOLDER_TYPE_CUSTOMER": "Customer",
+     "STAKEHOLDER_TYPE_EMPLOYEE": "Employee",
+     "STAKEHOLDER_TYPE_SUPPLIER": "Supplier"
 }

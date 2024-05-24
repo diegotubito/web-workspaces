@@ -14,6 +14,8 @@ import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert'
 import { TotalAmount } from '../../../Components/TotalAmount/TotalAmount';
 import { PaymentMethodSelector } from '../../../Components/PaymentMethodSelector/PaymentMehtodSelector';
 import { CurrencySelector } from '../../../Components/CurrencySelector/CurrencySelector';
+import { CustomerSelector } from '../../../Components/CustomerSelector/CustomerSelector';
+import { StakeholderTypeSelector } from '../../../Components/StakeholderTypeSelector/StakeholderTypeSelector';
 
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
@@ -35,6 +37,8 @@ export const PurchaseCrudView = () => {
 
    const [saleItems, setSaleItems] = useState([])
    const [availableSaleItems, setAvailableSaleItems] = useState([])
+   const [selectedCustomer, setSelectedCustomer] = useState()
+   const [selectedStakeholderType, setSelectedStakeholderType] = useState()
 
    // const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
    const [selectedStakeholder, setSelectedStakeholder] = useState("")
@@ -61,7 +65,10 @@ export const PurchaseCrudView = () => {
       }
    }, [onOrderSuccess])
 
- 
+   useEffect(() => {
+      console.log(selectedCustomer)
+   }, [selectedCustomer, setSelectedCustomer])
+
 
    // 2 - We programmatically select a default option, in this case, the first option. 
    useEffect(() => {
@@ -174,30 +181,18 @@ export const PurchaseCrudView = () => {
                            </select>
                         </div>
 
-                        <PaymentMethodSelector
-                           title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
-                           selectedPaymentItem={selectedPaymentItem}
-                           setSelectedPaymentItem={setSelectedPaymentItem}
+                        <StakeholderTypeSelector
+                           title={'Stakeholder Type'}
+                           selectedStakeholderType={selectedStakeholderType}
+                           setSelectedStakeholderType={setSelectedStakeholderType}
                         />
 
-                        <CurrencySelector
-                           title={t('PAYMENT_VIEW_CURRENCY_TITLE')}
-                           selectedCurrency={selectedCurrency}
-                           setSelectedCurrency={setSelectedCurrency}
+                        <CustomerSelector
+                           selectedCustomer={selectedCustomer}
+                           setSelectedCustomer={setSelectedCustomer}
                         />
 
-                        <div>
-                           <h3 className='purchase_view__form-title'>{t('Installments')}</h3>
-                           <QuantityTextField
-                              value={installmentNumber}
-                              onChangeValue={onInstallmentNumberChangeHandler}
-                              minValue={0}
-                              maxValue={18}
-                           />
-
-                        </div>
-
-                        <div className='purchase_view__buttons'>
+                        <div className='purchase_view__add-item-button'>
                            <SimpleButton
                               title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
                               style='primary'
@@ -211,6 +206,20 @@ export const PurchaseCrudView = () => {
                            setItems={setOrderItems}
                         />
 
+                        <PaymentMethodSelector
+                           title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
+                           selectedPaymentItem={selectedPaymentItem}
+                           setSelectedPaymentItem={setSelectedPaymentItem}
+                        />
+
+                        <QuantityTextField
+                           title="Installments"
+                           value={installmentNumber}
+                           onChangeValue={onInstallmentNumberChangeHandler}
+                           maxValue={18}
+                           minValue={1}
+                           placeholder="Enter quantity"
+                        />
 
                         <TotalAmount
                            title={t('PURCHASE_ORDER_CRUD_VIEW_TOTAL_TO_PAY_TITLE')}
@@ -218,7 +227,6 @@ export const PurchaseCrudView = () => {
                            total={totalAmount}
                            setTotal={setTotalAmount}
                         />
-
 
                         <div className='purchase_view__buttons'>
                            <SimpleButton
