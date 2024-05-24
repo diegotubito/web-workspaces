@@ -49,7 +49,7 @@ export const CashBalanceView = () => {
                   marginBottom: '2rem'
                }}>
                   <BalanceView
-                     account={account}
+                     accountId={account._id}
                   />
 
                </div>

@@ -61,7 +61,7 @@ export const CashCountComponent = ({cashCount, onCloseCashCount}) => {
 
          {cashCount.status !== 'CASH_COUNT_STATUS_CLOSED' && <SimpleButton
             title={t('Close Cash Count')}
-            style='primary'
+            style='destructive'
             onClick={handleSubmit}
          />}
       </div>

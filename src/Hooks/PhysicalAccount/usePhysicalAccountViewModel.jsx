@@ -16,6 +16,7 @@ export const usePhysicalAccountViewModel = () => {
    const { userSession } = useUserSession()
    const [accounts, setAccounts] = useState([])
    const [account, setAccount] = useState()
+   const [onError, setOnError] = useState(null)
 
    const getAllAccounts = async () => {
       try {
@@ -31,7 +32,9 @@ export const usePhysicalAccountViewModel = () => {
       try {
          const response = await fetchAccountByIdRepo(_id)
          setAccount(response.account)
+         setOnError(null)
       } catch (error) {
+         setOnError(error)
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
       }
@@ -77,6 +80,8 @@ export const usePhysicalAccountViewModel = () => {
       fetchAllAccountsByAssignee,
       fetchAllAccountsByAssigneeTransfer,
       isLoading,
-      fetchAllAccountsByAssigneeBalances
+      fetchAllAccountsByAssigneeBalances,
+      onError,
+      setOnError
    }
 }

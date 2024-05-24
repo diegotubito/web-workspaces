@@ -9,41 +9,67 @@ import { SimpleButton } from '../Buttons/SimpleButton/SimpleButton';
 import { NewCashCountComponent } from './NewCashCount/NewCashCountComponent';
 import { CashCountComponent } from './CashCountComponent/CashCountComponent';
 import { usePhysicalAccountViewModel } from '../../Hooks/PhysicalAccount/usePhysicalAccountViewModel';
+import { Spinner } from '../Spinner/spinner';
+import { Button, Alert } from 'react-bootstrap';
 
-export const BalanceView = ({ account }) => {
+export const BalanceView = ({ accountId }) => {
    const { t } = useTranslation();
-   const { closeCashCount, createCashCount, getCashCountsByWorkspaceAndAccount, cashCounts, onCashCountSuccess } = useCashCountViewModel();
-   const { fetchTransactionByWorkspaceAndAccountAndDates, fetchTransactionByWorkspaceAndAccount, payments } = useTransactionViewModel();
-   const [lastCashCount, setLastCashCount] = useState({});
-   const { getAccountById, account: innerAccount } = usePhysicalAccountViewModel()
+   const {
+      fetchCashCountByWorkspaceAndAccountLastClosed,
+      lastClosedCashCount,
+      closeCashCount,
+      createCashCount,
+      getCashCountsByWorkspaceAndAccount,
+      cashCounts,
+      onCashCountSuccess,
+      isLoading: cashCountLoading
+   } = useCashCountViewModel();
+
+   const {
+      fetchTransactionByWorkspaceAndAccountAndDates,
+      fetchTransactionByWorkspaceAndAccount,
+      payments,
+      isLoading: transactionLoading
+   } = useTransactionViewModel();
+   const {
+      getAccountById,
+      account,
+      isLoading: accountLoading,
+      onError: onAccountError,
+      setOnError: setOnAccountError
+   } = usePhysicalAccountViewModel()
 
    useEffect(() => {
-      getCashCountsByWorkspaceAndAccount(account);
-   }, []);
-
-   useEffect(() => {
-      if (cashCounts.length > 0) {
-         setLastCashCount(cashCounts[0]);
-      } else {
-         setLastCashCount({});
+      if (accountId) {
+         getAccountById(accountId)
       }
-   }, [cashCounts]);
+   }, [accountId])
 
    useEffect(() => {
-      let fromDate;
-      let toDate = new Date().toISOString();
-
-      if (lastCashCount && lastCashCount.closingDate) {
-         fromDate = new Date(lastCashCount.closingDate).toISOString();
-      } else if (lastCashCount && lastCashCount.date) {
-         fromDate = new Date(lastCashCount.date).toISOString();
+      if (account) {
+         getCashCountsByWorkspaceAndAccount(account);
+         fetchCashCountByWorkspaceAndAccountLastClosed(account)
       }
-      fetchTransactionByWorkspaceAndAccountAndDates(account, fromDate, toDate);
-   }, [lastCashCount]);
+   }, [account]);
+
+   useEffect(() => {
+      if (lastClosedCashCount) {
+         let fromDate;
+         let toDate = new Date().toISOString();
+
+         if (lastClosedCashCount.closingDate) {
+            fromDate = new Date(lastClosedCashCount.closingDate).toISOString();
+         } else if (lastClosedCashCount.date) {
+            fromDate = new Date(lastClosedCashCount.date).toISOString();
+         }
+         fetchTransactionByWorkspaceAndAccountAndDates(account, fromDate, toDate);
+
+      }
+   }, [lastClosedCashCount]);
 
    useEffect(() => {
       if (onCashCountSuccess) {
-         getCashCountsByWorkspaceAndAccount(account);
+         getAccountById(accountId)
       }
    }, [onCashCountSuccess])
 
@@ -56,9 +82,8 @@ export const BalanceView = ({ account }) => {
 
    const getSnapshotAmount = (balance) => {
       let amount = 0;
-      const lastCashAccount = cashCounts[0];
-      if (lastCashAccount) {
-         const innerBalances = lastCashAccount.balances;
+      if (lastClosedCashCount) {
+         const innerBalances = lastClosedCashCount.balances;
          const innerBalance = innerBalances.find((b) => b.balance._id === balance._id);
          if (innerBalance) {
             amount = innerBalance.countedAmount;
@@ -69,9 +94,8 @@ export const BalanceView = ({ account }) => {
 
    const getSnapshotPendingAmount = (balance) => {
       let amount = 0;
-      const lastCashAccount = cashCounts[0];
-      if (lastCashAccount) {
-         const innerBalances = lastCashAccount.balances;
+      if (lastClosedCashCount) {
+         const innerBalances = lastClosedCashCount.balances;
          const innerBalance = innerBalances.find((b) => b.balance._id === balance._id);
          if (innerBalance) {
             amount = innerBalance.balanceSnapshot.pendingAmount;
@@ -136,8 +160,36 @@ export const BalanceView = ({ account }) => {
       closeCashCount(cashCount);
    };
 
+   if (!account) {
+      return
+   }
+
+   if (onAccountError) {
+      return (
+         <div className="alert-container">
+            <Alert variant="warning">
+               <Alert.Heading>{onAccountError.title}</Alert.Heading>
+               <h3>
+                  {onAccountError.message}
+               </h3>
+               <hr />
+               <div className="d-flex justify-content-end">
+                  <Button onClick={() => setOnAccountError(null)} variant="outline-success">
+                     Close me
+                  </Button>
+               </div>
+            </Alert>
+         </div>
+      )
+   }
+
    return (
       <div className='balance_view__container'>
+
+         {(accountLoading || transactionLoading || cashCountLoading) && (
+            <Spinner />
+         )}
+
          <h1>{account.name}</h1>
 
          <div className='balance_view__main'>

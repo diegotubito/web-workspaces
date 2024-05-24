@@ -28,10 +28,10 @@ export const useCashCountViewModel = () => {
       }
    }
 
-   const fetchCashCountByWorkspaceAndAccountLastClosed = async (accountId) => {
+   const fetchCashCountByWorkspaceAndAccountLastClosed = async (account) => {
       try {
-         const response = await fetchCashCountByWorkspaceAndAccountLastClosedRepo(workspaceSession._id, accountId)
-         setLastClosedCashCount = response.lastCashCount
+         const response = await fetchCashCountByWorkspaceAndAccountLastClosedRepo(workspaceSession._id, account._id)
+         setLastClosedCashCount(response.lastCashCount)
       } catch (error) {
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message

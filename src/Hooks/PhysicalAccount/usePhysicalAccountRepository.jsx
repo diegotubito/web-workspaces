@@ -12,7 +12,7 @@ export const usePhysicalAccountRepository = () => {
 
    const fetchAccountById = (_id) => {
       return apiCall({
-         path: `/api/v1/workspace_accounts/${_id}`,
+         path: `/api/v1/workspace_account?_id=${_id}`,
          method: 'GET'
       })
    }
