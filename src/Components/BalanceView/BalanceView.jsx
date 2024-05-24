@@ -22,7 +22,9 @@ export const BalanceView = ({ accountId }) => {
       getCashCountsByWorkspaceAndAccount,
       cashCounts,
       onCashCountSuccess,
-      isLoading: cashCountLoading
+      isLoading: cashCountLoading,
+      onError: onCashCountError,
+      setOnError: setOnCashCountError
    } = useCashCountViewModel();
 
    const {
@@ -175,6 +177,25 @@ export const BalanceView = ({ accountId }) => {
                <hr />
                <div className="d-flex justify-content-end">
                   <Button onClick={() => setOnAccountError(null)} variant="outline-success">
+                     Close me
+                  </Button>
+               </div>
+            </Alert>
+         </div>
+      )
+   }
+
+   if (onCashCountError) {
+      return (
+         <div className="alert-container">
+            <Alert variant="warning">
+               <Alert.Heading>{onCashCountError.title}</Alert.Heading>
+               <h3>
+                  {onCashCountError.message}
+               </h3>
+               <hr />
+               <div className="d-flex justify-content-end">
+                  <Button onClick={() => setOnCashCountError(null)} variant="outline-success">
                      Close me
                   </Button>
                </div>

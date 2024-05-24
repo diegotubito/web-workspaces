@@ -8,12 +8,13 @@ export const useCashCountViewModel = () => {
       fetchCashCountByWorkspaceAndAccountLastClosed: fetchCashCountByWorkspaceAndAccountLastClosedRepo,
       closeCashCount: closeCashCountRepo,
       createCashCount: createCashCountRepo,
-      fetchCashCountByWorkspaceAndAccount: fetchCashCountByWorkspaceAndAccountRepo
+      fetchCashCountByWorkspaceAndAccount: fetchCashCountByWorkspaceAndAccountRepo,
+      isLoading
    } = useCashCountRepository()
    const { workspaceSession } = useWorkspaceSession()
    const { userSession } = useUserSession()
    const [cashCounts, setCashCounts] = useState([])
-   const [onCashCountFailed, setOnCashCountFailed] = useState(null)
+   const [onError, setOnError] = useState(null)
    const [onCashCountSuccess, setOnCashCountSuccess] = useState(null)
    const [lastClosedCashCount, setLastClosedCashCount] = useState()
 
@@ -48,9 +49,9 @@ export const useCashCountViewModel = () => {
          }
          const response = await createCashCountRepo(body)
          setOnCashCountSuccess(true)
-         setOnCashCountFailed(false)
+         setOnError(null)
       } catch (error) {
-         setOnCashCountFailed(true)
+         setOnError(error)
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
       }
@@ -65,7 +66,9 @@ export const useCashCountViewModel = () => {
          }
          const response = await closeCashCountRepo(body)
          setOnCashCountSuccess(true)
+         setOnError(null)
       } catch (error) {
+         setOnError(error)
          console.log('Error title:', error.title); // This should show the custom error class name if available
          console.log('Error message:', error.message); // This should show the custom message
       }
@@ -78,6 +81,9 @@ export const useCashCountViewModel = () => {
       createCashCount,
       onCashCountSuccess,
       getCashCountsByWorkspaceAndAccount,
-      cashCounts
+      cashCounts,
+      onError,
+      setOnError,
+      isLoading
    }
 }
