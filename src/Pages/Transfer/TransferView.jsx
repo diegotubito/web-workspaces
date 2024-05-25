@@ -9,8 +9,8 @@ import { Button, Alert } from 'react-bootstrap';
 import { Spinner } from '../../Components/Spinner/spinner'
 import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton'
 import { ErrorAlert } from '../../Components/CustomAlert/ErrorAlert';
-import { PhysicalAccountSelector } from '../../Components/PhysicalAccountSelector/PhysicalAccountSelector';
-import { AmountTextField } from '../../Components/TextField/AmountTextField/AmountTextField'
+import { PhysicalAccountSelector } from '../../Components/Selectors/PhysicalAccountSelector/PhysicalAccountSelector';
+import { AmountTextField } from '../../Components/TextField/AmountTextField/AmountTextField';
 import { useTransactionViewModel } from '../../Hooks/Transaction/useTransactionViewModel';
 
 export const TransferView = () => {

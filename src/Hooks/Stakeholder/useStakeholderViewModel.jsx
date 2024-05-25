@@ -50,6 +50,7 @@ export const useStakeholderViewModel = () => {
 
    return {
       stakeholders,
+      setStakeholders,
       isLoading,
       getStakeholdersByType,
       onStakeholderFailed,

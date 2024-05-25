@@ -6,13 +6,13 @@ import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Co
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton'
 import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert';
-import { CustomerSelector } from '../../../Components/CustomerSelector/CustomerSelector';
+import { CustomerSelector } from '../../../Components/Selectors/CustomerSelector/CustomerSelector';
 import { useItemViewModel } from '../../../Hooks/Item/useItemViewModel';
 import { useSaleItemFormViewModel } from './useSaleItemFormViewModel';
 import { InputFieldColumn } from '../../../Components/InputFieldColumn/InputFieldColumn';
 import { TotalAmount } from '../../../Components/TotalAmount/TotalAmount';
-import { PaymentMethodSelector } from '../../../Components/PaymentMethodSelector/PaymentMehtodSelector';
-import { CurrencySelector } from '../../../Components/CurrencySelector/CurrencySelector';
+import { PaymentMethodSelector } from '../../../Components/Selectors/PaymentMethodSelector/PaymentMehtodSelector';
+import { CurrencySelector } from '../../../Components/Selectors/CurrencySelector/CurrencySelector';
 import { useOrderViewModel } from '../../../Hooks/Order/useOrderViewModel';
 import { QuantityTextField } from '../../../Components/TextField/QuantityTextField/QuantityTextField';
 

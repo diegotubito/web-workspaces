@@ -1,7 +1,6 @@
 import './PuchaseCrudView.css'
 import { useEffect, useState } from 'react'
 import { useOrderViewModel } from '../../../Hooks/Order/useOrderViewModel';
-import { useStakeholderViewModel } from '../../../Hooks/Stakeholder/useStakeholderViewModel';
 import { useTranslation } from 'react-i18next';
 import { usePurchaseFormViewModel } from '../FormHook/usePurchaseFormViewModel'
 import { InputFieldColumn } from '../../../Components/InputFieldColumn/InputFieldColumn'
@@ -12,10 +11,13 @@ import { useNavigate } from 'react-router-dom';
 import { QuantityTextField } from '../../../Components/TextField/QuantityTextField/QuantityTextField';
 import { ErrorAlert } from '../../../Components/CustomAlert/ErrorAlert'
 import { TotalAmount } from '../../../Components/TotalAmount/TotalAmount';
-import { PaymentMethodSelector } from '../../../Components/PaymentMethodSelector/PaymentMehtodSelector';
-import { CurrencySelector } from '../../../Components/CurrencySelector/CurrencySelector';
-import { CustomerSelector } from '../../../Components/CustomerSelector/CustomerSelector';
-import { StakeholderTypeSelector } from '../../../Components/StakeholderTypeSelector/StakeholderTypeSelector';
+import { CurrencySelector } from '../../../Components/Selectors/CurrencySelector/CurrencySelector';
+import { CustomerSelector } from '../../../Components/Selectors/CustomerSelector/CustomerSelector';
+import { StakeholderTypeSelector } from '../../../Components/Selectors/StakeholderTypeSelector/StakeholderTypeSelector';
+import { PaymentMethodSelector } from '../../../Components/Selectors/PaymentMethodSelector/PaymentMehtodSelector';
+import { OrderTypeSelector } from '../../../Components/Selectors/OrderTypeSelector/OrderTypeSelector';
+import { StakeholderType } from '../../../Hooks/Stakeholder/stakeholderType';
+import { OrderType } from '../../../Hooks/Order/orderType';
 
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
@@ -28,17 +30,10 @@ export const PurchaseCrudView = () => {
       onOrderSuccess,
    } = useOrderViewModel()
 
-   const {
-      stakeholders,
-      stakeholderIsLoading,
-      getStakeholdersByType,
-      setOnStakeholderFailed
-   } = useStakeholderViewModel()
-
    const [saleItems, setSaleItems] = useState([])
    const [availableSaleItems, setAvailableSaleItems] = useState([])
-   const [selectedCustomer, setSelectedCustomer] = useState()
    const [selectedStakeholderType, setSelectedStakeholderType] = useState()
+   const [selectedOrderType, setSelectedOrderType] = useState()
 
    // const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
    const [selectedStakeholder, setSelectedStakeholder] = useState("")
@@ -52,12 +47,28 @@ export const PurchaseCrudView = () => {
 
    const [installmentNumber, setInstallmentNumber] = useState(1)
 
+   useEffect(() => {
+      if (selectedOrderType) {
+         switch (selectedOrderType) {
+            case OrderType.PURCHASE:
+               setSelectedStakeholderType(StakeholderType.SUPPLIER)
+               break
+            case OrderType.SALE:
+               setSelectedStakeholderType(StakeholderType.CUSTOMER)
+               break
+            case OrderType.ADJUSTMENT_SHORTAGE:
+            case OrderType.ADJUSTMENT_SURPLUS:
+               setSelectedStakeholderType(StakeholderType.EMPLOYEE)
+               break
+
+         }
+      }
+   }, [selectedOrderType, setSelectedOrderType])
+
    // 1 - Fetch All Purchase Items From API 
    useEffect(() => {
-      setSelectedStakeholder('')
-      getStakeholdersByType('SUPPLIER')
-      
-   }, [])
+      setSelectedStakeholder(null)
+   }, [selectedStakeholderType])
 
    useEffect(() => {
       if (onOrderSuccess) {
@@ -65,31 +76,17 @@ export const PurchaseCrudView = () => {
       }
    }, [onOrderSuccess])
 
-   useEffect(() => {
-      console.log(selectedCustomer)
-   }, [selectedCustomer, setSelectedCustomer])
-
-
    // 2 - We programmatically select a default option, in this case, the first option. 
-   useEffect(() => {
-      if (stakeholders.length > 0) {
-         setSelectedStakeholder(stakeholders[0]._id)
-         
-      }
-   }, [stakeholders])
-
-  
-
    
    // 3A - When picking a selector element, we create a default blank item.
    useEffect(() => {
       if (selectedStakeholder) {
          setOrderItems([])
         
-         const stakeholder = stakeholders.filter((s) => s._id === selectedStakeholder)
-         if (stakeholder) {
-            setSaleItems(stakeholder[0].items)
-         }
+         //const stakeholder = stakeholders.filter((s) => s._id === selectedStakeholder)
+        // if (stakeholder) {
+            //setSaleItems(stakeholder[0].items)
+        // }
       }
    }, [selectedStakeholder])
 
@@ -169,27 +166,16 @@ export const PurchaseCrudView = () => {
 
                      <div className='purchase_view__gap'>
 
-                        <div>
-                           <h3 className='purchase_view__form-title'>{t('PURCHASE_ORDER_CRUD_VIEW_SELECT_ARTICLE_TITLE')}</h3>
-                           <select className="form-select" value={selectedStakeholder} onChange={handleChange}>
-                              {stakeholders.map((stakeholder) => {
-                                 return (
-                                    <option key={stakeholder._id} value={stakeholder._id}>{stakeholder.title} {stakeholder.subTitle}</option>
-                                 )
-                              }
-                              )}
-                           </select>
-                        </div>
-
-                        <StakeholderTypeSelector
-                           title={'Stakeholder Type'}
-                           selectedStakeholderType={selectedStakeholderType}
-                           setSelectedStakeholderType={setSelectedStakeholderType}
+                        <OrderTypeSelector
+                           tite={'Order Type'}
+                           selectedOrderType={selectedOrderType}
+                           setSelectedOrderType={setSelectedOrderType}
                         />
 
                         <CustomerSelector
-                           selectedCustomer={selectedCustomer}
-                           setSelectedCustomer={setSelectedCustomer}
+                           selectedCustomer={selectedStakeholder}
+                           setSelectedCustomer={setSelectedStakeholder}
+                           stakeholderType={selectedStakeholderType}
                         />
 
                         <div className='purchase_view__add-item-button'>

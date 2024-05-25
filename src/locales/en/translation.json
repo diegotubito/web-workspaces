@@ -95,5 +95,17 @@
      "_comment_stakeholder_types": "Stakeholder Types",
      "STAKEHOLDER_TYPE_CUSTOMER": "Customer",
      "STAKEHOLDER_TYPE_EMPLOYEE": "Employee",
-     "STAKEHOLDER_TYPE_SUPPLIER": "Supplier"
+     "STAKEHOLDER_TYPE_SUPPLIER": "Supplier",
+
+     "_comment_order_types": "Order Types",
+
+     "SALE_ORDER": "Sale Order",
+     "PURCHASE_ORDER": "Purchase Order",
+     "ADJUSTMENT_SURPLUS": "Adjustment Surplus",
+     "ADJUSTMENT_SHORTAGE": "Adjustment Shortage",
+     "CREDIT_NOTE": "Credit Note",
+     "DEBIT_NOTE": "Debit Note",
+     "TRANSFER_ORIGIN": "Transfer Origin",
+     "TRANSFER_DESTINY": "Transfer Destiny"
 }
+

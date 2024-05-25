@@ -89,5 +89,16 @@
   "CASH_COUNT_RESULT_BALANCED": "Balanceado",
   "CASH_COUNT_RESULT_SHORTAGE": "Faltante",
   "CASH_COUNT_RESULT_SURPLUS": "Sobrandte",
-  "CASH_COUNT_RESULT_UNBALANCED": "Desbalanceado"
+  "CASH_COUNT_RESULT_UNBALANCED": "Desbalanceado",
+
+  "_comment_order_types": "Order Types",
+
+  "SALE_ORDER": "Orden de Venta",
+  "PURCHASE_ORDER": "Orden de Compra",
+  "ADJUSTMENT_SURPLUS": "Sobrante de Caja",
+  "ADJUSTMENT_SHORTAGE": "Faltante de Caja",
+  "CREDIT_NOTE": "Nota de Credito",
+  "DEBIT_NOTE": "Nota de Debito",
+  "TRANSFER_ORIGIN": "Transferencia Origen",
+  "TRANSFER_DESTINY": "Transferencia Destino"
 }

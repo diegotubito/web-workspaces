@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useItemViewModel } from "../../Hooks/Item/useItemViewModel"
+import { useItemViewModel } from "../../../Hooks/Item/useItemViewModel";
 import { useTranslation } from 'react-i18next';
 
 export const SaleItemSelector = ({selectedSaleItem, setSelectedSaleItem}) => {

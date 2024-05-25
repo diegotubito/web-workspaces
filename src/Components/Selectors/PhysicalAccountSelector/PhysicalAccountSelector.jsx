@@ -1,8 +1,8 @@
 import './PhysicalAccountSelector.css'
 import { useEffect, useState } from "react";
-import { usePhysicalAccountViewModel } from "../../Hooks/PhysicalAccount/usePhysicalAccountViewModel"
+import { usePhysicalAccountViewModel } from '../../../Hooks/PhysicalAccount/usePhysicalAccountViewModel';
 import { useTranslation } from 'react-i18next';
-import { formatCurrency } from "../../Utils/Common/formatCurrency";
+import { formatCurrency } from '../../../Utils/Common/formatCurrency';
 
 export const PhysicalAccountSelector = ({
    destiny,

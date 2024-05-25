@@ -1,6 +1,6 @@
 import './CurrencySelector.css'
 import { useEffect } from "react";
-import { useCurrencyViewModel } from '../../Hooks/Currency/useCurrencyViewModel';
+import { useCurrencyViewModel } from '../../../Hooks/Currency/useCurrencyViewModel'
 import { useTranslation } from 'react-i18next';
 
 export const CurrencySelector = ({ title, selectedCurrency, setSelectedCurrency }) => {

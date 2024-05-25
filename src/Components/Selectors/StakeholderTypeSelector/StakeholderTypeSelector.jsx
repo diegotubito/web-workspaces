@@ -1,7 +1,7 @@
 import './StakeholderTypeSelector.css'
 import { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
-import { StakeholderType } from '../../Hooks/Stakeholder/stakeholderType';
+import { StakeholderType } from '../../../Hooks/Stakeholder/stakeholderType';
 
 export const StakeholderTypeSelector = ({ title, selectedStakeholderType, setSelectedStakeholderType }) => {
    const { t } = useTranslation()
