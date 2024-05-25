@@ -75,6 +75,7 @@
    width: 10rem;
    font-size: 17px !important;
 }
+
 .purchase_view__add-item-button {
    display: flex;
    justify-content: flex-start;
@@ -84,5 +85,17 @@
 .purchase_view__buttons {
    display: flex;
    justify-content: flex-end;
+   gap: 1rem;
+}
+
+.puchase_view__payment_and_currency {
+   display: flex;
+   flex-direction: row;
+   gap: 1rem;
+}
+
+.puchase_view__discount_and_total {
+   display: flex;
+   justify-content: space-between;
    gap: 1rem;
 }

@@ -1,5 +1,7 @@
 export const usePurchaseFormViewModel = ({ setOrderItems, saleItems }) => {
    const createProductItem = () => {
+
+      console.log(saleItems)
       const emptyInputField = createEmptyProduct()
       setOrderItems((currentItems) => {
          return [...currentItems, emptyInputField]

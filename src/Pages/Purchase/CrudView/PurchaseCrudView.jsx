@@ -18,11 +18,12 @@ import { PaymentMethodSelector } from '../../../Components/Selectors/PaymentMeth
 import { OrderTypeSelector } from '../../../Components/Selectors/OrderTypeSelector/OrderTypeSelector';
 import { StakeholderType } from '../../../Hooks/Stakeholder/stakeholderType';
 import { OrderType } from '../../../Hooks/Order/orderType';
+import { useItemViewModel } from '../../../Hooks/Item/useItemViewModel';
 
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
    const { t } = useTranslation()
-  
+
    const {
       createOrder,
       itemIsLoading,
@@ -30,35 +31,49 @@ export const PurchaseCrudView = () => {
       onOrderSuccess,
    } = useOrderViewModel()
 
-   const [saleItems, setSaleItems] = useState([])
+   const {
+      fetchItemsByWorkspaceAndStakeholder,
+      fetchSaleItemsByWorkspace,
+      saleItems,
+      saleItemsIsLoading,
+      onGetSaleFailed,
+      setOnGetSaleFailed
+   } = useItemViewModel()
+
    const [availableSaleItems, setAvailableSaleItems] = useState([])
    const [selectedStakeholderType, setSelectedStakeholderType] = useState()
    const [selectedOrderType, setSelectedOrderType] = useState()
 
-   // const [selectedPurchaseItem, setSelectedPurchaseItem] = useState("");
    const [selectedStakeholder, setSelectedStakeholder] = useState("")
    const [orderItems, setOrderItems] = useState([]);
    const { createProductItem } = usePurchaseFormViewModel({ orderItems, setOrderItems, saleItems })
    const [totalAmount, setTotalAmount] = useState(0)
 
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
-
    const [selectedCurrency, setSelectedCurrency] = useState("")
-
    const [installmentNumber, setInstallmentNumber] = useState(1)
 
    useEffect(() => {
+
+   }, [])
+
+   useEffect(() => {
       if (selectedOrderType) {
+         setOrderItems([])
+
          switch (selectedOrderType) {
             case OrderType.PURCHASE:
                setSelectedStakeholderType(StakeholderType.SUPPLIER)
+               fetchSaleItemsByWorkspace(false)
                break
             case OrderType.SALE:
                setSelectedStakeholderType(StakeholderType.CUSTOMER)
+               fetchSaleItemsByWorkspace(true)
                break
             case OrderType.ADJUSTMENT_SHORTAGE:
             case OrderType.ADJUSTMENT_SURPLUS:
                setSelectedStakeholderType(StakeholderType.EMPLOYEE)
+               fetchSaleItemsByWorkspace(true)
                break
 
          }
@@ -77,38 +92,18 @@ export const PurchaseCrudView = () => {
    }, [onOrderSuccess])
 
    // 2 - We programmatically select a default option, in this case, the first option. 
-   
+
    // 3A - When picking a selector element, we create a default blank item.
-   useEffect(() => {
-      if (selectedStakeholder) {
-         setOrderItems([])
-        
-         //const stakeholder = stakeholders.filter((s) => s._id === selectedStakeholder)
-        // if (stakeholder) {
-            //setSaleItems(stakeholder[0].items)
-        // }
-      }
-   }, [selectedStakeholder])
+
 
    useEffect(() => {
-         
+
    }, [saleItems])
 
    // 3B - Or we can create a defaul blank item, by clicking on the + button. 
    const onNewItemDidPressed = () => {
-      createNewItem()
-   }
-
-   // 4 - Create a new blank item 
-   const createNewItem = () => {
       createProductItem()
    }
-
-   // 5 - When Purchase Selector Option changed, we start again creating a default item, deleteting all first.
-   const handleChange = (event) => {
-      const itemId = event.target.value;
-      setSelectedStakeholder(itemId);
-   };
 
    useEffect(() => {
       updateTotalAmount()
@@ -134,7 +129,7 @@ export const PurchaseCrudView = () => {
    }
 
    const onCreateOrderDidPressed = () => {
-      createOrder('purchase', orderItems, convertCurrencyStringToNumber(totalAmount), selectedStakeholder, selectedPaymentItem, selectedCurrency, installmentNumber)
+      createOrder(selectedOrderType, orderItems, convertCurrencyStringToNumber(totalAmount), selectedStakeholder, selectedPaymentItem, selectedCurrency, installmentNumber)
    }
 
    const onCancelDidPressed = () => {
@@ -158,7 +153,7 @@ export const PurchaseCrudView = () => {
                      navigate={navigate}
                   />
                )}
-             
+
                <div className='purchase_view__gap'>
 
                   <div>
@@ -178,6 +173,7 @@ export const PurchaseCrudView = () => {
                            stakeholderType={selectedStakeholderType}
                         />
 
+
                         <div className='purchase_view__add-item-button'>
                            <SimpleButton
                               title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
@@ -192,27 +188,53 @@ export const PurchaseCrudView = () => {
                            setItems={setOrderItems}
                         />
 
-                        <PaymentMethodSelector
-                           title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
-                           selectedPaymentItem={selectedPaymentItem}
-                           setSelectedPaymentItem={setSelectedPaymentItem}
-                        />
-
-                        <QuantityTextField
-                           title="Installments"
-                           value={installmentNumber}
-                           onChangeValue={onInstallmentNumberChangeHandler}
-                           maxValue={18}
-                           minValue={1}
-                           placeholder="Enter quantity"
-                        />
-
                         <TotalAmount
-                           title={t('PURCHASE_ORDER_CRUD_VIEW_TOTAL_TO_PAY_TITLE')}
+                           title={t('Partial Total')}
                            items={orderItems}
                            total={totalAmount}
                            setTotal={setTotalAmount}
                         />
+
+                        <div className='puchase_view__payment_and_currency'>
+                           <PaymentMethodSelector
+                              title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
+                              selectedPaymentItem={selectedPaymentItem}
+                              setSelectedPaymentItem={setSelectedPaymentItem}
+                           />
+
+                           <CurrencySelector
+                              title={t('PAYMENT_VIEW_CURRENCY_TITLE')}
+                              selectedCurrency={selectedCurrency}
+                              setSelectedCurrency={setSelectedCurrency}
+                           />
+
+                           <QuantityTextField
+                              title="Installments"
+                              value={installmentNumber}
+                              onChangeValue={onInstallmentNumberChangeHandler}
+                              maxValue={18}
+                              minValue={1}
+                              placeholder="Enter quantity"
+                           />
+                        </div>
+
+                        <div className='puchase_view__discount_and_total'>
+                           <TotalAmount
+                              title={t('Discounts')}
+                              items={orderItems}
+                              total={totalAmount}
+                              setTotal={setTotalAmount}
+                           />
+
+                           <TotalAmount
+                              title={t('PURCHASE_ORDER_CRUD_VIEW_TOTAL_TO_PAY_TITLE')}
+                              items={orderItems}
+                              total={totalAmount}
+                              setTotal={setTotalAmount}
+                           />
+                        </div>
+
+
 
                         <div className='purchase_view__buttons'>
                            <SimpleButton

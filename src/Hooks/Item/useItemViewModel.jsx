@@ -46,11 +46,11 @@ export const useItemViewModel = () => {
       }
    }
 
-   const fetchSaleItemsByWorkspace = async () => {
+   const fetchSaleItemsByWorkspace = async (isForSale) => {
 
       try {
          const response = await fetchItemsByWorkspaceRepository(workspaceSession._id)
-         const filterItems = filterByEnabledAndSaleType(response.items)
+         const filterItems = filterByEnabledAndSaleType(response.items, isForSale)
          setItems(filterItems)
       } catch (error) {
          console.error('Error:', error.title, error.message);
@@ -63,8 +63,8 @@ export const useItemViewModel = () => {
       }
    }
 
-   const filterByEnabledAndSaleType = (items) => {
-      return items.filter((item) => item.isEnabled && item.isForSale)
+   const filterByEnabledAndSaleType = (items, isForSale) => {
+      return items.filter((item) => item.isEnabled && item.isForSale === isForSale)
    }
 
    return {

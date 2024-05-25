@@ -15,7 +15,6 @@ export const useSaleItemFormViewModel = ({ setOrderItems, saleItems }) => {
    }
 
    const createEmptyProduct = () => {
-
       return {
          _id: Date.now().toString() + 'a', // Ensuring _id is a string
          title: '',
