@@ -34,7 +34,7 @@ export const PurchaseCrudView = () => {
    const {
       fetchItemsByWorkspaceAndStakeholder,
       fetchSaleItemsByWorkspace,
-      saleItems,
+      items,
       setItems,
       saleItemsIsLoading,
       onGetSaleFailed,
@@ -47,7 +47,7 @@ export const PurchaseCrudView = () => {
 
    const [selectedStakeholder, setSelectedStakeholder] = useState("")
    const [orderItems, setOrderItems] = useState([]);
-   const { createProductItem } = usePurchaseFormViewModel({ orderItems, setOrderItems, saleItems })
+   const { createProductItem } = usePurchaseFormViewModel({ orderItems, setOrderItems, items })
    const [totalAmount, setTotalAmount] = useState(0)
 
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
@@ -110,7 +110,7 @@ export const PurchaseCrudView = () => {
 
    useEffect(() => {
 
-   }, [saleItems])
+   }, [items])
 
    // 3B - Or we can create a defaul blank item, by clicking on the + button. 
    const onNewItemDidPressed = () => {
@@ -217,6 +217,7 @@ export const PurchaseCrudView = () => {
                                        title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
                                        style='primary'
                                        onClick={() => onNewItemDidPressed()}
+                                       disabled={items.length === 0}
                                     />
                                  </div>
 

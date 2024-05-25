@@ -74,7 +74,7 @@ export const useItemViewModel = () => {
    return {
       fetchItemsByWorkspaceAndStakeholder,
       fetchSaleItemsByWorkspace,
-      saleItems: items,
+      items,
       setItems,
       saleItemsIsLoading: isLoading,
       onGetSaleFailed: onItemFailed,
