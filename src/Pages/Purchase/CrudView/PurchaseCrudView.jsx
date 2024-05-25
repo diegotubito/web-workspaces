@@ -35,6 +35,7 @@ export const PurchaseCrudView = () => {
       fetchItemsByWorkspaceAndStakeholder,
       fetchSaleItemsByWorkspace,
       saleItems,
+      setItems,
       saleItemsIsLoading,
       onGetSaleFailed,
       setOnGetSaleFailed
@@ -54,26 +55,37 @@ export const PurchaseCrudView = () => {
    const [installmentNumber, setInstallmentNumber] = useState(1)
 
    useEffect(() => {
-
-   }, [])
-
-   useEffect(() => {
-      if (selectedOrderType) {
-         setOrderItems([])
-
+      if (selectedStakeholder) {
          switch (selectedOrderType) {
             case OrderType.PURCHASE:
-               setSelectedStakeholderType(StakeholderType.SUPPLIER)
-               fetchSaleItemsByWorkspace(false)
+               fetchItemsByWorkspaceAndStakeholder(selectedStakeholder)
                break
             case OrderType.SALE:
-               setSelectedStakeholderType(StakeholderType.CUSTOMER)
                fetchSaleItemsByWorkspace(true)
                break
             case OrderType.ADJUSTMENT_SHORTAGE:
             case OrderType.ADJUSTMENT_SURPLUS:
+               fetchSaleItemsByWorkspace(true, selectedStakeholder)
+               break
+
+         }
+      }
+   }, [selectedStakeholder, setSelectedStakeholder])
+
+   useEffect(() => {
+      if (selectedOrderType) {
+         setOrderItems([])
+         setItems([])
+         switch (selectedOrderType) {
+            case OrderType.PURCHASE:
+               setSelectedStakeholderType(StakeholderType.SUPPLIER)
+               break
+            case OrderType.SALE:
+               setSelectedStakeholderType(StakeholderType.CUSTOMER)
+               break
+            case OrderType.ADJUSTMENT_SHORTAGE:
+            case OrderType.ADJUSTMENT_SURPLUS:
                setSelectedStakeholderType(StakeholderType.EMPLOYEE)
-               fetchSaleItemsByWorkspace(true)
                break
 
          }
@@ -142,9 +154,9 @@ export const PurchaseCrudView = () => {
 
    {
       return (
-         <div className='purchase_crud_view__main'>
-            <div className='purchase_crud_view__container'>
+         <div className='sale_crud_view__main'>
 
+            <div className='sale_crud_view__main'>
                {itemIsLoading && <Spinner />}
 
                {onOrderFailed && (
@@ -154,109 +166,144 @@ export const PurchaseCrudView = () => {
                   />
                )}
 
-               <div className='purchase_view__gap'>
 
-                  <div>
-                     <h1 className='purchase_crud_view__title'>{t('PURCHASE_ORDER_CRUD_VIEW_TITLE')}</h1>
+               <div className='sale_crud_view__header'>
+                  <div className='sale_crud_view__footer-buttons'>
 
-                     <div className='purchase_view__gap'>
+                     <SimpleButton
+                        title={t('PURCHASE_ORDER_CRUD_VIEW_CANCEL_ORDER_BUTTON_TITLE')}
+                        style='cancel'
+                        onClick={() => onCancelDidPressed()}
+                     />
 
-                        <OrderTypeSelector
-                           tite={'Order Type'}
-                           selectedOrderType={selectedOrderType}
-                           setSelectedOrderType={setSelectedOrderType}
-                        />
+                  </div>
+               </div>
 
-                        <CustomerSelector
-                           selectedCustomer={selectedStakeholder}
-                           setSelectedCustomer={setSelectedStakeholder}
-                           stakeholderType={selectedStakeholderType}
-                        />
+               <div className='sale_crud_view__body sale_crud_view__body_gap'>
+                 
 
 
-                        <div className='purchase_view__add-item-button'>
-                           <SimpleButton
-                              title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
-                              style='primary'
-                              onClick={() => onNewItemDidPressed()}
+                        {itemIsLoading && <Spinner />}
+
+                        {onOrderFailed && (
+                           <ErrorAlert
+                              errorDetails={onOrderFailed}
+                              navigate={navigate}
                            />
+                        )}
+
+                        <div className='purchase_view__gap'>
+
+                           <div>
+                              <h1 className='purchase_crud_view__title'>{t('PURCHASE_ORDER_CRUD_VIEW_TITLE')}</h1>
+
+                              <div className='purchase_view__gap'>
+
+                                 <OrderTypeSelector
+                                    tite={'Order Type'}
+                                    selectedOrderType={selectedOrderType}
+                                    setSelectedOrderType={setSelectedOrderType}
+                                 />
+
+                                 <CustomerSelector
+                                    selectedCustomer={selectedStakeholder}
+                                    setSelectedCustomer={setSelectedStakeholder}
+                                    stakeholderType={selectedStakeholderType}
+                                 />
+
+
+                                 <div className='purchase_view__add-item-button'>
+                                    <SimpleButton
+                                       title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
+                                       style='primary'
+                                       onClick={() => onNewItemDidPressed()}
+                                    />
+                                 </div>
+
+                                 <InputFieldColumn
+                                    title={t('PURCHASE_ORDER_CRUD_VIEW_ITEMS_TITLE')}
+                                    items={orderItems}
+                                    setItems={setOrderItems}
+                                 />
+
+                                 <TotalAmount
+                                    title={t('Partial Total')}
+                                    items={orderItems}
+                                    total={totalAmount}
+                                    setTotal={setTotalAmount}
+                                 />
+
+                                 <div className='puchase_view__payment_and_currency'>
+                                    <PaymentMethodSelector
+                                       title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
+                                       selectedPaymentItem={selectedPaymentItem}
+                                       setSelectedPaymentItem={setSelectedPaymentItem}
+                                    />
+
+                                    <CurrencySelector
+                                       title={t('PAYMENT_VIEW_CURRENCY_TITLE')}
+                                       selectedCurrency={selectedCurrency}
+                                       setSelectedCurrency={setSelectedCurrency}
+                                    />
+
+                                    <QuantityTextField
+                                       title="Installments"
+                                       value={installmentNumber}
+                                       onChangeValue={onInstallmentNumberChangeHandler}
+                                       maxValue={18}
+                                       minValue={1}
+                                       placeholder="Enter quantity"
+                                    />
+                                 </div>
+
+                                 <div className='puchase_view__discount_and_total'>
+                                    <TotalAmount
+                                       title={t('Discounts')}
+                                       items={orderItems}
+                                       total={totalAmount}
+                                       setTotal={setTotalAmount}
+                                    />
+
+                                    <TotalAmount
+                                       title={t('PURCHASE_ORDER_CRUD_VIEW_TOTAL_TO_PAY_TITLE')}
+                                       items={orderItems}
+                                       total={totalAmount}
+                                       setTotal={setTotalAmount}
+                                    />
+                                 </div>
+
+
+
+                              </div>
+                           </div >
                         </div>
-
-                        <InputFieldColumn
-                           title={t('PURCHASE_ORDER_CRUD_VIEW_ITEMS_TITLE')}
-                           items={orderItems}
-                           setItems={setOrderItems}
-                        />
-
-                        <TotalAmount
-                           title={t('Partial Total')}
-                           items={orderItems}
-                           total={totalAmount}
-                           setTotal={setTotalAmount}
-                        />
-
-                        <div className='puchase_view__payment_and_currency'>
-                           <PaymentMethodSelector
-                              title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
-                              selectedPaymentItem={selectedPaymentItem}
-                              setSelectedPaymentItem={setSelectedPaymentItem}
-                           />
-
-                           <CurrencySelector
-                              title={t('PAYMENT_VIEW_CURRENCY_TITLE')}
-                              selectedCurrency={selectedCurrency}
-                              setSelectedCurrency={setSelectedCurrency}
-                           />
-
-                           <QuantityTextField
-                              title="Installments"
-                              value={installmentNumber}
-                              onChangeValue={onInstallmentNumberChangeHandler}
-                              maxValue={18}
-                              minValue={1}
-                              placeholder="Enter quantity"
-                           />
-                        </div>
-
-                        <div className='puchase_view__discount_and_total'>
-                           <TotalAmount
-                              title={t('Discounts')}
-                              items={orderItems}
-                              total={totalAmount}
-                              setTotal={setTotalAmount}
-                           />
-
-                           <TotalAmount
-                              title={t('PURCHASE_ORDER_CRUD_VIEW_TOTAL_TO_PAY_TITLE')}
-                              items={orderItems}
-                              total={totalAmount}
-                              setTotal={setTotalAmount}
-                           />
-                        </div>
+                  
 
 
+               </div>
 
-                        <div className='purchase_view__buttons'>
-                           <SimpleButton
-                              title={t('PURCHASE_ORDER_CRUD_VIEW_CANCEL_ORDER_BUTTON_TITLE')}
-                              style='cancel'
-                              onClick={() => onCancelDidPressed()}
-                           />
+               <div className='sale_crud_view__footer'>
 
-                           <SimpleButton
-                              title={t('PURCHASE_ORDER_CRUD_VIEW_CREATE_ORDER_BUTTON_TITLE')}
-                              style='secondary'
-                              onClick={() => onCreateOrderDidPressed()}
-                           />
+                  <div className='sale_crud_view__footer-buttons'>
 
-                        </div>
+                     <SimpleButton
+                        title={t('PURCHASE_ORDER_CRUD_VIEW_CANCEL_ORDER_BUTTON_TITLE')}
+                        style='cancel'
+                        onClick={() => onCancelDidPressed()}
+                     />
 
+                     <SimpleButton
+                        title={t('Create Sale')}
+                        style='secondary'
+                        onClick={() => onCreateOrderDidPressed()}
+                     />
 
-                     </div>
-                  </div >
+                  </div>
                </div>
             </div>
          </div>
+   
+       
       )
    }
 }

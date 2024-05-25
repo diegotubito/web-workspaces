@@ -17,8 +17,9 @@ export const useItemViewModel = () => {
 
    const fetchItemsByWorkspaceAndStakeholder = async (stakeholder) => {
       try {
-         const response = await getItemsByWorkspaceAndStakeholder(workspaceSession._id, stakeholder)
-         setItems(response.items)
+         const response = await fetchItemsByWorkspaceRepository(workspaceSession._id)
+         const filtered = filterByStakeholder(response.items, stakeholder.items)
+         setItems(filtered)
       } catch (error) {
          console.error('Error:', error.title, error.message);
          setOnItemFailed({
@@ -28,6 +29,10 @@ export const useItemViewModel = () => {
             setError: setOnItemFailed
          })
       }
+   }
+
+   const filterByStakeholder = (items, stakeholderItems) => {
+      return items.filter(item => stakeholderItems.includes(item._id));
    }
 
    const fetchItemsByWorkspace = async () => {
@@ -47,7 +52,6 @@ export const useItemViewModel = () => {
    }
 
    const fetchSaleItemsByWorkspace = async (isForSale) => {
-
       try {
          const response = await fetchItemsByWorkspaceRepository(workspaceSession._id)
          const filterItems = filterByEnabledAndSaleType(response.items, isForSale)
@@ -71,6 +75,7 @@ export const useItemViewModel = () => {
       fetchItemsByWorkspaceAndStakeholder,
       fetchSaleItemsByWorkspace,
       saleItems: items,
+      setItems,
       saleItemsIsLoading: isLoading,
       onGetSaleFailed: onItemFailed,
       setOnGetSaleFailed: setOnItemFailed,
