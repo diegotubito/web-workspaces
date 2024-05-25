@@ -14,8 +14,7 @@ import point_of_sale from '../../Resources/Images/point_of_sale.svg'
 import { ButtonIcon } from '../../Components/Buttons/ButtonIcon/ButtonIcon'
 import { useNavigate } from 'react-router-dom';
 
-import { ReactComponent as SaleIcon } from '../../Resources/Images/point_of_sale.svg';
-import { ReactComponent as PurchaseIcon } from '../../Resources/Images/shopping_bag.svg'
+import { ReactComponent as OrderIcon } from '../../Resources/Images/point_of_sale.svg';
 
 const Views = {
     purchaseView: 'purchase_view',
@@ -85,10 +84,6 @@ export const Home = () => {
         navigate(`/purchase_order_view`)
     }
 
-    const onSaleOrderViewDidClicked = () => {
-        navigate(`/sale_order_view`)
-    }
-
     const onTransferViewDidClicked = () => {
         navigate(`/transfer_view`)
     }
@@ -137,13 +132,11 @@ export const Home = () => {
                 <div className='home__left-sidebar'>
                     <div className='home__left-sidebar-buttons'>
 
-                        <ButtonIcon title={t('SALE_BUTTON')} reactIcon={SaleIcon} onClick={onSaleOrderViewDidClicked} />
+                        <ButtonIcon title={t('ORDER_BUTTON')} reactIcon={OrderIcon} onClick={onPurchaseOrderViewDidClicked} />
 
-                        <ButtonIcon title={t('PURCHASE_BUTTON')} reactIcon={PurchaseIcon} onClick={onPurchaseOrderViewDidClicked} />
+                        <ButtonIcon title={t('Transfers')} reactIcon={OrderIcon} onClick={onTransferViewDidClicked} />
 
-                        <ButtonIcon title={t('Transfers')} reactIcon={PurchaseIcon} onClick={onTransferViewDidClicked} />
-
-                        <ButtonIcon title={t('Cash Balance')} reactIcon={PurchaseIcon} onClick={onCashBalanceViewDidClicked} />
+                        <ButtonIcon title={t('Cash Balance')} reactIcon={OrderIcon} onClick={onCashBalanceViewDidClicked} />
                        
                     </div>
 

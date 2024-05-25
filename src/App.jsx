@@ -9,9 +9,6 @@ import { useEffect } from 'react';
 import { PaymentView } from './Pages/Purchase/Pay/PaymentView'
 import { PurchaseCrudView } from './Pages/Purchase/CrudView/PurchaseCrudView';
 import { PurchaseView } from './Pages/Purchase/PurchaseView';
-import { SaleOrderCrudView } from './Pages/Sales/CrudView/SaleOrderCrudView';
-import { SaleView } from './Pages/Sales/SaleView'
-import { PaymentSaleView } from './Pages/Sales/Pay/PaymentSaleView';
 import { TransferView } from './Pages/Transfer/TransferView';
 import { CashBalanceView } from './Pages/CashBalance/CashBalanceView';
 
@@ -30,11 +27,7 @@ function App() {
 
         <Route path="/" element={<Navigate replace to="/home" />} /> {/* Redirect from / to /home */}
         <Route path="/login" element={<LoginView />} />
-        
-        <Route path='/sale_order_view' element={<SaleView />} />
-        <Route path='/sale_order_crud_view' element={<SaleOrderCrudView />} />
-        <Route path='/sale_payment/:installmentId' element={<PaymentSaleView />} />
-        
+                
         <Route path='/payment/:installmentId' element={<PaymentView />} />
         
         <Route path='/purchase_order_view' element={<PurchaseView />} />

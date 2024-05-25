@@ -7,7 +7,7 @@
     background-color: rgb(227, 227, 227);
 }
 
-.purchase_view____header {
+.purchase_view__header {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -18,7 +18,7 @@
     /* Ensure the header is above the body content */
 }
 
-.purchase_view____body {
+.purchase_view__body {
     flex-grow: 1;
     overflow-y: auto;
     /* Add scroll to the body content only */
@@ -27,7 +27,7 @@
     /* Optional: for better content visibility */
 }
 
-.purchase_view____footer {
+.purchase_view__footer {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -38,7 +38,7 @@
     /* Ensure the footer is above the body content */
 }
 
-.purchase_view____footer-buttons {
+.purchase_view__footer-buttons {
     display: flex;
     justify-content: flex-end;
     align-items: center;

@@ -36,11 +36,6 @@ export const SearchBar = ({ onInputChange, onDidBegin, onReturnPressed, form, se
 
    return (
       <div>
-         <p style={{
-            fontSize: '19px',
-            fontWeight: 'bold',
-            margin: '0'
-         }}>{form.title}</p>
          <input
             placeholder={form.placeholder}
             onChange={(event) => onChangeHandler(event)}

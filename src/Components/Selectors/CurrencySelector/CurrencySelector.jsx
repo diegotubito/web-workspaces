@@ -25,7 +25,11 @@ export const CurrencySelector = ({ title, selectedCurrency, setSelectedCurrency 
 
    return (
       <div>
-         <h3 className='currency__selector__form-title'>{t(title)}</h3>
+         <p style={{
+            fontSize: '19px',
+            fontWeight: 'bold',
+            margin: '0'
+         }}>{title}</p>
          <select className="currency_selector__form-select" value={selectedCurrency} onChange={handleOnCurrencyChange}>
             {currencies.map((item) => (
                <option key={item._id} value={item._id}>{t(item.name)}</option>

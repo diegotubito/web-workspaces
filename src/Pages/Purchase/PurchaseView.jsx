@@ -107,7 +107,7 @@ export const PurchaseView = () => {
 
 
 
-         <div className='purchase_view____header'>
+         <div className='purchase_view__header'>
             <div className='sale_crud_view__footer-buttons'>
 
                <SimpleButton
@@ -120,7 +120,7 @@ export const PurchaseView = () => {
             </div>
          </div>
 
-         <div className='purchase_view____body'>
+         <div className='purchase_view__body'>
 
 
             <OrderComponent
@@ -150,9 +150,9 @@ export const PurchaseView = () => {
          </div >
 
 
-         <div className='purchase_view____footer'>
+         <div className='purchase_view__footer'>
 
-            <div className='purchase_view____footer-buttons'>
+            <div className='purchase_view__footer-buttons'>
 
                <SimpleButton
                   title={t('PURCHASE_ORDER_CRUD_VIEW_CANCEL_ORDER_BUTTON_TITLE')}

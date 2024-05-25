@@ -1,32 +1,49 @@
 .purchase_crud_view__main {
-   background-color: rgba(0, 0, 0, 0.80);
-   position: fixed;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
-   z-index: 1001;
+   position: absolute;
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   height: 100%;
+   background-color: rgb(227, 227, 227);
+}
 
+.purchase_crud_view__header {
    display: flex;
    justify-content: center;
-   flex-direction: column;
    align-items: center;
+   background-color: beige;
+   width: 100%;
+   min-height: 4rem;
+   z-index: 2;
+   /* Ensure the header is above the body content */
 }
 
-.purchase_crud_view__container {
-   position: relative;
-   width: 95%;
-   height: 80%;
-   background-color: rgb(205, 223, 227);
+.purchase_crud_view__body {
+   flex-grow: 1;
+   overflow-y: auto;
+   /* Add scroll to the body content only */
    padding: 2rem;
-   overflow: auto;
-   border-radius: 10px;
+   background-color: white;
+   /* Optional: for better content visibility */
 }
 
-@media (min-width: 1200px) {
-   .purchase_crud_view__container {
-      width: 80%;
-   }
+.purchase_crud_view__footer {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   background-color: beige;
+   width: 100%;
+   min-height: 4rem;
+   z-index: 2;
+   /* Ensure the footer is above the body content */
+}
+
+.purchase_crud_view__footer-buttons {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   gap: 1rem;
+   margin: 1rem;
 }
 
 .purchase_view__form-title {
@@ -38,10 +55,7 @@
 }
 
 .purchase_crud_view__title {
-   font-size: 29px;
-   margin-left: 1.0rem;
-   margin-bottom: 2rem;
-   /* Explicitly remove margin from <p> */
+   font-size: 29px;  
    font-weight: 700;
 }
 

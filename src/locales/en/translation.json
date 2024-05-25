@@ -15,10 +15,9 @@
 
      "_comment_home_left_bar": "Comments for left bar items",
 
-     "PURCHASE_BUTTON": "Purchase Order",
+     "ORDER_BUTTON": "Orders",
      "INCOME_BUTTON": "Cash Income",
      "OUTCOME_BUTTON": "Cash Outcome",
-     "SALE_BUTTON": "Sales",
      "CASH_BUTTON": "Closing Cash Balance",
 
      "_comment_purchase_status": "Purchase Status",
@@ -33,9 +32,9 @@
      "_comment_payment_view": "Payment View",
 
      "PAYMENT_VIEW_TITLE": "Purchase Payment",
-     "PAYMENT_VIEW_PAYMENT_METHOD_TITLE": "Select Payment Method",
-     "PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE": "Select Physical Account",
-     "PAYMENT_VIEW_CURRENCY_TITLE": "Select Currency",
+     "PAYMENT_VIEW_PAYMENT_METHOD_TITLE": "Payment Method",
+     "PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE": "Physical Account",
+     "PAYMENT_VIEW_CURRENCY_TITLE": "Currency",
      "PAYMENT_VIEW_TOTAL_TO_PAY_TITLE": "Total Amount",
      "PAYMENT_VIEW_TOTAL_PAID_TITLE": "Paid Amount",
      "PAYMENT_VIEW_BALANCE_TO_PAY_TITLE": "Remaining Amount",

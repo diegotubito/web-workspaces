@@ -15,8 +15,7 @@
 
   "_comment_home_left_bar": "Comments for left bar items",
 
-  "SALE_BUTTON": "Orden de Venta",
-  "PURCHASE_BUTTON": "Orden de Compra",
+  "ORDER_BUTTON": "Ordenes",
   "INCOME_BUTTON": "Ingresos",
   "OUTCOME_BUTTON": "Egresos",
   "CASH_BUTTON": "Cierre de Caja",
@@ -35,7 +34,7 @@
   "PAYMENT_VIEW_TITLE": "Pago De Compras",
   "PAYMENT_VIEW_PAYMENT_METHOD_TITLE": "Metodo De Pago",
   "PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE": "Caja",
-  "PAYMENT_VIEW_CURRENCY_TITLE": "Seleccione La Moneda",
+  "PAYMENT_VIEW_CURRENCY_TITLE": "Moneda",
   "PAYMENT_VIEW_TOTAL_TO_PAY_TITLE": "Monto Total",
   "PAYMENT_VIEW_TOTAL_PAID_TITLE": "Total Pagado",
   "PAYMENT_VIEW_EXCHANGE_RATE_TITLE": "Exchange Rate",

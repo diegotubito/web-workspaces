@@ -38,7 +38,7 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer, stakeh
 
    const [customerForm, setCustomerForm] = useState(defaultTextFieldForm)
    const [showSearchTextField, setShowSearchTextField] = useState(true)
-   
+
    const onInputChange = (name, newValue) => {
 
    }
@@ -93,8 +93,8 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer, stakeh
    return (
       <>
          {showSearchTextField && (
-            <>
-              {stakeholderIsLoading && <Spinner />}
+            <div>
+               {stakeholderIsLoading && <Spinner />}
 
                {onStakeholderFailed && (
                   <ErrorAlert
@@ -103,23 +103,31 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer, stakeh
                   />
                )}
 
-               <SearchBar
-                  title={t('Customer')}
-                  onInputChange={onInputChange}
-                  onDidBegin={onDidBeginInput}
-                  onReturnPressed={onReturnPressed}
-                  form={customerForm}
-                  setForm={setCustomerForm}
-               />
+               <div>
+                  <p style={{
+                     fontSize: '19px',
+                     fontWeight: 'bold',
+                     margin: '0'
+                  }}>{t(stakeholderType)}</p>
+                  <SearchBar
+                     title={t('Customer')}
+                     onInputChange={onInputChange}
+                     onDidBegin={onDidBeginInput}
+                     onReturnPressed={onReturnPressed}
+                     form={customerForm}
+                     setForm={setCustomerForm}
+                  />
+               </div>
+
                <ul className="stakeholder-list">
                   {stakeholders.map((customer) => (
                      <li key={customer._id} onClick={() => onSelectedCustomer(customer)} className="stakeholder-item">
                         <div className="register-content">
                            <div className="register-title">
-                              { customer.firstName && (
+                              {customer.firstName && (
                                  `${customer.firstName} ${customer.lastName} - ID: ${customer.nationalId}`
                               )}
-                              { customer.title && (
+                              {customer.title && (
                                  `${customer.title} ${customer.subTitle ? customer.subTitle : ''} - Tax ID: ${customer.taxId ? customer.taxId : 'none'}`
                               )}
                            </div>
@@ -127,105 +135,118 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer, stakeh
                      </li>
                   ))}
                </ul>
-               </>
+            </div>
          )}
 
          {
             !showSearchTextField && (
-               <div className="selected-stakeholder-card">
-                  <div className="stakeholder-info-row">
+
+               <div>
+                  <p style={{
+                     fontSize: '19px',
+                     fontWeight: 'bold',
+                     margin: '0'
+                  }}>{t(stakeholderType)}</p>
 
 
-                     {/* Personal Information */}
-                     <div className="stakeholder-info-section" style={{ display: 'flex', alignItems: 'center' }}>
+                  <div className="selected-stakeholder-card">
 
-                        {/* Profile Image */}
-                        {selectedCustomer && selectedCustomer.profileImage && (
-                           <div>
-                              <img
-                                 src={selectedCustomer.profileImage?.thumbnailImage?.url || defaultProfileImage}
-                                 alt={selectedCustomer.firstName ? `${selectedCustomer.firstName}'s profile` : "Default Profile"}
-                                 className="stakeholder-profile-image"
-                              />
-                           </div>
-                        )}
+                     <div className="stakeholder-info-row">
 
-                        {selectedCustomer && selectedCustomer.firstName && (
-                        
-                           <div style={{ marginLeft: '10px' }}>
-                              <div className="stakeholder-name">
-                                 {`${selectedCustomer.firstName} ${selectedCustomer.lastName}`}
+
+                        {/* Personal Information */}
+                        <div className="stakeholder-info-section" >
+
+                           {/* Profile Image */}
+                           {selectedCustomer && selectedCustomer.profileImage && (
+                              <div>
+                                 <img
+                                    src={selectedCustomer.profileImage?.thumbnailImage?.url || defaultProfileImage}
+                                    alt={selectedCustomer.firstName ? `${selectedCustomer.firstName}'s profile` : "Default Profile"}
+                                    className="stakeholder-profile-image"
+                                 />
                               </div>
-                           </div>
-                        )}
+                           )}
 
-                        {selectedCustomer && selectedCustomer.title && (
+                           {selectedCustomer && selectedCustomer.firstName && (
 
-                           <div style={{ marginLeft: '10px' }}>
-                              <div className="stakeholder-name">
-                                 {`${selectedCustomer.title} ${selectedCustomer.subTitle ? selectedCustomer.subTitle : ''}`}
+                              <div style={{ marginLeft: '10px' }}>
+                                 <div className="stakeholder-name">
+                                    {`${selectedCustomer.firstName} ${selectedCustomer.lastName}`}
+                                 </div>
                               </div>
-                           </div>
-                        )}
+                           )}
 
-                        {selectedCustomer && selectedCustomer.nationalId && (
+                           {selectedCustomer && selectedCustomer.title && (
 
-                           <div style={{ marginLeft: '10px' }}>
-                              <div className="stakeholder-rest-info">
-                                 ID: {selectedCustomer.nationalId || selectedCustomer.taxId}
+                              <div style={{ marginLeft: '10px' }}>
+                                 <div className="stakeholder-name">
+                                    {`${selectedCustomer.title} ${selectedCustomer.subTitle ? selectedCustomer.subTitle : ''}`}
+                                 </div>
                               </div>
-                           </div>
-                        )}
+                           )}
 
-                        {selectedCustomer && selectedCustomer.dob && (
+                           {selectedCustomer && selectedCustomer.nationalId && (
 
-                           <div style={{ marginLeft: '10px' }}>
-                            
-                              {selectedCustomer.dob && (
+                              <div style={{ marginLeft: '10px' }}>
                                  <div className="stakeholder-rest-info">
-                                    DOB: {new Date(selectedCustomer.dob).toLocaleDateString()}
+                                    ID: {selectedCustomer.nationalId || selectedCustomer.taxId}
+                                 </div>
+                              </div>
+                           )}
+
+                           {selectedCustomer && selectedCustomer.dob && (
+
+                              <div style={{ marginLeft: '10px' }}>
+
+                                 {selectedCustomer.dob && (
+                                    <div className="stakeholder-rest-info">
+                                       DOB: {new Date(selectedCustomer.dob).toLocaleDateString()}
+                                    </div>
+                                 )}
+                              </div>
+                           )}
+
+
+                        </div>
+
+
+                        {/* Contact Information */}
+                        {selectedCustomer && (
+                           <div className="stakeholder-info-section">
+                              {selectedCustomer.email && (
+                                 <div className="stakeholder-rest-info">
+                                    Email: {selectedCustomer.email}
+                                 </div>
+                              )}
+                              {selectedCustomer.phoneNumber && (
+                                 <div className="stakeholder-rest-info">
+                                    Phone: {selectedCustomer.phoneNumber}
                                  </div>
                               )}
                            </div>
+
                         )}
 
-                       
-                     </div>
 
-
-                     {/* Contact Information */}
-                     {selectedCustomer && (
-                        <div className="stakeholder-info-section">
-                           {selectedCustomer.email && (
+                        {/* Address Information */}
+                        {selectedCustomer && selectedCustomer.legacyAddress && (
+                           <div className="stakeholder-info-section">
                               <div className="stakeholder-rest-info">
-                                 Email: {selectedCustomer.email}
+                                 Address: {selectedCustomer.legacyAddress}
                               </div>
-                           )}
-                           {selectedCustomer.phoneNumber && (
-                              <div className="stakeholder-rest-info">
-                                 Phone: {selectedCustomer.phoneNumber}
-                              </div>
-                           )}
-                        </div>
-
-                     )}
-                  
-
-                     {/* Address Information */}
-                     {selectedCustomer && selectedCustomer.legacyAddress && (
-                        <div className="stakeholder-info-section">
-                           <div className="stakeholder-rest-info">
-                              Address: {selectedCustomer.legacyAddress}
                            </div>
-                        </div>
-                     )}
+                        )}
 
-                     {/* Action Buttons */}
-                     <div className="stakeholder-actions">
-                        <button className="edit-stakeholder-btn" onClick={() => onChangeCustomer()}>
-                           Select Other
-                        </button>
-                        {/* Add more action buttons if needed */}
+                        {/* Action Buttons */}
+                        <div className="stakeholder-actions">
+                           <button className="edit-stakeholder-btn" onClick={() => onChangeCustomer()}>
+                              Select Other
+                           </button>
+                           {/* Add more action buttons if needed */}
+                        </div>
+
+
                      </div>
                   </div>
                </div>

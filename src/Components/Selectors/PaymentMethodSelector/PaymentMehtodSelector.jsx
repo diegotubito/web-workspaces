@@ -23,7 +23,11 @@ export const PaymentMethodSelector = ({ title, selectedPaymentItem, setSelectedP
 
    return (
       <div>
-         <h3 className='payment_method_selector__form-title'>{title}</h3>
+         <p style={{
+            fontSize: '19px',
+            fontWeight: 'bold',
+            margin: '0'
+         }}>{title}</p>
          <select className="payment_method_selector__form-select" value={selectedPaymentItem} onChange={handleOnPaymentMethodChange}>
             {paymentMethods.map((item) => {
                return (

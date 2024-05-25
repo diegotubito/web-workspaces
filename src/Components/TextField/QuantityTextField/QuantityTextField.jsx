@@ -25,7 +25,11 @@ export const QuantityTextField = ({ title, value, onChangeValue, maxValue = 18, 
 
    return (
       <div>
-         {title && <h3>{title}</h3>}
+         <p style={{
+            fontSize: '19px',
+            fontWeight: 'bold',
+            margin: '0'
+         }}>{title}</p>
          <input
             style={{
                width: '5rem',

@@ -48,6 +48,10 @@ export const PurchaseCrudView = () => {
    const [selectedStakeholder, setSelectedStakeholder] = useState("")
    const [orderItems, setOrderItems] = useState([]);
    const { createProductItem } = usePurchaseFormViewModel({ orderItems, setOrderItems, items })
+  
+   const [partialAmount, setPartialAmount] = useState(0)
+   const [termAmount, setTermAmount] = useState(0)
+   const [totalDiscount, setTotalDiscount] = useState(0)
    const [totalAmount, setTotalAmount] = useState(0)
 
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
@@ -72,10 +76,18 @@ export const PurchaseCrudView = () => {
       }
    }, [selectedStakeholder, setSelectedStakeholder])
 
+   const resetAllValues = () => {
+      setOrderItems([])
+      setItems([])
+      setTotalAmount(0)
+      setInstallmentNumber(1)
+   }
+
    useEffect(() => {
       if (selectedOrderType) {
-         setOrderItems([])
-         setItems([])
+
+         resetAllValues()
+
          switch (selectedOrderType) {
             case OrderType.PURCHASE:
                setSelectedStakeholderType(StakeholderType.SUPPLIER)
@@ -154,9 +166,28 @@ export const PurchaseCrudView = () => {
 
    {
       return (
-         <div className='sale_crud_view__main'>
 
-            <div className='sale_crud_view__main'>
+         <div className='purchase_crud_view__main'>
+            {itemIsLoading && <Spinner />}
+
+            {onOrderFailed && (
+               <ErrorAlert
+                  errorDetails={onOrderFailed}
+                  navigate={navigate}
+               />
+            )}
+
+
+            <div className='purchase_crud_view__header'>
+
+               <h1 className='purchase_crud_view__title'>{t('PURCHASE_ORDER_CRUD_VIEW_TITLE')}</h1>
+
+            </div>
+
+            <div className='purchase_crud_view__body'>
+
+
+
                {itemIsLoading && <Spinner />}
 
                {onOrderFailed && (
@@ -166,145 +197,128 @@ export const PurchaseCrudView = () => {
                   />
                )}
 
+               <div className='purchase_view__gap'>
 
-               <div className='sale_crud_view__header'>
-                  <div className='sale_crud_view__footer-buttons'>
+                  <OrderTypeSelector
+                     title={'Order Type'}
+                     selectedOrderType={selectedOrderType}
+                     setSelectedOrderType={setSelectedOrderType}
+                  />
 
+                  <CustomerSelector
+                     selectedCustomer={selectedStakeholder}
+                     setSelectedCustomer={setSelectedStakeholder}
+                     stakeholderType={selectedStakeholderType}
+                  />
+
+
+                  <div className='purchase_view__add-item-button'>
                      <SimpleButton
-                        title={t('PURCHASE_ORDER_CRUD_VIEW_CANCEL_ORDER_BUTTON_TITLE')}
-                        style='cancel'
-                        onClick={() => onCancelDidPressed()}
+                        title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
+                        style='primary'
+                        onClick={() => onNewItemDidPressed()}
+                        disabled={items.length === 0}
+                     />
+                  </div>
+
+                  <InputFieldColumn
+                     title={t('PURCHASE_ORDER_CRUD_VIEW_ITEMS_TITLE')}
+                     items={orderItems}
+                     setItems={setOrderItems}
+                  />
+
+                  <TotalAmount
+                     title={t('Partial Amount')}
+                     items={orderItems}
+                     total={partialAmount}
+                     setTotal={setPartialAmount}
+                  />
+
+                  <div className='puchase_view__payment_and_currency'>
+                     <PaymentMethodSelector
+                        title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
+                        selectedPaymentItem={selectedPaymentItem}
+                        setSelectedPaymentItem={setSelectedPaymentItem}
                      />
 
+                     <CurrencySelector
+                        title={t('PAYMENT_VIEW_CURRENCY_TITLE')}
+                        selectedCurrency={selectedCurrency}
+                        setSelectedCurrency={setSelectedCurrency}
+                     />
+
+                     <QuantityTextField
+                        title="Term"
+                        value={installmentNumber}
+                        onChangeValue={onInstallmentNumberChangeHandler}
+                        maxValue={18}
+                        minValue={0}
+                        placeholder="Enter quantity"
+                     />
+
+                     <TotalAmount
+                        title={t('Term Amount')}
+                        items={orderItems}
+                        total={termAmount}
+                        setTotal={setTermAmount}
+                     />
                   </div>
-               </div>
 
-               <div className='sale_crud_view__body sale_crud_view__body_gap'>
-                 
+                  <div className='puchase_view__discount_and_total'>
+                     <div style={{display: 'flex', gap: '1rem'}}>
+                        <CurrencySelector
+                           title={t('Discounts')}
+                           selectedCurrency={selectedCurrency}
+                           setSelectedCurrency={setSelectedCurrency}
+                        />
 
+                        <TotalAmount
+                           title={t('Total Discounts')}
+                           items={orderItems}
+                           total={totalDiscount}
+                           setTotal={setTotalAmount}
+                        />
+                     </div>
 
-                        {itemIsLoading && <Spinner />}
-
-                        {onOrderFailed && (
-                           <ErrorAlert
-                              errorDetails={onOrderFailed}
-                              navigate={navigate}
-                           />
-                        )}
-
-                        <div className='purchase_view__gap'>
-
-                           <div>
-                              <h1 className='purchase_crud_view__title'>{t('PURCHASE_ORDER_CRUD_VIEW_TITLE')}</h1>
-
-                              <div className='purchase_view__gap'>
-
-                                 <OrderTypeSelector
-                                    tite={'Order Type'}
-                                    selectedOrderType={selectedOrderType}
-                                    setSelectedOrderType={setSelectedOrderType}
-                                 />
-
-                                 <CustomerSelector
-                                    selectedCustomer={selectedStakeholder}
-                                    setSelectedCustomer={setSelectedStakeholder}
-                                    stakeholderType={selectedStakeholderType}
-                                 />
+                     <TotalAmount
+                        title={t('PURCHASE_ORDER_CRUD_VIEW_TOTAL_TO_PAY_TITLE')}
+                        items={orderItems}
+                        total={totalAmount}
+                        setTotal={setTotalAmount}
+                     />
+                  </div>
 
 
-                                 <div className='purchase_view__add-item-button'>
-                                    <SimpleButton
-                                       title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
-                                       style='primary'
-                                       onClick={() => onNewItemDidPressed()}
-                                       disabled={items.length === 0}
-                                    />
-                                 </div>
-
-                                 <InputFieldColumn
-                                    title={t('PURCHASE_ORDER_CRUD_VIEW_ITEMS_TITLE')}
-                                    items={orderItems}
-                                    setItems={setOrderItems}
-                                 />
-
-                                 <TotalAmount
-                                    title={t('Partial Total')}
-                                    items={orderItems}
-                                    total={totalAmount}
-                                    setTotal={setTotalAmount}
-                                 />
-
-                                 <div className='puchase_view__payment_and_currency'>
-                                    <PaymentMethodSelector
-                                       title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
-                                       selectedPaymentItem={selectedPaymentItem}
-                                       setSelectedPaymentItem={setSelectedPaymentItem}
-                                    />
-
-                                    <CurrencySelector
-                                       title={t('PAYMENT_VIEW_CURRENCY_TITLE')}
-                                       selectedCurrency={selectedCurrency}
-                                       setSelectedCurrency={setSelectedCurrency}
-                                    />
-
-                                    <QuantityTextField
-                                       title="Installments"
-                                       value={installmentNumber}
-                                       onChangeValue={onInstallmentNumberChangeHandler}
-                                       maxValue={18}
-                                       minValue={1}
-                                       placeholder="Enter quantity"
-                                    />
-                                 </div>
-
-                                 <div className='puchase_view__discount_and_total'>
-                                    <TotalAmount
-                                       title={t('Discounts')}
-                                       items={orderItems}
-                                       total={totalAmount}
-                                       setTotal={setTotalAmount}
-                                    />
-
-                                    <TotalAmount
-                                       title={t('PURCHASE_ORDER_CRUD_VIEW_TOTAL_TO_PAY_TITLE')}
-                                       items={orderItems}
-                                       total={totalAmount}
-                                       setTotal={setTotalAmount}
-                                    />
-                                 </div>
-
-
-
-                              </div>
-                           </div >
-                        </div>
-                  
 
 
                </div>
 
-               <div className='sale_crud_view__footer'>
 
-                  <div className='sale_crud_view__footer-buttons'>
 
-                     <SimpleButton
-                        title={t('PURCHASE_ORDER_CRUD_VIEW_CANCEL_ORDER_BUTTON_TITLE')}
-                        style='cancel'
-                        onClick={() => onCancelDidPressed()}
-                     />
+            </div>
 
-                     <SimpleButton
-                        title={t('Create Sale')}
-                        style='secondary'
-                        onClick={() => onCreateOrderDidPressed()}
-                     />
+            <div className='purchase_crud_view__footer'>
 
-                  </div>
+               <div className='purchase_crud_view__footer-buttons'>
+
+                  <SimpleButton
+                     title={t('PURCHASE_ORDER_CRUD_VIEW_CANCEL_ORDER_BUTTON_TITLE')}
+                     style='cancel'
+                     onClick={() => onCancelDidPressed()}
+                  />
+
+                  <SimpleButton
+                     title={t('Create Sale')}
+                     style='secondary'
+                     onClick={() => onCreateOrderDidPressed()}
+                  />
+
                </div>
             </div>
          </div>
-   
-       
+
+
+
       )
    }
 }

@@ -5,7 +5,7 @@
 
 .stakeholder-item {
    cursor: pointer;
-   padding: 10px;
+   padding: 1rem;
    border-bottom: 1px solid var(--lightGray);
    transition: background-color 0.2s;
 }
@@ -46,8 +46,6 @@
    background: #dedede;
    border-radius: 8px;
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-   padding: 1.2rem;
-   margin-top: 1.2rem;
    font-size: 14px;
 }
 
@@ -55,11 +53,12 @@
    display: flex;
    justify-content: space-between;
    width: 100%;
+   padding: 1rem;
 }
 
 .stakeholder-info-section {
-   margin-right: 20px;
-   /* Space between sections */
+   display: flex;
+   align-items: center;
 }
 
 .edit-stakeholder-btn {
@@ -67,15 +66,13 @@
    /* Green */
    border: none;
    color: white;
-   padding: 10px 20px;
-   text-align: center;
-   text-decoration: none;
-   display: inline-block;
    font-size: 16px;
-   margin: 4px 2px;
    cursor: pointer;
    border-radius: 4px;
    transition: background-color 0.2s;
+   height: 100%;
+   padding-right: 3rem;
+   padding-left: 3rem;
 }
 
 .edit-stakeholder-btn:hover {

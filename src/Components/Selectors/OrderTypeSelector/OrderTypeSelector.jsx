@@ -26,7 +26,11 @@ export const OrderTypeSelector = ({ title, selectedOrderType, setSelectedOrderTy
 
    return (
       <div>
-         <h3 className='order_type_selector__form-title'>{t(title)}</h3>
+         <p style={{
+            fontSize: '19px',
+            fontWeight: 'bold',
+            margin: '0'
+         }}>{t(title)}</p>
          <select className="order_type_selector__form-select" value={selectedOrderType} onChange={handleOnSelectedOrderTypeChange}>
             {types.map((type) => (
                <option key={type} value={type}>{t(type)}</option>
