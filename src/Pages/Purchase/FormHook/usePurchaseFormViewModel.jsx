@@ -1,6 +1,6 @@
 import { formatCurrency } from "../../../Utils/Common/formatCurrency"
 
-export const usePurchaseFormViewModel = ({ setOrderItems, saleItems }) => {
+export const usePurchaseFormViewModel = ({ setOrderItems, items }) => {
    const createProductItem = () => {
   const emptyInputField = createEmptyProduct()
       setOrderItems((currentItems) => {
@@ -9,7 +9,7 @@ export const usePurchaseFormViewModel = ({ setOrderItems, saleItems }) => {
    }
 
    const getDefaultSalesPrice = () => {
-      let result = (saleItems.length > 0) ? saleItems[0].salePrice : 0
+      let result = (items.length > 0) ? items[0].salePrice : 0
       if (!result) {
          result = 0
       }
@@ -28,7 +28,7 @@ export const usePurchaseFormViewModel = ({ setOrderItems, saleItems }) => {
             _id: Date.now().toString() + 'b', // Ensuring _id is a string
             name: 'selector',
             type: 'selector',
-            selectorItems: saleItems
+            selectorItems: items
                .map(saleItem => ({
                   _id: saleItem._id,
                   title: `${saleItem.title} ${saleItem.description}`,
@@ -36,7 +36,7 @@ export const usePurchaseFormViewModel = ({ setOrderItems, saleItems }) => {
                })),
             minWidth: '20rem',
             maxWidth: '1fr',
-            value: (saleItems.length > 0) ? saleItems[0]._id : '',
+            value: (items.length > 0) ? items[0]._id : '',
             errorMessage: '',
             isEnabled: true,
             placeholder: ''
