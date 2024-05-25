@@ -73,7 +73,7 @@ export const PaymentView = () => {
 
 
    const onCreatePaymentDidPressed = () => {
-      createPayment('purchase', 'order', amount, installment?.remainingAmount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedBalance, description, installment._id, exchangeRate)
+      createPayment(installment.type, 'order', amount, installment?.remainingAmount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedBalance, description, installment._id, exchangeRate)
    }
 
    const onCancelDidPressed = () => {

@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { dateAndTimeFormat } from '../../../Utils/Common/dateUtils';
 import { formatCurrency } from '../../../Utils/Common/formatCurrency';
 import { SimpleButton } from '../../Buttons/SimpleButton/SimpleButton';
+import { CashCountResult } from '../../../Hooks/CashCount/cashCountResultType';
+import { CashCountStatusType } from '../../../Hooks/CashCount/cashCountStatusType';
 
 export const CashCountComponent = ({cashCount, onCloseCashCount}) => {
    const { t } = useTranslation()
@@ -10,6 +12,16 @@ export const CashCountComponent = ({cashCount, onCloseCashCount}) => {
    const handleSubmit = () => {
       onCloseCashCount(cashCount)
    };
+
+   const getButtonColor = () => {
+      if (cashCount.globalResult === CashCountResult.BALANCED) {
+        return 'success'
+      } else if (cashCount.globalResult === CashCountResult.UNBALANCED) {
+        return 'warning'
+     } else {
+         return 'desctructive'
+     }
+   }
 
    return (
       <div key={cashCount._id} className='cash_count_component__item' style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -59,9 +71,9 @@ export const CashCountComponent = ({cashCount, onCloseCashCount}) => {
 
          <h5>{`Responsible ${cashCount.user.lastName} ${cashCount.user.firstName}`}</h5>
 
-         {cashCount.status !== 'CASH_COUNT_STATUS_CLOSED' && <SimpleButton
+         {cashCount.status !== CashCountStatusType.CLOSED && <SimpleButton
             title={t('Close Cash Count')}
-            style='destructive'
+            style={getButtonColor()}
             onClick={handleSubmit}
          />}
       </div>

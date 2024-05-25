@@ -11,6 +11,7 @@ import { CashCountComponent } from './CashCountComponent/CashCountComponent';
 import { usePhysicalAccountViewModel } from '../../Hooks/PhysicalAccount/usePhysicalAccountViewModel';
 import { Spinner } from '../Spinner/spinner';
 import { Button, Alert } from 'react-bootstrap';
+import { TransactionTypeEnum } from '../../Hooks/Transaction/transactionType';
 
 export const BalanceView = ({ accountId }) => {
    const { t } = useTranslation();
@@ -55,9 +56,10 @@ export const BalanceView = ({ accountId }) => {
    }, [account]);
 
    useEffect(() => {
+      let toDate = new Date().toISOString();
       if (lastClosedCashCount) {
          let fromDate;
-         let toDate = new Date().toISOString();
+       
 
          if (lastClosedCashCount.closingDate) {
             fromDate = new Date(lastClosedCashCount.closingDate).toISOString();
@@ -66,6 +68,9 @@ export const BalanceView = ({ accountId }) => {
          }
          fetchTransactionByWorkspaceAndAccountAndDates(account, fromDate, toDate);
 
+      } else {
+         let fromDate = new Date('01/01/2004').toISOString();
+         fetchTransactionByWorkspaceAndAccountAndDates(account, fromDate, toDate);
       }
    }, [lastClosedCashCount]);
 
@@ -110,14 +115,14 @@ export const BalanceView = ({ accountId }) => {
       let accountType;
       let amount = formatCurrency(payment.amount.toFixed(2).toString());
       switch (payment.type) {
-         case 'purchase':
-         case 'transfer_origin':
-         case 'adjustment_shortage':
+         case TransactionTypeEnum.PURCHASE:
+         case TransactionTypeEnum.TRANSFER_ORIGIN:
+         case TransactionTypeEnum.ADJUSTMENT_SHORTAGE:
             accountType = 'debe';
             break;
-         case 'sale':
-         case 'transfer_destiny':
-         case 'adjustment_surplus':
+         case TransactionTypeEnum.SALE:
+         case TransactionTypeEnum.TRANSFER_DESTINY:
+         case TransactionTypeEnum.ADJUSTMENT_SURPLUS:
             accountType = 'haber';
             break;
          default:
@@ -134,14 +139,14 @@ export const BalanceView = ({ accountId }) => {
       let accountType;
       let amount = formatCurrency(payment.amount.toFixed(2).toString());
       switch (payment.type) {
-         case 'purchase':
-         case 'transfer_origin':
-         case 'adjustment_shortage':
+         case TransactionTypeEnum.PURCHASE:
+         case TransactionTypeEnum.TRANSFER_ORIGIN:
+         case TransactionTypeEnum.ADJUSTMENT_SHORTAGE:
             accountType = 'debe';
             break;
-         case 'sale':
-         case 'transfer_destiny':
-         case 'adjustment_surplus':
+         case TransactionTypeEnum.SALE:
+         case TransactionTypeEnum.TRANSFER_DESTINY:
+         case TransactionTypeEnum.ADJUSTMENT_SURPLUS:
             accountType = 'haber';
             break;
          default:

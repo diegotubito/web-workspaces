@@ -11,6 +11,8 @@
     --grayEvenDisabled: rgb(190, 190, 190, 0.3);
     --grayPairDisabled: rgb(200, 200, 200, 0.3);
     --primarySimpleButton: rgb(60, 125, 155);
+    --successSimpleButton: rgb(38, 91, 52);
+    --warningSimpleButton: rgb(187, 193, 35);
     --secondarySimpleButton: rgb(213, 88, 21);
     --destructiveSimpleButton: rgb(212, 54, 54);
     --cancelSimpleButton: #757575;

@@ -6,7 +6,9 @@ export const SimpleButton = ({ style, title, onClick, disabled }) => {
       primary: 'primary',
       secondary: 'secondary',
       destructive: 'destructive',
-      cancel: 'cancel'      
+      cancel: 'cancel',
+      success: 'success',
+      warning: 'warning' 
    }
 
    const buttonClass = `simple_button__style${disabled ? ' disabled' : ''}`;
@@ -22,6 +24,10 @@ export const SimpleButton = ({ style, title, onClick, disabled }) => {
       switch (style) {
          case Style.primary:
             return 'white'
+         case Style.success:
+            return 'white'
+         case Style.warning:
+            return 'black'
          case Style.secondary:
             return 'white'
          case Style.destructive:
@@ -37,6 +43,10 @@ export const SimpleButton = ({ style, title, onClick, disabled }) => {
       switch (style) {
          case Style.primary:
             return 'var(--primarySimpleButton)'
+         case Style.success:
+            return 'var(--successSimpleButton)'
+         case Style.warning:
+            return 'var(--warningSimpleButton)'
          case Style.secondary:
             return 'var(--secondarySimpleButton)'
          case Style.destructive:
