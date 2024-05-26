@@ -18,11 +18,9 @@ import { PhysicalAccountSelector } from '../../../Components/Selectors/PhysicalA
 export const PaymentView = () => {
    const navigate = useNavigate();
    const { installmentId } = useParams()
-   const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
    const [selectedPhysicalAccount, setSelectedPhysicalAccount] = useState("");
    const [selectedBalance, setSelectedBalance] = useState("")
    const { getInstallmentById, installment } = useInstallmentViewModel()
-   const { fetchAllMethods, paymentMethods } = usePaymentViewModel()
    const [balances, setBalances] = useState([])
    const { createPayment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess } = useTransactionViewModel()
    const [amount, setAmount] = useState()
@@ -33,19 +31,6 @@ export const PaymentView = () => {
    useEffect(() => {
       getInstallmentById(installmentId)
    }, [])
-
-   useEffect(() => {
-      if (installment._id) {
-         fetchAllMethods()
-      }
-   }, [installment])
-
-   useEffect(() => {
-      // default payment method
-      if (paymentMethods.length > 0) {
-         setSelectedPaymentItem(paymentMethods[0]._id)
-      }
-   }, [paymentMethods])
 
    useEffect(() => {
       if (onCreatedTransactionSuccess) {
@@ -62,18 +47,13 @@ export const PaymentView = () => {
    }, [selectedBalance])
 
 
-   const handleOnPaymentMethodChange = (event) => {
-      const itemId = event.target.value;
-      setSelectedPaymentItem(itemId);
-   };
-
    const totalToPay = () => formatCurrency(((installment?.amount || 0).toFixed(2)).toString());
    const totalPaid = () => formatCurrency(((installment.paidAmount || 0).toFixed(2)).toString());
    const netToPay = () => formatCurrency(((installment?.remainingAmount || 0)).toFixed(2).toString());
 
 
    const onCreatePaymentDidPressed = () => {
-      createPayment(installment.type, 'order', amount, installment?.remainingAmount, installment.order._id, selectedPaymentItem, selectedPhysicalAccount, selectedBalance, description, installment._id, exchangeRate)
+      createPayment(installment.type, 'order', amount, installment, selectedPhysicalAccount, selectedBalance, description, installment._id, exchangeRate)
    }
 
    const onCancelDidPressed = () => {
@@ -150,18 +130,6 @@ export const PaymentView = () => {
                balances={balances}
                setBalances={setBalances}
             />
-
-            <div>
-               <h3 className='purchase_view__form-title'>{t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}</h3>
-               <select className="form-select" value={selectedPaymentItem} onChange={handleOnPaymentMethodChange}>
-                  {paymentMethods.map((item) => {
-                     return (
-                        <option key={item._id} value={item._id}>{item.name}</option>
-                     )
-                  }
-                  )}
-               </select>
-            </div>
 
             <div className='payment_view__total-amount-main'>
                <h3>{t('PAYMENT_VIEW_TOTAL_TO_PAY_TITLE')}</h3>

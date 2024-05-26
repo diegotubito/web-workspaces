@@ -10,9 +10,9 @@ export const useStakeholderRepository = () => {
       })
    }
 
-   const fetchStakeholdersByWorkspaceAndTypePaginatedRepository = (workspace, stakeholderType, search, page, limit) => {
+   const fetchStakeholdersByWorkspaceAndTypePaginatedRepository = (workspace, search, page, limit) => {
       return apiCall({
-         path: `/api/v1/search-stakeholder?workspace=${workspace}&stakeholderType=${stakeholderType}&search=${search}&page=${page}&limit=${limit}`,
+         path: `/api/v1/search-stakeholder?workspace=${workspace}&search=${search}&page=${page}&limit=${limit}`,
          method: 'GET'
       })
    }

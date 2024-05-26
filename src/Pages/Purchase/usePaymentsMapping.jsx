@@ -60,15 +60,6 @@ export const usePaymentsMapping = () => {
                   titleAlignment: 'center',
                },
                {
-                  _id: transaction._id + 'd',
-                  name: 'Payment Method',
-                  minWidth: '5rem',
-                  maxWidth: '0.5fr',
-                  value: `${transaction.paymentMethod.name}`,
-                  alignment: 'start',
-                  titleAlignment: 'center',
-               },
-               {
                   _id: transaction._id + 'e',
                   name: 'Description',
                   minWidth: '15rem',

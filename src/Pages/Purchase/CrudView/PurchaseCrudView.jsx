@@ -65,6 +65,7 @@ export const PurchaseCrudView = () => {
                fetchItemsByWorkspaceAndStakeholder(selectedStakeholder)
                break
             case OrderType.SALE:
+            case OrderType.CREDIT_NOTE:
                fetchSaleItemsByWorkspace(true)
                break
             case OrderType.ADJUSTMENT_SHORTAGE:
@@ -80,6 +81,9 @@ export const PurchaseCrudView = () => {
       setOrderItems([])
       setItems([])
       setTotalAmount(0)
+      setTermAmount(0)
+      setTotalDiscount(0)
+      setPartialAmount(0)
       setInstallmentNumber(1)
    }
 

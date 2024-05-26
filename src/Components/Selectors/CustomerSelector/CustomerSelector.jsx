@@ -10,13 +10,13 @@ import { Spinner } from '../../Spinner/spinner';
 import { ErrorAlert } from '../../CustomAlert/ErrorAlert';
 
 
-export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer, stakeholderType }) => {
+export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer }) => {
    const { t } = useTranslation();
    const navigate = useNavigate();
 
    const defaultTextFieldForm = {
       name: 'customer_input',
-      title: t(stakeholderType),
+      title: t('Stakeholders'),
       placeholder: t('National ID, Tax ID, Lastname, Firstname searches criteria.'),
       value: '',
       errorMessage: '',
@@ -51,13 +51,13 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer, stakeh
    }
 
    const onReturnPressed = (name) => {
-      fetchStakeholdersByWorkspaceAndTypePaginated(stakeholderType, customerForm.value)
+      fetchStakeholdersByWorkspaceAndTypePaginated(customerForm.value)
    }
 
    useEffect(() => {
       setCustomerForm(defaultTextFieldForm)
       setStakeholders([])
-   }, [stakeholderType])
+   }, [])
 
    useEffect(() => {
       if (stakeholderEmptyList) {
@@ -108,7 +108,7 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer, stakeh
                      fontSize: '19px',
                      fontWeight: 'bold',
                      margin: '0'
-                  }}>{t(stakeholderType)}</p>
+                  }}>{t('Stakeholders')}</p>
                   <SearchBar
                      title={t('Customer')}
                      onInputChange={onInputChange}
@@ -146,7 +146,7 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer, stakeh
                      fontSize: '19px',
                      fontWeight: 'bold',
                      margin: '0'
-                  }}>{t(stakeholderType)}</p>
+                  }}>{t('Stakeholders')}</p>
 
 
                   <div className="selected-stakeholder-card">

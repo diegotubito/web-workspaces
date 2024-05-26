@@ -80,9 +80,9 @@ export const useTransactionViewModel = () => {
          setTransactionIsLoading(false)
       }
    }
-
-   const createPayment = async (type, entityModel, amount, remainingAmount, orderId, paymentMethodId, accountId, balanceId, description, installmentId, exchangeRate) => {
-      if (Number(exchangeRate * amount) > remainingAmount) {
+  
+   const createPayment = async (type, entityModel, amount, installment, accountId, balanceId, description, installmentId, exchangeRate, stakeholder) => {
+      if (Number(exchangeRate * amount) > (installment?.remainingAmount ?? 0)) {
          setOnTransactionError({
             title: 'Validation Error',
             message: 'Amount exceeds remaining amount'
@@ -105,14 +105,14 @@ export const useTransactionViewModel = () => {
             user: userSession.user._id,
             amount: amount,
             type: type,
-            entity: orderId,
+            entity: installment.order._id,
             entityModel: entityModel,
             description: description,
-            paymentMethod: paymentMethodId,
             account: accountId,
             balance: balanceId,
             installment: installmentId,
-            exchangeRate: exchangeRate
+            exchangeRate: exchangeRate,
+            stakeholder: installment.stakeholder
          }
          const response = await createNewPayment(body)
          setOnTransactionError(null)
