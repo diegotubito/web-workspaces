@@ -19,6 +19,7 @@ import { OrderTypeSelector } from '../../../Components/Selectors/OrderTypeSelect
 import { StakeholderType } from '../../../Hooks/Stakeholder/stakeholderType';
 import { OrderType } from '../../../Hooks/Order/orderType';
 import { useItemViewModel } from '../../../Hooks/Item/useItemViewModel';
+import { AddSaleItem } from '../../../Components/AddSaleItemComponent/AddSaleItem';
 
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
@@ -215,16 +216,27 @@ export const PurchaseCrudView = () => {
                      stakeholderType={selectedStakeholderType}
                   />
 
+                  <AddSaleItem
+                     title={'New Add Item'}
+                     selectedStakeholderType={selectedStakeholderType}
+                     selectedStakeholder={selectedStakeholder}
+                  />
 
-                  <div className='purchase_view__add-item-button'>
-                     <SimpleButton
-                        title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
-                        style='primary'
-                        onClick={() => onNewItemDidPressed()}
-                        disabled={items.length === 0}
-                     />
+
+                  <div className='puchase_view__space-between '>
+
+                     <div className='purchase_view__add--button'>
+                        <SimpleButton
+                           title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
+                           style='primary'
+                           onClick={() => onNewItemDidPressed()}
+                           disabled={items.length === 0}
+                        />
+                     </div>
+
+                  
                   </div>
-
+                
                   <InputFieldColumn
                      title={t('PURCHASE_ORDER_CRUD_VIEW_ITEMS_TITLE')}
                      items={orderItems}

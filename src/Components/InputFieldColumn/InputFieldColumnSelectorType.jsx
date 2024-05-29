@@ -20,7 +20,7 @@ export const InputFieldColumnSelectorType = ({ settings, items, setItems, item: 
                   // setting default values for sub_total when selecting a new option
                   if (field.name === "sub_total") {
                      const option = receivedField.selectorItems.filter((option) => option._id === selectedOptionId)[0]
-                     return { ...field, value: formatCurrency(String(option.price*100)) }
+                     return { ...field, value: formatCurrency(String(option.price*100 * option.rate)) }
                   }
 
                   //setting default value for total  when selecting a new option
@@ -31,7 +31,7 @@ export const InputFieldColumnSelectorType = ({ settings, items, setItems, item: 
 
                   // setting default values for sub_total  when selecting a new option
                   if (field.name === "quantity") {
-                     return { ...field, value: 1 }
+                     return { ...field, value: 5 }
                   }
 
                   return field

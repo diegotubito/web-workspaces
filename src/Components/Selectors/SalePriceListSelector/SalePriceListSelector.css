@@ -1,0 +1,12 @@
+.sale_price_list_selector__form-select {
+   width: 100% !important;
+   max-width: 50rem;
+   text-wrap: wrap;
+   font-size: 15px !important;
+   height: auto !important;
+   padding: 0.5rem 1rem 0.5rem 1rem !important;
+   /* Add padding to the right side */
+   border: none;
+   background-color: rgb(218, 218, 218);
+   border-radius: 4px;
+}
