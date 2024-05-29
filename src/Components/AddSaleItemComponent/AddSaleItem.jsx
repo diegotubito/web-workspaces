@@ -6,15 +6,15 @@ import { formatCurrency } from '../../Utils/Common/formatCurrency';
 import { useSalePriceListViewModel } from '../../Hooks/SalePriceList/useSalePriceListViewModel';
 import { useItemViewModel } from '../../Hooks/Item/useItemViewModel';
 import { useDiscountPerItemViewModel } from '../../Hooks/DiscountPerItem/useDiscountPerItemViewModel';
+import { DiscountSelection } from './DiscountSelection/DiscountSelection';
+import { ItemSelection } from './ItemSelection/ItemSelection';
 
 export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholder }) => {
    const { t } = useTranslation()
 
    const [orderItems, setOrderItems] = useState([])
    const [selectedSalePriceList, setSelectedSalePriceList] = useState()
-   const [selectedDiscountPerItem, setSelectedDiscountPerItem] = useState()
    const [total, setTotal] = useState(0)
-   const [selectedSaleItem, setSelectedSaleItem] = useState()
 
    const {
       fetchSalePricesByWorkspace,
@@ -44,6 +44,12 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
       fetchSaleItemsByWorkspace(true)
    }, [])
 
+   useEffect(() => {
+      if (!selectedStakeholder) {
+         setOrderItems([])
+      }
+   }, [selectedStakeholder])
+
    // Autoselect First List Price
    useEffect(() => {
       if (salePrices.length > 0) {
@@ -51,24 +57,10 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
       }
    }, [salePrices])
 
-   // Autoselect First Discount Per Item
-   useEffect(() => {
-      if (discountsPerItem.length > 0) {
-         setSelectedDiscountPerItem("") // Initially, set it to an empty string indicating "Ninguna"
-      }
-   }, [discountsPerItem])
-
-   // Autoselect First Sale Item
-   useEffect(() => {
-      if (saleItems.length > 0) {
-         setSelectedSaleItem(saleItems[0]._id)
-      }
-   }, [saleItems])
-
    const onNewItemDidPressed = () => {
       const priceList = salePrices.find((salePrice) => salePrice._id === selectedSalePriceList)
-      const saleItem = saleItems.find((saleItem) => saleItem._id === selectedSaleItem)
-      const discountPerItem = discountsPerItem.find((d) => d._id === selectedDiscountPerItem)
+      const saleItem = saleItems.find((saleItem) => saleItem._id === saleItems[0]._id)
+      const discountPerItem = ""
 
       if (!priceList || !saleItem) {
          return
@@ -80,7 +72,7 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
       const newItem = {
          id: Math.random().toString(36), // Ensure a unique id for each new item
          saleItemId: saleItem._id,  // Use saleItemId for comparison
-         discountPerItemId: selectedDiscountPerItem || null, // Store the discountPerItemId or null
+         discountPerItemId: "", // Store the discountPerItemId or null
          saleItem: saleItem.title,
          price: saleItem.salePrice,
          discount: discount,
@@ -120,12 +112,13 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
    }
 
    useEffect(() => {
+      console.log(orderItems)
       updateTotal()
    }, [orderItems])
 
    useEffect(() => {
       updateOrderItemsWithPriceList()
-   }, [selectedSalePriceList, selectedDiscountPerItem]) // Ensure to add selectedDiscountPerItem as dependency
+   }, [selectedSalePriceList]) // Ensure to add selectedDiscountPerItem as dependency
 
    const updateTotal = () => {
       let result = 0
@@ -140,10 +133,10 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
       setSelectedSalePriceList(item);
    };
 
-   const handleOnDiscountPerItemChange = (event, index) => {
-      const selectedDiscountId = event.target.value;
-      const discountPerItem = discountsPerItem.find((d) => d._id === selectedDiscountId)
-      const discount = discountPerItem ? discountPerItem.rate : 1
+   const handleSelectedDiscountPerItem = (discountObject, index) => {
+      const discount = discountObject ? discountObject.rate : 1
+      const discountId = discountObject ? discountObject._id : "" // selected none
+     
 
       const updatedOrders = orderItems.map((o, i) => {
          if (i === index) {
@@ -154,7 +147,7 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
             const quantity = o.quantity || 1
             return {
                ...o,
-               discountPerItemId: selectedDiscountId || null, // Update the discountPerItemId
+               discountPerItemId: discountId, // Update the discountPerItemId
                discount: discount,
                total: priceList.rate * discount * quantity * saleItem.salePrice
             }
@@ -162,34 +155,32 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
          return o
       })
       setOrderItems(updatedOrders)
-   };
+   }
 
-   const handleSelectorChange = (event, index) => {
-      const selectedOptionId = event.target.value;
+   const handleSelectedSaleItem = (saleItemObject, index) => {
       const priceList = salePrices.find((salePrice) => salePrice._id === selectedSalePriceList)
-      const saleItem = saleItems.find((saleItem) => saleItem._id === selectedOptionId)
-      if (!priceList || !saleItem) {
-         return
-      }
-
       const updatedOrders = orderItems.map((o, i) => {
          if (i === index) {
             const discount = 1
             const quantity = 1
             return {
                ...o,
-               saleItemId: saleItem._id,
-               discountPerItemId: "", // Reset discount to "Ninguna"
-               saleItem: saleItem.title,
-               price: saleItem.salePrice,
-               priceListRate: priceList.rate,
+               saleItemId: saleItemObject._id,
+               discountPerItemId: "", // Reset discount to "None"
+               saleItem: saleItemObject.title,
+               price: saleItemObject.salePrice,
                discount: discount,
-               total: priceList.rate * discount * quantity * saleItem.salePrice
+               quantity: quantity,
+               total: priceList.rate * discount * quantity * saleItemObject.salePrice
             }
          }
          return o
       })
       setOrderItems(updatedOrders)
+   }
+
+   if (!selectedStakeholder) {
+      return 
    }
 
    return (
@@ -205,7 +196,7 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
                      title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
                      style='primary'
                      onClick={() => onNewItemDidPressed()}
-                     disabled={!saleItems.length > 0}
+                     disabled={!saleItems.length > 0 || !selectedStakeholder}
                   />
                </div>
             </div>
@@ -234,40 +225,23 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
                      width: '100%'
                   }}
                >
-                  <select
-                     style={{
-                        width: '100%',
-                        border: '1px solid rgb(180, 180, 180)',
-                        height: '3rem'
-                     }}
-                     value={orderItem.saleItemId} // Ensure the value is the saleItemId
-                     onChange={(event) => handleSelectorChange(event, index)}
-                  >
-                     {saleItems.map((s) => (
-                        <option
-                           key={s._id}
-                           value={s._id}>{t(s.title)}
-                        </option>
-                     ))}
-                  </select>
 
-                  <select
-                     style={{
-                        width: '100%',
-                        border: '1px solid rgb(180, 180, 180)',
-                        height: '3rem'
-                     }}
-                     value={orderItem.discountPerItemId || ""} // Ensure the value is the discount id or an empty string
-                     onChange={(event) => handleOnDiscountPerItemChange(event, index)}
-                  >
-                     <option value="">Ninguna</option> {/* Optional first option */}
-                     {discountsPerItem.filter((d) => d.items.includes(orderItem.saleItemId)).map((s) => (
-                        <option
-                           key={s._id}
-                           value={s._id}>{t(s.name)}
-                        </option>
-                     ))}
-                  </select>
+                  <ItemSelection
+                     index={index}
+                     orderItem={orderItem}
+                     items={saleItems}
+                     onSelectedItem={handleSelectedSaleItem}
+                  />
+
+                  <DiscountSelection
+                     index={index}
+                     orderItem={orderItem}
+                     discounts={discountsPerItem.filter((d) => d.items.includes(orderItem.saleItemId)).filter((d) => d.stakeholderTypes.includes(selectedStakeholder.stakeholderType)) }
+                     selectedDiscountPerItem={handleSelectedDiscountPerItem}
+                  />
+
+
+
                   <div>{orderItem.discount}</div>
                   <div>{orderItem.price}</div>
                   <div>{orderItem.priceListRate}</div>
