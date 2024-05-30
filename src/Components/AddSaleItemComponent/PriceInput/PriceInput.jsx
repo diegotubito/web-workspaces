@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './PriceInput.css'
 import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Common/formatCurrency'
 
-export const PriceInput = ({ settings, isEnabled, maxLength, initialValue, onInputChanged, index }) => {
+export const PriceInput = ({ settings, isEnabled, maxLength, textAlign, initialValue, onInputChanged, index }) => {
    const [inputValue, setInputValue] = useState('')
 
    useEffect(() => {
@@ -62,9 +62,8 @@ export const PriceInput = ({ settings, isEnabled, maxLength, initialValue, onInp
                style={{
                   border: '1px solid ' + `${isEnabled ? settings.inputBorderColorEnabled : settings.inputBorderColorDisabled}`,
                   width: '100%',
-                  height: settings.inputHeight,
-                  textAlign: 'end',
-                  padding: '0rem 0.5rem',
+                  padding: settings.padding,
+                  textAlign: textAlign,
                   userSelect: `${isEnabled ? 'revert' : 'none'}`,
                   borderRadius: settings.borderRadius
                }}

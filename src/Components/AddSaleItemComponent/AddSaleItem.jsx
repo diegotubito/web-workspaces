@@ -17,7 +17,7 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
    const { t } = useTranslation()
 
    const settings = {
-      inputHeight: '3rem',
+      padding: '0.5rem 0.5rem',
       inputBorderColorEnabled: 'rgb(200, 200, 200)',
       inputBorderColorDisabled: 'rgb(240, 240, 240)',
       borderRadius: '4px'
@@ -332,6 +332,7 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
                            settings={settings}
                            isEnabled={true}
                            maxLength={15}
+                           textAlign={'end'}
                            initialValue={orderItem.price}
                            onInputChanged={onInputPriceChanged}
                            index={index}
@@ -392,6 +393,7 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
                            settings={settings}
                            isEnabled={false}
                            maxLength={15}
+                           textAlign={'end'}
                            initialValue={orderItem.total}
                            onInputChanged={onInputPriceChanged}
                            index={index}

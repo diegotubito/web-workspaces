@@ -32,7 +32,7 @@ export const DiscountSelection = ({ settings, isEnabled, index, orderItem, disco
          style={{
             width: '100%',
             border: '1px solid ' + `${isEnabled ? settings.inputBorderColorEnabled : settings.inputBorderColorDisabled}`,
-            height: settings.inputHeight,
+            padding: settings.padding,
             borderRadius: settings.borderRadius
          }}
          value={orderItem.discountPerItemId || ""} // Ensure the value is the discount id or an empty string

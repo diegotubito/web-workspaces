@@ -51,9 +51,8 @@ export const TextInput = ({ settings, isEnabled, placeholder, maxLength, textAli
                style={{
                   border: '1px solid ' + `${isEnabled ? settings.inputBorderColorEnabled : settings.inputBorderColorDisabled}`,
                   width: '100%',
-                  height: settings.inputHeight,
+                  padding: settings.padding,
                   textAlign: textAlign,
-                  padding: '0rem 0.5rem',
                   userSelect: `${isEnabled ? 'revert' : 'none'}`,
                   borderRadius: settings.borderRadius
                }}

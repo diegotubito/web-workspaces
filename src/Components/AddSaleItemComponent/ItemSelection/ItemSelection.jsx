@@ -31,7 +31,7 @@ export const ItemSelection = ({ settings, isEnabled, index, orderItem, items, on
          style={{
             border: '1px solid ' + `${isEnabled ? settings.inputBorderColorEnabled : settings.inputBorderColorDisabled}`,
             width: '100%',
-            height: settings.inputHeight,
+            padding: settings.padding,
             borderRadius: settings.borderRadius
          }}
          value={orderItem.saleItemId} // Ensure the value is the saleItemId
