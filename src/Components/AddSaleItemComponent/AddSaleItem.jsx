@@ -8,9 +8,20 @@ import { useItemViewModel } from '../../Hooks/Item/useItemViewModel';
 import { useDiscountPerItemViewModel } from '../../Hooks/DiscountPerItem/useDiscountPerItemViewModel';
 import { DiscountSelection } from './DiscountSelection/DiscountSelection';
 import { ItemSelection } from './ItemSelection/ItemSelection';
+import { PriceListSelection } from './PriceListSelection/PriceListSelection';
+import { PriceInput } from './PriceInput/PriceInput';
+import { QuantityInput } from './QuantityInput/QuantityInput';
+import { TextInput } from './TextInput/TextInput';
 
 export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholder }) => {
    const { t } = useTranslation()
+
+   const settings = {
+      inputHeight: '3rem',
+      inputBorderColorEnabled: 'rgb(200, 200, 200)',
+      inputBorderColorDisabled: 'rgb(240, 240, 240)',
+      borderRadius: '4px'
+   }
 
    const [orderItems, setOrderItems] = useState([])
    const [selectedSalePriceList, setSelectedSalePriceList] = useState()
@@ -68,6 +79,7 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
 
       const discount = discountPerItem ? discountPerItem.rate : 1
       const quantity = 1
+      const note = ''
 
       const newItem = {
          id: Math.random().toString(36), // Ensure a unique id for each new item
@@ -77,6 +89,7 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
          price: saleItem.salePrice,
          discount: discount,
          priceListRate: priceList.rate,
+         note: note,
          quantity: quantity,
          total: priceList.rate * discount * quantity * saleItem.salePrice
       }
@@ -128,15 +141,14 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
       setTotal(result)
    }
 
-   const handleOnChange = (event) => {
-      const item = event.target.value;
-      setSelectedSalePriceList(item);
+   const handleOnChangePriceList = (priceListObject) => {
+      setSelectedSalePriceList(priceListObject._id);
    };
 
    const handleSelectedDiscountPerItem = (discountObject, index) => {
       const discount = discountObject ? discountObject.rate : 1
       const discountId = discountObject ? discountObject._id : "" // selected none
-     
+
 
       const updatedOrders = orderItems.map((o, i) => {
          if (i === index) {
@@ -149,7 +161,7 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
                ...o,
                discountPerItemId: discountId, // Update the discountPerItemId
                discount: discount,
-               total: priceList.rate * discount * quantity * saleItem.salePrice
+               total: priceList.rate * discount * quantity * o.price
             }
          }
          return o
@@ -158,11 +170,13 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
    }
 
    const handleSelectedSaleItem = (saleItemObject, index) => {
+
       const priceList = salePrices.find((salePrice) => salePrice._id === selectedSalePriceList)
       const updatedOrders = orderItems.map((o, i) => {
          if (i === index) {
             const discount = 1
             const quantity = 1
+            const note = ""
             return {
                ...o,
                saleItemId: saleItemObject._id,
@@ -170,6 +184,8 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
                saleItem: saleItemObject.title,
                price: saleItemObject.salePrice,
                discount: discount,
+               priceListRate: priceList.rate,
+               note: note,
                quantity: quantity,
                total: priceList.rate * discount * quantity * saleItemObject.salePrice
             }
@@ -180,7 +196,55 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
    }
 
    if (!selectedStakeholder) {
-      return 
+      return
+   }
+
+   const onInputPriceChanged = (value, index) => {
+      const priceList = salePrices.find((salePrice) => salePrice._id === selectedSalePriceList)
+      const updatedOrders = orderItems.map((o, i) => {
+         if (i === index) {
+            const quantity = o.quantity || 1
+            return {
+               ...o,
+               price: value, // Update the discountPerItemId
+               total: priceList.rate * o.discount * o.quantity * value
+            }
+         }
+         return o
+      })
+      setOrderItems(updatedOrders)
+   }
+
+
+   const onQuantityChanged = (value, index) => {
+      const priceList = salePrices.find((salePrice) => salePrice._id === selectedSalePriceList)
+      const updatedOrders = orderItems.map((o, i) => {
+         if (i === index) {
+            const quantity = value || 1
+            return {
+               ...o,
+               quantity: quantity,
+               total: priceList.rate * o.discount * quantity * o.price
+            }
+         }
+         return o
+      })
+      setOrderItems(updatedOrders)
+   }
+
+
+   const onTextInputChanged = (value, index) => {
+      console.log(value, index)
+      const updatedOrders = orderItems.map((o, i) => {
+         if (i === index) {
+            return {
+               ...o,
+               note: value || ''
+            }
+         }
+         return o
+      })
+      setOrderItems(updatedOrders)
    }
 
    return (
@@ -200,55 +264,144 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
                   />
                </div>
             </div>
-            <div>
-               <h1 className='add_sale_item__title'>{'Price List'}</h1>
-               <select className="add_sale_item__price-list-selector" value={selectedSalePriceList} onChange={handleOnChange}>
-                  {salePrices.map((item) => (
-                     <option
-                        key={item._id}
-                        value={item._id}>{t(item.name)}
-                     </option>
-                  ))}
-               </select>
-            </div>
+
+            <PriceListSelection
+               selectedSalePriceList={selectedSalePriceList}
+               salePrices={salePrices}
+               onSelectedPriceList={handleOnChangePriceList}
+            />
+
          </div>
 
          <div className='add_sale_item__container'>
-            {orderItems.map((orderItem, index) => (
+
+
+<div>
+
                <div
-                  key={orderItem.id} // Use a unique key for each item
                   style={{
                      display: 'grid',
-                     gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
+                     background: 'gray',
+                     padding: '0.5rem 0rem',
+                     marginBottom: '0.5rem',
+                     borderRadius: '0px',
+                     gridTemplateColumns: '1fr 0.7fr 0.3fr 0.7fr 0.3fr 1fr 0.1fr 0.7fr',
                      alignItems: 'baseline',
-                     gap: '5px',
-                     width: '100%'
+                     gap: '0.5rem',
+                     width: '100%',
+                     color: 'white'
                   }}
                >
-
-                  <ItemSelection
-                     index={index}
-                     orderItem={orderItem}
-                     items={saleItems}
-                     onSelectedItem={handleSelectedSaleItem}
-                  />
-
-                  <DiscountSelection
-                     index={index}
-                     orderItem={orderItem}
-                     discounts={discountsPerItem.filter((d) => d.items.includes(orderItem.saleItemId)).filter((d) => d.stakeholderTypes.includes(selectedStakeholder.stakeholderType)) }
-                     selectedDiscountPerItem={handleSelectedDiscountPerItem}
-                  />
-
-
-
-                  <div>{orderItem.discount}</div>
-                  <div>{orderItem.price}</div>
-                  <div>{orderItem.priceListRate}</div>
-                  <div>{orderItem.quantity}</div>
-                  <div>{orderItem.total}</div>
+                  <div>Item</div>
+                  <div>List Price</div>
+                  <div>Rate</div>
+                  <div>Discount</div>
+                  <div>Rate</div>
+                  <div>Note</div>
+                  <div>Qty</div>
+                  <div>Total Amount</div>
                </div>
-            ))}
+
+
+
+
+               <form>
+                  {orderItems.map((orderItem, index) => (
+                     <div
+                        key={orderItem.id} // Use a unique key for each item
+                        style={{
+                           display: 'grid',
+                           gridTemplateColumns: '1fr 0.7fr 0.3fr 0.7fr 0.3fr 1fr 0.1fr 0.7fr',
+                           alignItems: 'baseline',
+                           gap: '0.5rem',
+                           width: '100%',
+                           marginBottom: '0.5rem'
+                        }}
+                     >
+                        <ItemSelection
+                           isEnabled={true}
+                           settings={settings}
+                           index={index}
+                           orderItem={orderItem}
+                           items={saleItems}
+                           onSelectedItem={handleSelectedSaleItem}
+                        />
+
+
+                        <PriceInput
+                           settings={settings}
+                           isEnabled={true}
+                           maxLength={15}
+                           initialValue={orderItem.price}
+                           onInputChanged={onInputPriceChanged}
+                           index={index}
+                        />
+
+                        <TextInput
+                           settings={settings}
+                           isEnabled={false}
+                           placeholder={''}
+                           maxLength={3}
+                           textAlign={'center'}
+                           initialValue={orderItem.priceListRate}
+                           index={index}
+                        />
+
+                        <DiscountSelection
+                           settings={settings}
+                           isEnabled={true}
+                           index={index}
+                           orderItem={orderItem}
+                           discounts={discountsPerItem.filter((d) => d.items.includes(orderItem.saleItemId)).filter((d) => d.stakeholderTypes.includes(selectedStakeholder.stakeholderType))}
+                           selectedDiscountPerItem={handleSelectedDiscountPerItem}
+                        />
+
+                        <TextInput
+                           isEnabled={false}
+                           settings={settings}
+                           placeholder={''}
+                           maxLength={3}
+                           textAlign={'center'}
+                           initialValue={orderItem.discount}
+                           index={index}
+                        />
+
+                        <TextInput
+                           isEnabled={true}
+                           settings={settings}
+                           placeholder={'Note'}
+                           maxLength={120}
+                           textAlign={'start'}
+                           initialValue={orderItem.note}
+                           onInputChanged={onTextInputChanged}
+                           index={index}
+                        />
+
+                        <QuantityInput
+                           isEnabled={true}
+                           settings={settings}
+                           placeholder={orderItem.quantity}
+                           maxLength={2}
+                           textAlign={'center'}
+                           initialValue={orderItem.quantity}
+                           onInputChanged={onQuantityChanged}
+                           index={index}
+                        />
+
+                        <PriceInput
+                           settings={settings}
+                           isEnabled={false}
+                           maxLength={15}
+                           initialValue={orderItem.total}
+                           onInputChanged={onInputPriceChanged}
+                           index={index}
+                        />
+                     </div>
+                  ))}
+               </form>
+
+
+</div>
          </div>
 
          <div className='add_sale_item__total-amount-main'>
