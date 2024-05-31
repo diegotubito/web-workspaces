@@ -12,6 +12,7 @@ import { PriceListSelection } from './PriceListSelection/PriceListSelection';
 import { PriceInput } from './PriceInput/PriceInput';
 import { QuantityInput } from './QuantityInput/QuantityInput';
 import { TextInput } from './TextInput/TextInput';
+import { ReactComponent as TrashIcon } from '../../Resources/Images/delete_icon.svg';
 
 export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholder }) => {
    const { t } = useTranslation()
@@ -247,6 +248,15 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
       setOrderItems(updatedOrders)
    }
 
+   const onRemoveButtonClicked = (orderItemObject) => {
+      const index = orderItems.findIndex((item) => item.id === orderItemObject.id);
+      if (index !== -1) {
+         const newItems = [...orderItems];
+         newItems.splice(index, 1); // Usar splice en newItems en lugar de orderItems
+         setOrderItems(newItems);
+      }
+   }
+
    return (
       <div className='add_sale_item__main'>
          {/* Title */}
@@ -276,7 +286,7 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
          <div className='add_sale_item__container'>
 
 
-<div>
+            <div>
 
                <div
                   style={{
@@ -285,21 +295,37 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
                      padding: '0.5rem 0rem',
                      marginBottom: '0.5rem',
                      borderRadius: '0px',
-                     gridTemplateColumns: '1fr 0.7fr 0.3fr 0.7fr 0.3fr 1fr 0.1fr 0.7fr',
+                     gridTemplateColumns: '1fr 0.7fr 0.3fr 0.7fr 0.3fr 1fr 0.1fr 0.7fr 0.1fr',
                      alignItems: 'baseline',
                      gap: '0.5rem',
                      width: '100%',
                      color: 'white'
                   }}
                >
-                  <div>Item</div>
-                  <div>List Price</div>
-                  <div>Rate</div>
-                  <div>Discount</div>
-                  <div>Rate</div>
-                  <div>Note</div>
-                  <div>Qty</div>
-                  <div>Total Amount</div>
+                  <div style={{
+                     padding: '0.0rem 1rem',
+                  }}>Item</div>
+                  <div style={{
+                     padding: '0.0rem 1rem',
+                  }}>List Price</div>
+                  <div style={{
+                     padding: '0.0rem 1rem',
+                  }}>Rate</div>
+                  <div style={{
+                     padding: '0.0rem 1rem',
+                  }}>Discount</div>
+                  <div style={{
+                     padding: '0.0rem 1rem',
+                  }}>Rate</div>
+                  <div style={{
+                     padding: '0.0rem 1rem',
+                  }}>Note</div>
+                  <div style={{
+                     padding: '0.0rem 1rem',
+                  }}>Qty</div>
+                  <div style={{
+                     padding: '0.0rem 1rem',
+                  }}>Total Amount</div>
                </div>
 
 
@@ -311,7 +337,7 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
                         key={orderItem.id} // Use a unique key for each item
                         style={{
                            display: 'grid',
-                           gridTemplateColumns: '1fr 0.7fr 0.3fr 0.7fr 0.3fr 1fr 0.1fr 0.7fr',
+                           gridTemplateColumns: '1fr 0.7fr 0.3fr 0.7fr 0.3fr 1fr 0.1fr 0.7fr 0.1fr',
                            alignItems: 'baseline',
                            gap: '0.5rem',
                            width: '100%',
@@ -398,12 +424,19 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
                            onInputChanged={onInputPriceChanged}
                            index={index}
                         />
+
+                        <div className="input_field_column">
+                           <TrashIcon
+                              className='input_field_column__trash-button'
+                              onClick={() => onRemoveButtonClicked(orderItem)}
+                           />
+                        </div>
                      </div>
                   ))}
                </form>
 
 
-</div>
+            </div>
          </div>
 
          <div className='add_sale_item__total-amount-main'>
