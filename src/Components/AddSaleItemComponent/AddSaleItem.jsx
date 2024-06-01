@@ -16,7 +16,7 @@ import { ReactComponent as TrashIcon } from '../../Resources/Images/delete_icon.
 import { StakeholderType } from '../../Hooks/Stakeholder/stakeholderType';
 import { TransactionTypeEnum } from '../../Hooks/Transaction/transactionType';
 
-export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderType, selectedStakeholder, itemTotal, setItemTotal }) => {
+export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderType, selectedStakeholder, itemTotal, setItemTotal, selectedSalePriceList, setSelectedSalePriceList }) => {
    const { t } = useTranslation()
 
    const settings = {
@@ -25,8 +25,6 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
       inputBorderColorDisabled: 'rgb(240, 240, 240)',
       borderRadius: '4px'
    }
-
-   const [selectedSalePriceList, setSelectedSalePriceList] = useState()
 
    const {
       fetchSalePricesByWorkspace,

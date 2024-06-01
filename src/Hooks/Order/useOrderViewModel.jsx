@@ -67,7 +67,7 @@ export const useOrderViewModel = () => {
       }
    }
 
-   const createOrder = async (type, items, totalAmount, stakeholder, selectedPaymentItem, selectedCurrency, installmentNumber) => {
+   const createOrder = async (type, items, totalAmount, stakeholder, selectedPaymentItem, selectedCurrency, installmentNumber, selectedSalePriceListId) => {
       if (items.length === 0) {
          setOnOrderFailed({
             title: "Validation Error",
@@ -103,13 +103,14 @@ export const useOrderViewModel = () => {
          workspace: workspaceSession._id,
          date: Date.now(),
          stakeholder: stakeholder,
-         items: mapItems(items),
+         items: mapItems(items, selectedSalePriceListId),
          totalAmount: totalAmount,
          status: 'pending_approval',
          paymentMethod: selectedPaymentItem,
-         currency: selectedCurrency,
+         currency: selectedCurrency._id,
          numberOfInstallments: installmentNumber,
-         type: type
+         type: type,
+         exchangeRate: selectedCurrency.exchangeRate
       }
 
       try {
@@ -126,7 +127,7 @@ export const useOrderViewModel = () => {
       }
    }
 
-   const mapItems = (items) => {
+   const mapItems = (items, priceListId) => {
       let result = []
 
       items.forEach((item) => {
@@ -137,8 +138,8 @@ export const useOrderViewModel = () => {
             price: item.price,
             discount: item.discountPerItemId,
             discountRate: item.discount,
+            priceList: priceListId,
             priceListRate: item.priceListRate,
-
             total: item.total
          }
          result = [...result, newItem]

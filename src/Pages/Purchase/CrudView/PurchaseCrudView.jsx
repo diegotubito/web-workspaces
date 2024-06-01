@@ -42,6 +42,7 @@ export const PurchaseCrudView = () => {
 
    const [selectedStakeholderType, setSelectedStakeholderType] = useState()
    const [selectedOrderType, setSelectedOrderType] = useState()
+   const [selectedSalePriceList, setSelectedSalePriceList] = useState()
 
    const [selectedStakeholder, setSelectedStakeholder] = useState("")
    const [orderItems, setOrderItems] = useState([]);
@@ -52,7 +53,7 @@ export const PurchaseCrudView = () => {
    const [totalAmount, setTotalAmount] = useState(0)
 
    const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
-   const [selectedCurrency, setSelectedCurrency] = useState("")
+   const [selectedCurrency, setSelectedCurrency] = useState()
    const [installmentNumber, setInstallmentNumber] = useState(1)
 
    useEffect(() => {
@@ -132,7 +133,7 @@ export const PurchaseCrudView = () => {
    }
 
    const onCreateOrderDidPressed = () => {
-      createOrder(selectedOrderType, orderItems, convertCurrencyStringToNumber(totalAmount), selectedStakeholder, selectedPaymentItem, selectedCurrency, installmentNumber)
+      createOrder(selectedOrderType, orderItems, convertCurrencyStringToNumber(totalAmount), selectedStakeholder, selectedPaymentItem, selectedCurrency, installmentNumber, selectedSalePriceList)
    }
 
    const onCancelDidPressed = () => {
@@ -197,6 +198,8 @@ export const PurchaseCrudView = () => {
                      selectedStakeholder={selectedStakeholder}
                      itemTotal={itemTotal}
                      setItemTotal={setItemTotal}
+                     selectedSalePriceList={selectedSalePriceList}
+                     setSelectedSalePriceList={setSelectedSalePriceList}
                   />
 
                   <div className='puchase_view__payment_and_currency'>
