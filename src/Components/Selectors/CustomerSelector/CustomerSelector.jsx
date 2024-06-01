@@ -8,9 +8,11 @@ import { useStakeholderViewModel } from '../../../Hooks/Stakeholder/useStakehold
 import defaultProfileImage from '../../../Resources/Images/empty_profile.jpg'
 import { Spinner } from '../../Spinner/spinner';
 import { ErrorAlert } from '../../CustomAlert/ErrorAlert';
+import { TransactionTypeEnum } from '../../../Hooks/Transaction/transactionType';
+import { StakeholderType } from '../../../Hooks/Stakeholder/stakeholderType';
 
 
-export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer }) => {
+export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer, stakeholderType, orderType }) => {
    const { t } = useTranslation();
    const navigate = useNavigate();
 
@@ -51,13 +53,29 @@ export const CustomerSelector = ({ selectedCustomer, setSelectedCustomer }) => {
    }
 
    const onReturnPressed = (name) => {
-      fetchStakeholdersByWorkspaceAndTypePaginated(customerForm.value)
+      let stakeholderType = [];
+      switch (orderType) {
+         case TransactionTypeEnum.PURCHASE:
+            stakeholderType = [StakeholderType.SUPPLIER]
+            break
+         case TransactionTypeEnum.ADJUSTMENT_SHORTAGE:
+         case TransactionTypeEnum.ADJUSTMENT_SURPLUS:
+         case TransactionTypeEnum.TRANSFER_DESTINY:
+         case TransactionTypeEnum.TRANSFER_ORIGIN:
+            stakeholderType = [StakeholderType.EMPLOYEE]
+            break
+         case TransactionTypeEnum.SALE:
+         case TransactionTypeEnum.CREDIT_NOTE:
+         case TransactionTypeEnum.DEBIT_NOTE:
+            stakeholderType = [StakeholderType.SUPPLIER, StakeholderType.PURCHASE, StakeholderType.CUSTOMER]
+      }
+      fetchStakeholdersByWorkspaceAndTypePaginated(customerForm.value, stakeholderType)
    }
 
    useEffect(() => {
       setCustomerForm(defaultTextFieldForm)
       setStakeholders([])
-   }, [])
+   }, [stakeholderType])
 
    useEffect(() => {
       if (stakeholderEmptyList) {

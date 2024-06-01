@@ -214,11 +214,12 @@ export const PurchaseCrudView = () => {
                      selectedCustomer={selectedStakeholder}
                      setSelectedCustomer={setSelectedStakeholder}
                      stakeholderType={selectedStakeholderType}
+                     orderType={selectedOrderType}
                   />
 
                   <AddSaleItem
-                     title={'New Add Item'}
-                     selectedStakeholderType={selectedStakeholderType}
+                     title={'Add New Items'}
+                     selectedOrderType={selectedOrderType}
                      selectedStakeholder={selectedStakeholder}
                   />
 

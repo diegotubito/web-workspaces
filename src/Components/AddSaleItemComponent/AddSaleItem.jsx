@@ -13,8 +13,10 @@ import { PriceInput } from './PriceInput/PriceInput';
 import { QuantityInput } from './QuantityInput/QuantityInput';
 import { TextInput } from './TextInput/TextInput';
 import { ReactComponent as TrashIcon } from '../../Resources/Images/delete_icon.svg';
+import { StakeholderType } from '../../Hooks/Stakeholder/stakeholderType';
+import { TransactionTypeEnum } from '../../Hooks/Transaction/transactionType';
 
-export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholder }) => {
+export const AddSaleItem = ({ title, selectedOrderType, selectedStakeholder }) => {
    const { t } = useTranslation()
 
    const settings = {
@@ -53,13 +55,30 @@ export const AddSaleItem = ({ title, selectedStakeholderType, selectedStakeholde
    useEffect(() => {
       fetchSalePricesByWorkspace()
       fetchDiscountsPerItemByWorkspace()
-      fetchSaleItemsByWorkspace(true)
    }, [])
 
    useEffect(() => {
+      console.log(selectedOrderType)
       if (!selectedStakeholder) {
          setOrderItems([])
+      } else {
+         switch (selectedOrderType) {
+            case TransactionTypeEnum.PURCHASE:
+               fetchItemsByWorkspaceAndStakeholder(selectedStakeholder)
+               break
+            case TransactionTypeEnum.CREDIT_NOTE:
+            case TransactionTypeEnum.DEBIT_NOTE:
+               fetchSaleItemsByWorkspace(true)
+               break
+            default:
+               fetchSaleItemsByWorkspace(false)
+               break
+         }
       }
+         
+    
+      
+
    }, [selectedStakeholder])
 
    // Autoselect First List Price

@@ -31,10 +31,17 @@ export const useStakeholderViewModel = () => {
       }
    }
 
-   const fetchStakeholdersByWorkspaceAndTypePaginated = async (search) => {
+   const fetchStakeholdersByWorkspaceAndTypePaginated = async (search, stakeholderTypes) => {
 
       try {
-         const response = await fetchStakeholdersByWorkspaceAndTypePaginatedRepository(workspaceSession._id, search, 1, 200)
+         const body = {
+            workspace: workspaceSession._id,
+            search,
+            page: 1,
+            limit: 200,
+            stakeholderTypes
+         }
+         const response = await fetchStakeholdersByWorkspaceAndTypePaginatedRepository(body)
          setStakeholderEmptyList((response.stakeholders.length === 0))
          setStakeholders(response.stakeholders)
       } catch (error) {
