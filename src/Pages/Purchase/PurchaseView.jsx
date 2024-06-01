@@ -43,7 +43,6 @@ export const PurchaseView = () => {
       setPurchaseError(error)
    }
 
-
    // Callbacks from InstallmentComponent
    const onSelectedInstallment = (installment) => {
       setSelectedInstallment(installment)
@@ -68,8 +67,6 @@ export const PurchaseView = () => {
    const onTransactionError = (error) => {
       setTransactionError(error)
    }
-
-
 
    const handleTransactionChange = () => {
       setReloadTrigger(prev => !prev); // Cambia el valor para desencadenar una actualización
@@ -105,8 +102,6 @@ export const PurchaseView = () => {
             />
          )}
 
-
-
          <div className='purchase_view__header'>
             <div className='sale_crud_view__footer-buttons'>
 
@@ -121,8 +116,6 @@ export const PurchaseView = () => {
          </div>
 
          <div className='purchase_view__body'>
-
-
             <OrderComponent
                type={'all'}
                onSelectedOrder={onSelectedOrder}

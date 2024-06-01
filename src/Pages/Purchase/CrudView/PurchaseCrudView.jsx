@@ -2,8 +2,6 @@ import './PuchaseCrudView.css'
 import { useEffect, useState } from 'react'
 import { useOrderViewModel } from '../../../Hooks/Order/useOrderViewModel';
 import { useTranslation } from 'react-i18next';
-import { usePurchaseFormViewModel } from '../FormHook/usePurchaseFormViewModel'
-import { InputFieldColumn } from '../../../Components/InputFieldColumn/InputFieldColumn'
 import { convertCurrencyStringToNumber, formatCurrency } from '../../../Utils/Common/formatCurrency';
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { SimpleButton } from '../../../Components/Buttons/SimpleButton/SimpleButton';
@@ -42,15 +40,13 @@ export const PurchaseCrudView = () => {
       setOnGetSaleFailed
    } = useItemViewModel()
 
-   const [availableSaleItems, setAvailableSaleItems] = useState([])
    const [selectedStakeholderType, setSelectedStakeholderType] = useState()
    const [selectedOrderType, setSelectedOrderType] = useState()
 
    const [selectedStakeholder, setSelectedStakeholder] = useState("")
    const [orderItems, setOrderItems] = useState([]);
-   const { createProductItem } = usePurchaseFormViewModel({ orderItems, setOrderItems, items })
-  
-   const [partialAmount, setPartialAmount] = useState(0)
+
+   const [itemTotal, setItemTotal] = useState(0)
    const [termAmount, setTermAmount] = useState(0)
    const [totalDiscount, setTotalDiscount] = useState(0)
    const [totalAmount, setTotalAmount] = useState(0)
@@ -84,7 +80,7 @@ export const PurchaseCrudView = () => {
       setTotalAmount(0)
       setTermAmount(0)
       setTotalDiscount(0)
-      setPartialAmount(0)
+      setItemTotal(0)
       setInstallmentNumber(1)
    }
 
@@ -109,7 +105,10 @@ export const PurchaseCrudView = () => {
       }
    }, [selectedOrderType, setSelectedOrderType])
 
-   // 1 - Fetch All Purchase Items From API 
+   useEffect(() => {
+      setTermAmount(totalAmount / installmentNumber)
+   }, [setInstallmentNumber, installmentNumber, totalAmount])
+
    useEffect(() => {
       setSelectedStakeholder(null)
    }, [selectedStakeholderType])
@@ -120,41 +119,16 @@ export const PurchaseCrudView = () => {
       }
    }, [onOrderSuccess])
 
-   // 2 - We programmatically select a default option, in this case, the first option. 
-
-   // 3A - When picking a selector element, we create a default blank item.
-
-
-   useEffect(() => {
-
-   }, [items])
-
-   // 3B - Or we can create a defaul blank item, by clicking on the + button. 
-   const onNewItemDidPressed = () => {
-      createProductItem()
-   }
-
    useEffect(() => {
       updateTotalAmount()
-   }, [orderItems, setOrderItems])
+   }, [orderItems, setOrderItems, setItemTotal, itemTotal])
 
    const updateTotalAmount = () => {
       let total = 0
-      let shouldUpdate = false
-      orderItems.forEach((orderItem) => {
-         orderItem.fields.forEach((field) => {
-            if (field.name === 'total') {
-               const value = convertCurrencyStringToNumber(field.value).toFixed(2)
-               const parsedValue = parseFloat(value) || 0
-               total += parsedValue
-               shouldUpdate = true
-            }
-         })
-      })
 
-      if (shouldUpdate) {
-         setTotalAmount(total)
-      }
+      total = itemTotal
+      
+      setTotalAmount(total)
    }
 
    const onCreateOrderDidPressed = () => {
@@ -191,8 +165,6 @@ export const PurchaseCrudView = () => {
 
             <div className='purchase_crud_view__body'>
 
-
-
                {itemIsLoading && <Spinner />}
 
                {onOrderFailed && (
@@ -218,37 +190,13 @@ export const PurchaseCrudView = () => {
                   />
 
                   <AddSaleItem
+                     orderItems={orderItems}
+                     setOrderItems={setOrderItems}
                      title={'Add New Items'}
                      selectedOrderType={selectedOrderType}
                      selectedStakeholder={selectedStakeholder}
-                  />
-
-
-                  <div className='puchase_view__space-between '>
-
-                     <div className='purchase_view__add--button'>
-                        <SimpleButton
-                           title={t('PURCHASE_ORDER_CRUD_VIEW_ADD_NEW_ITEM_TITLE')}
-                           style='primary'
-                           onClick={() => onNewItemDidPressed()}
-                           disabled={items.length === 0}
-                        />
-                     </div>
-
-                  
-                  </div>
-                
-                  <InputFieldColumn
-                     title={t('PURCHASE_ORDER_CRUD_VIEW_ITEMS_TITLE')}
-                     items={orderItems}
-                     setItems={setOrderItems}
-                  />
-
-                  <TotalAmount
-                     title={t('Partial Amount')}
-                     items={orderItems}
-                     total={partialAmount}
-                     setTotal={setPartialAmount}
+                     itemTotal={itemTotal}
+                     setItemTotal={setItemTotal}
                   />
 
                   <div className='puchase_view__payment_and_currency'>
@@ -275,33 +223,16 @@ export const PurchaseCrudView = () => {
 
                      <TotalAmount
                         title={t('Term Amount')}
-                        items={orderItems}
                         total={termAmount}
-                        setTotal={setTermAmount}
                      />
                   </div>
 
                   <div className='puchase_view__discount_and_total'>
-                     <div style={{display: 'flex', gap: '1rem'}}>
-                        <CurrencySelector
-                           title={t('Discounts')}
-                           selectedCurrency={selectedCurrency}
-                           setSelectedCurrency={setSelectedCurrency}
-                        />
-
-                        <TotalAmount
-                           title={t('Total Discounts')}
-                           items={orderItems}
-                           total={totalDiscount}
-                           setTotal={setTotalAmount}
-                        />
-                     </div>
+                    
 
                      <TotalAmount
                         title={t('PURCHASE_ORDER_CRUD_VIEW_TOTAL_TO_PAY_TITLE')}
-                        items={orderItems}
                         total={totalAmount}
-                        setTotal={setTotalAmount}
                      />
                   </div>
 

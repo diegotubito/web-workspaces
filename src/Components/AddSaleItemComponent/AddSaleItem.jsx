@@ -16,7 +16,7 @@ import { ReactComponent as TrashIcon } from '../../Resources/Images/delete_icon.
 import { StakeholderType } from '../../Hooks/Stakeholder/stakeholderType';
 import { TransactionTypeEnum } from '../../Hooks/Transaction/transactionType';
 
-export const AddSaleItem = ({ title, selectedOrderType, selectedStakeholder }) => {
+export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderType, selectedStakeholder, itemTotal, setItemTotal }) => {
    const { t } = useTranslation()
 
    const settings = {
@@ -26,9 +26,7 @@ export const AddSaleItem = ({ title, selectedOrderType, selectedStakeholder }) =
       borderRadius: '4px'
    }
 
-   const [orderItems, setOrderItems] = useState([])
    const [selectedSalePriceList, setSelectedSalePriceList] = useState()
-   const [total, setTotal] = useState(0)
 
    const {
       fetchSalePricesByWorkspace,
@@ -66,6 +64,7 @@ export const AddSaleItem = ({ title, selectedOrderType, selectedStakeholder }) =
             case TransactionTypeEnum.PURCHASE:
                fetchItemsByWorkspaceAndStakeholder(selectedStakeholder)
                break
+            case TransactionTypeEnum.SALE:
             case TransactionTypeEnum.CREDIT_NOTE:
             case TransactionTypeEnum.DEBIT_NOTE:
                fetchSaleItemsByWorkspace(true)
@@ -75,10 +74,6 @@ export const AddSaleItem = ({ title, selectedOrderType, selectedStakeholder }) =
                break
          }
       }
-         
-    
-      
-
    }, [selectedStakeholder])
 
    // Autoselect First List Price
@@ -158,7 +153,7 @@ export const AddSaleItem = ({ title, selectedOrderType, selectedStakeholder }) =
       orderItems.forEach((orderItem) => {
          result += orderItem.total
       })
-      setTotal(result)
+      setItemTotal(result)
    }
 
    const handleOnChangePriceList = (priceListObject) => {
@@ -460,7 +455,7 @@ export const AddSaleItem = ({ title, selectedOrderType, selectedStakeholder }) =
 
          <div className='add_sale_item__total-amount-main'>
             <h2 className='add_sale_item__title'> {'Partial Amount'}</h2>
-            <h3 className='add_sale_item__total-amount '>{formatCurrency(total.toFixed(2).toString())}</h3>
+            <h3 className='add_sale_item__total-amount '>{formatCurrency(itemTotal.toFixed(2).toString())}</h3>
          </div>
       </div>
    )

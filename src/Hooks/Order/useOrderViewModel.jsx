@@ -130,50 +130,16 @@ export const useOrderViewModel = () => {
       let result = []
 
       items.forEach((item) => {
-         let auxItem = null;
-         const itemIndex = item.fields.findIndex((field) => field.type === 'selector');
-         // Si encontramos un índice válido, asignamos el valor correspondiente a purchaseItem
-         if (itemIndex !== -1) {
-            auxItem = item.fields[itemIndex].value;
-         }
-         // Si purchaseItem es una cadena vacía, lo ajustamos a null
-         if (auxItem === '') {
-            auxItem = null;
-         }
-
-
-         let description = null
-         const descriptionIndex = item.fields.findIndex((field) => field.name === 'description')
-         if (descriptionIndex !== -1 && itemIndex === -1) {
-            description = item.fields[descriptionIndex].value
-         }
-
-         let quantity = null
-         const quantityIndex = item.fields.findIndex((field) => field.name === 'quantity')
-         if (quantityIndex !== -1) {
-            quantity = item.fields[quantityIndex].value
-         }
-
-         let subTotal = null
-         const subTotalIndex = item.fields.findIndex((field) => field.name === 'sub_total')
-         if (subTotalIndex !== -1) {
-            subTotal = item.fields[subTotalIndex].value
-            subTotal = convertCurrencyStringToNumber(subTotal)
-         }
-
-         let total = null
-         const totalIndex = item.fields.findIndex((field) => field.name === 'total')
-         if (totalIndex !== -1) {
-            total = item.fields[totalIndex].value
-            total = convertCurrencyStringToNumber(total)
-         }
-
          const newItem = {
-            item: auxItem,
-            description: description,
-            quantity: quantity,
-            subTotal: subTotal,
-            total: total
+            item: item.saleItemId,
+            description: item.note,
+            quantity: item.quantity,
+            price: item.price,
+            discount: item.discountPerItemId,
+            discountRate: item.discount,
+            priceListRate: item.priceListRate,
+
+            total: item.total
          }
          result = [...result, newItem]
       })
