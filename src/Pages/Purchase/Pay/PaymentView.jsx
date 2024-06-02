@@ -15,6 +15,8 @@ import { NoteTextField } from '../../../Components/TextField/NoteTextField/NoteT
 import { AmountTextField } from '../../../Components/TextField/AmountTextField/AmountTextField';
 import { PhysicalAccountSelector } from '../../../Components/Selectors/PhysicalAccountSelector/PhysicalAccountSelector';
 import { AccountSelectorByCurrency } from '../../../Components/Selectors/AccountSelectorByCurrency/AccountSelectorByCurrency';
+import { PriceInput } from '../../../Components/AddSaleItemComponent/PriceInput/PriceInput';
+import { NewAmountInput } from '../../../Components/TextField/NewAmountInput/NewAmountInput';
 
 export const PaymentView = () => {
    const navigate = useNavigate();
@@ -43,7 +45,7 @@ export const PaymentView = () => {
       const balanceItem = balances.find((c) => c._id === selectedBalance)
       const originExchageRate = installment?.currency?.exchangeRate
       const destinyExchangeRate = balanceItem?.currency?.exchangeRate
-
+      setAmount(installment.amount)
       setExchangeRate(destinyExchangeRate / originExchageRate)
    }, [selectedBalance])
 
@@ -158,13 +160,16 @@ export const PaymentView = () => {
             {(installment?.order?.status === 'partial_payment' || installment?.order?.status === 'ready_to_pay') && (
                <>
 
-                  <div className='payment_view__total-amount-main'>
-                     <h3 className='purchase_view__form-title'>{t('Payment')}</h3>
-                     <AmountTextField
-                        initialValue={installment.amount.toFixed(2).toString()}
-                        onChangeValue={onAmountDidChanged}
-                     />
-                  </div>
+
+                  <NewAmountInput
+                     isEnabled={true}
+                     maxLength={15}
+                     textAlign={'end'}
+                     initialValue={installment.amount.toFixed(2).toString()}
+                     onInputChanged={onAmountDidChanged}
+                  />
+
+
                </>
             )}
 
