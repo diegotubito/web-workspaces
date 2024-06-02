@@ -7,7 +7,7 @@ export const NewAmountInput = ({ isEnabled, maxLength, textAlign, initialValue, 
 
    useEffect(() => {
       const convertedNumber = convertCurrencyStringToNumber(initialValue)
-      setInputValue(initialValue ? formatCurrency(convertedNumber.toFixed(2).toString()) : '')
+      setInputValue(initialValue ? formatCurrency(convertedNumber.toFixed(2).toString()) : '$0.0')
    }, [initialValue])
 
    const onChangeHandler = (event) => {

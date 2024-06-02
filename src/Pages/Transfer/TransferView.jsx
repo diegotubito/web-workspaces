@@ -10,8 +10,8 @@ import { Spinner } from '../../Components/Spinner/spinner'
 import { SimpleButton } from '../../Components/Buttons/SimpleButton/SimpleButton'
 import { ErrorAlert } from '../../Components/CustomAlert/ErrorAlert';
 import { PhysicalAccountSelector } from '../../Components/Selectors/PhysicalAccountSelector/PhysicalAccountSelector';
-import { AmountTextField } from '../../Components/TextField/AmountTextField/AmountTextField';
 import { useTransactionViewModel } from '../../Hooks/Transaction/useTransactionViewModel';
+import { NewAmountInput } from '../../Components/TextField/NewAmountInput/NewAmountInput';
 
 export const TransferView = () => {
    const navigate = useNavigate();
@@ -100,15 +100,7 @@ export const TransferView = () => {
             </div>
          </div>
 
-         <div className='transfer_view__body'>
-
-            <div className='transfer_view__total-amount-main'>
-               <AmountTextField
-                  initialValue={0}
-                  onChangeValue={onAmountDidChanged}
-                  form={{ textAlign: "left" }}
-               />
-            </div>
+         <div className='transfer_view__body'>            
 
             <PhysicalAccountSelector
                destiny={'assignees'}
@@ -133,6 +125,17 @@ export const TransferView = () => {
                balances={destinyBalances}
                setBalances={setDestinyBalances}
             />
+
+            <div className='transfer_view__total-amount-main'>
+               <NewAmountInput
+                  isEnabled={true}
+                  maxLength={15}
+                  textAlign={'end'}
+                  initialValue={0}
+                  onInputChanged={onAmountDidChanged}
+               />
+            </div>
+
 
          </div >
 

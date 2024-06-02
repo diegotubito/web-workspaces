@@ -12,7 +12,6 @@ import { useInstallmentViewModel } from '../../../Hooks/Installment/useInstallme
 import { Spinner } from '../../../Components/Spinner/spinner'
 import { Button, Alert } from 'react-bootstrap';
 import { NoteTextField } from '../../../Components/TextField/NoteTextField/NoteTextField';
-import { AmountTextField } from '../../../Components/TextField/AmountTextField/AmountTextField';
 import { PhysicalAccountSelector } from '../../../Components/Selectors/PhysicalAccountSelector/PhysicalAccountSelector';
 import { AccountSelectorByCurrency } from '../../../Components/Selectors/AccountSelectorByCurrency/AccountSelectorByCurrency';
 import { PriceInput } from '../../../Components/AddSaleItemComponent/PriceInput/PriceInput';
