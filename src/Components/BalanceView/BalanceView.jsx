@@ -116,11 +116,13 @@ export const BalanceView = ({ accountId }) => {
       let amount = formatCurrency(payment.amount.toFixed(2).toString());
       switch (payment.type) {
          case TransactionTypeEnum.PURCHASE:
+         case TransactionTypeEnum.CREDIT_NOTE:
          case TransactionTypeEnum.TRANSFER_ORIGIN:
          case TransactionTypeEnum.ADJUSTMENT_SHORTAGE:
             accountType = 'debe';
             break;
          case TransactionTypeEnum.SALE:
+         case TransactionTypeEnum.DEBIT_NOTE:
          case TransactionTypeEnum.TRANSFER_DESTINY:
          case TransactionTypeEnum.ADJUSTMENT_SURPLUS:
             accountType = 'haber';
@@ -140,10 +142,12 @@ export const BalanceView = ({ accountId }) => {
       let amount = formatCurrency(payment.amount.toFixed(2).toString());
       switch (payment.type) {
          case TransactionTypeEnum.PURCHASE:
+         case TransactionTypeEnum.CREDIT_NOTE:
          case TransactionTypeEnum.TRANSFER_ORIGIN:
          case TransactionTypeEnum.ADJUSTMENT_SHORTAGE:
             accountType = 'debe';
             break;
+         case TransactionTypeEnum.DEBIT_NOTE:
          case TransactionTypeEnum.SALE:
          case TransactionTypeEnum.TRANSFER_DESTINY:
          case TransactionTypeEnum.ADJUSTMENT_SURPLUS:

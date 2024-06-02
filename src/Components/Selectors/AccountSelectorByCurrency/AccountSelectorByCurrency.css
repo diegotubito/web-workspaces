@@ -1,0 +1,21 @@
+.account_selector_by_currency__container {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 2rem;
+}
+
+.account_selector_by_currency__form-title {
+   font-size: 15px;
+   font-weight: 400;
+}
+
+.account_selector_by_currency__form-select {
+   width: 100%;
+   font-size: 15px;
+   font-weight: 500;
+   border: none;
+   background-color: rgba(23, 53, 136, 0.543);
+   border-radius: 4px;
+   padding: 1rem 1.0rem;
+   color: whitesmoke;
+}

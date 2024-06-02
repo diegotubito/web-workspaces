@@ -14,6 +14,7 @@ import { Button, Alert } from 'react-bootstrap';
 import { NoteTextField } from '../../../Components/TextField/NoteTextField/NoteTextField';
 import { AmountTextField } from '../../../Components/TextField/AmountTextField/AmountTextField';
 import { PhysicalAccountSelector } from '../../../Components/Selectors/PhysicalAccountSelector/PhysicalAccountSelector';
+import { AccountSelectorByCurrency } from '../../../Components/Selectors/AccountSelectorByCurrency/AccountSelectorByCurrency';
 
 export const PaymentView = () => {
    const navigate = useNavigate();
@@ -119,16 +120,17 @@ export const PaymentView = () => {
 
             <h3> {getOrderInfo()} </h3>
 
-            <PhysicalAccountSelector
+            <AccountSelectorByCurrency
                destiny={'assignees'}
                title={t('PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE')}
-               currencyTitle={t('PAYMENT_VIEW_CURRENCY_TITLE')}
+               balanceTitle={t('Balance')}
                selectedPhysicalAccount={selectedPhysicalAccount}
                setSelectedPhysicalAccount={setSelectedPhysicalAccount}
                selectedBalance={selectedBalance}
                setSelectedBalance={setSelectedBalance}
                balances={balances}
                setBalances={setBalances}
+               withCurrency={installment.currency}
             />
 
             <div className='payment_view__total-amount-main'>
@@ -151,7 +153,7 @@ export const PaymentView = () => {
                <h3 className='payment_view__total-amount'>{exchangeRate}</h3>
             </div>
 
-           
+
 
             {(installment?.order?.status === 'partial_payment' || installment?.order?.status === 'ready_to_pay') && (
                <>
@@ -159,7 +161,7 @@ export const PaymentView = () => {
                   <div className='payment_view__total-amount-main'>
                      <h3 className='purchase_view__form-title'>{t('Payment')}</h3>
                      <AmountTextField
-                        initialValue={0}
+                        initialValue={installment.amount.toFixed(2).toString()}
                         onChangeValue={onAmountDidChanged}
                      />
                   </div>
