@@ -5,7 +5,7 @@ export const useSalePriceListRepository = () => {
 
    const fetchSalePricesByWorkspace = (workspace) => {
       return apiCall({
-         path: `/api/v1/sale_price?workspace=${workspace}`,
+         path: `/api/v1/sale_price_list?workspace=${workspace}`,
          method: 'GET'
       })
    }

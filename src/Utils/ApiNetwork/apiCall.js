@@ -116,9 +116,6 @@ const mapErrorToCustom = (err) => {
       const title = data.title || "Error";
       const message = data.message || "An error occurred";
 
-      console.log('estatusssss', err.response)
-      console.log('estatusssss', data.message)
-
       switch (status) {
          case 400:
             return new BadRequestError(title, message);

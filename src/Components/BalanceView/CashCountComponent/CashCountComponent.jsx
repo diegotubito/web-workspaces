@@ -19,7 +19,7 @@ export const CashCountComponent = ({cashCount, onCloseCashCount}) => {
       } else if (cashCount.globalResult === CashCountResult.UNBALANCED) {
         return 'warning'
      } else {
-         return 'desctructive'
+         return 'destructive'
      }
    }
 

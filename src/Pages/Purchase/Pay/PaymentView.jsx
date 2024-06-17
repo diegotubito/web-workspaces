@@ -121,7 +121,7 @@ export const PaymentView = () => {
 
             <h3> {getOrderInfo()} </h3>
 
-            <AccountSelectorByCurrency
+            {installment && (<AccountSelectorByCurrency
                destiny={'assignees'}
                title={t('PAYMENT_VIEW_PHYSICAL_ACCOUNT_TITLE')}
                balanceTitle={t('Balance')}
@@ -132,7 +132,7 @@ export const PaymentView = () => {
                balances={balances}
                setBalances={setBalances}
                withCurrency={installment.currency}
-            />
+            />)}
 
             <div className='payment_view__total-amount-main'>
                <h3>{t('PAYMENT_VIEW_TOTAL_TO_PAY_TITLE')}</h3>

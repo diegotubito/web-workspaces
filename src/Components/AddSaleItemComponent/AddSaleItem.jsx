@@ -54,7 +54,6 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
    }, [])
 
    useEffect(() => {
-      console.log(selectedOrderType)
       if (!selectedStakeholder) {
          setOrderItems([])
       } else {
@@ -138,7 +137,6 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
    }
 
    useEffect(() => {
-      console.log(orderItems)
       updateTotal()
    }, [orderItems])
 
@@ -247,7 +245,6 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
 
 
    const onTextInputChanged = (value, index) => {
-      console.log(value, index)
       const updatedOrders = orderItems.map((o, i) => {
          if (i === index) {
             return {
@@ -269,6 +266,17 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
       }
    }
 
+   const getGridTemplate = () => {
+      switch (selectedOrderType) {
+         case TransactionTypeEnum.SALE:
+            return '1fr 0.7fr 0.3fr 0.7fr 0.3fr 1fr 0.1fr 0.7fr 0.1fr'
+         case TransactionTypeEnum.PURCHASE:
+            return '1fr 0.7fr 0.3fr 1fr 0.1fr 0.7fr 0.1fr'
+         default:
+            return '1fr 0.7fr 0.3fr 0.7fr 0.3fr 1fr 0.1fr 0.7fr 0.1fr'
+      }
+   }
+
    return (
       <div className='add_sale_item__main'>
          {/* Title */}
@@ -287,11 +295,11 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
                </div>
             </div>
 
-            <PriceListSelection
+            {selectedOrderType !== TransactionTypeEnum.PURCHASE && (<PriceListSelection
                selectedSalePriceList={selectedSalePriceList}
                salePrices={salePrices}
                onSelectedPriceList={handleOnChangePriceList}
-            />
+            />)}
 
          </div>
 
@@ -307,7 +315,7 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
                      padding: '0.5rem 0rem',
                      marginBottom: '0.5rem',
                      borderRadius: '0px',
-                     gridTemplateColumns: '1fr 0.7fr 0.3fr 0.7fr 0.3fr 1fr 0.1fr 0.7fr 0.1fr',
+                     gridTemplateColumns: getGridTemplate(),
                      alignItems: 'baseline',
                      gap: '0.5rem',
                      width: '100%',
@@ -323,12 +331,15 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
                   <div style={{
                      padding: '0.0rem 1rem',
                   }}>Rate</div>
-                  <div style={{
+                  
+                  {selectedOrderType !== TransactionTypeEnum.PURCHASE && (<div style={{
                      padding: '0.0rem 1rem',
-                  }}>Discount</div>
-                  <div style={{
+                  }}>Discount</div>)}
+                  
+                  {selectedOrderType !== TransactionTypeEnum.PURCHASE && ( <div style={{
                      padding: '0.0rem 1rem',
-                  }}>Rate</div>
+                  }}>Rate</div>)}
+                  
                   <div style={{
                      padding: '0.0rem 1rem',
                   }}>Note</div>
@@ -349,7 +360,7 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
                         key={orderItem.id} // Use a unique key for each item
                         style={{
                            display: 'grid',
-                           gridTemplateColumns: '1fr 0.7fr 0.3fr 0.7fr 0.3fr 1fr 0.1fr 0.7fr 0.1fr',
+                           gridTemplateColumns: getGridTemplate(),
                            alignItems: 'baseline',
                            gap: '0.5rem',
                            width: '100%',
@@ -386,16 +397,16 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
                            index={index}
                         />
 
-                        <DiscountSelection
+                        {selectedOrderType !== TransactionTypeEnum.PURCHASE && (<DiscountSelection
                            settings={settings}
                            isEnabled={true}
                            index={index}
                            orderItem={orderItem}
                            discounts={discountsPerItem.filter((d) => d.items.includes(orderItem.saleItemId)).filter((d) => d.stakeholderTypes.includes(selectedStakeholder.stakeholderType))}
                            selectedDiscountPerItem={handleSelectedDiscountPerItem}
-                        />
+                        />)}
 
-                        <TextInput
+                        {selectedOrderType !== TransactionTypeEnum.PURCHASE && (<TextInput
                            isEnabled={false}
                            settings={settings}
                            placeholder={''}
@@ -403,7 +414,7 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
                            textAlign={'center'}
                            initialValue={orderItem.discount}
                            index={index}
-                        />
+                        />)}
 
                         <TextInput
                            isEnabled={true}

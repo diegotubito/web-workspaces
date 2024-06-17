@@ -20,7 +20,7 @@ export const useInstallmentMapping = () => {
          const currencyCode = currency.code
          return `(${currencyCode}) ${amountText}`
       }
-      console.log('s:',selectedInstallmentId)
+     
       const newItems = sortedInstallments.map((installment) => {
          return {
             _id: installment._id,

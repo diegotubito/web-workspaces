@@ -114,7 +114,6 @@ export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
          const price = convertCurrencyStringToNumber(name === 'price_input' ? newValue : items[index].price)
          const quantity = name === 'quantity_input' ? newValue : items[index].quantity 
          const total = parseFloat((price * quantity)).toFixed(2)
-         console.log(total)
        
          const newItems = [...items];
 
@@ -160,7 +159,7 @@ export const BoxItem = ({ initValues, onBoxItemDidChanged }) => {
                   <div className='box_item__container-list-cell'>
                      <div className='box_item__container-list-cell-input'>
 
-                        <select className="input" id="" value={selectedSaleItem} onChange={console.log('changed')}>
+                        <select className="input" id="" value={selectedSaleItem}>
                            {saleItems.map((item) => {
                               return (
                                  <option key={item._id} value={item._id}>{item.title}, {item.description}.</option>

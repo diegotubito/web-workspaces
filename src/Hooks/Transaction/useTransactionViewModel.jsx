@@ -112,7 +112,8 @@ export const useTransactionViewModel = () => {
             balance: balanceId,
             installment: installmentId,
             exchangeRate: exchangeRate,
-            stakeholder: installment.stakeholder
+            stakeholder: installment.stakeholder,
+            currency: installment.currency._id
          }
          const response = await createNewPayment(body)
          setOnTransactionError(null)

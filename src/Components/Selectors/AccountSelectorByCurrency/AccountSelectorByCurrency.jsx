@@ -50,7 +50,7 @@ export const AccountSelectorByCurrency = ({
    };
 
    const mapbalances = () => {
-      if (!selectedPhysicalAccount) {
+      if (!selectedPhysicalAccount || !withCurrency) {
          setBalances([])
          return
       }
@@ -69,7 +69,6 @@ export const AccountSelectorByCurrency = ({
       if(items.length > 0) {
          setSelectedBalance(items[0]._id)
       }
-      console.log(withCurrency)
 
       setBalances(items)
    }
