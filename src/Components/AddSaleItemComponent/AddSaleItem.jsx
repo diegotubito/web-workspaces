@@ -277,6 +277,15 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
       }
    }
 
+   const filterDiscounts = (orderItem) => {
+      const discounts = discountsPerItem.filter((d) =>
+         d.items.some(item => item._id === orderItem.saleItemId)
+      ).filter((d) =>
+         d.stakeholderTypes.includes(selectedStakeholder.stakeholderType)
+      );
+      return discounts
+   }
+
    return (
       <div className='add_sale_item__main'>
          {/* Title */}
@@ -402,7 +411,7 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
                            isEnabled={true}
                            index={index}
                            orderItem={orderItem}
-                           discounts={discountsPerItem.filter((d) => d.items.includes(orderItem.saleItemId)).filter((d) => d.stakeholderTypes.includes(selectedStakeholder.stakeholderType))}
+                           discounts={filterDiscounts(orderItem)}
                            selectedDiscountPerItem={handleSelectedDiscountPerItem}
                         />)}
 
