@@ -8,3 +8,11 @@ export const TransactionTypeEnum = {
    TRANSFER_ORIGIN: 'TRANSFER_ORIGIN',
    TRANSFER_DESTINY: 'TRANSFER_DESTINY'
 };
+
+const PaymentMethodTypes = {
+   cash: 'PAYMENT_METHOD_CASH',
+   mercadoPago: 'PAYMENT_METHOD_MERCADO_PAGO',
+   creditCard: 'PAYMENT_METHOD_CREDIT_CARD',
+}
+
+export { PaymentMethodTypes };

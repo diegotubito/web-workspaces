@@ -16,15 +16,19 @@ import { PhysicalAccountSelector } from '../../../Components/Selectors/PhysicalA
 import { AccountSelectorByCurrency } from '../../../Components/Selectors/AccountSelectorByCurrency/AccountSelectorByCurrency';
 import { PriceInput } from '../../../Components/AddSaleItemComponent/PriceInput/PriceInput';
 import { NewAmountInput } from '../../../Components/TextField/NewAmountInput/NewAmountInput';
+import { PaymentMethodTypes } from '../../../Hooks/Transaction/transactionType';
+import { useMercadoPagoViewModel } from '../../../Hooks/MercadoPago/use_mercado_pago_viewmodel';
 
 export const PaymentView = () => {
    const navigate = useNavigate();
    const { installmentId } = useParams()
    const [selectedPhysicalAccount, setSelectedPhysicalAccount] = useState("");
    const [selectedBalance, setSelectedBalance] = useState("")
+   const [selectedPaymentMethodId, setSelectedPaymentMethodId] = useState("")
    const { getInstallmentById, installment } = useInstallmentViewModel()
    const [balances, setBalances] = useState([])
    const { createPayment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess } = useTransactionViewModel()
+   const { createPayment: createPaymentMP, onError: onMPError, setOnError: setOnMPError } = useMercadoPagoViewModel()
    const [amount, setAmount] = useState()
    const { t } = useTranslation()
    const [description, setDescription] = useState('')
@@ -44,6 +48,8 @@ export const PaymentView = () => {
       const balanceItem = balances.find((c) => c._id === selectedBalance)
       const originExchageRate = installment?.currency?.exchangeRate
       const destinyExchangeRate = balanceItem?.currency?.exchangeRate
+      console.log(balanceItem?.paymentMethod?._id)
+      setSelectedPaymentMethodId(balanceItem?.paymentMethod?._id)
       setAmount(installment.amount)
       setExchangeRate(destinyExchangeRate / originExchageRate)
    }, [selectedBalance])
@@ -55,7 +61,13 @@ export const PaymentView = () => {
 
 
    const onCreatePaymentDidPressed = () => {
-      createPayment(installment.type, 'order', amount, installment, selectedPhysicalAccount, selectedBalance, description, installment._id, exchangeRate)
+      if (installment.paymentMethod.name === PaymentMethodTypes.mercadoPago) {
+         console.log('should create a mercadopago payment')
+         createPaymentMP('order', amount, installment, selectedPhysicalAccount, selectedBalance, 'Mercado Pago Sales', exchangeRate, selectedPaymentMethodId)
+      } else {
+         console.log('internal payment')
+         createPayment(installment.type, 'order', amount, installment, selectedPhysicalAccount, selectedBalance, description, installment._id, exchangeRate, selectedPaymentMethodId)
+      }
    }
 
    const onCancelDidPressed = () => {
@@ -109,6 +121,23 @@ export const PaymentView = () => {
                   <hr />
                   <div className="d-flex justify-content-end">
                      <Button onClick={() => setOnTransactionError(null)} variant="outline-success">
+                        Close me
+                     </Button>
+                  </div>
+               </Alert>
+            </div>
+         )}
+
+         {onMPError && (
+            <div className="alert-container">
+               <Alert variant="warning">
+                  <Alert.Heading>{onMPError.title}</Alert.Heading>
+                  <h3>
+                     {onMPError.message}
+                  </h3>
+                  <hr />
+                  <div className="d-flex justify-content-end">
+                     <Button onClick={() => setOnMPError(null)} variant="outline-success">
                         Close me
                      </Button>
                   </div>

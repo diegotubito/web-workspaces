@@ -2,6 +2,7 @@ import { useTransactionRepository } from "./useTransactionRepository";
 import { useState } from "react";
 import { useWorkspaceSession } from "../../Utils/Contexts/workspaceSessionContext";
 import { useUserSession } from "../../Utils/Contexts/userSessionContext";
+import { PaymentMethodTypes } from "./transactionType";
 
 export const useTransactionViewModel = () => {
    const { fetchTransactionByWorkspaceAndAccountAndDate: fetchTransactionByWorkspaceAndAccountAndDateRepo, fetchTransactionByWorkspaceAndAccount: fetchTransactionByWorkspaceAndAccountRepo, fetchTransactionByEntity, createNewPayment, disablePayment, fetchTransactionByInstallment, isLoading, transferFundsRepo } = useTransactionRepository()
@@ -81,7 +82,7 @@ export const useTransactionViewModel = () => {
       }
    }
   
-   const createPayment = async (type, entityModel, amount, installment, accountId, balanceId, description, installmentId, exchangeRate, stakeholder) => {
+   const createPayment = async (type, entityModel, amount, installment, accountId, balanceId, description, installmentId, exchangeRate, selectedPaymentMethodId) => {
       if (Number(exchangeRate * amount) > (installment?.remainingAmount ?? 0)) {
          setOnTransactionError({
             title: 'Validation Error',
@@ -96,6 +97,13 @@ export const useTransactionViewModel = () => {
             message: 'You need to espicify a balance'
          })
          return
+      }
+
+      if (installment.paymentMethod._id !== selectedPaymentMethodId) {
+         return setOnTransactionError({
+            title: 'Validation Error',
+            message: 'Payment method should match with order payment method.'
+         })
       }
 
       try {
