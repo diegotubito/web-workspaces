@@ -10,9 +10,9 @@ export const useItemRepository = () => {
       })
    }
 
-   const fetchItemsByWorkspace = (workspace, stakeholder) => {
+   const fetchItemsByWorkspace = (workspace) => {
       return apiCall({
-         path: `/api/v1/item-workspace?workspaceId=${workspace}&stakeholder=${stakeholder}`,
+         path: `/api/v1/item-workspace?workspaceId=${workspace}`,
          method: 'GET'
       })
    }

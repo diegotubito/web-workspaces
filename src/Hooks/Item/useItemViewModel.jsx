@@ -15,22 +15,6 @@ export const useItemViewModel = () => {
 
    const [onItemFailed, setOnItemFailed] = useState(null)
 
-   const fetchItemsByWorkspaceAndStakeholder = async (stakeholder) => {
-      try {
-         const response = await fetchItemsByWorkspaceRepository(workspaceSession._id)
-         const filtered = filterByStakeholder(response.items, stakeholder.items)
-         setItems(filtered)
-      } catch (error) {
-         console.error('Error:', error.title, error.message);
-         setOnItemFailed({
-            title: error.title || "Error",
-            message: error.message || "An unexpected error occurred",
-            action: 'pop',
-            setError: setOnItemFailed
-         })
-      }
-   }
-
    const filterByStakeholder = (items, stakeholderItems) => {
       return items.filter(item => stakeholderItems.includes(item._id));
    }
@@ -72,7 +56,6 @@ export const useItemViewModel = () => {
    }
 
    return {
-      fetchItemsByWorkspaceAndStakeholder,
       fetchSaleItemsByWorkspace,
       items,
       setItems,
