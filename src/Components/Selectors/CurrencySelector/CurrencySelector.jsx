@@ -14,14 +14,13 @@ export const CurrencySelector = ({ title, selectedCurrency, setSelectedCurrency 
    useEffect(() => {
       // default payment method
       if (currencies.length > 0) {
-         setSelectedCurrency(currencies[0])
+         setSelectedCurrency(currencies[0]._id)
       }
    }, [currencies])
 
    const handleOnCurrencyChange = (event) => {
       const item = event.target.value;
-      const currencyObject = currencies.find((c) => c._id === item)
-      setSelectedCurrency(currencyObject);
+      setSelectedCurrency(item);
    };
 
    return (

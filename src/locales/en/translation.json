@@ -105,6 +105,13 @@
      "CREDIT_NOTE": "Credit Note",
      "DEBIT_NOTE": "Debit Note",
      "TRANSFER_ORIGIN": "Transfer Origin",
-     "TRANSFER_DESTINY": "Transfer Destiny"
-}
+     "TRANSFER_DESTINY": "Transfer Destiny",
 
+     "_payment_methods": "Payment Methods",
+
+     "PAYMENT_METHOD_CASH": "Cash",
+     "PAYMENT_METHOD_MERCADO_PAGO": "Mercado Pago",
+     "PAYMENT_METHOD_CREDIT_CARD": "Credit Card",
+     "PAYMENT_METHOD_FINANCE": "Finance",
+     "PAYMENT_METHOD_SUSCRIPTION_MERCADO_PAGO": "Subscription MP"
+}

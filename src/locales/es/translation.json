@@ -99,5 +99,13 @@
   "CREDIT_NOTE": "Nota de Credito",
   "DEBIT_NOTE": "Nota de Debito",
   "TRANSFER_ORIGIN": "Transferencia Origen",
-  "TRANSFER_DESTINY": "Transferencia Destino"
+  "TRANSFER_DESTINY": "Transferencia Destino",
+
+  "_payment_methods": "Payment Methods",
+  
+  "PAYMENT_METHOD_CASH": "Efectivo",
+  "PAYMENT_METHOD_MERCADO_PAGO": "Mercado Pago",
+  "PAYMENT_METHOD_CREDIT_CARD": "Credit Card",
+  "PAYMENT_METHOD_FINANCE": "Financiación",
+  "PAYMENT_METHOD_SUSCRIPTION_MERCADO_PAGO": "Suscripción MP"
 }

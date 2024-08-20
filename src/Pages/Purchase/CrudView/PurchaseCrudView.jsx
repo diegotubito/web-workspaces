@@ -52,9 +52,11 @@ export const PurchaseCrudView = () => {
    const [totalDiscount, setTotalDiscount] = useState(0)
    const [totalAmount, setTotalAmount] = useState(0)
 
-   const [selectedPaymentItem, setSelectedPaymentItem] = useState("");
+   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
    const [selectedCurrency, setSelectedCurrency] = useState()
    const [installmentNumber, setInstallmentNumber] = useState(1)
+
+   const [isFinanced, setIsFinanced] = useState(false)
 
    useEffect(() => {
       if (selectedStakeholder) {
@@ -133,7 +135,7 @@ export const PurchaseCrudView = () => {
    }
 
    const onCreateOrderDidPressed = () => {
-      createOrder(selectedOrderType, orderItems, convertCurrencyStringToNumber(totalAmount), selectedStakeholder, selectedPaymentItem, selectedCurrency, installmentNumber, selectedSalePriceList)
+      createOrder(selectedOrderType, orderItems, convertCurrencyStringToNumber(totalAmount), selectedStakeholder, selectedPaymentMethod, selectedCurrency, installmentNumber, selectedSalePriceList)
    }
 
    const onCancelDidPressed = () => {
@@ -205,8 +207,9 @@ export const PurchaseCrudView = () => {
                   <div className='puchase_view__payment_and_currency'>
                      <PaymentMethodSelector
                         title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
-                        selectedPaymentItem={selectedPaymentItem}
-                        setSelectedPaymentItem={setSelectedPaymentItem}
+                        selectedPaymentMethod={selectedPaymentMethod}
+                        setSelectedPaymentMethod={setSelectedPaymentMethod}
+                        setIsFinanced={setIsFinanced}
                      />
 
                      <CurrencySelector
@@ -214,20 +217,22 @@ export const PurchaseCrudView = () => {
                         selectedCurrency={selectedCurrency}
                         setSelectedCurrency={setSelectedCurrency}
                      />
+                   
 
-                     <QuantityTextField
+                     { (isFinanced === true) && <QuantityTextField
                         title="Term"
                         value={installmentNumber}
                         onChangeValue={onInstallmentNumberChangeHandler}
                         maxValue={18}
                         minValue={0}
                         placeholder="Enter quantity"
-                     />
+                     /> }
 
-                     <TotalAmount
+                     {(isFinanced === true) && <TotalAmount
                         title={t('Term Amount')}
                         total={termAmount}
-                     />
+                     />}
+
                   </div>
 
                   <div className='puchase_view__discount_and_total'>

@@ -68,6 +68,16 @@ export const useOrderViewModel = () => {
    }
 
    const createOrder = async (type, items, totalAmount, stakeholder, selectedPaymentItem, selectedCurrency, installmentNumber, selectedSalePriceListId) => {
+      if (stakeholder === null || stakeholder === undefined) {
+         setOnOrderFailed({
+            title: "Validation Error",
+            message: "Select a stakeholder.",
+            action: 'none',
+            setError: setOnOrderFailed
+         })
+         return
+      }
+
       if (items.length === 0) {
          setOnOrderFailed({
             title: "Validation Error",
@@ -78,20 +88,20 @@ export const useOrderViewModel = () => {
          return
       }
 
-      if (!totalAmount) {
+      if (selectedSalePriceListId === null || selectedSalePriceListId === undefined) {
          setOnOrderFailed({
             title: "Validation Error",
-            message: "Amount must not be zero",
+            message: "Select a sale price.",
             action: 'none',
             setError: setOnOrderFailed
          })
          return
       }
 
-      if (!stakeholder) {
+      if (!totalAmount) {
          setOnOrderFailed({
             title: "Validation Error",
-            message: "Stakeholder needed",
+            message: "Amount must not be zero",
             action: 'none',
             setError: setOnOrderFailed
          })

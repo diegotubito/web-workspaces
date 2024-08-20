@@ -79,9 +79,13 @@ export const useMercadoPagoViewModel = () => {
          */
       } catch (error) {
 
-         setOnError(error)
-         console.log('Error title:', error.title); // This should show the custom error class name if available
-         console.log('Error message:', error.message); // This should show the custom message
+         console.error('Error:', error.title, error.message);
+         setOnError({
+            title: error.title || "Error",
+            message: error.message || "An unexpected error occurred",
+            action: 'none',
+            setError: setOnError
+         })
       } 
    }
 

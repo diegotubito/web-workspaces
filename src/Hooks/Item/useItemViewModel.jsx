@@ -36,6 +36,7 @@ export const useItemViewModel = () => {
    }
 
    const fetchSaleItemsByWorkspace = async (isForSale) => {
+      console.log('coming here')
       try {
          const response = await fetchItemsByWorkspaceRepository(workspaceSession._id)
          const filterItems = filterByEnabledAndSaleType(response.items, isForSale)
