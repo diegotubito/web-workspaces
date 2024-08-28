@@ -97,6 +97,8 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
          id: Math.random().toString(36), // Ensure a unique id for each new item
          saleItemId: saleItem._id,  // Use saleItemId for comparison
          discountPerItemId: "", // Store the discountPerItemId or null
+         acceptedPaymentMethods: saleItem.acceptedPaymentMethods,
+         acceptedCurrencies: saleItem.acceptedCurrencies,
          saleItem: saleItem.title,
          price: saleItem.salePrice,
          discount: discount,
@@ -194,6 +196,8 @@ export const AddSaleItem = ({ orderItems, setOrderItems, title, selectedOrderTyp
                discountPerItemId: "", // Reset discount to "None"
                saleItem: saleItemObject.title,
                price: saleItemObject.salePrice,
+               acceptedPaymentMethods: saleItemObject.acceptedPaymentMethods,
+               acceptedCurrencies: saleItemObject.acceptedCurrencies,
                discount: discount,
                priceListRate: priceList.rate,
                note: note,

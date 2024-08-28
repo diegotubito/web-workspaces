@@ -18,6 +18,8 @@ import { StakeholderType } from '../../../Hooks/Stakeholder/stakeholderType';
 import { OrderType } from '../../../Hooks/Order/orderType';
 import { useItemViewModel } from '../../../Hooks/Item/useItemViewModel';
 import { AddSaleItem } from '../../../Components/AddSaleItemComponent/AddSaleItem';
+import { PaymentMethodHardcodedSelector } from '../../../Components/Selectors/PaymentMethodHardcodedSelector/PaymentMethodHardcodedSelector';
+import { CurrencyHardcodedSelector } from '../../../Components/Selectors/CurrencyHardcodedSelector/CurrencyHardcodedSelector';
 
 export const PurchaseCrudView = () => {
    const navigate = useNavigate()
@@ -55,6 +57,9 @@ export const PurchaseCrudView = () => {
    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
    const [selectedCurrency, setSelectedCurrency] = useState()
    const [installmentNumber, setInstallmentNumber] = useState(1)
+
+   const [paymentMethods, setPaymentMethods] = useState([])
+   const [currencies, setCurrencies] = useState([])
 
    const [isFinanced, setIsFinanced] = useState(false)
 
@@ -124,7 +129,52 @@ export const PurchaseCrudView = () => {
 
    useEffect(() => {
       updateTotalAmount()
+      intersectPaymentMethods()
+      intersectCurrencies()
    }, [orderItems, setOrderItems, setItemTotal, itemTotal])
+
+   const intersectPaymentMethods = () => {
+      if (orderItems.length === 0) return []
+
+      // Inicializar el resultado con los métodos del primer item
+      let result = orderItems[0].acceptedPaymentMethods
+
+      // Iterar sobre el resto de los items
+      orderItems.slice(1).map((item) => {
+         result = result.filter((method) =>
+            item.acceptedPaymentMethods.some((m) => m._id === method._id)
+         )
+      })
+
+      if (result.length !== 0) {
+         setSelectedPaymentMethod(result[0]._id)
+      } else {
+         setSelectedPaymentMethod("")
+      }
+      setPaymentMethods(result)
+   }
+
+   const intersectCurrencies = () => {
+      if (orderItems.length === 0) return []
+
+      // Inicializar el resultado con los métodos del primer item
+      let result = orderItems[0].acceptedCurrencies
+
+      // Iterar sobre el resto de los items
+      orderItems.slice(1).map((item) => {
+         result = result.filter((currency) =>
+            item.acceptedCurrencies.some((m) => m._id === currency._id)
+         )
+      })
+
+      if (result.length !== 0) {
+         setSelectedCurrency(result[0]._id)
+      } else {
+         setSelectedCurrency("")
+      }
+      setCurrencies(result)
+   }
+
 
    const updateTotalAmount = () => {
       let total = 0
@@ -205,17 +255,19 @@ export const PurchaseCrudView = () => {
                   />
 
                   <div className='puchase_view__payment_and_currency'>
-                     <PaymentMethodSelector
+                     <PaymentMethodHardcodedSelector
                         title={t('PAYMENT_VIEW_PAYMENT_METHOD_TITLE')}
                         selectedPaymentMethod={selectedPaymentMethod}
                         setSelectedPaymentMethod={setSelectedPaymentMethod}
                         setIsFinanced={setIsFinanced}
+                        paymentMethods={paymentMethods}
                      />
 
-                     <CurrencySelector
+                     <CurrencyHardcodedSelector
                         title={t('PAYMENT_VIEW_CURRENCY_TITLE')}
                         selectedCurrency={selectedCurrency}
                         setSelectedCurrency={setSelectedCurrency}
+                        currencies={currencies}
                      />
                    
 
