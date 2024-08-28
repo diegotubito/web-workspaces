@@ -68,6 +68,16 @@ export const useOrderViewModel = () => {
    }
 
    const createOrder = async (type, items, totalAmount, stakeholder, selectedPaymentItem, selectedCurrency, installmentNumber, selectedSalePriceListId) => {
+      if (!selectedCurrency) {
+         setOnOrderFailed({
+            title: "Validation Error",
+            message: "Currency Should Be Selected.",
+            action: 'none',
+            setError: setOnOrderFailed
+         })
+         return
+      }
+
       if (!selectedPaymentItem) {
          setOnOrderFailed({
             title: "Validation Error",
