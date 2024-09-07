@@ -13,6 +13,8 @@ const PaymentMethodTypes = {
    cash: 'PAYMENT_METHOD_CASH',
    mercadoPago: 'PAYMENT_METHOD_MERCADO_PAGO',
    creditCard: 'PAYMENT_METHOD_CREDIT_CARD',
+   finance: 'PAYMENT_METHOD_FINANCE',
+   suscription: 'PAYMENT_METHOD_SUSCRIPTION_MERCADO_PAGO',
 }
 
 export { PaymentMethodTypes };

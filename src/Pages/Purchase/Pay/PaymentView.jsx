@@ -28,7 +28,12 @@ export const PaymentView = () => {
    const { getInstallmentById, installment } = useInstallmentViewModel()
    const [balances, setBalances] = useState([])
    const { createPayment, transactionIsLoading, onTransactionError, setOnTransactionError, onCreatedTransactionSuccess } = useTransactionViewModel()
-   const { createPayment: createPaymentMP, onError: onMPError, setOnError: setOnMPError } = useMercadoPagoViewModel()
+   const {
+      createMercadoPagoPayment,
+      createMercadoPagoSuscription,
+      onError: onMPError,
+      setOnError: setOnMPError
+   } = useMercadoPagoViewModel()
    const [amount, setAmount] = useState()
    const { t } = useTranslation()
    const [description, setDescription] = useState('')
@@ -48,7 +53,6 @@ export const PaymentView = () => {
       const balanceItem = balances.find((c) => c._id === selectedBalance)
       const originExchageRate = installment?.currency?.exchangeRate
       const destinyExchangeRate = balanceItem?.currency?.exchangeRate
-      console.log(balanceItem?.paymentMethod?._id)
       setSelectedPaymentMethodId(balanceItem?.paymentMethod?._id)
       setAmount(installment.amount)
       setExchangeRate(destinyExchangeRate / originExchageRate)
@@ -63,7 +67,13 @@ export const PaymentView = () => {
    const onCreatePaymentDidPressed = () => {
       if (installment.paymentMethod.name === PaymentMethodTypes.mercadoPago) {
          console.log('should create a mercadopago payment')
-         createPaymentMP('order', amount, installment, selectedPhysicalAccount, selectedBalance, 'Mercado Pago Sales', exchangeRate, selectedPaymentMethodId)
+         createMercadoPagoPayment('order', amount, installment, selectedPhysicalAccount, selectedBalance, 'Mercado Pago Sales', exchangeRate, selectedPaymentMethodId)
+      } else if (installment.paymentMethod.name === PaymentMethodTypes.suscription) {
+        
+         const itemId = installment.order.items[0].item
+         const startDate = new Date()
+         const endDate = null
+         createMercadoPagoSuscription(itemId, startDate, endDate, amount, installment, 'order', selectedPhysicalAccount, selectedBalance, 'MP Suscription', exchangeRate, selectedPaymentMethodId)
       } else {
          console.log('internal payment')
          createPayment(installment.type, 'order', amount, installment, selectedPhysicalAccount, selectedBalance, description, installment._id, exchangeRate, selectedPaymentMethodId)
@@ -193,7 +203,7 @@ export const PaymentView = () => {
                      isEnabled={true}
                      maxLength={15}
                      textAlign={'end'}
-                     initialValue={installment.amount.toFixed(2).toString()}
+                     initialValue={installment.remainingAmount.toFixed(2).toString()}
                      onInputChanged={onAmountDidChanged}
                   />
 

@@ -12,5 +12,14 @@ export const useMercadoPagoRepository = () => {
       })
    }
 
-   return { createPaymentRepository }
+   const createMercadoPagoSuscriptionRepo = (body) => {
+      return apiCall({
+         path: `/api/v1/mercadopago/subscription/preapproval-internal`,
+         method: 'POST',
+         body: body,
+         isLogin: false
+      })
+   }
+
+   return { createPaymentRepository, createMercadoPagoSuscriptionRepo }
 }
