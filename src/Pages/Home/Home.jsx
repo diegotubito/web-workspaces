@@ -15,6 +15,7 @@ import { ButtonIcon } from '../../Components/Buttons/ButtonIcon/ButtonIcon'
 import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as OrderIcon } from '../../Resources/Images/point_of_sale.svg';
+import TurnstyleView from '../../Components/TurnStyleManager/Turnstyle';
 
 const Views = {
     purchaseView: 'purchase_view',
@@ -163,6 +164,7 @@ export const Home = () => {
                     <div>Right Side Bar</div>
                     <div>Right Side Bar</div>
                     <div>Right Side Bar</div>
+                    {/* <TurnstyleView/> */}
                 </div>
             </div>
 

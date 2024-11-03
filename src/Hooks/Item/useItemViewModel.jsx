@@ -35,8 +35,22 @@ export const useItemViewModel = () => {
       }
    }
 
+   const fetchItemsByWorkspaceAndStakeholder = async (stakeholder) => {
+
+      try {
+         setItems(stakeholder.items)
+      } catch (error) {
+         console.error('Error:', error.title, error.message);
+         setOnItemFailed({
+            title: error.title || "Error",
+            message: error.message || "An unexpected error occurred",
+            action: 'none',
+            setError: setOnItemFailed
+         })
+      }
+   }
+
    const fetchSaleItemsByWorkspace = async (isForSale) => {
-      console.log('coming here')
       try {
          const response = await fetchItemsByWorkspaceRepository(workspaceSession._id)
          const filterItems = filterByEnabledAndSaleType(response.items, isForSale)
@@ -63,6 +77,7 @@ export const useItemViewModel = () => {
       saleItemsIsLoading: isLoading,
       onGetSaleFailed: onItemFailed,
       setOnGetSaleFailed: setOnItemFailed,
-      fetchItemsByWorkspace
+      fetchItemsByWorkspace,
+      fetchItemsByWorkspaceAndStakeholder
    }
 }
